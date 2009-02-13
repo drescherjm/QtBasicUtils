@@ -13,14 +13,14 @@ public:
 	virtual void Initialize();
 public:
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue = true);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, UINT nDefaultValue = 0, UINT nMinValue=0, 
-		UINT nMaxValue = UINT_MAX);
+	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
+		quint32 nMaxValue = UINT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
 		int nMaxValue = INT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, BYTE nDefaultValue = 0, BYTE nMinValue=0, 
-		BYTE nMaxValue = UCHAR_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, WORD nDefaultValue = 0, WORD nMinValue=0, 
-		WORD nMaxValue = USHRT_MAX);
+	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 
+		quint8 nMaxValue = UCHAR_MAX);
+	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint16 nDefaultValue = 0, quint16 nMinValue=0, 
+		quint16 nMaxValue = USHRT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
 		short nMaxValue = SHRT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=FLT_MIN, 
@@ -38,14 +38,14 @@ public:
 
 	int AddArg(QString strName, CCmdArg* pArg=NULL);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, bool bDefaultValue = true);
-	int	AddArg( QString strName, QString strDescription, QString strExplanation, UINT nDefaultValue = 0, UINT nMinValue=0, 
-		UINT nMaxValue = UINT_MAX);
+	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
+		quint32 nMaxValue = UINT_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
 		int nMaxValue = INT_MAX);
-	int	AddArg( QString strName, QString strDescription, QString strExplanation, BYTE nDefaultValue = 0, BYTE nMinValue=0, 
-		BYTE nMaxValue = UCHAR_MAX);
-	int	AddArg( QString strName, QString strDescription, QString strExplanation, WORD nDefaultValue = 0, WORD nMinValue=0, 
-		WORD nMaxValue = USHRT_MAX);
+	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 
+		quint8 nMaxValue = UCHAR_MAX);
+	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint16 nDefaultValue = 0, quint16 nMinValue=0, 
+		quint16 nMaxValue = USHRT_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
 		short nMaxValue = SHRT_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=FLT_MIN, 
@@ -62,10 +62,10 @@ public:
 		CMDSTRVERIFY pFnVerify=NULL);
 public:
 	int GetOpt(QChar ch, bool & bValue);
-	int GetOpt(QChar ch, UINT & nValue);
+	int GetOpt(QChar ch, quint32 & nValue);
 	int GetOpt(QChar ch, int & nValue);
-	int GetOpt(QChar ch, BYTE & nValue);
-	int GetOpt(QChar ch, WORD & nValue);
+	int GetOpt(QChar ch, quint8 & nValue);
+	int GetOpt(QChar ch, quint16 & nValue);
 	int	GetOpt(QChar ch, short & nValue);
 	int GetOpt(QChar ch, float & nValue);
 	int GetOpt(QChar ch, double & nValue);
@@ -75,10 +75,10 @@ public:
 	int	GetOpt(QChar ch, CCmdLineFileList & nValue);
 
 	int GetArg(QString strName, bool & bValue);
-	int GetArg(QString strName, UINT & nValue);
+	int GetArg(QString strName, quint32 & nValue);
 	int GetArg(QString strName, int & nValue);
-	int GetArg(QString strName, BYTE & nValue);
-	int GetArg(QString strName, WORD & nValue);
+	int GetArg(QString strName, quint8 & nValue);
+	int GetArg(QString strName, quint16 & nValue);
 	int	GetArg(QString strName, short & nValue);
 	int GetArg(QString strName, float & nValue);
 	int GetArg(QString strName, double & nValue);
