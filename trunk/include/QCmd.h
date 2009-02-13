@@ -84,7 +84,7 @@ public:
 	int	GetOpt(QChar ch, short & nValue);
 	int GetOpt(QChar ch, float & nValue);
 	int GetOpt(QChar ch, double & nValue);
-	int	GetOpt(QChar ch, char & chValue);
+	int	GetOpt(QChar ch, QChar & chValue);
 	int GetOpt(QChar ch, QString & nValue);
 	int	GetOpt(QChar ch, QStringList & nValue);
 	int	GetOpt(QChar ch, QCmdLineFileList & nValue);
@@ -97,7 +97,7 @@ public:
 	int	GetArg(QString strName, short & nValue);
 	int GetArg(QString strName, float & nValue);
 	int GetArg(QString strName, double & nValue);
-	int	GetArg(QString strName, char & chValue);
+	int	GetArg(QString strName, QChar & chValue);
 	int	GetArg(QString strName, QString & nValue);
 	int	GetArg(QString strName, QStringList & nValue);
 	int	GetArg(QString strName, QCmdLineFileList & nValue);

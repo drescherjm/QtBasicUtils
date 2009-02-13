@@ -7,6 +7,11 @@
 #include "QCmdOptBool.h"
 #include "QCmdParseException.h"
 #include "QCmdOptBasic.h"
+#include "QCmdOptQChar.h"
+#include "QCmdOptQString.h"
+#include "QCmdOptQStringList.h"
+
+#include "QCmdArgBool.h"
 
 namespace QTUTILS {
 
@@ -282,13 +287,16 @@ int QCmd::AddOpt(QChar ch, QCmdOpt* pOpt)
 {
 	QChar chOpt = GetOptChar(ch);
 	int retVal = QCmdParseError::STATUS_OK;
-	if ( m_mapOpt.Lookup(chOpt,pOpt) ) {
+
+	QOptMap::iterator it = m_mapOpt.find(chOpt);
+
+	if ( it != m_mapOpt.end() ) {
 		retVal = QCmdParseError::OPTION_ALLREADY_ADDED;
 	}	
 	else
 		if ( pOpt != NULL ) {
-			m_mapOpt.SetAt(chOpt,pOpt);
-			m_listOptions.AddTail(pOpt);
+			m_mapOpt.insert(chOpt,pOpt);
+			m_listOptions.push_back(pOpt);
 		}
 		QCmdParseException::Throw(retVal,ch);
 		return retVal;
@@ -298,7 +306,10 @@ int QCmd::FindOpt(QChar ch, QCmdOpt *& option)
 {
 	QChar chOpt = GetOptChar(ch);
 	int retVal = QCmdParseError::OPTION_NOT_FOUND;
-	if ( m_mapOpt.Lookup(chOpt,option) ) {
+
+	QOptMap::iterator it = m_mapOpt.find(chOpt);
+	if ( it != m_mapOpt.end() ) {
+		option = *it;
 		if ( option != NULL ) {
 			retVal = QCmdParseError::STATUS_OK;
 		}
@@ -350,7 +361,7 @@ int QCmd::GetOpt(QChar ch, int & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptint* pOptquint32 = dynamic_cast<QCmdOptint*>(pOpt);
+		QCmdOpt_int* pOptquint32 = dynamic_cast<QCmdOpt_int*>(pOpt);
 		if ( pOptquint32 ) {
 			nValue = pOptquint32->GetValue();
 		}
@@ -384,7 +395,7 @@ int QCmd::GetOpt(QChar ch, short & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptshort* pOptshort = dynamic_cast<QCmdOptshort*>(pOpt);
+		QCmdOpt_short* pOptshort = dynamic_cast<QCmdOpt_short*>(pOpt);
 		if ( pOptshort ) {
 			nValue = pOptshort->GetValue();
 		}
@@ -420,7 +431,7 @@ int QCmd::GetOpt(QChar ch, float & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptfloat* pOptfloat = dynamic_cast<QCmdOptfloat*>(pOpt);
+		QCmdOpt_float* pOptfloat = dynamic_cast<QCmdOpt_float*>(pOpt);
 		if ( pOptfloat ) {
 			nValue = pOptfloat->GetValue();
 		}
@@ -437,7 +448,7 @@ int QCmd::GetOpt(QChar ch, double & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptdouble* pOptdouble = dynamic_cast<QCmdOptdouble*>(pOpt);
+		QCmdOpt_double* pOptdouble = dynamic_cast<QCmdOpt_double*>(pOpt);
 		if ( pOptdouble ) {
 			nValue = pOptdouble->GetValue();
 		}
@@ -485,13 +496,13 @@ int QCmd::GetOpt(QChar ch, QString & nValue)
 int QCmd::GetOpt(QChar ch, QStringList & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
-	nValue.RemoveAll();
+	nValue.clear();
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
 		QCmdOptQStringList* pOptQStringList = dynamic_cast<QCmdOptQStringList*>(pOpt);
 		if ( pOptQStringList ) {
-			pOptQStringList->GetValue().CopyTo(nValue);
+			nValue = pOptQStringList->GetValue();
 		}
 		else
 			retVal = QCmdParseError::OPTION_WRONG_TYPE;

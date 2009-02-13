@@ -1,25 +1,20 @@
 #ifndef __QCMDOPTQCHAR_H__
 #define __QCMDOPTQCHAR_H__
 
-#include "QCmdOptBasic.h"
+#include "QCmdOptBasicBase.h"
 
 namespace QTUTILS {
 	
-	class CCmdOptQChar : public QCmdOptBasic<QChar  
+	class QCmdOptQChar : public QCmdOptBasicBase<QChar>  
 	{
 	public:
-		CCmdOptTCHAR(TCHAR ch, CString strDescription, CString strExplanation, BOOL bIgnoreCase, 
-			TCHAR chDefaultValue, TCHAR chMinVal, TCHAR chMaxVal);
-		virtual int		ImportData( CString strValue );
-		virtual void	Initialize();
-		TCHAR	GetValue();
+		QCmdOptQChar(QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+			QChar chDefaultValue, QChar chMinVal, QChar chMaxVal);
 	public:
-		virtual CString GetSyntax();
-		TCHAR	m_chValue;
-		TCHAR	m_chDefaultValue;
-		TCHAR	m_chMinValue;
-		TCHAR	m_chMaxValue;
-		BOOL	m_bIgnoreCase;
+		virtual int		ImportData( QString strValue );
+		virtual QString GetSyntax();
+	public:
+		bool	m_bIgnoreCase;
 	};
 
 }; //namespace QTUTILS

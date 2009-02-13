@@ -1,11 +1,11 @@
 #ifndef __QCMDOPTBASIC_H__
 #define __QCMDOPTBASIC_H__
 
-#include "QCmdOptBasicBase.h"
+#include "QCmdOptBasicBaseMM.h"
 
 namespace QTUTILS {
 
-template <class TYPE,char fmt[]> class QCmdOptBasic : public QCmdOptBasicBase<TYPE>  
+template <class TYPE,char fmt[]> class QCmdOptBasic : public QCmdOptBasicBaseMM<TYPE>  
 {
 public:
 	QCmdOptBasic(QChar ch, QString strDescription, QString strExplanation, 

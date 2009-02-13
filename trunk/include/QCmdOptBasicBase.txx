@@ -1,5 +1,5 @@
-#ifndef __QCmdOptBasicBaseBASE_TXX__
-#define __QCmdOptBasicBaseBASE_TXX__
+#ifndef __QCMDORGBASICBASE_TXX__
+#define __QCMDORGBASICBASE_TXX__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,4 +32,4 @@ TYPE QCmdOptBasicBase<TYPE>::GetValue()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCmdOptBasicBaseBASE_TXX__
+#endif //__QCMDORGBASICBASE_TXX__
