@@ -10,6 +10,11 @@
 //
 //
 
+#ifndef __QCMDARG_H__
+#define __QCMDARG_H__
+
+#include "QCmdPart.h"
+
 namespace QTUTILS {
 
 class QCmdArg : public QCmdPart  
@@ -49,3 +54,5 @@ inline bool QCmdArg::GetOptional()
 }
 
 }; //namespace QTUTILS
+
+#endif //def __QCMDARG_H__

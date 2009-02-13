@@ -3,6 +3,9 @@
 #include "QCmd.h"
 #include "QCmdArg.h"
 #include "QCmdOpt.h"
+#include "QCmdParseError.h"
+#include "QCmdOptBool.h"
+#include "QCmdParseException.h"
 
 namespace QTUTILS {
 
@@ -21,35 +24,32 @@ m_strName(strName), m_strDescription(strDescription), m_strExplanation(strExplan
 
 QCmd::~QCmd()
 {
-	QArgList::iterator it;
 	QCmdPart* ptr;
-	for(it = m_listArguments.begin(); it != m_listArguments.end();++it) {
+	for(QArgList::iterator it = m_listArguments.begin(); it != m_listArguments.end();++it) {
 		ptr = *it;
 		delete ptr;
 	}
 	
-	pos = m_listOptions.GetHeadPosition();
-	while( pos ) {
-		ptr = m_listOptions.GetNext(pos);
+	for (QOptList::iterator it = m_listOptions.begin(); it != m_listOptions.end();++it) {
+		ptr = *it;
 		delete ptr;
 	}
 }
 
 void QCmd::Initialize()
 {
-	POSITION pos; 
 	QCmdPart* ptr;
 	m_bOptional = false;
-	pos = m_listArguments.GetHeadPosition();
-	while( pos ) {
-		ptr = m_listArguments.GetNext(pos);
+	for(QArgList::iterator it = m_listArguments.begin(); it != m_listArguments.end();++it) {
+		ptr = *it;
 		ptr->Initialize();
 	}
-	pos = m_listOptions.GetHeadPosition();
-	while( pos ) {
-		ptr = m_listOptions.GetNext(pos);
+	
+	for (QOptList::iterator it = m_listOptions.begin(); it != m_listOptions.end();++it) {
+		ptr = *it;
 		ptr->Initialize();
 	}
+
 }
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue)
