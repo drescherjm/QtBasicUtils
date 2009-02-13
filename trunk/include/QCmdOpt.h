@@ -15,18 +15,18 @@ namespace QTUTILS {
 class QCmdOpt : public QCmdPart  
 {
 public:
-	QCmdOpt(TCHAR chLetter,QString strDescription, QString strExplanation);
+	QCmdOpt(QChar chLetter,QString strDescription, QString strExplanation);
 	virtual ~QCmdOpt();
 public:
 	virtual int		ImportData( QString strValue )=0;
 	virtual QString GetSyntax( )=0;
 	virtual QString GetShortSyntax( );
-	TCHAR	GetName();
+	QChar	GetName();
 protected:
-	TCHAR m_chLetter;
+	QChar m_chLetter;
 };
 
-inline TCHAR QCmdOpt::GetName()
+inline QChar QCmdOpt::GetName()
 {
 	return m_chLetter;
 }

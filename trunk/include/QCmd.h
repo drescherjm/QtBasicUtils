@@ -5,6 +5,15 @@
 
 namespace QTUTILS {
 
+class QCmdArg;
+class QCmdOpt;
+
+typedef QList<QCmdArg*> QArgList;
+typedef QList<QCmdOpt*> QOptList;
+
+typedef QMap<QChar,QCmdOpt*> QOptMap;
+typedef QMap<QString,QCmdArg*> QArgMap;
+
 typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
  
 class QCmd
@@ -112,10 +121,10 @@ protected:
 	bool		m_bIgnoreCase;
 	QString		m_strDescription;
 	QString		m_strExplanation;
-	COptList	m_listOptions;
-	CArgList	m_listArguments;
-	COptMap		m_mapOpt;
-	CArgMap		m_mapArg;
+	QOptList	m_listOptions;
+	QArgList	m_listArguments;
+	QOptMap		m_mapOpt;
+	QArgMap		m_mapArg;
 private:
 	QString m_strStringListEnd;
 	QChar m_chOption;

@@ -14,7 +14,7 @@ m_strName(strName), m_strDescription(strDescription), m_strExplanation(strExplan
 	m_chOption = '-';
 	m_strStringListEnd = tr(".");
 	m_bOptional = false;
-	AddOpt('?',"Help","This option shows the help for this command.",false);
+	AddOpt(QChar('?'),"Help","This option shows the help for this command.",false);
 }
 
 QCmd::~QCmd()
