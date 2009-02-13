@@ -62,10 +62,12 @@ export_library_dependencies (
 
 SET( QtBasicUtils_SRCS
 	./src/main.cxx
+	./src/QCmd.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
 	./include/QtBasicUtils.h
+	./include/QCmd.h
 )
 
 SET( QtBasicUtils_INT_HDRS
