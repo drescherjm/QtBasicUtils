@@ -1,7 +1,9 @@
 //
 
+#include <float.h>
 #include <QString>
 #include "QCmdLineFileList.h"
+#include "QLimits.h"
 
 namespace QTUTILS {
 
@@ -42,7 +44,7 @@ public:
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chDefaultValue=0x0, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
 
-	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=tr(""), 
+	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
@@ -67,7 +69,7 @@ public:
 		double nMaxValue = DBL_MAX);
 	int AddArg( QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chNameDefaultValue=0x0, QChar chNameMinVal=SCHAR_MIN, QChar chNameMaxVal=SCHAR_MAX);
-	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=tr(""), 
+	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
@@ -130,12 +132,12 @@ private:
 	QChar m_chOption;
 };
 
-inline QString QtCmd::GetName()
+inline QString QCmd::GetName()
 {
 	return m_strName;
 }
 
-inline QString QtCmd::GetDescription()
+inline QString QCmd::GetDescription()
 {
 	return m_strDescription;
 }

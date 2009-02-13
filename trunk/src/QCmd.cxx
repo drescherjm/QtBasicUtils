@@ -1,6 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #include "QCmd.h"
+#include "QCmdArg.h"
+#include "QCmdOpt.h"
 
 namespace QTUTILS {
 
@@ -12,20 +14,20 @@ QCmd::QCmd(QString strName,QString strDescription, QString strExplanation,bool b
 m_strName(strName), m_strDescription(strDescription), m_strExplanation(strExplanation), m_bIgnoreCase(bIgnoreCase)
 {
 	m_chOption = '-';
-	m_strStringListEnd = tr(".");
+	m_strStringListEnd = (".");
 	m_bOptional = false;
-	AddOpt(QChar('?'),"Help","This option shows the help for this command.",false);
+	AddOpt(QChar('?'),QString("Help"),QString("This option shows the help for this command."),(bool)false);
 }
 
 QCmd::~QCmd()
 {
-	POSITION pos; 
+	QArgList::iterator it;
 	QCmdPart* ptr;
-	pos = m_listArguments.GetHeadPosition();
-	while( pos ) {
-		ptr = m_listArguments.GetNext(pos);
+	for(it = m_listArguments.begin(); it != m_listArguments.end();++it) {
+		ptr = *it;
 		delete ptr;
 	}
+	
 	pos = m_listOptions.GetHeadPosition();
 	while( pos ) {
 		ptr = m_listOptions.GetNext(pos);
@@ -992,29 +994,29 @@ QString QCmd::GetSyntax()
 	pos = m_listOptions.GetHeadPosition();
 	while( pos ) {
 		pCmdOpt = m_listOptions.GetNext(pos);
-		retVal += tr("[-");
+		retVal += ("[-");
 		retVal += pCmdOpt->GetShortSyntax();
-		retVal += tr("] ");
+		retVal += ("] ");
 	}
 	
 	pos = m_listArguments.GetHeadPosition();
 	while( pos ) {
 		pCmdArg = m_listArguments.GetNext(pos);
 		if ( pCmdArg->GetOptional() ) {
-			retVal += tr("[");
+			retVal += ("[");
 			retVal += pCmdArg->GetShortSyntax();
-			retVal += tr("] ");
+			retVal += ("] ");
 		}
 		else
 		{
-			retVal += tr("<") + pCmdArg->GetShortSyntax() + tr("> ");
+			retVal += ("<") + pCmdArg->GetShortSyntax() + ("> ");
 		}
 	}
 	
 	
-	retVal += tr("\nDescription:\n  ") + GetDescription();
+	retVal += ("\nDescription:\n  ") + GetDescription();
 	
-	retVal += tr("\nArguments:\n");
+	retVal += ("\nArguments:\n");
 	QString str;
 
 	pos = m_listArguments.GetHeadPosition();
@@ -1022,23 +1024,23 @@ QString QCmd::GetSyntax()
 		pCmdArg = m_listArguments.GetNext(pos);
 		str.Format("  %s -- ",pCmdArg->GetName());
 		retVal += str + pCmdArg->GetSyntax();
-		retVal += tr("\n");
+		retVal += ("\n");
 		str = pCmdArg->GetExplanation();
 		if ( !str.IsEmpty() ) {
-			retVal += tr("  \t") + str + tr("\n");
+			retVal += ("  \t") + str + ("\n");
 		}
 	}
-	retVal += tr("\nOptions:\n");
+	retVal += ("\nOptions:\n");
 	
 	pos = m_listOptions.GetHeadPosition();
 	while( pos ) {
 		pCmdOpt = m_listOptions.GetNext(pos);
 		str.Format("  %c -- ",pCmdOpt->GetName());
 		retVal += str + pCmdOpt->GetSyntax();
-		retVal += tr("\n");
+		retVal += ("\n");
 		str = pCmdOpt->GetExplanation();
 		if ( !str.IsEmpty() ) {
-			retVal += tr("  \t") + str + tr("\n");
+			retVal += ("  \t") + str + ("\n");
 		}
 	}
 	return retVal;

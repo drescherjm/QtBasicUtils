@@ -70,6 +70,7 @@ SET( QtBasicUtils_SRCS
 
 SET( QtBasicUtils_EXT_HDRS 
 	./include/QtBasicUtils.h
+	./include/QLimits.h
 	./include/QCmd.h
 	./include/QCmdParseError.h
 	./include/QCmdHelpException.h
