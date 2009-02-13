@@ -72,6 +72,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QtBasicUtils.h
 	./include/QLimits.h
 	./include/QCmd.h
+	./include/QCmdExtra.h
 	./include/QCmdParseError.h
 	./include/QCmdHelpException.h
 	./include/QCmdParseException.h
@@ -90,6 +91,16 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdOptQString.h
 	./include/QCmdOptQStringList.h
 	./include/QCmdArgBool.h
+	./include/QCmdArgBasic.h
+	./include/QCmdArgBasic.txx
+	./include/QCmdArgBasicBase.h
+	./include/QCmdArgBasicBase.txx
+	./include/QCmdArgBasicBaseMM.h
+	./include/QCmdArgBasicBaseMM.txx
+	./include/QCmdArgQChar.h
+	./include/QCmdArgQString.h
+	./include/QCmdArgQStringList.h
+	./include/QCmdArgFileList.h
 )
 
 SET( QtBasicUtils_INT_HDRS

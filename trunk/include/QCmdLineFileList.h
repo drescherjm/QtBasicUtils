@@ -9,6 +9,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+#ifndef __QCMDLINEFILELIST_H__
+#define __QCMDLINEFILELIST_H__
 
 #include <QStringList>
 
@@ -66,3 +68,5 @@ inline void QCmdLineFileList::destroy()
 }
 
 }; //namespace QTUTILS
+
+#endif //ndef __QCMDLINEFILELIST_H__

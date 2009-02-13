@@ -1,13 +1,15 @@
-#ifndef __QCMDORGBASICBASEXX__
-#define __QCMDORGBASICBASEXX__
+#ifndef __QCMDARGBASICBASEXX__
+#define __QCMDARGBASICBASEXX__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QCmdOptBasicBase<TYPE>::QCmdOptBasicBase(QChar ch, QString strDescription, QString strExplanation, 
-									 TYPE nDefaultValue) : 
-QCmdOpt( ch, strDescription,strExplanation ), m_nValue(nDefaultValue), 
-m_nDefaultValue(nDefaultValue)
+QCmdArgBasicBase<TYPE>::QCmdArgBasicBase(QString strName, QString strDescription, 
+										QString strExplanation, TYPE nDefaultValue, 
+										TYPE nMinValue, TYPE nMaxValue) : 
+QCmdArg( strName, strDescription,strExplanation ), m_nValue(nDefaultValue), 
+m_nDefaultValue(nDefaultValue), m_nMinValue(nMinValue),
+m_nMaxValue(nMaxValue)
 {
 
 }
@@ -15,7 +17,7 @@ m_nDefaultValue(nDefaultValue)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QCmdOptBasicBase<TYPE>::Initialize()
+void QCmdArgBasicBase<TYPE>::Initialize()
 {
 	m_nValue = m_nDefaultValue;
 	QCmdPart::Initialize();
@@ -24,11 +26,11 @@ void QCmdOptBasicBase<TYPE>::Initialize()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-TYPE QCmdOptBasicBase<TYPE>::GetValue()
+TYPE QCmdArgBasicBase<TYPE>::GetValue()
 {
 	return m_nValue;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDORGBASICBASEXX__
+#endif //__QCMDARGBASICBASEXX__

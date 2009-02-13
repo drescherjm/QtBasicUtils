@@ -1,0 +1,27 @@
+#ifndef __QCMDARGFILELIST_H__
+#define __QCMDARGFILELIST_H__
+
+#include "QCmdArgBasicBase.h"
+#include "QCmdLineFileList.h"
+
+namespace QTUTILS {
+
+
+class QCmdArgFileList : public QCmdArgBasicBase<QCmdLineFileList>
+{
+public:
+	QCmdArgFileList(QString strName, QString strDescription, QString strExplanation, 
+		const QCmdLineFileList & strDefaultValue, 
+		CMDSTRVERIFY pfnVerify);
+	virtual int		ImportData( QString strValue );
+	virtual void	Initialize();
+	QCmdLineFileList&	GetValue();
+	virtual QString GetSyntax();
+	virtual QString GetShortSyntax( );
+public:
+	CMDSTRVERIFY		m_pFnVerify;
+};
+
+}; //namespace QTUTILS
+
+#endif //ndef __QCMDARGFILELIST_H__

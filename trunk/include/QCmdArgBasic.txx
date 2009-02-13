@@ -1,13 +1,13 @@
-#ifndef __QCMDOPTBASICXX__
-#define __QCMDOPTBASICXX__
+#ifndef __QCMDARGBASIC_TXX__
+#define __QCMDARGBASIC_TXX__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QChar ch, QString strDescription, 
+QCmdArgBasic<TYPE,fmt>::QCmdArgBasic(QString strName, QString strDescription, 
 									 QString strExplanation, TYPE nDefaultValue,
 									 TYPE nMinValue, 
-									 TYPE nMaxValue) : QCmdOptBasicBaseMM(ch,
+									 TYPE nMaxValue) : QCmdArgBasicBaseMM(strName,
 									 strDescription,strExplanation,
 									 nDefaultValue,nMinValue,nMaxValue
 									 )
@@ -18,7 +18,7 @@ QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QChar ch, QString strDescription,
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-int QCmdOptBasic<TYPE,fmt>::ImportData( QString strValue )
+int QCmdArgBasic<TYPE,fmt>::ImportData( QString strValue )
 {
 	int retVal = MarkSet();
 	if ( retVal == 0 ) {
@@ -53,7 +53,7 @@ int QCmdOptBasic<TYPE,fmt>::ImportData( QString strValue )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
+QString QCmdArgBasic<TYPE,fmt>::GetSyntax()
 {
 	QString retVal;
 	QString tempStr = ("%s [");
@@ -65,4 +65,4 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDOPTBASICXX__
+#endif //__QCMDARGBASIC_TXX__

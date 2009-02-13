@@ -12,6 +12,11 @@
 #include "QCmdOptQStringList.h"
 
 #include "QCmdArgBool.h"
+#include "QCmdArgBasic.h"
+#include "QCmdArgQChar.h"
+#include "QCmdArgQString.h"
+#include "QCmdArgQStringList.h"
+#include "QCmdArgFileList.h"
 
 namespace QTUTILS {
 
@@ -536,8 +541,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint32* ptr;
-		ptr = new QCmdArgquint32(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_quint32* ptr;
+		ptr = new QCmdArg_quint32(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -556,8 +561,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgint* ptr;
-		ptr = new QCmdArgint(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_int* ptr;
+		ptr = new QCmdArg_int(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -576,8 +581,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint8* ptr;
-		ptr = new QCmdArgquint8(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_quint8* ptr;
+		ptr = new QCmdArg_quint8(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -597,8 +602,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint16* ptr;
-		ptr = new QCmdArgquint16(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_quint16* ptr;
+		ptr = new QCmdArg_quint16(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -617,8 +622,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgshort* ptr;
-		ptr = new QCmdArgshort(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_short* ptr;
+		ptr = new QCmdArg_short(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -639,8 +644,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgfloat* ptr;
-		ptr = new QCmdArgfloat(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_float* ptr;
+		ptr = new QCmdArg_float(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -659,8 +664,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgdouble* ptr;
-		ptr = new QCmdArgdouble(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArg_double* ptr;
+		ptr = new QCmdArg_double(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -757,29 +762,35 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QCmdArg* pArg)
 {
-	
 	int retVal = QCmdParseError::STATUS_OK;
-	if ( m_mapArg.Lookup(strName,pArg) ) {
+
+	QArgMap::iterator it = m_mapArg.find(strName);
+	if ( it != m_mapArg.end() ) {
 		retVal = QCmdParseError::ARGUMENT_ALLREADY_ADDED;
 	}	
 	else
 		if ( pArg != NULL ) {
 			pArg->m_bOptional = m_bOptional;
-			m_mapArg.SetAt(strName,pArg);
-			m_listArguments.AddTail(pArg);
+			m_mapArg.insert(strName,pArg);
+			m_listArguments.push_back(pArg);
 		}
 		QCmdParseException::Throw(retVal);
 		return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::FindArg(QString strName, QCmdArg *& ARGUMENT)
 {
 	
 	int retVal = QCmdParseError::ARGUMENT_NOT_FOUND;
-	if ( m_mapArg.Lookup(strName,ARGUMENT) ) {
+	QArgMap::iterator it = m_mapArg.find(strName);
+	if ( it != m_mapArg.end() ) {
+		ARGUMENT = *it;
 		if ( ARGUMENT != NULL ) {
 			retVal = QCmdParseError::STATUS_OK;
 		}
@@ -814,7 +825,7 @@ int QCmd::GetArg(QString strName, quint32 & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint32* pArgquint32 = dynamic_cast<QCmdArgquint32*>(pArg);
+		QCmdArg_quint32* pArgquint32 = dynamic_cast<QCmdArg_quint32*>(pArg);
 		if ( pArgquint32 ) {
 			nValue = pArgquint32->GetValue();
 		}
@@ -831,7 +842,7 @@ int QCmd::GetArg(QString strName, int & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgint* pArgquint32 = dynamic_cast<QCmdArgint*>(pArg);
+		QCmdArg_int* pArgquint32 = dynamic_cast<QCmdArg_int*>(pArg);
 		if ( pArgquint32 ) {
 			nValue = pArgquint32->GetValue();
 		}
@@ -848,7 +859,7 @@ int QCmd::GetArg(QString strName, quint8 & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint8* pArgquint8 = dynamic_cast<QCmdArgquint8*>(pArg);
+		QCmdArg_quint8* pArgquint8 = dynamic_cast<QCmdArg_quint8*>(pArg);
 		if ( pArgquint8 ) {
 			nValue = pArgquint8->GetValue();
 		}
@@ -865,7 +876,7 @@ int QCmd::GetArg(QString strName, short & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgshort* pArgshort = dynamic_cast<QCmdArgshort*>(pArg);
+		QCmdArg_short* pArgshort = dynamic_cast<QCmdArg_short*>(pArg);
 		if ( pArgshort ) {
 			nValue = pArgshort->GetValue();
 		}
@@ -884,7 +895,7 @@ int QCmd::GetArg(QString strName, quint16 & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgquint16* pArgquint16 = dynamic_cast<QCmdArgquint16*>(pArg);
+		QCmdArg_quint16* pArgquint16 = dynamic_cast<QCmdArg_quint16*>(pArg);
 		if ( pArgquint16 ) {
 			nValue = pArgquint16->GetValue();
 		}
@@ -900,7 +911,7 @@ int QCmd::GetArg(QString strName, float & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgfloat* pArgfloat = dynamic_cast<QCmdArgfloat*>(pArg);
+		QCmdArg_float* pArgfloat = dynamic_cast<QCmdArg_float*>(pArg);
 		if ( pArgfloat ) {
 			nValue = pArgfloat->GetValue();
 		}
@@ -916,7 +927,7 @@ int QCmd::GetArg(QString strName, double & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgdouble* pArgdouble = dynamic_cast<QCmdArgdouble*>(pArg);
+		QCmdArg_double* pArgdouble = dynamic_cast<QCmdArg_double*>(pArg);
 		if ( pArgdouble ) {
 			nValue = pArgdouble->GetValue();
 		}
@@ -946,13 +957,13 @@ int QCmd::GetArg(QString strName, QString & nValue)
 
 int QCmd::GetArg(QString strName, QStringList & nValue)
 {
-	nValue.RemoveAll();
+	nValue.clear();
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
 		QCmdArgQStringList* pArgQString = dynamic_cast<QCmdArgQStringList*>(pArg);
 		if ( pArgQString ) {
-			pArgQString->GetValue().CopyTo(nValue);
+			nValue =pArgQString->GetValue();
 		}
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
@@ -963,7 +974,7 @@ int QCmd::GetArg(QString strName, QStringList & nValue)
 
 int QCmd::GetArg(QString strName, QCmdLineFileList & nValue)
 {
-	nValue.m_strListFiles.RemoveAll();
+	nValue.m_strListFiles.clear();
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
@@ -998,22 +1009,19 @@ int QCmd::GetArg(QString strName, QChar & chValue)
 QString QCmd::GetSyntax()
 {
 	QString retVal;
-	retVal.Format("+%s ",GetName());
-	POSITION pos; 
+	retVal.sprintf("+%s ",GetName());
 	QCmdOpt* pCmdOpt;
 	QCmdArg* pCmdArg;
 	
-	pos = m_listOptions.GetHeadPosition();
-	while( pos ) {
-		pCmdOpt = m_listOptions.GetNext(pos);
+	for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
+		pCmdOpt = *it;
 		retVal += ("[-");
 		retVal += pCmdOpt->GetShortSyntax();
 		retVal += ("] ");
 	}
 	
-	pos = m_listArguments.GetHeadPosition();
-	while( pos ) {
-		pCmdArg = m_listArguments.GetNext(pos);
+	for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
+		pCmdArg = *it;
 		if ( pCmdArg->GetOptional() ) {
 			retVal += ("[");
 			retVal += pCmdArg->GetShortSyntax();
@@ -1024,34 +1032,31 @@ QString QCmd::GetSyntax()
 			retVal += ("<") + pCmdArg->GetShortSyntax() + ("> ");
 		}
 	}
-	
-	
+		
 	retVal += ("\nDescription:\n  ") + GetDescription();
 	
 	retVal += ("\nArguments:\n");
 	QString str;
 
-	pos = m_listArguments.GetHeadPosition();
-	while( pos ) {
-		pCmdArg = m_listArguments.GetNext(pos);
-		str.Format("  %s -- ",pCmdArg->GetName());
+	for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
+		pCmdArg = *it;
+		str.sprintf("  %s -- ",pCmdArg->GetName());
 		retVal += str + pCmdArg->GetSyntax();
 		retVal += ("\n");
 		str = pCmdArg->GetExplanation();
-		if ( !str.IsEmpty() ) {
+		if ( !str.isEmpty() ) {
 			retVal += ("  \t") + str + ("\n");
 		}
 	}
 	retVal += ("\nOptions:\n");
 	
-	pos = m_listOptions.GetHeadPosition();
-	while( pos ) {
-		pCmdOpt = m_listOptions.GetNext(pos);
-		str.Format("  %c -- ",pCmdOpt->GetName());
+	for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
+		pCmdOpt = *it;
+		str.sprintf("  %c -- ",pCmdOpt->GetName());
 		retVal += str + pCmdOpt->GetSyntax();
 		retVal += ("\n");
 		str = pCmdOpt->GetExplanation();
-		if ( !str.IsEmpty() ) {
+		if ( !str.isEmpty() ) {
 			retVal += ("  \t") + str + ("\n");
 		}
 	}
@@ -1060,8 +1065,9 @@ QString QCmd::GetSyntax()
 
 QChar QCmd::GetOptChar(QChar ch)
 {
+
 	if ( m_bIgnoreCase ) {
-		return _totupper(ch);
+		return ch.toUpper();
 	}
 	else
 		return ch;
