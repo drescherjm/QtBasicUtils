@@ -10,6 +10,8 @@
 //
 //
 
+#include <QStringList>
+
 namespace QTUTILS {
 
 class QCmdLineFileList
@@ -59,8 +61,8 @@ inline QCmdLineFileList::QCmdLineFileList(const QCmdLineFileList & other )
 
 inline void QCmdLineFileList::destroy() 
 {
-	m_strListFiles.RemoveAll();
-	m_strDefaultPath.Empty();
+	m_strListFiles.clear();
+	m_strDefaultPath.clear();
 }
 
 }; //namespace QTUTILS

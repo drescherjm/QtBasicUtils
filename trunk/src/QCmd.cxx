@@ -12,7 +12,7 @@ QCmd::QCmd(QString strName,QString strDescription, QString strExplanation,bool b
 m_strName(strName), m_strDescription(strDescription), m_strExplanation(strExplanation), m_bIgnoreCase(bIgnoreCase)
 {
 	m_chOption = '-';
-	m_strStringListEnd = _T(".");
+	m_strStringListEnd = tr(".");
 	m_bOptional = false;
 	AddOpt('?',"Help","This option shows the help for this command.",false);
 }
@@ -992,29 +992,29 @@ QString QCmd::GetSyntax()
 	pos = m_listOptions.GetHeadPosition();
 	while( pos ) {
 		pCmdOpt = m_listOptions.GetNext(pos);
-		retVal += _T("[-");
+		retVal += tr("[-");
 		retVal += pCmdOpt->GetShortSyntax();
-		retVal += _T("] ");
+		retVal += tr("] ");
 	}
 	
 	pos = m_listArguments.GetHeadPosition();
 	while( pos ) {
 		pCmdArg = m_listArguments.GetNext(pos);
 		if ( pCmdArg->GetOptional() ) {
-			retVal += _T("[");
+			retVal += tr("[");
 			retVal += pCmdArg->GetShortSyntax();
-			retVal += _T("] ");
+			retVal += tr("] ");
 		}
 		else
 		{
-			retVal += _T("<") + pCmdArg->GetShortSyntax() + _T("> ");
+			retVal += tr("<") + pCmdArg->GetShortSyntax() + tr("> ");
 		}
 	}
 	
 	
-	retVal += _T("\nDescription:\n  ") + GetDescription();
+	retVal += tr("\nDescription:\n  ") + GetDescription();
 	
-	retVal += _T("\nArguments:\n");
+	retVal += tr("\nArguments:\n");
 	QString str;
 
 	pos = m_listArguments.GetHeadPosition();
@@ -1022,23 +1022,23 @@ QString QCmd::GetSyntax()
 		pCmdArg = m_listArguments.GetNext(pos);
 		str.Format("  %s -- ",pCmdArg->GetName());
 		retVal += str + pCmdArg->GetSyntax();
-		retVal += _T("\n");
+		retVal += tr("\n");
 		str = pCmdArg->GetExplanation();
 		if ( !str.IsEmpty() ) {
-			retVal += _T("  \t") + str + _T("\n");
+			retVal += tr("  \t") + str + tr("\n");
 		}
 	}
-	retVal += _T("\nOptions:\n");
+	retVal += tr("\nOptions:\n");
 	
 	pos = m_listOptions.GetHeadPosition();
 	while( pos ) {
 		pCmdOpt = m_listOptions.GetNext(pos);
 		str.Format("  %c -- ",pCmdOpt->GetName());
 		retVal += str + pCmdOpt->GetSyntax();
-		retVal += _T("\n");
+		retVal += tr("\n");
 		str = pCmdOpt->GetExplanation();
 		if ( !str.IsEmpty() ) {
-			retVal += _T("  \t") + str + _T("\n");
+			retVal += tr("  \t") + str + tr("\n");
 		}
 	}
 	return retVal;

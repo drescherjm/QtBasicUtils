@@ -16,7 +16,7 @@ class QCmdParseException
 {
 public:
 	void Delete();
-	static void Throw(quint32 nErrorCode, QString str0=_T(""), QString str1=_T(""));
+	static void Throw(quint32 nErrorCode, QString str0=tr(""), QString str1=tr(""));
 	static void Throw(quint32 nErrorCode, QString str0, const QStringList & sl);
 	static void Throw(quint32 nErrorCode, QString str0, const QStringList & sl,QString str2);
 	quint32	GetErrorCode();

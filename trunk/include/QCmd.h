@@ -1,6 +1,7 @@
 //
 
 #include <QString>
+#include "QCmdLineFileList.h"
 
 namespace QTUTILS {
 
@@ -32,14 +33,14 @@ public:
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chDefaultValue=0x0, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
 
-	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=_T(""), 
+	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=tr(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 
-	int AddArg(QString strName, QCmdArg* pArg=NULL);
+	int AddArg( QString strName, QCmdArg* pArg=NULL);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, bool bDefaultValue = true);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
 		quint32 nMaxValue = quint32_MAX);
@@ -57,7 +58,7 @@ public:
 		double nMaxValue = DBL_MAX);
 	int AddArg( QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chNameDefaultValue=0x0, QChar chNameMinVal=SCHAR_MIN, QChar chNameMaxVal=SCHAR_MAX);
-	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=_T(""), 
+	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=tr(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);

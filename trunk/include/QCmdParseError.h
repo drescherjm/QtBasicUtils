@@ -15,8 +15,8 @@ namespace QTUTILS {
 class QCmdParseError 
 {
 public:
-	static QString	GetErrorString(quint32 nErrorCode, QString str0=_T(""), QString str1=_T(""),
-		QString str2=_T(""));
+	static QString	GetErrorString(quint32 nErrorCode, QString str0=tr(""), QString str1=tr(""),
+		QString str2=tr(""));
 public:
 	enum errorCode {STATUS_OK, NO_DEFAULT_COMMAND,PARAM_NOT_OPTION, PARAM_EXTRA_DATA, PARAM_MISSING_DATA, 
 		PARAM_TOO_BIG, PARAM_TOO_SMALL, PARAM_INVALID_DATA, PARAM_ALLREADY_SET, OPTION_ALLREADY_ADDED, 
