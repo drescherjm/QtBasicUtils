@@ -10,6 +10,9 @@
 //
 //
 
+#ifndef __QCMDPART_H__
+#define __QCMDPART_H__
+
 namespace QTUTILS {
 
 class QCmdPart 
@@ -45,3 +48,5 @@ inline QString QCmdPart::GetExplanation()
 }
 
 }; //namespace QTUTILS
+
+#endif //__QCMDPART_H__

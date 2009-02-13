@@ -2,19 +2,19 @@
 
 #include <float.h>
 #include <QString>
+#include <QMap>
 #include "QCmdLineFileList.h"
 #include "QLimits.h"
+#include "QCmdArg.h"
+#include "QCmdOpt.h"
 
 namespace QTUTILS {
-
-class QCmdArg;
-class QCmdOpt;
 
 typedef QList<QCmdArg*> QArgList;
 typedef QList<QCmdOpt*> QOptList;
 
-typedef QMap<QChar,QCmdOpt*> QOptMap;
-typedef QMap<QString,QCmdArg*> QArgMap;
+typedef QMap< QChar,QCmdOpt* > QOptMap;
+typedef QMap< QString,QCmdArg* > QArgMap;
 
 typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
  
@@ -41,8 +41,8 @@ public:
 		float nMaxValue = FLT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=DBL_MIN, 
 		double nMaxValue = DBL_MAX);
-	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
-		QChar chDefaultValue=0x0, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
+	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+		QChar chDefaultValue, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
 
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
@@ -128,8 +128,8 @@ protected:
 	QOptMap		m_mapOpt;
 	QArgMap		m_mapArg;
 private:
-	QString m_strStringListEnd;
-	QChar m_chOption;
+	QString		m_strStringListEnd;
+	QChar		m_chOption;
 };
 
 inline QString QCmd::GetName()

@@ -10,6 +10,11 @@
 //
 //
 
+#ifndef __QCMDOPT_H__
+#define __QCMDOPT_H__
+
+#include "QCmdPart.h"
+
 namespace QTUTILS {
 
 class QCmdOpt : public QCmdPart  
@@ -38,3 +43,5 @@ inline QString QCmdOpt::GetShortSyntax()
 
 
 }; //namespace QTUTILS
+
+#endif //__QCMDOPT_H__

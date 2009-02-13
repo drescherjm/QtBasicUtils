@@ -27,6 +27,7 @@
 # define UINT32_MAX		(4294967295U)
 # define UINT64_MAX		(__UINT64_C(18446744073709551615))
 
+#ifndef INT_MAX
 #define INT_MAX INT32_MAX
 #define INT_MIN INT32_MIN
 #define UCHAR_MAX UINT8_MAX
@@ -36,6 +37,7 @@
 
 #define SCHAR_MIN INT16_MIN
 #define SCHAR_MAX INT16_MAX
+#endif //ndef INT_MAX
 
 namespace QTUTILS {
 

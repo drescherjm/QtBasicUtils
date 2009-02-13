@@ -6,6 +6,7 @@
 #include "QCmdParseError.h"
 #include "QCmdOptBool.h"
 #include "QCmdParseException.h"
+#include "QCmdOptBasic.h"
 
 namespace QTUTILS {
 
@@ -77,8 +78,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint32* ptr;
-		ptr = new QCmdOptquint32(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_quint32* ptr;
+		ptr = new QCmdOpt_quint32(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -117,8 +118,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint8* ptr;
-		ptr = new QCmdOptquint8(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_quint8* ptr;
+		ptr = new QCmdOpt_quint8(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -138,8 +139,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint16* ptr;
-		ptr = new QCmdOptquint16(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_quint16* ptr;
+		ptr = new QCmdOpt_quint16(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -332,7 +333,7 @@ int QCmd::GetOpt(QChar ch, quint32 & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint32* pOptquint32 = dynamic_cast<QCmdOptquint32*>(pOpt);
+		QCmdOpt_quint32* pOptquint32 = dynamic_cast<QCmdOpt_quint32*>(pOpt);
 		if ( pOptquint32 ) {
 			nValue = pOptquint32->GetValue();
 		}
@@ -366,7 +367,7 @@ int QCmd::GetOpt(QChar ch, quint8 & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint8* pOptquint8 = dynamic_cast<QCmdOptquint8*>(pOpt);
+		QCmdOpt_quint8* pOptquint8 = dynamic_cast<QCmdOpt_quint8*>(pOpt);
 		if ( pOptquint8 ) {
 			nValue = pOptquint8->GetValue();
 		}
@@ -402,7 +403,7 @@ int QCmd::GetOpt(QChar ch, quint16 & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptquint16* pOptquint16 = dynamic_cast<QCmdOptquint16*>(pOpt);
+		QCmdOpt_quint16* pOptquint16 = dynamic_cast<QCmdOpt_quint16*>(pOpt);
 		if ( pOptquint16 ) {
 			nValue = pOptquint16->GetValue();
 		}
