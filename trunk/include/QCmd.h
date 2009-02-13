@@ -16,7 +16,7 @@ public:
 public:
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue = true);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
-		quint32 nMaxValue = UINT_MAX);
+		quint32 nMaxValue = quint32_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
 		int nMaxValue = INT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 
@@ -42,7 +42,7 @@ public:
 	int AddArg(QString strName, QCmdArg* pArg=NULL);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, bool bDefaultValue = true);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
-		quint32 nMaxValue = UINT_MAX);
+		quint32 nMaxValue = quint32_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
 		int nMaxValue = INT_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 

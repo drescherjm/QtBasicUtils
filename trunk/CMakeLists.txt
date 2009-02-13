@@ -74,6 +74,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdParseError.h
 	./include/QCmdHelpException.h
 	./include/QCmdParseExeption.h
+	./include/QCmdLineFileList.h
 )
 
 SET( QtBasicUtils_INT_HDRS

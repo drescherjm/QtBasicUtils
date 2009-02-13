@@ -12,34 +12,34 @@
 
 namespace QTUTILS {
 
-class CCmdParseException 
+class QCmdParseException 
 {
 public:
 	void Delete();
-	static void Throw(UINT nErrorCode, CString str0=_T(""), CString str1=_T(""));
-	static void Throw(UINT nErrorCode, CString str0, const CStringList & sl);
-	static void Throw(UINT nErrorCode, CString str0, const CStringList & sl,CString str2);
-	UINT	GetErrorCode();
-	CString	GetErrorString();
+	static void Throw(quint32 nErrorCode, QString str0=_T(""), QString str1=_T(""));
+	static void Throw(quint32 nErrorCode, QString str0, const QStringList & sl);
+	static void Throw(quint32 nErrorCode, QString str0, const QStringList & sl,QString str2);
+	quint32	GetErrorCode();
+	QString	GetErrorString();
 protected:
-	UINT		m_nErrorCode;
-	CString		m_strError;
+	quint32		m_nErrorCode;
+	QString		m_strError;
 private:
-	CCmdParseException(UINT nErrorCode, CString str0, CString str1,CString str2="");
+	QCmdParseException(quint32 nErrorCode, QString str0, QString str1,QString str2="");
 };
 
-inline CCmdParseException::CCmdParseException(UINT nErrorCode, CString str0, CString str1,CString str2)
+inline QCmdParseException::QCmdParseException(quint32 nErrorCode, QString str0, QString str1,QString str2)
 {
 	m_nErrorCode = nErrorCode;
-	m_strError = CCmdParseError::GetErrorString(nErrorCode,str0,str1,str2);
+	m_strError = QCmdParseError::GetErrorString(nErrorCode,str0,str1,str2);
 }
 
-inline UINT CCmdParseException::GetErrorCode()
+inline quint32 QCmdParseException::GetErrorCode()
 {
 	return m_nErrorCode;
 }
 
-inline CString CCmdParseException::GetErrorString()
+inline QString QCmdParseException::GetErrorString()
 {
 	return m_strError;
 }

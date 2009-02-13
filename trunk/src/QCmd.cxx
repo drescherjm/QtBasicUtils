@@ -75,8 +75,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptUINT* ptr;
-		ptr = new QCmdOptUINT(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOptquint32* ptr;
+		ptr = new QCmdOptquint32(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -330,9 +330,9 @@ int QCmd::GetOpt(QChar ch, quint32 & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptUINT* pOptUINT = dynamic_cast<QCmdOptUINT*>(pOpt);
-		if ( pOptUINT ) {
-			nValue = pOptUINT->GetValue();
+		QCmdOptquint32* pOptquint32 = dynamic_cast<QCmdOptquint32*>(pOpt);
+		if ( pOptquint32 ) {
+			nValue = pOptquint32->GetValue();
 		}
 		else
 			retVal = QCmdParseError::OPTION_WRONG_TYPE;
@@ -347,9 +347,9 @@ int QCmd::GetOpt(QChar ch, int & nValue)
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptint* pOptUINT = dynamic_cast<QCmdOptint*>(pOpt);
-		if ( pOptUINT ) {
-			nValue = pOptUINT->GetValue();
+		QCmdOptint* pOptquint32 = dynamic_cast<QCmdOptint*>(pOpt);
+		if ( pOptquint32 ) {
+			nValue = pOptquint32->GetValue();
 		}
 		else
 			retVal = QCmdParseError::OPTION_WRONG_TYPE;
@@ -522,8 +522,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgUINT* ptr;
-		ptr = new QCmdArgUINT(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdArgquint32* ptr;
+		ptr = new QCmdArgquint32(strName,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
 		}
@@ -800,9 +800,9 @@ int QCmd::GetArg(QString strName, quint32 & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgUINT* pArgUINT = dynamic_cast<QCmdArgUINT*>(pArg);
-		if ( pArgUINT ) {
-			nValue = pArgUINT->GetValue();
+		QCmdArgquint32* pArgquint32 = dynamic_cast<QCmdArgquint32*>(pArg);
+		if ( pArgquint32 ) {
+			nValue = pArgquint32->GetValue();
 		}
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
@@ -817,9 +817,9 @@ int QCmd::GetArg(QString strName, int & nValue)
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgint* pArgUINT = dynamic_cast<QCmdArgint*>(pArg);
-		if ( pArgUINT ) {
-			nValue = pArgUINT->GetValue();
+		QCmdArgint* pArgquint32 = dynamic_cast<QCmdArgint*>(pArg);
+		if ( pArgquint32 ) {
+			nValue = pArgquint32->GetValue();
 		}
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
