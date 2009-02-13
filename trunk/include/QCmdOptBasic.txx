@@ -3,19 +3,20 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template <class TYPE, QChar fmt[]>
-QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QChar ch, QString strDescription, QString strExplanation, 
-									   TYPE nDefaultValue, TYPE nMinValue, TYPE nMaxValue) : 
-QCmdOpt( ch, strDescription,strExplanation ), m_nValue(nDefaultValue), 
-m_nDefaultValue(nDefaultValue), m_nMinValue(nMinValue),
-m_nMaxValue(nMaxValue)
+template <class TYPE,char fmt[]>
+QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QChar ch, QString strDescription, 
+									 QString strExplanation, TYPE nDefaultValue,
+									 TYPE nMinValue, 
+									 TYPE nMaxValue) : QCmdOptBasicBase(ch,
+									 strDescription,nDefaultValue,nMinValue,nMaxValue
+									 )
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template <class TYPE,QChar fmt[]>
+template <class TYPE,char fmt[]>
 int QCmdOptBasic<TYPE,fmt>::ImportData( QString strValue )
 {
 	int retVal = MarkSet();
@@ -50,7 +51,7 @@ int QCmdOptBasic<TYPE,fmt>::ImportData( QString strValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template <class TYPE,QChar fmt[]>
+template <class TYPE,char fmt[]>
 QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 {
 	QString retVal;
@@ -59,23 +60,6 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 	tempStr += _T("]");
 	retVal.Format(tempStr,GetDescription(),m_nDefaultValue);
 	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-template <class TYPE, QChar fmt[]>
-void QCmdOptBasic<TYPE,fmt>::Initialize()
-{
-	m_nValue = m_nDefaultValue;
-	QCmdPart::Initialize();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-template <class TYPE, QChar fmt[]>
-TYPE QCmdOptBasic<TYPE,fmt>::GetValue()
-{
-	return m_nValue;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

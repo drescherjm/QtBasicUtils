@@ -79,8 +79,11 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdPart.h
 	./include/QCmdArg.h
 	./include/QCmdOpt.h
+	./include/QCmdOptBasicBase.h
+	./include/QCmdOptBasicBase.txx
 	./include/QCmdOptBasic.h
 	./include/QCmdOptBasic.txx
+	./include/QCmdOptQChar.h
 )
 
 SET( QtBasicUtils_INT_HDRS

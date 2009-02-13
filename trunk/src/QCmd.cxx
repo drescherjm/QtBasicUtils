@@ -98,8 +98,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, int n
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptint* ptr;
-		ptr = new QCmdOptint(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_int* ptr;
+		ptr = new QCmdOpt_int(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -159,8 +159,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, short
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptshort* ptr;
-		ptr = new QCmdOptshort(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_short* ptr;
+		ptr = new QCmdOpt_short(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -181,8 +181,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, float
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptfloat* ptr;
-		ptr = new QCmdOptfloat(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_float* ptr;
+		ptr = new QCmdOpt_float(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
@@ -201,8 +201,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, doubl
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptdouble* ptr;
-		ptr = new QCmdOptdouble(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+		QCmdOpt_double* ptr;
+		ptr = new QCmdOpt_double(chOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
 		}
