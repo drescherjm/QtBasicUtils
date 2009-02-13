@@ -254,14 +254,14 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, QStri
 	return retVal;
 }
 
-int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, const CStringList & strLstDefaultValue, 
+int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, const QStringList & strLstDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
 {
 	QChar chOpt = GetOptChar(ch);
 	int retVal = AddOpt( chOpt );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptCStringList* ptr;
-		ptr = new QCmdOptCStringList(chOpt,strDescription,strExplanation,strLstDefaultValue,
+		QCmdOptQStringList* ptr;
+		ptr = new QCmdOptQStringList(chOpt,strDescription,strExplanation,strLstDefaultValue,
 			pFnVerify);
 		if ( ptr ) {
 			retVal = AddOpt( chOpt, ptr );
@@ -479,16 +479,16 @@ int QCmd::GetOpt(QChar ch, QString & nValue)
 	return retVal;
 }
 
-int QCmd::GetOpt(QChar ch, CStringList & nValue)
+int QCmd::GetOpt(QChar ch, QStringList & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
 	nValue.RemoveAll();
 	QCmdOpt* pOpt=NULL;
 	int retVal = FindOpt(chOpt,pOpt);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdOptCStringList* pOptCStringList = dynamic_cast<QCmdOptCStringList*>(pOpt);
-		if ( pOptCStringList ) {
-			pOptCStringList->GetValue().CopyTo(nValue);
+		QCmdOptQStringList* pOptQStringList = dynamic_cast<QCmdOptQStringList*>(pOpt);
+		if ( pOptQStringList ) {
+			pOptQStringList->GetValue().CopyTo(nValue);
 		}
 		else
 			retVal = QCmdParseError::OPTION_WRONG_TYPE;
@@ -701,14 +701,14 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
-int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, const CStringList &  strLstDefaultValue, 
+int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, const QStringList &  strLstDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
 {
 	
 	int retVal = AddArg( strName );
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgCStringList* ptr;
-		ptr = new QCmdArgCStringList(strName,strDescription,strExplanation,strLstDefaultValue,
+		QCmdArgQStringList* ptr;
+		ptr = new QCmdArgQStringList(strName,strDescription,strExplanation,strLstDefaultValue,
 			pFnVerify);
 		if ( ptr ) {
 			retVal = AddArg( strName, ptr );
@@ -930,13 +930,13 @@ int QCmd::GetArg(QString strName, QString & nValue)
 	return retVal;
 }
 
-int QCmd::GetArg(QString strName, CStringList & nValue)
+int QCmd::GetArg(QString strName, QStringList & nValue)
 {
 	nValue.RemoveAll();
 	QCmdArg* pArg=NULL;
 	int retVal = FindArg(strName,pArg);
 	if ( retVal == QCmdParseError::STATUS_OK ) {
-		QCmdArgCStringList* pArgCString = dynamic_cast<QCmdArgCStringList*>(pArg);
+		QCmdArgQStringList* pArgCString = dynamic_cast<QCmdArgQStringList*>(pArg);
 		if ( pArgCString ) {
 			pArgCString->GetValue().CopyTo(nValue);
 		}

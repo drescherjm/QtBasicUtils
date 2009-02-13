@@ -3,6 +3,8 @@
 #include <QString>
 
 namespace QTUTILS {
+
+typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
  
 class QCmd
 {
@@ -29,9 +31,10 @@ public:
 		double nMaxValue = DBL_MAX);
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chDefaultValue=0x0, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
+
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=_T(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
-	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  CStringList & strLstDefaultValue, 
+	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  CCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
@@ -56,7 +59,7 @@ public:
 		QChar chNameDefaultValue=0x0, QChar chNameMinVal=SCHAR_MIN, QChar chNameMaxVal=SCHAR_MAX);
 	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=_T(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
-	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  CStringList & strLstDefaultValue, 
+	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  CCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
@@ -71,7 +74,7 @@ public:
 	int GetOpt(QChar ch, double & nValue);
 	int	GetOpt(QChar ch, char & chValue);
 	int GetOpt(QChar ch, QString & nValue);
-	int	GetOpt(QChar ch, CStringList & nValue);
+	int	GetOpt(QChar ch, QStringList & nValue);
 	int	GetOpt(QChar ch, CCmdLineFileList & nValue);
 
 	int GetArg(QString strName, bool & bValue);
@@ -84,11 +87,11 @@ public:
 	int GetArg(QString strName, double & nValue);
 	int	GetArg(QString strName, char & chValue);
 	int	GetArg(QString strName, QString & nValue);
-	int	GetArg(QString strName, CStringList & nValue);
+	int	GetArg(QString strName, QStringList & nValue);
 	int	GetArg(QString strName, CCmdLineFileList & nValue);
 public:
 	virtual int Parse();
-	CStringList m_strLstCmd;
+	QStringList m_strLstCmd;
 	virtual int Execute();
 	void	EndRequiredArguments();
 	int		IsOption( QString & str, CCmdOpt *& pOption );
@@ -97,7 +100,7 @@ public:
 	QString GetDescription();
 	QString GetLongDescription();
 protected:
-	int		Parse( CStringList & strLst );
+	int		Parse( QStringList & strLst );
 	int		AddOpt( QChar ch, CCmdOpt* pOpt = NULL );
 	QChar	GetOptChar( QChar ch );
 	int		FindOpt( QChar ch, CCmdOpt *& option );
