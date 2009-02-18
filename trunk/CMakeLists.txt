@@ -68,6 +68,7 @@ export_library_dependencies (
 SET( QtBasicUtils_SRCS
 	./src/main.cxx
 	./src/QCmd.cxx
+	./src/QCmdLine.cxx
 	./src/QCmdPart.cxx
 	./src/QCmdOpt.cxx
 	./src/QCmdHelpException.cxx
@@ -84,12 +85,14 @@ SET( QtBasicUtils_SRCS
 	./src/QCmdArgQStringList.cxx
 	./src/QCmdArgFileList.cxx
 	./src/QCmdLineFileList.cxx
+	./src/QCmdHelp.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
 	./include/QtBasicUtils.h
 	./include/QLimits.h
 	./include/QCmd.h
+	./include/QCmdLine.h
 	./include/QCmdExtra.h
 	./include/QCmdParseError.h
 	./include/QCmdHelpException.h
@@ -119,6 +122,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdArgQString.h
 	./include/QCmdArgQStringList.h
 	./include/QCmdArgFileList.h
+	./include/QCmdHelp.h
 )
 
 SET( QtBasicUtils_INT_HDRS

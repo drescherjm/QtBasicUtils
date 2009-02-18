@@ -28,5 +28,8 @@ int QCmdTest::Execute()
 int main()
 {
 	QCmdTest cmdTest("Test","This is the test command");
+
+	cmdTest.Execute();
+
 	return 0;
 }
