@@ -69,12 +69,14 @@ SET( QtBasicUtils_SRCS
 	./src/main.cxx
 	./src/QCmd.cxx
 	./src/QCmdPart.cxx
+	./src/QCmdOpt.cxx
 	./src/QCmdHelpException.cxx
 	./src/QCmdParseException.cxx
 	./src/QCmdOptBool.cxx
 	./src/QCmdOptQChar.cxx
 	./src/QCmdOptQString.cxx
 	./src/QCmdOptQStringList.cxx
+	./src/QCmdArg.cxx
 	./src/QCmdArgBool.cxx
 	./src/QCmdArgQChar.cxx
 	./src/QCmdArgQString.cxx

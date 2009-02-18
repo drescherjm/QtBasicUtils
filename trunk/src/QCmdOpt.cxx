@@ -1,0 +1,20 @@
+#include "QCmdOpt.h"
+
+namespace QTUTILS {
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdOpt::QCmdOpt(QChar chLetter,QString strDescription, QString strExplanation) : 
+m_chLetter(chLetter), QCmdPart(strDescription,strExplanation)
+{
+
+}
+
+QCmdOpt::~QCmdOpt()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+}; //namespace QTUTILS
