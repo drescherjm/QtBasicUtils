@@ -1,7 +1,11 @@
 #include <iostream>
 
 #include "QCmd.h"
+#include "QCmdHelp.h"
+#include "QCmdLine.h"
 #include "QCmdParseError.h"
+#include "QCmdParseException.h"
+#include "QCmdHelpException.h"
 
 using namespace QTUTILS;
 
@@ -25,11 +29,40 @@ int QCmdTest::Execute()
 	return QCmdParseError::STATUS_OK;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	QCmdTest cmdTest("Test","This is the test command");
 
-	cmdTest.Execute();
+	try {
+		QCmdTest cmdTest("Test","This is the test command");
+
+		QCmdLine myCmdLine(argc,argv);
+		QCmdHelp myHelp("This command shows the help message for all commands.","");
+
+		myCmdLine.AddCmd(&myHelp);
+		myCmdLine.Parse();
+
+		QCmd* pCmd;
+
+		QCmdLine::iterator it = myCmdLine.begin();
+		while(it != myCmdLine.end()){
+			if( myCmdLine.GetNextCommand(it,pCmd) == QCmdParseError::STATUS_OK ) {
+				if ( pCmd != NULL ) {
+					try {
+						pCmd->Parse();
+						pCmd->Execute();
+					}
+					catch( QCmdHelpException* e) {
+						std::cout << e->GetMessageString().toStdString() << std::endl;
+						e->Delete();
+					}
+				}
+			}
+		}
+	}
+	catch( QCmdParseException* e) {
+		std::cout << e->GetErrorString().toStdString() << std::endl;
+		e->Delete();
+	}
 
 	return 0;
 }
