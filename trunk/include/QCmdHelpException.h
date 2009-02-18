@@ -10,6 +10,8 @@
 //
 //
 
+#include <QString>
+
 namespace QTUTILS {
 
 class QCmdHelpException 

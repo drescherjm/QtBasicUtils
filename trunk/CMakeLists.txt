@@ -2,6 +2,8 @@ PROJECT(QtBasicUtils)
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6 FATAL_ERROR)
 
+option (BUILD_TESTING "Build Tests" ON)
+
 SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
 
@@ -66,6 +68,7 @@ export_library_dependencies (
 SET( QtBasicUtils_SRCS
 	./src/main.cxx
 	./src/QCmd.cxx
+	./src/QCmdHelpException.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -107,6 +110,15 @@ SET( QtBasicUtils_INT_HDRS
 	"${PROJECT_BINARY_DIR}/QtBasicUtilsConfig.h"
 )
 
+IF(BUILD_TESTING)
+	ENABLE_TESTING()
+	LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
+	add_executable(BasicTest ./src/Tests/basic.cxx)
+	ADD_TEST(Test0  ${EXECUTABLE_OUTPUT_PATH}/BasicTest)
+	
+ENDIF(BUILD_TESTING)
+
+
 include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
 
 add_library(QtBasicUtils ${QtBasicUtils_SRCS} ${QtBasicUtils_EXT_HDRS} ${QtBasicUtils_INT_HDRS} )
@@ -120,3 +132,5 @@ install (FILES
 
 install (TARGETS QtBasicUtils DESTINATION lib)
 install (FILES ${QtBasicUtils_EXT_HDRS} DESTINATION include)
+
+

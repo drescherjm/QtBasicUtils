@@ -17,6 +17,7 @@
 #include "QCmdArgQString.h"
 #include "QCmdArgQStringList.h"
 #include "QCmdArgFileList.h"
+#include "QCmdHelpException.h"
 
 namespace QTUTILS {
 
@@ -1063,6 +1064,8 @@ QString QCmd::GetSyntax()
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QChar QCmd::GetOptChar(QChar ch)
 {
 
@@ -1072,5 +1075,129 @@ QChar QCmd::GetOptChar(QChar ch)
 	else
 		return ch;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::Execute()
+{
+	return QCmdParseError::STATUS_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::Parse()
+{
+	int retVal;
+	QCmdOpt* pOpt;
+
+	QStringList::iterator it = m_strLstCmd.begin();
+	QString str;
+	for(; it != m_strLstCmd.end();++it) {
+		str = *it;
+		if ( IsOption(str,pOpt) == QCmdParseError::STATUS_OK ) {
+			if (pOpt->GetName() == '?') {
+				QCmdHelpException::Throw(GetSyntax());
+			}
+		}
+	}
+	retVal = Parse(m_strLstCmd);
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::Parse(QStringList & strLst)
+{
+	Initialize();
+	int retVal = QCmdParseError::STATUS_OK;
+	QString str;
+	QCmdOpt* pOpt=NULL;
+	QCmdArg* pArg=NULL;
+	QCmdArg* pTest= NULL;
+	//for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
+
+	QArgList::iterator itArg = m_listArguments.begin();
+	for(QStringList::iterator it=strLst.begin(); it != strLst.end();++it) {
+		str = *it;
+		retVal = IsOption(str,pOpt);
+		switch(retVal) {
+		case QCmdParseError::STATUS_OK:
+			retVal = pOpt->ImportData(str);
+			pOpt = dynamic_cast<QCmdOptQStringList*>(pOpt);
+			break;
+		case QCmdParseError::PARAM_NOT_OPTION:
+			if ( str.compare(m_strStringListEnd,Qt::CaseInsensitive) == 0 ) {
+				pOpt = NULL;
+				pArg = NULL;
+				retVal = QCmdParseError::STATUS_OK;
+				break;
+			}
+			if ( pOpt != NULL ) {
+				pOpt = dynamic_cast<QCmdOptQStringList*>(pOpt);
+				if ( pOpt != NULL ) {
+					retVal = pOpt->ImportData(str);
+					break;
+				}
+			}
+			if ( pArg != NULL ) {
+				pTest = dynamic_cast<QCmdArgQStringList*>(pArg);
+				if ( pTest != NULL ) {
+					pArg = pTest;
+					retVal = pArg->ImportData(str);
+					break;
+				}
+			}
+			if ( pArg != NULL ) {
+				pTest = dynamic_cast<QCmdArgFileList*>(pArg);
+				if ( pTest != NULL ) {
+					pArg = pTest;
+					retVal = pArg->ImportData(str);
+					break;
+				}
+			}
+			if ( itArg != m_listArguments.end() ) {
+				pArg = *itArg;
+				itArg++;
+				retVal = pArg->ImportData(str);
+			}
+			else
+				retVal = QCmdParseError::TOO_MANY_ARGUMENTS;
+			break;
+		}
+		if ( retVal != QCmdParseError::STATUS_OK ) {
+			break;
+		}
+
+	}
+	if ( itArg != m_listArguments.end() ) {
+		pArg = *itArg;
+		itArg++;
+		if ( !pArg->GetOptional() ) {
+			retVal = QCmdParseError::NOT_ENOUGH_ARGUMENTS;
+		}
+	}
+	QCmdParseException::Throw(retVal," while parsing ",strLst, str);
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::IsOption(QString & str, QCmdOpt *& pOption)
+{
+	int retVal = QCmdParseError::PARAM_NOT_OPTION;
+	if ( str.length() > 1 ) {
+		if ( str[0] == '-' ) {
+			if ( !str[1].isDigit() ) {
+				retVal = FindOpt(GetOptChar(str[1]),pOption);
+				if ( retVal == QCmdParseError::STATUS_OK ) {
+					str = QString( str.mid(2) );
+				}
+			}
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 }; //namespace QTUTILS
