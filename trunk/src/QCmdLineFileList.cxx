@@ -25,7 +25,38 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	QCmdLineFileList::iterator QCmdLineFileList::begin()
+	{
+		return m_strListFiles.begin();
+	}
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
+	QCmdLineFileList::iterator QCmdLineFileList::end()
+	{
+		return m_strListFiles.end();
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void QCmdLineFileList::copy(const QCmdLineFileList & other )
+	{
+		m_strListFiles = other.m_strListFiles;
+		m_nFlags = other.m_nFlags;
+		m_nMaxNumFiles = other.m_nMaxNumFiles;
+		m_nMinNumFiles = other.m_nMinNumFiles;
+		m_strDefaultPath = other.m_strDefaultPath;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void QCmdLineFileList::CopyTo( QCmdLineFileList & other )
+	{
+		other.m_strListFiles = m_strListFiles;
+		other.m_nFlags = m_nFlags;
+		other.m_nMaxNumFiles = m_nMaxNumFiles;
+		other.m_nMinNumFiles = m_nMinNumFiles;
+		other.m_strDefaultPath = m_strDefaultPath;
+	}
 
 }; // namespace QTUTILS

@@ -68,6 +68,7 @@ export_library_dependencies (
 SET( QtBasicUtils_SRCS
 	./src/main.cxx
 	./src/QCmd.cxx
+	./src/QCmdPart.cxx
 	./src/QCmdHelpException.cxx
 	./src/QCmdParseException.cxx
 	./src/QCmdOptBool.cxx
@@ -79,6 +80,7 @@ SET( QtBasicUtils_SRCS
 	./src/QCmdArgQString.cxx
 	./src/QCmdArgQStringList.cxx
 	./src/QCmdArgFileList.cxx
+	./src/QCmdLineFileList.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 

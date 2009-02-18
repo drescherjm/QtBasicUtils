@@ -14,11 +14,10 @@ public:
 	QCmdArgFileList(QString strName, QString strDescription, QString strExplanation, 
 		QCmdLineFileList strDefaultValue, 
 		CMDSTRVERIFY pfnVerify);
-	virtual int		ImportData( QString strValue );
-	virtual void	Initialize();
-	QCmdLineFileList&	GetValue();
-	virtual QString GetSyntax();
-	virtual QString GetShortSyntax( );
+	virtual int			ImportData( QString strValue );
+	virtual void		Initialize();
+	virtual QString		GetSyntax();
+	virtual QString		GetShortSyntax( );
 public:
 	CMDSTRVERIFY		m_pFnVerify;
 };
