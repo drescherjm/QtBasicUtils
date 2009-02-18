@@ -1,7 +1,7 @@
 #ifndef __QCMDARGBASICBASE_H__
 #define __QCMDARGBASICBASE_H__
 
-#include "QCmdOpt.h"
+#include "QCmdArg.h"
 
 namespace QTUTILS {
 
@@ -9,7 +9,7 @@ namespace QTUTILS {
 	{
 	public:
 		QCmdArgBasicBase(QString strName, QString strDescription, QString strExplanation, 
-			TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
+			TYPE nDefaultValue);
 		virtual QString GetSyntax()=0;
 		virtual int		ImportData( QString strValue )=0;
 		virtual void	Initialize();
@@ -17,8 +17,6 @@ namespace QTUTILS {
 	public:
 		TYPE	m_nValue;
 		TYPE	m_nDefaultValue;
-		TYPE	m_nMinValue;
-		TYPE	m_nMaxValue;
 	};
 
 /////////////////////////////////////////////////////////////////////////////////////////

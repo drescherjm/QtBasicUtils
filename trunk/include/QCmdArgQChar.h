@@ -1,14 +1,15 @@
 #ifndef __QCMDARGQCHAR_H__
 #define __QCMDARGQCHAR_H__
 
-#include "QCmdArgBasicBase.h"
+#include "QCmdArgBasicBaseMM.h"
 
 namespace QTUTILS {
 	
-	class QCmdArgQChar : public QCmdArgBasicBase<QChar>  
+	class QCmdArgQChar : public QCmdArgBasicBaseMM<QChar>  
 	{
 	public:
-		QCmdArgQChar(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+		QCmdArgQChar(QString strName, QString strDescription, QString strExplanation, 
+			bool bIgnoreCase, 
 			QChar chDefaultValue, QChar chMinVal, QChar chMaxVal);
 	public:
 		virtual int		ImportData( QString strValue );

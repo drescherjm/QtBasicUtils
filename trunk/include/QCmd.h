@@ -1,3 +1,5 @@
+#ifndef __QCMD_H__
+#define __QCMD_H__
 //
 
 #include <float.h>
@@ -143,3 +145,5 @@ inline QString QCmd::GetDescription()
 }
 
 }; // namespace QTUTILS
+
+#endif //__QCMD_H__

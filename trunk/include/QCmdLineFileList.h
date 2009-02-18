@@ -16,7 +16,7 @@
 
 namespace QTUTILS {
 
-class QCmdLineFileList
+	class QCmdLineFileList
 {
 public:
 	QCmdLineFileList();
@@ -27,6 +27,15 @@ public:
 	int			CheckFileName(QString & strFile);
 	void		SetPath();
 	void		CopyTo(QCmdLineFileList & other);
+public:
+
+	typedef		QStringList::iterator iterator;
+
+	int			size () const;
+	void		push_back(const QString & str);
+	void		clear();
+	iterator	begin();
+	iterator	end();
 public:
 	QStringList		m_strListFiles;
 	QString			m_strDefaultPath;

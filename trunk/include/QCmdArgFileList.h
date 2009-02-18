@@ -3,15 +3,16 @@
 
 #include "QCmdArgBasicBase.h"
 #include "QCmdLineFileList.h"
+#include "QCmd.h"
+
 
 namespace QTUTILS {
-
 
 class QCmdArgFileList : public QCmdArgBasicBase<QCmdLineFileList>
 {
 public:
 	QCmdArgFileList(QString strName, QString strDescription, QString strExplanation, 
-		const QCmdLineFileList & strDefaultValue, 
+		QCmdLineFileList strDefaultValue, 
 		CMDSTRVERIFY pfnVerify);
 	virtual int		ImportData( QString strValue );
 	virtual void	Initialize();

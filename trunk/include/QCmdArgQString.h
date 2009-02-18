@@ -2,6 +2,7 @@
 #define __QCMDARGQSTRING_H__
 
 #include "QCmdArgBasicBase.h"
+#include "QCmd.h"
 
 namespace QTUTILS {
 

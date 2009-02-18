@@ -2,7 +2,7 @@
 #define __QCMDOPTQSTRINGLIST_H__
 
 #include "QCmdOptBasicBase.h"
-
+#include "QCmd.h"
 #include <QStringList>
 
 namespace QTUTILS {
@@ -10,12 +10,13 @@ namespace QTUTILS {
 	class QCmdOptQStringList : public QCmdOptBasicBase<QStringList>  
 	{
 	public:
-		QCmdOptQStringList(QString str, QString strDescription, QString strExplanation,  
+		QCmdOptQStringList(QChar ch, QString strDescription, QString strExplanation,  
 			QStringList strDefaultValue, CMDSTRVERIFY pfnVerify);
 	public:
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();
 		virtual QString GetShortSyntax( );
+		virtual	void	Initialize();
 	protected:
 		CMDSTRVERIFY	m_pFnVerify;
 	};

@@ -1,3 +1,4 @@
+
 //
 // C++ Interface: QLimits
 //
@@ -9,6 +10,9 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+
+#ifndef __QLIMITS_H__
+#define __QLIMITS_H__
 
 /* Minimum of signed integral types.  */
 # define INT8_MIN		(-128)
@@ -45,3 +49,4 @@ const quint32 quint32_MAX = -1;
 const quint32 quint32_MIN = 0;
 
 }; // namespace QTUTILS
+#endif //__QLIMITS_H__

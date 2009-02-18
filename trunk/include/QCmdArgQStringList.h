@@ -2,6 +2,7 @@
 #define __QCMDARGQSTRINGLIST_H__
 
 #include "QCmdArgBasicBase.h"
+#include "QCmd.h"
 
 #include <QStringList>
 
@@ -16,6 +17,7 @@ namespace QTUTILS {
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();
 		virtual QString GetShortSyntax( );
+		virtual	void	Initialize();
 	protected:
 		CMDSTRVERIFY	m_pFnVerify;
 	};

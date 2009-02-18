@@ -2,13 +2,14 @@
 #define __QCMDOPTQSTRING_H__
 
 #include "QCmdOptBasicBase.h"
+#include "QCmd.h"
 
 namespace QTUTILS {
 
 	class QCmdOptQString : public QCmdOptBasicBase<QString>  
 	{
 	public:
-		QCmdOptQString(QString str, QString strDescription, QString strExplanation,  
+		QCmdOptQString(QChar ch, QString strDescription, QString strExplanation,  
 			QString strDefaultValue, CMDSTRVERIFY pfnVerify);
 	public:
 		virtual int		ImportData( QString strValue );

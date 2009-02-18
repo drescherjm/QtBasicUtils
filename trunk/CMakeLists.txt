@@ -72,6 +72,13 @@ SET( QtBasicUtils_SRCS
 	./src/QCmdParseException.cxx
 	./src/QCmdOptBool.cxx
 	./src/QCmdOptQChar.cxx
+	./src/QCmdOptQString.cxx
+	./src/QCmdOptQStringList.cxx
+	./src/QCmdArgBool.cxx
+	./src/QCmdArgQChar.cxx
+	./src/QCmdArgQString.cxx
+	./src/QCmdArgQStringList.cxx
+	./src/QCmdArgFileList.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 

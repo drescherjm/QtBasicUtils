@@ -5,11 +5,9 @@
 
 template <class TYPE>
 QCmdArgBasicBase<TYPE>::QCmdArgBasicBase(QString strName, QString strDescription, 
-										QString strExplanation, TYPE nDefaultValue, 
-										TYPE nMinValue, TYPE nMaxValue) : 
+										QString strExplanation, TYPE nDefaultValue) : 
 QCmdArg( strName, strDescription,strExplanation ), m_nValue(nDefaultValue), 
-m_nDefaultValue(nDefaultValue), m_nMinValue(nMinValue),
-m_nMaxValue(nMaxValue)
+m_nDefaultValue(nDefaultValue)
 {
 
 }

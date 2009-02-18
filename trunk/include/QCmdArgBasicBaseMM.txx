@@ -1,12 +1,13 @@
-#ifndef __QCMDOPTBASICBASEMMXX__
-#define __QCMDOPTBASICBASEMMXX__
+#ifndef __QCMDARGBASICBASEMMXX__
+#define __QCMDARGBASICBASEMMXX__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM(QChar ch, QString strDescription, QString strExplanation, 
+QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM(QString strName, QString strDescription, QString strExplanation, 
 										 TYPE nDefaultValue, TYPE nMinValue, TYPE nMaxValue) : 
-QCmdOptBasicBase( ch, strDescription,strExplanation,nDefaultValue ), m_nMinValue(nMinValue),
+QCmdArgBasicBase(strName, strDescription,strExplanation,
+				 nDefaultValue ), m_nMinValue(nMinValue),
 m_nMaxValue(nMaxValue)
 {
 
@@ -14,4 +15,4 @@ m_nMaxValue(nMaxValue)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDOPTBASICBASEMMXX__
+#endif //__QCMDARGBASICBASEMMXX__

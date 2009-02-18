@@ -1,25 +1,24 @@
-#include "QCmdOptBool.h"
+#include "QCmdArgBool.h"
 #include "QCmdParseError.h"
 
 namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QCmdOptBool::QCmdOptBool(QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue) : 
-QCmdOpt( ch, strDescription,strExplanation ), m_bValue(bDefaultValue), 
-m_bDefaultValue(bDefaultValue)
+QCmdArgBool::QCmdArgBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue) : 
+QCmdArgBasicBase<bool>( strName, strDescription,strExplanation,bDefaultValue)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmdOptBool::ImportData( QString strValue )
+int QCmdArgBool::ImportData( QString strValue )
 {
 	int retVal = MarkSet();
 	if ( retVal == 0 ) {
 		QString strTemp = strValue.trimmed();
-		
+
 		if ( strTemp.length() > 1 ) {
 			retVal = QCmdParseError::PARAM_INVALID_DATA;
 		}
@@ -27,10 +26,10 @@ int QCmdOptBool::ImportData( QString strValue )
 			if ( strTemp.length() == 1 ) {
 				switch(strTemp[0].toAscii()) {
 				case '+':
-					m_bValue = true;
+					m_nValue = true;
 					break;
 				case '-':
-					m_bValue = false;
+					m_nValue = false;
 					break;
 				default:
 					retVal = QCmdParseError::PARAM_INVALID_DATA;
@@ -39,7 +38,7 @@ int QCmdOptBool::ImportData( QString strValue )
 			}
 			else
 			{
-				m_bValue = true;
+				m_nValue = true;
 			}
 	}
 	return retVal;
@@ -47,19 +46,11 @@ int QCmdOptBool::ImportData( QString strValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void QCmdOptBool::Initialize()
-{
-	m_bValue = m_bDefaultValue;
-	QCmdPart::Initialize();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QString QCmdOptBool::GetSyntax()
+QString QCmdArgBool::GetSyntax()
 {
 	QString retVal;
 	QString tempStr = "%s [";
-	if ( m_bDefaultValue == true )
+	if ( m_nDefaultValue == true )
 		tempStr += "TRUE";
 	else
 		tempStr += "FALSE";
