@@ -13,6 +13,8 @@
 #include <QChar>
 #include <QString>
 
+#include "QCmdOpt.h"
+
 namespace QTUTILS {
 
 class QCmdOptBool : public QCmdOpt  

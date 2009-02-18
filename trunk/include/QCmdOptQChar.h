@@ -1,11 +1,11 @@
 #ifndef __QCMDOPTQCHAR_H__
 #define __QCMDOPTQCHAR_H__
 
-#include "QCmdOptBasicBase.h"
+#include "QCmdOptBasicBaseMM.h"
 
 namespace QTUTILS {
 	
-	class QCmdOptQChar : public QCmdOptBasicBase<QChar>  
+	class QCmdOptQChar : public QCmdOptBasicBaseMM<QChar>  
 	{
 	public:
 		QCmdOptQChar(QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 

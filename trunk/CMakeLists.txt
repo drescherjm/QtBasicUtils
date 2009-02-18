@@ -69,6 +69,9 @@ SET( QtBasicUtils_SRCS
 	./src/main.cxx
 	./src/QCmd.cxx
 	./src/QCmdHelpException.cxx
+	./src/QCmdParseException.cxx
+	./src/QCmdOptBool.cxx
+	./src/QCmdOptQChar.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 

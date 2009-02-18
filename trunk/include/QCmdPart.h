@@ -13,6 +13,8 @@
 #ifndef __QCMDPART_H__
 #define __QCMDPART_H__
 
+#include <QString>
+
 namespace QTUTILS {
 
 class QCmdPart 

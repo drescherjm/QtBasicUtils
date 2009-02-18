@@ -10,6 +10,11 @@
 //
 //
 
+#include <QString>
+#include <QStringList>
+
+#include "QCmdParseError.h"
+
 namespace QTUTILS {
 
 class QCmdParseException 

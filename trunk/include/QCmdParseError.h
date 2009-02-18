@@ -1,3 +1,4 @@
+
 //
 // C++ Interface: QCmdParseError
 //
@@ -9,6 +10,9 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+
+#ifndef __QCMDPARSEERROR_H__
+#define __QCMDPARSEERROR_H__
 
 namespace QTUTILS {
 
@@ -28,3 +32,5 @@ public:
 };
 
 }; //namespace QTUTILS
+
+#endif //__QCMDPARSEERROR_H__
