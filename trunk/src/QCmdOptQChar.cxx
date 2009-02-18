@@ -60,4 +60,16 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	QString QCmdOptQChar::GetSyntax()
+	{
+		QString retVal;
+		QString tempStr = ("%s [");
+		tempStr += "%c";
+		tempStr += ("]");
+		retVal.sprintf(tempStr.toAscii(),GetDescription(),m_nDefaultValue);
+		return retVal;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 }; // namespace QTUTILS
