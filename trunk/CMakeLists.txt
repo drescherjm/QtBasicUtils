@@ -133,7 +133,9 @@ IF(BUILD_TESTING)
 	ENABLE_TESTING()
 	LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
 	add_executable(BasicTest ./src/Tests/basic.cxx)
-	ADD_TEST(Test0  ${EXECUTABLE_OUTPUT_PATH}/BasicTest)
+	ADD_TEST(Test0			${EXECUTABLE_OUTPUT_PATH}/BasicTest +?)
+	ADD_TEST(StringListArg  ${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRLST 1 2 3 4 .)
+	ADD_TEST(Test2			${EXECUTABLE_OUTPUT_PATH}/BasicTest +Test 1.0)
 	
 ENDIF(BUILD_TESTING)
 

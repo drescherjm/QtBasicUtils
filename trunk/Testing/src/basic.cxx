@@ -44,33 +44,41 @@ int QCmdTest::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class QCmdGo : public QCmd
+class QCmdStringListArg : public QCmd
 {
 public:
-	QCmdGo(QString strName, QString strDescription);
+	QCmdStringListArg(QString strName, QString strDescription);
 	virtual int Execute();
 };
 
-QCmdGo::QCmdGo(QString strName, QString strDescription) :
+QCmdStringListArg::QCmdStringListArg(QString strName, QString strDescription) :
 QCmd(strName,strDescription)
 {
 	QStringList sl;
 	sl.push_back("0");
 	sl.push_back("1");
 	sl.push_back("2");
-	AddArg("CaseNumber(s)","The case number","",sl);
+	AddArg("Integer(s)","The integers to sum","",sl);
 
-	float fTemp = 0.0f;
-	AddOpt('T',"Temperature","Temperature in Fahrenheit",fTemp);
+	int nSum;
+	QStringList::iterator it;
+	for(it = sl.begin(); it != sl.end();++it) {
+		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
+	}
+
+	AddOpt('S',"The sum to test","Temperature in Fahrenheit",fTemp);
 }
 
-int QCmdGo::Execute()
+int QCmdStringListArg::Execute()
 {
 
-	quint32 nCase;
-	GetArg("CaseNumber(s)",nCase);
+	QStringList sl;
+	GetArg("CaseNumber(s)",sl);
 
-	std::cout << "CaseNumber=" << nCase << std::endl;
+	QStringList::iterator it;
+	for(it = sl.begin(); it != sl.end();++it) {
+		std::cout << "CaseNumber(s)=" << it->toStdString() << std::endl;
+	}
 
 	float fTemp = 100.0f;
 	GetOpt('T',fTemp);
@@ -83,17 +91,20 @@ int QCmdGo::Execute()
 
 int main(int argc, char* argv[])
 {
+	
+	int retVal =0;
+
 
 	try {
-		QCmdTest	cmdTest("Test","This is the test command");
-		QCmdGo		cmdGo("GO","This is the go command");
+		QCmdTest			cmdTest("Test","This is the test command");
+		QCmdStringListArg	cmdStrLst("STRLST","This tests the string list as an argument.");
 
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
 		myCmdLine.AddCmd(&myHelp);
 		myCmdLine.AddCmd(&cmdTest);
-		myCmdLine.AddCmd(&cmdGo);
+		myCmdLine.AddCmd(&cmdStrLst);
 
 		myCmdLine.Parse();
 
@@ -118,11 +129,13 @@ int main(int argc, char* argv[])
 	catch( QCmdParseException* e) {
 		std::cout << e->GetErrorString().toStdString() << std::endl;
 		e->Delete();
+
+		retVal = -1;
 	}
 
 
 	int c;
 	std::cin >> c;
 
-	return 0;
+	return retVal;
 }
