@@ -68,7 +68,7 @@ int QCmdGo::Execute()
 {
 
 	quint32 nCase;
-	GetArg("CaseNumber",nCase);
+	GetArg("CaseNumber(s)",nCase);
 
 	std::cout << "CaseNumber=" << nCase << std::endl;
 
