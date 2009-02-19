@@ -46,11 +46,9 @@ namespace QTUTILS {
 
 	QString QCmdArgQString::GetSyntax()
 	{
-		QString retVal;
-		QString tempStr = ("%s [");
-		tempStr += "%s";
-		tempStr += ("]");
-		retVal.sprintf(tempStr.toAscii(),GetDescription(),m_nDefaultValue);
+		QString retVal = GetDescription() + " [";
+		retVal += m_nDefaultValue;
+		retVal += "]";
 		return retVal;
 	}
 

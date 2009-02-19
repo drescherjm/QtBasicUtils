@@ -74,21 +74,18 @@ namespace QTUTILS {
 
 	QString QCmdArgFileList::GetSyntax()
 	{
-		QString retVal;
-		QString tempStr = ("%s [");
-		retVal.sprintf(tempStr.toAscii(),GetDescription());
-		QString str;
-
+		QString retVal = GetDescription() + " [";
+		
 		QStringList::iterator it=m_nDefaultValue.begin();
 
 		if (it != m_nDefaultValue.end()) {
-			tempStr += *it;
+			retVal += *it;
 		}
 		for(; it != m_nDefaultValue.end();++it) {
-			tempStr += (" ") + *it;
+			retVal += (" ") + *it;
 		}
 
-		tempStr += ("]");
+		retVal += ("]");
 		return retVal;
 	}
 

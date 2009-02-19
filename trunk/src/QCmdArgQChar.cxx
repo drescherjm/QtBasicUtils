@@ -66,10 +66,10 @@ namespace QTUTILS {
 	QString QCmdArgQChar::GetSyntax()
 	{
 		QString retVal;
-		QString tempStr = ("%s [");
+		QString tempStr = GetDescription() + ("%s [");
 		tempStr += "%c";
 		tempStr += ("]");
-		retVal.sprintf(tempStr.toAscii(),GetDescription(),m_nDefaultValue);
+		retVal.sprintf(tempStr.toAscii(),m_nDefaultValue);
 		return retVal;
 	}
 

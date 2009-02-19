@@ -57,15 +57,16 @@ void QCmdOptBool::Initialize()
 
 QString QCmdOptBool::GetSyntax()
 {
-	QString retVal;
-	QString tempStr = "%s [";
+	QString retVal = GetDescription();
+	
+	retVal += " [";
 	if ( m_bDefaultValue == true )
-		tempStr += "TRUE";
+		retVal += "TRUE";
 	else
-		tempStr += "FALSE";
+		retVal += "FALSE";
 
-	tempStr += "]";
-	retVal.sprintf(tempStr.toAscii(),GetDescription());
+	retVal += "]";
+
 	return retVal;
 }
 

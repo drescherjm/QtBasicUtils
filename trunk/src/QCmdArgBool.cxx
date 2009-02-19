@@ -48,15 +48,13 @@ int QCmdArgBool::ImportData( QString strValue )
 
 QString QCmdArgBool::GetSyntax()
 {
-	QString retVal;
-	QString tempStr = "%s [";
+	QString retVal= GetDescription() + " [";
 	if ( m_nDefaultValue == true )
-		tempStr += "TRUE";
+		retVal += "TRUE";
 	else
-		tempStr += "FALSE";
+		retVal += "FALSE";
 
-	tempStr += "]";
-	retVal.sprintf(tempStr.toAscii(),GetDescription());
+	retVal += "]";
 	return retVal;
 }
 

@@ -100,7 +100,7 @@ namespace QTUTILS {
 		break;
 		}
 		QString retVal;
-		retVal.sprintf(strError.toAscii(),str0,str1);
+		retVal.sprintf(strError.toAscii(),str0.toStdString().c_str(),str1.toStdString().c_str());
 		return retVal;
 	}
 

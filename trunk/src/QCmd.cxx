@@ -1010,7 +1010,9 @@ int QCmd::GetArg(QString strName, QChar & chValue)
 QString QCmd::GetSyntax()
 {
 	QString retVal;
-	retVal.sprintf("+%s ",GetName());
+
+	retVal = ("+") + GetName() + " ";
+
 	QCmdOpt* pCmdOpt;
 	QCmdArg* pCmdArg;
 	
@@ -1036,31 +1038,37 @@ QString QCmd::GetSyntax()
 		
 	retVal += ("\nDescription:\n  ") + GetDescription();
 	
-	retVal += ("\nArguments:\n");
-	QString str;
+	if (!m_listArguments.isEmpty()) {
+		retVal += ("\nArguments:\n");
+		QString str;
 
-	for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
-		pCmdArg = *it;
-		str.sprintf("  %s -- ",pCmdArg->GetName());
-		retVal += str + pCmdArg->GetSyntax();
-		retVal += ("\n");
-		str = pCmdArg->GetExplanation();
-		if ( !str.isEmpty() ) {
-			retVal += ("  \t") + str + ("\n");
+		for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
+			pCmdArg = *it;
+		
+			retVal += "  " + pCmdArg->GetName() + " -- " + pCmdArg->GetSyntax();
+			retVal += ("\n");
+			str = pCmdArg->GetExplanation();
+			if ( !str.isEmpty() ) {
+				retVal += ("  \t") + str + ("\n");
+			}
 		}
 	}
-	retVal += ("\nOptions:\n");
 	
-	for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
-		pCmdOpt = *it;
-		str.sprintf("  %c -- ",pCmdOpt->GetName());
-		retVal += str + pCmdOpt->GetSyntax();
-		retVal += ("\n");
-		str = pCmdOpt->GetExplanation();
-		if ( !str.isEmpty() ) {
-			retVal += ("  \t") + str + ("\n");
+	if (!m_listOptions.isEmpty()) {
+		retVal += ("\nOptions:\n");
+		QString str;
+		for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
+			pCmdOpt = *it;
+			str.sprintf("  %c -- ",pCmdOpt->GetName().toAscii());
+			retVal += str + pCmdOpt->GetSyntax();
+			retVal += ("\n");
+			str = pCmdOpt->GetExplanation();
+			if ( !str.isEmpty() ) {
+				retVal += ("  \t") + str + ("\n");
+			}
 		}
 	}
+	
 	return retVal;
 }
 

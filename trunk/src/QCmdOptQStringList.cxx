@@ -72,21 +72,19 @@ namespace QTUTILS {
 
 	QString QCmdOptQStringList::GetSyntax()
 	{
-		QString retVal;
-		QString tempStr = ("%s [");
-		retVal.sprintf(tempStr.toAscii(),GetDescription());
+		QString retVal = GetDescription() + " [";
 		QString str;
 		
 		QStringList::iterator it=m_nDefaultValue.begin();
 
 		if (it != m_nDefaultValue.end()) {
-			tempStr += *it;
+			retVal += *it;
 		}
 		for(; it != m_nDefaultValue.end();++it) {
-			tempStr += (" ") + *it;
+			retVal += (" ") + *it;
 		}
 	
-		tempStr += ("]");
+		retVal += ("]");
 		return retVal;
 	}
 

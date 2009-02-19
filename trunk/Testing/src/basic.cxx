@@ -20,12 +20,23 @@ QCmdTest::QCmdTest(QString strName, QString strDescription) :
 QCmd(strName,strDescription)
 {
 	AddArg("CaseNumber","The case number","",(quint32)0);
+
+	float fTemp = 0.0f;
+	AddOpt('T',"Temperature","Temperature in Fahrenheit",fTemp);
 }
 
 int QCmdTest::Execute()
 {
 	quint32 nCase;
 	GetArg("CaseNumber",nCase);
+
+	std::cout << "CaseNumber=" << nCase << std::endl;
+
+	float fTemp = 100.0f;
+	GetOpt('T',fTemp);
+
+	std::cout << "Temperature=" << fTemp << std::endl;
+
 	return QCmdParseError::STATUS_OK;
 }
 
@@ -39,6 +50,8 @@ int main(int argc, char* argv[])
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
 		myCmdLine.AddCmd(&myHelp);
+		myCmdLine.AddCmd(&cmdTest);
+
 		myCmdLine.Parse();
 
 		QCmd* pCmd;

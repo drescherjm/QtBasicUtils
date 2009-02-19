@@ -56,10 +56,10 @@ template <class TYPE,char fmt[]>
 QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 {
 	QString retVal;
-	QString tempStr = ("%s [");
+	QString tempStr = GetDescription() + " [";
 	tempStr += fmt;
 	tempStr += ("]");
-	retVal.sprintf(tempStr.toStdString().c_str(),GetDescription(),m_nDefaultValue);
+	retVal.sprintf(tempStr.toAscii(),m_nDefaultValue);
 	return retVal;
 }
 

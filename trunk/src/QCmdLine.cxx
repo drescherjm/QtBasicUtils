@@ -83,20 +83,24 @@ namespace QTUTILS {
 		QStringList* pStrLstCmd;
 		QString str;
 
-		if ( m_listCmds.size() > 0  ) {
+		if ( !m_listCmds.isEmpty() ) {
 			if ( it != end() ) {
 				
 				pStrLstCmd = *it;
 				it++;
 
 				if ( pStrLstCmd ) {
-					if (pStrLstCmd->size() > 0) {
+					if (!pStrLstCmd->isEmpty()) {
 						QStringList::iterator itStrLst = pStrLstCmd->begin();
 
 						str = *itStrLst;
 						itStrLst++;
 
-						QCmdMap::iterator itMap = m_mapCmd.find(str.mid(1));
+						//The following will convert the command to all uppercase if 
+						// m_bIgnoreCase is true
+						str = GetCommandString(str.mid(1));
+
+						QCmdMap::iterator itMap = m_mapCmd.find(str);
 
 						if ( itMap != m_mapCmd.end() ) {
 							
