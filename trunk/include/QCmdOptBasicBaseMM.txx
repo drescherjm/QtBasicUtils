@@ -6,7 +6,7 @@
 template <class TYPE>
 QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM(QChar ch, QString strDescription, QString strExplanation, 
 										 TYPE nDefaultValue, TYPE nMinValue, TYPE nMaxValue) : 
-QCmdOptBasicBase( ch, strDescription,strExplanation,nDefaultValue ), m_nMinValue(nMinValue),
+QCmdOptBasicBase<TYPE>::QCmdOptBasicBase( ch, strDescription,strExplanation,nDefaultValue ), m_nMinValue(nMinValue),
 m_nMaxValue(nMaxValue)
 {
 

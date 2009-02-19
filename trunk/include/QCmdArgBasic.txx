@@ -7,10 +7,11 @@ template <class TYPE,char fmt[]>
 QCmdArgBasic<TYPE,fmt>::QCmdArgBasic(QString strName, QString strDescription, 
 									 QString strExplanation, TYPE nDefaultValue,
 									 TYPE nMinValue, 
-									 TYPE nMaxValue) : QCmdArgBasicBaseMM(strName,
-									 strDescription,strExplanation,
-									 nDefaultValue,nMinValue,nMaxValue
-									 )
+									 TYPE nMaxValue) : 
+						QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM(strName,
+						strDescription,strExplanation,
+						nDefaultValue,nMinValue,nMaxValue
+						)
 {
 
 }
@@ -20,7 +21,7 @@ QCmdArgBasic<TYPE,fmt>::QCmdArgBasic(QString strName, QString strDescription,
 template <class TYPE,char fmt[]>
 int QCmdArgBasic<TYPE,fmt>::ImportData( QString strValue )
 {
-	int retVal = MarkSet();
+	int retVal = QCmdPart::MarkSet();
 	if ( retVal == 0 ) {
 		QString strTemp = strValue.trimmed();
 		if ( strTemp.isEmpty() ) {
@@ -28,13 +29,13 @@ int QCmdArgBasic<TYPE,fmt>::ImportData( QString strValue )
 		}
 		else
 		{
-			retVal = sscanf(strTemp.toStdString().c_str(),fmt,&m_nValue);
+			retVal = sscanf(strTemp.toStdString().c_str(),fmt,&this->m_nValue);
 			if ( retVal == 1 ) {
-				if ( m_nValue < m_nMinValue ) {
+				if ( this->m_nValue < this->m_nMinValue ) {
 					retVal = QCmdParseError::PARAM_TOO_SMALL;
 				}
 				else
-					if ( m_nValue > m_nMaxValue ) {
+					if ( this->m_nValue > this->m_nMaxValue ) {
 						retVal = QCmdParseError::PARAM_TOO_BIG;
 					}
 					else
@@ -56,10 +57,10 @@ template <class TYPE,char fmt[]>
 QString QCmdArgBasic<TYPE,fmt>::GetSyntax()
 {
 	QString retVal;
-	QString tempStr = GetDescription() + " [";
+	QString tempStr = this->GetDescription() + " [";
 	tempStr += fmt;
 	tempStr += ("]");
-	retVal.sprintf(tempStr.toStdString().c_str(),m_nDefaultValue);
+	retVal.sprintf(tempStr.toStdString().c_str(),this->m_nDefaultValue);
 	return retVal;
 }
 
