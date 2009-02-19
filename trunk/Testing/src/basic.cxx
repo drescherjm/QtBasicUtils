@@ -118,5 +118,9 @@ int main(int argc, char* argv[])
 		e->Delete();
 	}
 
+
+	int c;
+	std::cin >> c;
+
 	return 0;
 }

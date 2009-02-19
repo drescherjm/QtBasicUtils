@@ -532,7 +532,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -552,7 +552,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -572,7 +572,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -592,7 +592,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -613,7 +613,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -633,7 +633,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -655,7 +655,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -675,7 +675,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -696,7 +696,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -717,7 +717,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -738,7 +738,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -759,7 +759,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
 		}
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -779,7 +779,7 @@ int QCmd::AddArg(QString strName, QCmdArg* pArg)
 			m_mapArg.insert(strName,pArg);
 			m_listArguments.push_back(pArg);
 		}
-		QCmdParseException::Throw(retVal);
+		QCmdParseException::Throw(retVal,strName);
 		return retVal;
 }
 
@@ -816,7 +816,7 @@ int QCmd::GetArg(QString strName, bool & bValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -833,7 +833,7 @@ int QCmd::GetArg(QString strName, quint32 & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -850,7 +850,7 @@ int QCmd::GetArg(QString strName, int & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -867,7 +867,7 @@ int QCmd::GetArg(QString strName, quint8 & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -884,7 +884,7 @@ int QCmd::GetArg(QString strName, short & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -903,6 +903,7 @@ int QCmd::GetArg(QString strName, quint16 & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -919,6 +920,7 @@ int QCmd::GetArg(QString strName, float & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -935,7 +937,7 @@ int QCmd::GetArg(QString strName, double & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -952,7 +954,7 @@ int QCmd::GetArg(QString strName, QString & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -969,7 +971,7 @@ int QCmd::GetArg(QString strName, QStringList & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -986,7 +988,7 @@ int QCmd::GetArg(QString strName, QCmdLineFileList & nValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
@@ -1003,7 +1005,7 @@ int QCmd::GetArg(QString strName, QChar & chValue)
 		else
 			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	QCmdParseException::Throw(retVal);
+	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
 
