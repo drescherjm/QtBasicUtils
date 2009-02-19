@@ -19,7 +19,10 @@ namespace QTUTILS {
 		virtual QString GetShortSyntax( );
 		virtual	void	Initialize();
 	protected:
+		void	Insert(QString strValue);
+	protected:
 		CMDSTRVERIFY	m_pFnVerify;
+		bool			m_bWasDefault;
 	};
 
 }; //namespace QTUTILS

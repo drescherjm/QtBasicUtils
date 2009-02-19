@@ -60,32 +60,84 @@ QCmd(strName,strDescription)
 	sl.push_back("2");
 	AddArg("Integer(s)","The integers to sum","",sl);
 
-	int nSum;
+	int nSum = 0;
 	QStringList::iterator it;
 	for(it = sl.begin(); it != sl.end();++it) {
-		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
+		nSum += it->toInt();
 	}
 
-	AddOpt('S',"The sum to test","Temperature in Fahrenheit",fTemp);
+	AddOpt('S',"The sum","This is the expected sum of Integer(s)",nSum);
 }
 
 int QCmdStringListArg::Execute()
 {
 
 	QStringList sl;
-	GetArg("CaseNumber(s)",sl);
+	GetArg("Integer(s)",sl);
 
+	int nSum = 0;
 	QStringList::iterator it;
 	for(it = sl.begin(); it != sl.end();++it) {
-		std::cout << "CaseNumber(s)=" << it->toStdString() << std::endl;
+		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
+		nSum += it->toInt();
 	}
 
-	float fTemp = 100.0f;
-	GetOpt('T',fTemp);
+	int nExpectedSum = 0;
+	GetOpt('S',nExpectedSum);
 
-	std::cout << "Temperature=" << fTemp << std::endl;
+	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
+	std::cout << "Actual Sum=" << nSum << std::endl;
 
-	return QCmdParseError::STATUS_OK;
+	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdStringListOpt : public QCmd
+{
+public:
+	QCmdStringListOpt(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+QCmdStringListOpt::QCmdStringListOpt(QString strName, QString strDescription) :
+QCmd(strName,strDescription)
+{
+	QStringList sl;
+	sl.push_back("0");
+	sl.push_back("1");
+	sl.push_back("2");
+	AddOpt('I',"The integers to sum","",sl);
+
+	int nSum = 0;
+	QStringList::iterator it;
+	for(it = sl.begin(); it != sl.end();++it) {
+		nSum += it->toInt();
+	}
+
+	AddOpt('S',"The sum","This is the expected sum of Integer(s)",nSum);
+}
+
+int QCmdStringListOpt::Execute()
+{
+
+	QStringList sl;
+	GetOpt('I',sl);
+
+	int nSum = 0;
+	QStringList::iterator it;
+	for(it = sl.begin(); it != sl.end();++it) {
+		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
+		nSum += it->toInt();
+	}
+
+	int nExpectedSum = 0;
+	GetOpt('S',nExpectedSum);
+
+	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
+	std::cout << "Actual Sum=" << nSum << std::endl;
+
+	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 }
 
 
@@ -97,14 +149,17 @@ int main(int argc, char* argv[])
 
 	try {
 		QCmdTest			cmdTest("Test","This is the test command");
-		QCmdStringListArg	cmdStrLst("STRLST","This tests the string list as an argument.");
+		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
+		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
 
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
-		myCmdLine.AddCmd(&myHelp);
 		myCmdLine.AddCmd(&cmdTest);
-		myCmdLine.AddCmd(&cmdStrLst);
+		myCmdLine.AddCmd(&cmdStrLstArg);
+		myCmdLine.AddCmd(&cmdStrLstOpt);
+		myCmdLine.AddCmd(&myHelp);
+
 
 		myCmdLine.Parse();
 
@@ -112,11 +167,12 @@ int main(int argc, char* argv[])
 
 		QCmdLine::iterator it = myCmdLine.begin();
 		while(it != myCmdLine.end()){
-			if( myCmdLine.GetNextCommand(it,pCmd) == QCmdParseError::STATUS_OK ) {
+			retVal = myCmdLine.GetNextCommand(it,pCmd);
+			if( retVal == QCmdParseError::STATUS_OK ) {
 				if ( pCmd != NULL ) {
 					try {
 						pCmd->Parse();
-						pCmd->Execute();
+						retVal = pCmd->Execute();
 					}
 					catch( QCmdHelpException* e) {
 						std::cout << e->GetMessageString().toStdString() << std::endl;
@@ -133,6 +189,13 @@ int main(int argc, char* argv[])
 		retVal = -1;
 	}
 
+	if (retVal == QCmdParseError::STATUS_OK) {
+		std::cout << "SUCCEEDED" << std::endl;
+	}
+	else{
+		std::cout << "FAILED" << std::endl;
+	}
+	
 
 	int c;
 	std::cin >> c;

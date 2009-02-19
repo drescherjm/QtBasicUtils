@@ -95,6 +95,9 @@ namespace QTUTILS {
 	case MUST_BE_FOLDER:
 		strError = ("MUST_BE_FOLDER %s. The parameter %s must be the name of a folder.");
 		break;
+	case USER_EXECUTION_ERROR:
+		strError = ("USER_EXECUTION_ERROR %s. An error occurred executing the command");
+		break;
 	default:
 		strError = ("ERROR: Unknown parse error.");
 		break;

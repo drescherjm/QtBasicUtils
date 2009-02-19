@@ -9,13 +9,24 @@ namespace QTUTILS {
 	QCmdOptQStringList::QCmdOptQStringList(QChar ch, QString strDescription, QString strExplanation,
 		QStringList strLstDefaultValue, CMDSTRVERIFY pFnVerify ): 
 	QCmdOptBasicBase<QStringList>( ch, strDescription,strExplanation, strLstDefaultValue ), 
-		m_pFnVerify(pFnVerify)
+		m_pFnVerify(pFnVerify),m_bWasDefault(false)
 	{
 
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	void QCmdOptQStringList::Insert(QString str)
+	{
+		// Remove the default value after first non default insert
+		if (m_bWasDefault) {
+			m_bWasDefault = false;
+			m_nValue.clear();
+		}
+		m_nValue.push_back(str);
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 	int QCmdOptQStringList::ImportData( QString strValue )
 	{
 		int retVal;
@@ -30,12 +41,12 @@ namespace QTUTILS {
 			if ( m_pFnVerify != NULL ) {
 				retVal = (*m_pFnVerify)(strValue,m_nValue.size());
 				if ( retVal == QCmdParseError::STATUS_OK ) {
-					m_nValue.push_back(strValue);
+					Insert(strValue);
 				}
 			}
 			else
 			{
-				m_nValue.push_back(strValue);
+				Insert(strValue);
 				retVal = QCmdParseError::STATUS_OK;
 			}
 		}
@@ -52,6 +63,8 @@ namespace QTUTILS {
 		for(it=m_nDefaultValue.begin(); it != m_nDefaultValue.end();++it) {
 			m_nValue.push_back(*it);
 		}
+
+		m_bWasDefault = true;
 
 		QCmdOptBasicBase<QStringList>::Initialize();
 	}
