@@ -56,6 +56,8 @@ QCmd(strName,strDescription)
 {
 	QStringList sl;
 	sl.push_back("0");
+	sl.push_back("1");
+	sl.push_back("2");
 	AddArg("CaseNumber(s)","The case number","",sl);
 
 	float fTemp = 0.0f;
