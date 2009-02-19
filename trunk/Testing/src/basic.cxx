@@ -140,6 +140,7 @@ int QCmdStringListOpt::Execute()
 	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
 {
@@ -167,18 +168,38 @@ int main(int argc, char* argv[])
 
 		QCmdLine::iterator it = myCmdLine.begin();
 		while(it != myCmdLine.end()){
-			retVal = myCmdLine.GetNextCommand(it,pCmd);
-			if( retVal == QCmdParseError::STATUS_OK ) {
-				if ( pCmd != NULL ) {
-					try {
-						pCmd->Parse();
-						retVal = pCmd->Execute();
-					}
-					catch( QCmdHelpException* e) {
-						std::cout << e->GetMessageString().toStdString() << std::endl;
-						e->Delete();
+			try {
+				retVal = myCmdLine.GetNextCommand(it,pCmd);
+				if( retVal == QCmdParseError::STATUS_OK ) {
+					if ( pCmd != NULL ) {
+						try {
+							pCmd->Parse();
+							retVal = pCmd->Execute();
+						}
+						catch( QCmdHelpException* e) {
+							std::cout << e->GetMessageString().toStdString() << std::endl;
+							e->Delete();
+						}
 					}
 				}
+				else
+				{
+					std::cout << QCmdParseError::GetErrorString(retVal).toStdString() << std::endl;
+				}
+				if (retVal == QCmdParseError::STATUS_OK) {
+					std::cout << "SUCCEEDED" << std::endl;
+				}
+				else{
+					std::cout << "FAILED" << std::endl;
+				}
+			}
+			catch( QCmdParseException* e) {
+				std::cout << e->GetErrorString().toStdString() << std::endl;
+				e->Delete();
+
+				retVal = -1;
+
+				std::cout << "FAILED" << std::endl;
 			}
 		}
 	}
@@ -187,15 +208,9 @@ int main(int argc, char* argv[])
 		e->Delete();
 
 		retVal = -1;
-	}
 
-	if (retVal == QCmdParseError::STATUS_OK) {
-		std::cout << "SUCCEEDED" << std::endl;
-	}
-	else{
 		std::cout << "FAILED" << std::endl;
 	}
-	
 
 	int c;
 	std::cin >> c;

@@ -1,6 +1,7 @@
 #include "QCmdLine.h"
 #include "QCmdHelp.h"
 #include "QCmdParseError.h"
+#include "QCmdParseException.h"
 #include <QFile>
 #include <QTextStream>
 
@@ -119,16 +120,19 @@ namespace QTUTILS {
 							else
 							{
 								retVal = QCmdParseError::MEMORY_CORRUPTION_ERROR;
+								QCmdParseException::Throw(retVal,str);
 							}
 						}
 						else 
 						{
 							retVal = QCmdParseError::PARAM_NOT_COMMAND;
+							QCmdParseException::Throw(retVal,str);
 						}
 					}
 					else
 					{
 						retVal = QCmdParseError::COMMAND_NOT_SEPARATED;
+						QCmdParseException::Throw(retVal,str);
 					}
 				}
 			}
