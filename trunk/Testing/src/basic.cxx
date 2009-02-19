@@ -7,6 +7,8 @@
 #include "QCmdParseException.h"
 #include "QCmdHelpException.h"
 
+#include <math.h>
+
 using namespace QTUTILS;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +25,7 @@ QCmd(strName,strDescription)
 {
 	AddArg("CaseNumber","The case number","",(quint32)0);
 
-	float fTemp = 0.0f;
+	float fTemp = 32.0f;
 	AddOpt('T',"Temperature","Temperature in Fahrenheit",fTemp);
 }
 
@@ -142,6 +144,109 @@ int QCmdStringListOpt::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#define NUM_FLOAT_ARGS 5
+
+class QCmdFloatArgs : public QCmd
+{
+public:
+	QCmdFloatArgs(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+QCmdFloatArgs::QCmdFloatArgs(QString strName, QString strDescription) :
+QCmd(strName,strDescription)
+{
+	float fVal = 1.0f;
+	AddArg("F0","This is a required float value","",fVal);
+	EndRequiredArguments();
+
+	float fSum = fVal;
+	for(int i=1; i < NUM_FLOAT_ARGS;++i) {
+		QString str;
+		str.sprintf("F%d",i);
+		AddArg(str,"This is an optional float value","",fVal);
+		fSum += fVal;
+	}
+		
+	AddOpt('S',"This is the sum of the required and optional float values","",fSum);
+}
+
+int QCmdFloatArgs::Execute()
+{
+	float fSum = 0.0;
+	for(int i=0; i < NUM_FLOAT_ARGS;++i) {
+		float fVal = 0.0;
+		QString str;
+		str.sprintf("F%d",i);
+		GetArg(str,fVal);
+		fSum += fVal;
+	}
+
+	float fExpectedSum = 0.0;
+	GetOpt('S',fExpectedSum);
+
+	std::cout << "Expected Sum=" << fExpectedSum << std::endl;
+	std::cout << "Actual Sum=" << fSum << std::endl;
+
+	bool bTest = (fabs(fExpectedSum-fSum) < 0.001);
+
+	return (bTest) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define NUM_DOUBLE_ARGS 5
+
+class QCmdDoubleArgs : public QCmd
+{
+public:
+	QCmdDoubleArgs(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+QCmdDoubleArgs::QCmdDoubleArgs(QString strName, QString strDescription) :
+QCmd(strName,strDescription)
+{
+	double fVal = 1.0f;
+	AddArg("D0","This is a required double value","",fVal);
+	EndRequiredArguments();
+
+	double fSum = fVal;
+	for(int i=1; i < NUM_DOUBLE_ARGS;++i) {
+		QString str;
+		str.sprintf("D%d",i);
+		AddArg(str,"This is an optional double value","",fVal);
+		fSum += fVal;
+	}
+
+	AddOpt('S',"This is the sum of the required and optional double values","",fSum);
+}
+
+int QCmdDoubleArgs::Execute()
+{
+	double fSum = 0.0;
+	for(int i=0; i < NUM_DOUBLE_ARGS;++i) {
+		double fVal = 0.0;
+		QString str;
+		str.sprintf("D%d",i);
+		GetArg(str,fVal);
+		fSum += fVal;
+	}
+
+	double fExpectedSum = 0.0;
+	GetOpt('S',fExpectedSum);
+
+	std::cout << "Expected Sum=" << fExpectedSum << std::endl;
+	std::cout << "Actual Sum=" << fSum << std::endl;
+
+	bool bTest = (abs(fExpectedSum-fSum) < 0.001);
+
+	return (bTest) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char* argv[])
 {
 	
@@ -153,15 +258,19 @@ int main(int argc, char* argv[])
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
 		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
 
+		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
+		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
+
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
 		myCmdLine.AddCmd(&cmdTest);
 		myCmdLine.AddCmd(&cmdStrLstArg);
 		myCmdLine.AddCmd(&cmdStrLstOpt);
+		myCmdLine.AddCmd(&cmdFloatArgs);
+		myCmdLine.AddCmd(&cmdDoubleArgs);
 		myCmdLine.AddCmd(&myHelp);
-
-
+		
 		myCmdLine.Parse();
 
 		QCmd* pCmd;

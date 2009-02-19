@@ -19,6 +19,9 @@ typedef QMap< QChar,QCmdOpt* > QOptMap;
 typedef QMap< QString,QCmdArg* > QArgMap;
 
 typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
+
+const float		NEG_FLOAT_MAX = -1.0f * FLT_MAX;
+const double	NEG_DOUBLE_MAX = -1.0 * DBL_MAX;
  
 class QCmd
 {
@@ -39,9 +42,9 @@ public:
 		quint16 nMaxValue = USHRT_MAX);
 	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
 		short nMaxValue = SHRT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=FLT_MIN, 
+	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=NEG_FLOAT_MAX, 
 		float nMaxValue = FLT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=DBL_MIN, 
+	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=NEG_DOUBLE_MAX, 
 		double nMaxValue = DBL_MAX);
 	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 		QChar chDefaultValue, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
@@ -65,9 +68,9 @@ public:
 		quint16 nMaxValue = USHRT_MAX);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
 		short nMaxValue = SHRT_MAX);
-	int	AddArg( QString strName, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=FLT_MIN, 
+	int	AddArg( QString strName, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=NEG_FLOAT_MAX, 
 		float nMaxValue = FLT_MAX);
-	int	AddArg( QString strName, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=DBL_MIN, 
+	int	AddArg( QString strName, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=NEG_DOUBLE_MAX, 
 		double nMaxValue = DBL_MAX);
 	int AddArg( QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
 		QChar chNameDefaultValue=0x0, QChar chNameMinVal=SCHAR_MIN, QChar chNameMaxVal=SCHAR_MAX);
