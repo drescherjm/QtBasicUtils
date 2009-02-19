@@ -110,12 +110,12 @@ public:
 	virtual int Parse();
 	QStringList m_strLstCmd;
 	virtual int Execute();
-	void	EndRequiredArguments();
-	int		IsOption( QString & str, QCmdOpt *& pOption );
-	virtual QString GetSyntax();
-	QString	GetName();
-	QString GetDescription();
-	QString GetLongDescription();
+	void		EndRequiredArguments();
+	int			IsOption( QString & str, QCmdOpt *& pOption );
+	virtual		QString GetSyntax();
+	QString		GetName();
+	QString		GetDescription();
+	QString		GetLongDescription();
 protected:
 	int		Parse( QStringList & strLst );
 	int		AddOpt( QChar ch, QCmdOpt* pOpt = NULL );
