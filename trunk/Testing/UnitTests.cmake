@@ -1,3 +1,5 @@
+#This file contains the automated unit testing for QtBasicUtils
+
 ENABLE_TESTING()
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
 add_executable(BasicTest ./src/Tests/basic.cxx)
