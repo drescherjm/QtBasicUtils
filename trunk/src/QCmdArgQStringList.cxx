@@ -78,6 +78,7 @@ namespace QTUTILS {
 
 		if (it != m_nDefaultValue.end()) {
 			retVal += *it;
+			it++;
 		}
 		for(; it != m_nDefaultValue.end();++it) {
 			retVal += (" ") + *it;

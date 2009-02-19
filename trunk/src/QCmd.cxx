@@ -34,6 +34,8 @@ m_strName(strName), m_strDescription(strDescription), m_strExplanation(strExplan
 	AddOpt(QChar('?'),QString("Help"),QString("This option shows the help for this command."),(bool)false);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QCmd::~QCmd()
 {
 	QCmdPart* ptr;
@@ -47,6 +49,8 @@ QCmd::~QCmd()
 		delete ptr;
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmd::Initialize()
 {
@@ -63,6 +67,8 @@ void QCmd::Initialize()
 	}
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue)
 {
@@ -83,6 +89,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, bool 
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint32 nDefaultValue,
 				 quint32 nMinVal, quint32 nMaxVal)
 {
@@ -102,6 +110,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	QCmdParseException::Throw(retVal,ch);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, int nDefaultValue,
 				 int nMinVal, int nMaxVal)
@@ -143,6 +153,7 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint16 nDefaultValue,
 				 quint16 nMinVal, quint16 nMaxVal)
@@ -164,6 +175,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, quint
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, short nDefaultValue,
 				 short nMinVal, short nMaxVal)
 {
@@ -184,7 +197,7 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, short
 	return retVal;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, float nDefaultValue,
 				 float nMinVal, float nMaxVal)
@@ -206,6 +219,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, float
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, double nDefaultValue,
 				 double nMinVal, double nMaxVal)
 {
@@ -225,6 +240,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, doubl
 	QCmdParseException::Throw(retVal,ch);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 				 QChar chDefaultValue, QChar chMinVal, QChar chMaxVal)
@@ -247,6 +264,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, bool 
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, QString  strDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
 {
@@ -267,6 +286,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, QStri
 	QCmdParseException::Throw(retVal,ch);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, const QStringList & strLstDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
@@ -289,6 +310,8 @@ int QCmd::AddOpt(QChar ch, QString strDescription, QString strExplanation, const
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddOpt(QChar ch, QCmdOpt* pOpt)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -305,8 +328,10 @@ int QCmd::AddOpt(QChar ch, QCmdOpt* pOpt)
 			m_listOptions.push_back(pOpt);
 		}
 		QCmdParseException::Throw(retVal,ch);
-		return retVal;
+	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::FindOpt(QChar ch, QCmdOpt *& option)
 {
@@ -327,6 +352,8 @@ int QCmd::FindOpt(QChar ch, QCmdOpt *& option)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, bool & bValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -343,6 +370,8 @@ int QCmd::GetOpt(QChar ch, bool & bValue)
 	QCmdParseException::Throw(retVal,ch,GetName());
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetOpt(QChar ch, quint32 & nValue)
 {
@@ -361,6 +390,8 @@ int QCmd::GetOpt(QChar ch, quint32 & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, int & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -377,6 +408,8 @@ int QCmd::GetOpt(QChar ch, int & nValue)
 	QCmdParseException::Throw(retVal,ch,GetName());
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetOpt(QChar ch, quint8 & nValue)
 {
@@ -395,6 +428,8 @@ int QCmd::GetOpt(QChar ch, quint8 & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, short & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -412,7 +447,7 @@ int QCmd::GetOpt(QChar ch, short & nValue)
 	return retVal;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetOpt(QChar ch, quint16 & nValue)
 {
@@ -431,6 +466,8 @@ int QCmd::GetOpt(QChar ch, quint16 & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, float & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -447,6 +484,8 @@ int QCmd::GetOpt(QChar ch, float & nValue)
 	QCmdParseException::Throw(retVal,ch,GetName());
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetOpt(QChar ch, double & nValue)
 {
@@ -465,6 +504,8 @@ int QCmd::GetOpt(QChar ch, double & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, QChar & chValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -482,6 +523,8 @@ int QCmd::GetOpt(QChar ch, QChar & chValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetOpt(QChar ch, QString & nValue)
 {
 	QChar chOpt = GetOptChar(ch);
@@ -498,6 +541,8 @@ int QCmd::GetOpt(QChar ch, QString & nValue)
 	QCmdParseException::Throw(retVal,ch,GetName());
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetOpt(QChar ch, QStringList & nValue)
 {
@@ -517,6 +562,8 @@ int QCmd::GetOpt(QChar ch, QStringList & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue)
 {
 	
@@ -535,6 +582,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue,
 				 quint32 nMinVal, quint32 nMaxVal)
@@ -556,6 +605,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, int nDefaultValue,
 				 int nMinVal, int nMaxVal)
 {
@@ -575,6 +626,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, quint8 nDefaultValue,
 				 quint8 nMinVal, quint8 nMaxVal)
@@ -596,6 +649,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, quint16 nDefaultValue,
 				 quint16 nMinVal, quint16 nMaxVal)
@@ -617,6 +671,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, short nDefaultValue,
 				 short nMinVal, short nMaxVal)
 {
@@ -637,7 +693,7 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, float nDefaultValue,
 				 float nMinVal, float nMaxVal)
@@ -659,6 +715,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, double nDefaultValue,
 				 double nMinVal, double nMaxVal)
 {
@@ -678,6 +736,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 				 QChar  chDefaultValue, QChar  chMinVal, QChar  chMaxVal)
@@ -700,6 +760,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, QString  strDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
 {
@@ -720,6 +782,8 @@ int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::AddArg(QString strName, QString strDescription, QString strExplanation, const QStringList &  strLstDefaultValue, 
 				 CMDSTRVERIFY pFnVerify)
@@ -820,6 +884,8 @@ int QCmd::GetArg(QString strName, bool & bValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, quint32 & nValue)
 {
 	
@@ -854,6 +920,8 @@ int QCmd::GetArg(QString strName, int & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, quint8 & nValue)
 {
 	
@@ -870,6 +938,8 @@ int QCmd::GetArg(QString strName, quint8 & nValue)
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetArg(QString strName, short & nValue)
 {
@@ -888,7 +958,7 @@ int QCmd::GetArg(QString strName, short & nValue)
 	return retVal;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetArg(QString strName, quint16 & nValue)
 {
@@ -907,6 +977,8 @@ int QCmd::GetArg(QString strName, quint16 & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, float & nValue)
 {
 	
@@ -923,6 +995,8 @@ int QCmd::GetArg(QString strName, float & nValue)
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetArg(QString strName, double & nValue)
 {
@@ -941,6 +1015,8 @@ int QCmd::GetArg(QString strName, double & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, QString & nValue)
 {
 	
@@ -957,6 +1033,8 @@ int QCmd::GetArg(QString strName, QString & nValue)
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::GetArg(QString strName, QStringList & nValue)
 {
@@ -975,6 +1053,8 @@ int QCmd::GetArg(QString strName, QStringList & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, QCmdLineFileList & nValue)
 {
 	nValue.m_strListFiles.clear();
@@ -992,6 +1072,8 @@ int QCmd::GetArg(QString strName, QCmdLineFileList & nValue)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmd::GetArg(QString strName, QChar & chValue)
 {
 	
@@ -1008,6 +1090,8 @@ int QCmd::GetArg(QString strName, QChar & chValue)
 	QCmdParseException::Throw(retVal,strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QString QCmd::GetSyntax()
 {
