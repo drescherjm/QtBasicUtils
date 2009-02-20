@@ -239,7 +239,7 @@ int QCmdDoubleArgs::Execute()
 	std::cout << "Expected Sum=" << fExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << fSum << std::endl;
 
-	bool bTest = (abs(fExpectedSum-fSum) < 0.001);
+	bool bTest = (fabs(fExpectedSum-fSum) < 0.001);
 
 	return (bTest) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 }
@@ -321,8 +321,11 @@ int main(int argc, char* argv[])
 		std::cout << "FAILED" << std::endl;
 	}
 
+
+#ifndef __GNUC__
 	int c;
 	std::cin >> c;
+#endif //ndef __GNUC__
 
 	return retVal;
 }
