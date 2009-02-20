@@ -3,6 +3,7 @@ PROJECT(QtBasicUtils)
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6 FATAL_ERROR)
 
 option (BUILD_TESTING "Build Tests" ON)
+option (BUILD_EXPERIMENTAL "Build Experimental Code" ON)
 
 SET (CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Debug;Release" FORCE)
 
@@ -143,6 +144,10 @@ SET( QtBasicUtils_INT_HDRS
 IF(BUILD_TESTING)
 include(UnitTests.cmake)
 ENDIF(BUILD_TESTING)
+
+IF(BUILD_EXPERIMENTAL)
+add_subdirectory(Experimental)
+ENDIF(BUILD_EXPERIMENTAL)
 
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
