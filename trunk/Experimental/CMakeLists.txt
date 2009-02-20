@@ -9,6 +9,7 @@ include_directories(include)
 SET( EXPERIMENTAL_SRCS
 	./src/xrvariant.cpp
 	./src/xrbase64.cpp
+	./src/main.cxx
 )
 
 SET( EXPERIMENTAL_HDRS 
@@ -17,3 +18,4 @@ SET( EXPERIMENTAL_HDRS
 )
 
 add_executable(experimental ${EXPERIMENTAL_SRCS} ${EXPERIMENTAL_HDRS})
+target_link_libraries(experimental  ${QT_LIBRARIES} )
