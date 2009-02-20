@@ -7,7 +7,12 @@ option (BUILD_TESTING "Build Tests" ON)
 SET (CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Debug;Release" FORCE)
 
 IF(WIN32)
-SET (CMAKE_INSTALL_PREFIX $ENV{PROGRAMFILES}/UPMC/${CMAKE_PROJECT_NAME} CACHE STRING "Default Install Path" FORCE)
+
+#The following command changes \ to / in the Program Files Path so CMake will not complain
+#about bad escape sequences.
+string (REPLACE "\\" "/" PGM_FILES $ENV{PROGRAMFILES})
+
+SET (CMAKE_INSTALL_PREFIX ${PGM_FILES}/UPMC/${CMAKE_PROJECT_NAME} CACHE STRING "Default Install Path" FORCE)
 ENDIF(WIN32)
 
 SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
