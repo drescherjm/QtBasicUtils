@@ -1,8 +1,8 @@
 #This file contains the automated unit testing for QtBasicUtils
 
-ENABLE_TESTING()
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
-add_executable(BasicTest ./src/Tests/basic.cxx)
+include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
+add_executable(BasicTest ./src/basic.cxx)
 ADD_TEST(Test0			${EXECUTABLE_OUTPUT_PATH}/BasicTest +?)
 ADD_TEST(Test1			${EXECUTABLE_OUTPUT_PATH}/BasicTest +Test 1.0)
 ADD_TEST(StringListArg0  ${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRLSTARG 1 2 3 4 . -S10)
