@@ -142,7 +142,8 @@ SET( QtBasicUtils_INT_HDRS
 )
 
 IF(BUILD_TESTING)
-include(UnitTests.cmake)
+#include(Testing/UnitTests.cmake)
+add_subdirectory(Testing)
 ENDIF(BUILD_TESTING)
 
 IF(BUILD_EXPERIMENTAL)
