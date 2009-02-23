@@ -4,13 +4,13 @@ FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )
 
-include_directories(include)
+include_directories(include ../include)
+
+link_directories(../bin)
 
 SET( EXPERIMENTAL_SRCS
 	./src/xrvariant.cpp
 	./src/xrbase64.cpp
-	./src/Property.cxx
-	./src/PropertyMap.cxx
 	./src/main.cxx
 )
 
@@ -21,8 +21,7 @@ SET( EXPERIMENTAL_HDRS
 )
 
 SET( EXPERIMENTAL_MOC_HDRS 
-	./include/Property.h
-	./include/PropertyMap.h
+
 )
 
 # and finally this will run moc:
@@ -34,4 +33,4 @@ add_executable(experimental ${EXPERIMENTAL_SRCS}
 	${EXPERIMENTAL_MOC_HDRS}
 )
 
-target_link_libraries(experimental  ${QT_LIBRARIES} )
+target_link_libraries(experimental  ${QT_LIBRARIES} QtBasicUtils )

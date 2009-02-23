@@ -98,6 +98,8 @@ SET( QtBasicUtils_SRCS
 	./src/QCmdArgFileList.cxx
 	./src/QCmdLineFileList.cxx
 	./src/QCmdHelp.cxx
+	./src/Property.cxx
+	./src/PropertyMap.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -137,9 +139,17 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdHelp.h
 )
 
+SET( QtBasicUtils_MOC_HDRS 
+	./include/Property.h
+	./include/PropertyMap.h
+)
+
 SET( QtBasicUtils_INT_HDRS
 	"${PROJECT_BINARY_DIR}/QtBasicUtilsConfig.h"
 )
+
+# and finally this will run moc:
+QT4_WRAP_CPP( QtBasicUtils_MOC_SRCS ${QtBasicUtils_MOC_HDRS} )
 
 IF(BUILD_TESTING)
 ENABLE_TESTING()
@@ -161,7 +171,12 @@ ADD_CUSTOM_TARGET(uninstall
 
 include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
 
-add_library(QtBasicUtils ${QtBasicUtils_SRCS} ${QtBasicUtils_EXT_HDRS} ${QtBasicUtils_INT_HDRS} )
+add_library(QtBasicUtils 
+	${QtBasicUtils_SRCS} 
+	${QtBasicUtils_EXT_HDRS} 
+	${QtBasicUtils_MOC_SRCS} 
+	${QtBasicUtils_INT_HDRS} 
+)
 
 install (FILES
 	${PROJECT_BINARY_DIR}/QtBasicUtilsConfig.cmake

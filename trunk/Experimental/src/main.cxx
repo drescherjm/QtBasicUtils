@@ -20,7 +20,9 @@ int main(int argc, char* argv[])
 	QList<XRVariant>::const_iterator it;
 
 	for(it = vtList.begin(); it != vtList.end();++it) {
-		domDoc.insertBefore(it->toDomElement(domDoc),domDoc.firstChild());
+
+		QDomNode xmlNode = it->toDomElement(domDoc);
+		domDoc.insertBefore(xmlNode,domDoc.firstChild());
 	}
 
 	QFile file("test.xml");
