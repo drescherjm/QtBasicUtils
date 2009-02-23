@@ -27,10 +27,9 @@ PropertyMap& PropertyMap::operator =(const PropertyMap & other)
 
 void PropertyMap::copy(const PropertyMap & other)
 {
-	m_vt = other.m_vt;
 	setObjectName(other.objectName());
 
-	PropertyMap map = other.m_mapProps;
+	Map map = other.m_mapProps;
 	
 	iterator it= map.begin();
 	for(; it != map.end();++it) {
@@ -74,7 +73,9 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 QString PropertyMap::toXML()
 {
 	QString name = objectName();
-	QVariant::Type ty = GetData().type();
+	
+	QVariant::Type ty = QVariant::UserType;
+
 	QString retVal = QString("<%1 ty=\"%2\">\n")
 			.arg(name)
 			.arg(ty);

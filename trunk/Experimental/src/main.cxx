@@ -1,6 +1,6 @@
 #include "xrvariant.h"
 #include "Property.h"
-#include "PropertyCollection.h"
+#include "PropertyMap.h"
 
 #include <iostream>
 #include <QFile>
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	prop.GetData() = QString("John M. Drescher");
 	std::cout << prop.toXML().toStdString() << std::endl;
 
-	QTUTILS::PropertyCollection pc;
+	QTUTILS::PropertyMap pc;
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
@@ -55,23 +55,23 @@ int main(int argc, char* argv[])
 	prop.setObjectName("Person");
 	prop.GetData() = QVariant::fromValue(pc);
 
-	QTUTILS::PropertyCollection pc1;
+	QTUTILS::PropertyMap pc1;
 
 	pc1.insert(prop);
 		
 	std::cout << prop.GetData().typeName() << std::endl;
 
 	{
-		QTUTILS::PropertyCollection::iterator it = pc1.begin();
+		QTUTILS::PropertyMap::iterator it = pc1.begin();
 
 		for(;it != pc1.end(); ++it) {
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
 			std::cout << (*it)->GetData().typeName() << std::endl;
 
 			/*
-			if ((*it)->GetData().canConvert<QTUTILS::PropertyCollection>()) {
-				QTUTILS::PropertyCollection pc2 = (*it)->GetData().value<QTUTILS::PropertyCollection>();
-				QTUTILS::PropertyCollection::iterator itPC;
+			if ((*it)->GetData().canConvert<QTUTILS::PropertyMap>()) {
+				QTUTILS::PropertyMap pc2 = (*it)->GetData().value<QTUTILS::PropertyMap>();
+				QTUTILS::PropertyMap::iterator itPC;
 				for (itPC = pc2.begin(); itPC != pc2.end(); ++itPC) {
 					std::cout << (*itPC)->toXML().toStdString() << std::endl;
 				}

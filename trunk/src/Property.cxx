@@ -1,5 +1,5 @@
 #include "Property.h"
-#include "PropertyCollection.h"
+#include "PropertyMap.h"
 
 namespace QTUTILS {
 
@@ -56,8 +56,8 @@ QString	Property::toXML()
 			.arg(retVal);
 		retVal = strTemp;
 	}
-	else if (GetData().canConvert<PropertyCollection>()) {
-		PropertyCollection pc = GetData().value<PropertyCollection>();
+	else if (GetData().canConvert<PropertyMap>()) {
+		PropertyMap pc = GetData().value<PropertyMap>();
 		
 		retVal = pc.toXML();
 		/*
@@ -65,7 +65,7 @@ QString	Property::toXML()
 			.arg(objectName())
 			.arg(ty);
 
-		PropertyCollection::
+		PropertyMap::
 		*/
 	}
 	return retVal;

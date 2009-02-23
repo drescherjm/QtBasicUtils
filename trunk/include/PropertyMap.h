@@ -1,14 +1,12 @@
-#ifndef __PROPERTYCOLLECTION_H__
-#define __PROPERTYCOLLECTION_H__
+#ifndef __PROPERTYMAP_H__
+#define __PROPERTYMAP_H__
 
 #include "Property.h"
 #include <QMap>
 
 namespace QTUTILS {
 
-typedef QMap<QString,Property*> PropertyMap;
-
-class PropertyMap : public Property
+class PropertyMap : public QObject
 {
 	Q_OBJECT
 public:
@@ -17,7 +15,8 @@ public:
 	PropertyMap(const PropertyMap & other);
 	PropertyMap& operator=(const PropertyMap & other);
 public:
-	typedef PropertyMap::iterator iterator;
+	typedef QMap<QString,Property*> Map;
+	typedef Map::iterator iterator;
 
 	iterator		insert(Property* pProp);
 	iterator		insert(Property & prop);
@@ -26,7 +25,7 @@ public:
 public:
 	QString			toXML();
 protected:
-	PropertyMap		m_mapProps;
+	Map				m_mapProps;
 private:
 	void copy( const PropertyMap & other );
 	void destroy();
@@ -36,4 +35,4 @@ private:
 
 Q_DECLARE_METATYPE(QTUTILS::PropertyMap)
 
-#endif //__PROPERTYCOLLECTION_H__
+#endif //__PROPERTYMAP_H__

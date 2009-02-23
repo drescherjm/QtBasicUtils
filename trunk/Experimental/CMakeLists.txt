@@ -10,7 +10,7 @@ SET( EXPERIMENTAL_SRCS
 	./src/xrvariant.cpp
 	./src/xrbase64.cpp
 	./src/Property.cxx
-	./src/PropertyCollection.cxx
+	./src/PropertyMap.cxx
 	./src/main.cxx
 )
 
@@ -22,7 +22,7 @@ SET( EXPERIMENTAL_HDRS
 
 SET( EXPERIMENTAL_MOC_HDRS 
 	./include/Property.h
-	./include/PropertyCollection.h
+	./include/PropertyMap.h
 )
 
 # and finally this will run moc:
