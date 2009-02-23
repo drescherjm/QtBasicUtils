@@ -22,6 +22,7 @@ public:
 	iterator		insert(Property & prop);
 	iterator		begin();
 	iterator		end();
+	iterator		find(QString strName);
 public:
 	QString			toXML();
 protected:

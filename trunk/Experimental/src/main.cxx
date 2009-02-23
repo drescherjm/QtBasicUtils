@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QTextStream>
 
+using namespace QTUTILS;
+
 int main(int argc, char* argv[])
 {
 	QDomDocument domDoc;
@@ -41,7 +43,7 @@ int main(int argc, char* argv[])
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)10;
+	prop.GetData() = (int)37;
 	pc.insert(prop);
 	std::cout << prop.toXML().toStdString() << std::endl;
 
@@ -51,6 +53,17 @@ int main(int argc, char* argv[])
 	std::cout << prop.toXML().toStdString() << std::endl;
 
 	pc.insert(prop);
+
+	QString strSearch("age");
+	PropertyMap::iterator itFind = pc.find(strSearch);
+	if ( itFind != pc.end()) {
+		std::cout << "Found " << strSearch.toStdString() << std::endl;
+		std::cout << (*itFind)->toXML().toStdString() << std::endl;
+	}
+	else
+	{
+		std::cout << "Not Found " << strSearch.toStdString() << std::endl;
+	}
 
 	prop.setObjectName("Person");
 	prop.GetData() = QVariant::fromValue(pc);
@@ -67,17 +80,7 @@ int main(int argc, char* argv[])
 		for(;it != pc1.end(); ++it) {
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
 			std::cout << (*it)->GetData().typeName() << std::endl;
-
-			/*
-			if ((*it)->GetData().canConvert<QTUTILS::PropertyMap>()) {
-				QTUTILS::PropertyMap pc2 = (*it)->GetData().value<QTUTILS::PropertyMap>();
-				QTUTILS::PropertyMap::iterator itPC;
-				for (itPC = pc2.begin(); itPC != pc2.end(); ++itPC) {
-					std::cout << (*itPC)->toXML().toStdString() << std::endl;
-				}
-			}
-			else*/
-				std::cout << (*it)->toXML().toStdString() << std::endl;
+			std::cout << (*it)->toXML().toStdString() << std::endl;
 		}
 	}
 }

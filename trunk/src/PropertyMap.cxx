@@ -95,4 +95,9 @@ QString PropertyMap::toXML()
 	return retVal;
 }
 
+PropertyMap::iterator PropertyMap::find(QString strName)
+{
+	return m_mapProps.find(strName);
+}
+
 }; // namespace QTUTILS
