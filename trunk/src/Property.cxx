@@ -41,4 +41,22 @@ QVariant& Property::GetData()
 	return m_vt;
 }
 
+QString	Property::toXML()
+{
+	QString retVal;
+	QVariant::Type ty = GetData().type();
+
+	if (ty < QVariant::UserType) {
+		QString strName = objectName();
+		retVal = GetData().toString();
+		QString strTemp = QString("<%1 ty=\"%2\">%3</%1>\n")
+			.arg(strName)
+			.arg(ty)
+			.arg(retVal);
+		retVal = strTemp;
+	}
+	return retVal;
+
+}
+
 }; // namespace QTUTILS

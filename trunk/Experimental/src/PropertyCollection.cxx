@@ -29,11 +29,21 @@ void PropertyCollection::copy(const PropertyCollection & other)
 {
 	m_vt = other.m_vt;
 	setObjectName(other.objectName());
+
+	PropertyMap map = other.m_mapProps;
+	
+	iterator it= map.begin();
+	for(; it != map.end();++it) {
+		insert(**it);
+	}
 }
 
 void PropertyCollection::destroy()
 {
-
+	iterator it= begin();
+	for(; it != end();++it) {
+		delete *it;
+	}
 }
 
 PropertyCollection::iterator PropertyCollection::begin()

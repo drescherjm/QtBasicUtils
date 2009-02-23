@@ -17,6 +17,7 @@ public:
 	Property& operator=(const Property & other);
 public:
 	QVariant&	GetData();
+	QString		toXML();
 private:
 	void copy( const Property & other );
 	void destroy();

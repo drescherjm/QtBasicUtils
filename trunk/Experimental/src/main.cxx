@@ -35,23 +35,40 @@ int main(int argc, char* argv[])
 
 	prop.setObjectName("Name");
 	prop.GetData() = QString("John M. Drescher");
+	std::cout << prop.toXML().toStdString() << std::endl;
 
 	QTUTILS::PropertyCollection pc;
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
 	prop.GetData() = (int)10;
+	pc.insert(prop);
+	std::cout << prop.toXML().toStdString() << std::endl;
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('M');
+
+	std::cout << prop.toXML().toStdString() << std::endl;
 
 	pc.insert(prop);
+
+	prop.setObjectName("Person");
+	prop.GetData() = QVariant::fromValue(pc);
+
+	QTUTILS::PropertyCollection pc1;
+
+	pc1.insert(prop);
 		
 	std::cout << prop.GetData().typeName() << std::endl;
 
 	{
-		QTUTILS::PropertyCollection::iterator it = pc.begin();
+		QTUTILS::PropertyCollection::iterator it = pc1.begin();
 
-		for(;it != pc.end(); ++it) {
+		for(;it != pc1.end(); ++it) {
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
 			std::cout << (*it)->GetData().typeName() << std::endl;
+
+			std::cout << (*it)->toXML().toStdString() << std::endl;
 		}
 	}
 }
