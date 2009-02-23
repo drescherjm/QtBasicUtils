@@ -50,23 +50,25 @@ QString	Property::toXML()
 	if (ty < QVariant::UserType) {
 		QString strName = objectName();
 		retVal = GetData().toString();
-		QString strTemp = QString("<%1 ty=\"%2\">%3</%1>\n")
+		QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">%4</%1>\n")
 			.arg(strName)
 			.arg(ty)
+			.arg(GetData().typeName())
 			.arg(retVal);
 		retVal = strTemp;
 	}
 	else if (GetData().canConvert<PropertyMap>()) {
 		PropertyMap pc = GetData().value<PropertyMap>();
-		
+		QString strName = objectName();
 		retVal = pc.toXML();
-		/*
-		retVal = QString("<%1 ty=\"%2\">)
-			.arg(objectName())
-			.arg(ty);
 
-		PropertyMap::
-		*/
+		QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">\n%4</%1>\n")
+			.arg(strName)
+			.arg(ty)
+			.arg(GetData().typeName())
+			.arg(retVal);
+
+		retVal = strTemp;
 	}
 	return retVal;
 

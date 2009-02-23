@@ -76,9 +76,13 @@ QString PropertyMap::toXML()
 	
 	QVariant::Type ty = QVariant::UserType;
 
-	QString retVal = QString("<%1 ty=\"%2\">\n")
+	QString retVal;
+		
+		
+	/*= QString("<%1 ty=\"%2\">\n")
 			.arg(name)
 			.arg(ty);
+	*/
 
 	iterator it = begin();
 	
@@ -86,7 +90,7 @@ QString PropertyMap::toXML()
 		retVal += (*it)->toXML();
 	}
 
-	retVal += QString("</%1>\n").arg(name);
+	//retVal += QString("</%1>\n").arg(name);
 
 	return retVal;
 }
