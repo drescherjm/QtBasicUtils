@@ -24,12 +24,16 @@ public:
 	iterator		end();
 	iterator		find(QString strName);
 public:
+	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
 	QString			toXML();
 protected:
 	Map				m_mapProps;
+	Qt::CaseSensitivity m_cs;
+protected:
+	QString			CleanUpName(QString strName);
 private:
-	void copy( const PropertyMap & other );
-	void destroy();
+	void			copy( const PropertyMap & other );
+	void			destroy();
 };
 
 }; // namespace QTUTILS

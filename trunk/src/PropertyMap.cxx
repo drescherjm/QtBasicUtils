@@ -2,19 +2,27 @@
 
 namespace QTUTILS {
 
-PropertyMap::PropertyMap()
+/////////////////////////////////////////////////////////////////////////////////////////
+
+PropertyMap::PropertyMap() : m_cs(Qt::CaseInsensitive)
 {
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 PropertyMap::~PropertyMap()
 {
 	destroy();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 PropertyMap::PropertyMap(const PropertyMap & other)
 {
 	copy(other);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 PropertyMap& PropertyMap::operator =(const PropertyMap & other)
 {
@@ -25,9 +33,12 @@ PropertyMap& PropertyMap::operator =(const PropertyMap & other)
 	return (*this);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void PropertyMap::copy(const PropertyMap & other)
 {
 	setObjectName(other.objectName());
+	setCaseSensitivity(other.m_cs);
 
 	Map map = other.m_mapProps;
 	
@@ -37,6 +48,8 @@ void PropertyMap::copy(const PropertyMap & other)
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void PropertyMap::destroy()
 {
 	iterator it= begin();
@@ -45,30 +58,40 @@ void PropertyMap::destroy()
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 PropertyMap::iterator PropertyMap::begin()
 {
 	return m_mapProps.begin();
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 PropertyMap::iterator PropertyMap::end()
 {
 	return m_mapProps.end();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 PropertyMap::iterator PropertyMap::insert(Property & prop)
 {
 	return insert(new Property(prop));
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 PropertyMap::iterator PropertyMap::insert(Property* pProp)
 {
 	iterator retVal = m_mapProps.end();
 	if (pProp != NULL) {
-		retVal = m_mapProps.insert(pProp->objectName(),pProp);
+		QString strName = CleanUpName(pProp->objectName());
+		retVal = m_mapProps.insert(strName,pProp);
 	}
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QString PropertyMap::toXML()
 {
@@ -95,9 +118,38 @@ QString PropertyMap::toXML()
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+// This cleans up whitespace and applies the case sensitivity.
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString PropertyMap::CleanUpName(QString strName)
+{
+	strName = strName.simplified();
+	if (m_cs == Qt::CaseInsensitive) {
+		strName = strName.toUpper();
+	}
+
+	return strName;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 PropertyMap::iterator PropertyMap::find(QString strName)
 {
+	strName = CleanUpName(strName);
 	return m_mapProps.find(strName);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+void PropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
+{
+	if (m_mapProps.isEmpty()) {
+		m_cs = cs;
+	}
 }
 
 }; // namespace QTUTILS

@@ -137,6 +137,8 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdArgQStringList.h
 	./include/QCmdArgFileList.h
 	./include/QCmdHelp.h
+	./include/Property.h
+	./include/PropertyMap.h
 )
 
 SET( QtBasicUtils_MOC_HDRS 

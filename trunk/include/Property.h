@@ -25,7 +25,6 @@ protected:
 	QVariant	m_vt;
 };
 
-
 }; // namespace QTUTILS
 
 Q_DECLARE_METATYPE(QTUTILS::Property);
