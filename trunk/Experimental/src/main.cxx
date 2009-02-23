@@ -68,7 +68,16 @@ int main(int argc, char* argv[])
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
 			std::cout << (*it)->GetData().typeName() << std::endl;
 
-			std::cout << (*it)->toXML().toStdString() << std::endl;
+			/*
+			if ((*it)->GetData().canConvert<QTUTILS::PropertyCollection>()) {
+				QTUTILS::PropertyCollection pc2 = (*it)->GetData().value<QTUTILS::PropertyCollection>();
+				QTUTILS::PropertyCollection::iterator itPC;
+				for (itPC = pc2.begin(); itPC != pc2.end(); ++itPC) {
+					std::cout << (*itPC)->toXML().toStdString() << std::endl;
+				}
+			}
+			else*/
+				std::cout << (*it)->toXML().toStdString() << std::endl;
 		}
 	}
 }

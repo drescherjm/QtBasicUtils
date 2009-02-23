@@ -23,6 +23,8 @@ public:
 	iterator		insert(Property & prop);
 	iterator		begin();
 	iterator		end();
+public:
+	QString			toXML();
 protected:
 	PropertyMap		m_mapProps;
 private:

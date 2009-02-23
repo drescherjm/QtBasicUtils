@@ -71,4 +71,23 @@ PropertyCollection::iterator PropertyCollection::insert(Property* pProp)
 	return retVal;
 }
 
+QString PropertyCollection::toXML()
+{
+	QString name = objectName();
+	QVariant::Type ty = GetData().type();
+	QString retVal = QString("<%1 ty=\"%2\">\n")
+			.arg(name)
+			.arg(ty);
+
+	iterator it = begin();
+	
+	for (;it != end();++it) {
+		retVal += (*it)->toXML();
+	}
+
+	retVal += QString("</%1>\n").arg(name);
+
+	return retVal;
+}
+
 }; // namespace QTUTILS
