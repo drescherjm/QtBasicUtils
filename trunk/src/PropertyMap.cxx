@@ -154,20 +154,62 @@ void PropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyMap::CopyProperty(QString strName, PropertyMap & other)
+void PropertyMap::CopyProperty(QString strName, PropertyMap & other,
+							   QString strNewName)
 {
 	PropertyMap::iterator it = other.find(strName);
 	if ( it != other.end()) {
 		Property prop = **it;
-		insert(**it);
+		
+		if (strNewName.isEmpty()) {
+			prop.setObjectName(strNewName);
+		}
+
+		insert(prop);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyMap::RemoveProperty(QString strName)
+bool PropertyMap::RenameProperty(QString strOldName,QString strNewName)
 {
-	m_mapProps.remove(strName);
+	bool retVal = ((!strOldName.isEmpty()) && (!strNewName.isEmpty()));
+
+	if (retVal) {
+		iterator it = find(strOldName);
+
+		retVal = (it != end());
+		if (retVal) {
+			retVal = find(strNewName) == end();
+			if (retVal) {
+				Property* pProp = *it;
+				m_mapProps.erase(it);
+				pProp->setObjectName(strNewName);
+				retVal = (insert(pProp) != end());
+				if (!retVal) {
+					// WARNING: This should never get here
+					// TODO: Add critical logging					
+				}
+			}
+		}
+
+	}
+	
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::RemoveProperty(QString strName)
+{
+	bool retVal;
+	iterator it = find(strName);
+	retVal = (it != end());
+	if (retVal) {
+		delete *it;
+		m_mapProps.erase(it);
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

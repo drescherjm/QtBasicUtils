@@ -1,11 +1,12 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
-//#include "xrvariant.h"
 #include <QVariant>
 #include <QObject>
 
 namespace QTUTILS {
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class Property : public QObject
 {
@@ -20,13 +21,15 @@ public:
 	QString		toXML();
 	bool		fromXML(QString strXML);
 private:
-	void copy( const Property & other );
-	void destroy();
+	void		copy( const Property & other );
+	void		destroy();
 protected:
 	QVariant	m_vt;
 };
 
 }; // namespace QTUTILS
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 Q_DECLARE_METATYPE(QTUTILS::Property);
 

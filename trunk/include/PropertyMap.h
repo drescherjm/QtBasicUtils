@@ -6,6 +6,8 @@
 
 namespace QTUTILS {
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 class PropertyMap : public QObject
 {
 	Q_OBJECT
@@ -26,8 +28,10 @@ public:
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
 	QString			toXML();
-	void			CopyProperty(QString strName, PropertyMap & other);
-	void			RemoveProperty(QString strName);
+	void			CopyProperty(QString strOldName, PropertyMap & other, 
+		QString strNewName="");
+	bool			RemoveProperty(QString strName);
+	bool			RenameProperty(QString strOldName,QString strNewName);
 	void			addProperties(PropertyMap * other);
 protected:
 	Map				m_mapProps;
@@ -40,6 +44,8 @@ private:
 };
 
 }; // namespace QTUTILS
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 Q_DECLARE_METATYPE(QTUTILS::PropertyMap)
 
