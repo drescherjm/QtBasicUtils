@@ -26,6 +26,9 @@ public:
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
 	QString			toXML();
+	void			CopyProperty(QString strName, PropertyMap & other);
+	void			RemoveProperty(QString strName);
+	void			addProperties(PropertyMap * other);
 protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;

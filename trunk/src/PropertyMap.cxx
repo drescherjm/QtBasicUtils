@@ -152,4 +152,33 @@ void PropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void PropertyMap::CopyProperty(QString strName, PropertyMap & other)
+{
+	PropertyMap::iterator it = other.find(strName);
+	if ( it != other.end()) {
+		insert(*it);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void PropertyMap::RemoveProperty(QString strName)
+{
+	m_mapProps.remove(strName);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void PropertyMap::addProperties(PropertyMap * pOther)
+{
+	if (pOther != NULL) {
+		iterator it = pOther->begin();
+		for(;it != pOther->end();++it) {
+			insert(*it);
+		}
+	}
+}
+
 }; // namespace QTUTILS
