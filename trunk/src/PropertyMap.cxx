@@ -158,7 +158,8 @@ void PropertyMap::CopyProperty(QString strName, PropertyMap & other)
 {
 	PropertyMap::iterator it = other.find(strName);
 	if ( it != other.end()) {
-		insert(*it);
+		Property prop = **it;
+		insert(**it);
 	}
 }
 
@@ -176,7 +177,7 @@ void PropertyMap::addProperties(PropertyMap * pOther)
 	if (pOther != NULL) {
 		iterator it = pOther->begin();
 		for(;it != pOther->end();++it) {
-			insert(*it);
+			insert(**it);
 		}
 	}
 }
