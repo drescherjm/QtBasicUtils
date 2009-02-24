@@ -18,6 +18,7 @@ public:
 public:
 	QVariant&	GetData();
 	QString		toXML();
+	bool		fromXML(QString strXML);
 private:
 	void copy( const Property & other );
 	void destroy();

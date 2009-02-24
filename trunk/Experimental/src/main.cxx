@@ -5,8 +5,50 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
+#include <QDomNamedNodeMap>
 
 using namespace QTUTILS;
+
+
+void printDomElem(QDomElement & e)
+{
+	std::cout << "Parse Begin" << std::endl;
+	std::cout << e.tagName().toStdString() << std::endl; // the node really is an element.
+	if(e.hasAttribute("tyID")) {
+		QString strAttr = e.attribute("tyID");
+		if (!strAttr.isEmpty()) {
+			std::cout << strAttr.toStdString() << std::endl;
+		}
+	}
+	if(e.hasAttribute("tyName")) {
+		QString strAttr = e.attribute("tyName");
+		if (!strAttr.isEmpty()) {
+			std::cout << strAttr.toStdString() << std::endl;
+		}
+	}
+
+	std::cout << e.text().toStdString() << std::endl;
+
+
+	std::cout << "Parse End." << std::endl << std::endl;
+}
+
+bool test_exportXML(QTUTILS::Property & prop) 
+{
+	std::cout << "BEGIN: Testing test_exportXML" << std::endl;
+
+	QString strXML = prop.toXML();
+	QTUTILS::Property prop1;
+	prop1.fromXML(strXML);
+
+	std::cout << "Prop= " <<  strXML.toStdString() << std::endl;
+	std::cout << "Prop1= " << prop1.toXML().toStdString() << std::endl;
+
+
+	std::cout << "END: Testing test_exportXML" << std::endl;
+
+	return false;
+}
 
 int main(int argc, char* argv[])
 {
@@ -41,6 +83,8 @@ int main(int argc, char* argv[])
 	prop.GetData() = QString("John M. Drescher");
 	std::cout << prop.toXML().toStdString() << std::endl;
 
+	test_exportXML(prop);
+
 	QTUTILS::PropertyMap pc;
 	pc.insert(prop);
 
@@ -49,10 +93,22 @@ int main(int argc, char* argv[])
 	pc.insert(prop);
 	std::cout << prop.toXML().toStdString() << std::endl;
 
+	test_exportXML(prop);
+
 	prop.setObjectName("Sex");
 	prop.GetData() = QChar('M');
 
+	test_exportXML(prop);
+
 	std::cout << prop.toXML().toStdString() << std::endl;
+
+	{
+		QDomDocument doc;
+		if (doc.setContent(prop.toXML())) {
+			QDomElement docElem = doc.documentElement();
+			printDomElem(docElem);
+		}
+	}
 
 	pc.insert(prop);
 
@@ -83,6 +139,25 @@ int main(int argc, char* argv[])
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
 			std::cout << (*it)->GetData().typeName() << std::endl;
 			std::cout << (*it)->toXML().toStdString() << std::endl;
+
+			if ( (*it)->GetData().type() == QVariant::UserType ) {
+				QDomDocument doc;
+				if (doc.setContent((*it)->toXML())) {
+					QDomElement docElem = doc.documentElement();
+					
+					printDomElem(docElem);
+
+					QDomNode n = docElem.firstChild();
+					while(!n.isNull()) {
+						QDomElement e = n.toElement(); // try to convert the node to an element.
+						if(!e.isNull()) {
+							printDomElem(e);
+						}
+						n = n.nextSibling();
+					}
+
+				}
+			}
 		}
 	}
 }
