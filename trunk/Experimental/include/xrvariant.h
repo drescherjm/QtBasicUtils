@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <QDomElement>
 #include <qdatetime.h>
 #include <qstring.h>
-#include <Qlist>
+#include <QList>
 #include <xrbase64.h>
 /**
  * This subclass of QT's QVariant class represents the data types that are
@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * XRMethodResponse.
  *
  * @see http://www.xmlrpc.com/spec
- * 
+ *
  * The clean mapping between QT types is the following.
  * A key feature is that is REVERSIBLE, i.e. it is one-to-one.
  * All deserialization is done according to the clean mapping.
@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * The lossy mapping is the above plus the following:
  * <ul>
  *   <li>C++ uint : XML-RPC int</li>
- *   <li>QT QDate : XML-RPC dateTime.iso8601 with time 00:00:00</li> 
+ *   <li>QT QDate : XML-RPC dateTime.iso8601 with time 00:00:00</li>
  *   <li>QT QStringList : XML-RPC array</li>
  *   <li>All others, if they can be cast to QString : XML-RPC string</li>
  *   <li>All others, to empty strings.</li>
@@ -69,7 +69,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * mapping may occur.  The responsibility to make sure that data can
  * be cleanly mapped is on users of the library.  The library will always
  * make a best-effort, which may be lossy.
- *   
+ *
  */
 
 class XRVariant : public QVariant
