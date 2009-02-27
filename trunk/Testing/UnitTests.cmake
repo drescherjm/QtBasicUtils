@@ -1,8 +1,8 @@
 #This file contains the automated unit testing for QtBasicUtils
 
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
-add_executable(BasicTest ./src/basic.cxx)
+include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include ./include)
+add_executable(BasicTest ./src/basic.cxx ./src/testxml.cxx ./include/testxml.h)
 ADD_TEST(Test0			${EXECUTABLE_OUTPUT_PATH}/BasicTest +?)
 ADD_TEST(Test1			${EXECUTABLE_OUTPUT_PATH}/BasicTest +Test 1.0)
 ADD_TEST(StringListArg0  ${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRLSTARG 1 2 3 4 . -S10)
@@ -37,3 +37,12 @@ SET_TESTS_PROPERTIES(DoubleArgs7 PROPERTIES WILL_FAIL TRUE)
 
 ADD_TEST(DoubleArgs8	     ${EXECUTABLE_OUTPUT_PATH}/BasicTest +DOUBLEARGS 1.0 2.0 2.0 2.0 2.0 1.0 -S10.0)	
 SET_TESTS_PROPERTIES(DoubleArgs8 PROPERTIES WILL_FAIL TRUE)
+
+ADD_TEST(XMLExport0	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 0)	
+ADD_TEST(XMLExport1	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 1)	
+ADD_TEST(XMLExport2	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 2)	
+ADD_TEST(XMLExport3	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 3)	
+ADD_TEST(XMLExport4	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 4)	
+ADD_TEST(XMLExport5	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 5)	
+ADD_TEST(XMLExport6	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 6)	
+ADD_TEST(XMLExport7	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 7)	

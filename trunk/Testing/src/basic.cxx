@@ -6,6 +6,7 @@
 #include "QCmdParseError.h"
 #include "QCmdParseException.h"
 #include "QCmdHelpException.h"
+#include "testxml.h"
 
 #include <math.h>
 
@@ -244,6 +245,8 @@ int QCmdDoubleArgs::Execute()
 	return (bTest) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -260,6 +263,8 @@ int main(int argc, char* argv[])
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
+		QCmdTestXMLExport	cmdTestXMLEXP("XMLEXP","This tests varios exports of xml on the Property class.");
+
 
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
@@ -269,6 +274,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdStrLstOpt);
 		myCmdLine.AddCmd(&cmdFloatArgs);
 		myCmdLine.AddCmd(&cmdDoubleArgs);
+		myCmdLine.AddCmd(&cmdTestXMLEXP);
 		myCmdLine.AddCmd(&myHelp);
 		
 		myCmdLine.Parse();
