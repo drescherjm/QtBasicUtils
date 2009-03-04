@@ -64,6 +64,11 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/QtBasicUtilsConfig.h"
 )
 
+configure_file (
+	"${PROJECT_SOURCE_DIR}/install.bat.in"
+	"${PROJECT_BINARY_DIR}/Batch/install.bat"
+)
+
 set (QTBASICUTILS_INCLUDE  ${CMAKE_INSTALL_PREFIX}/include )
 set (QTBASICUTILS_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
 set (QTBASICUTILS_RELEASE_LIB ${PROJECT_NAME} )
@@ -140,6 +145,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdHelp.h
 	./include/Property.h
 	./include/PropertyMap.h
+	./include/QUpdateTracker.h
 )
 
 SET( QtBasicUtils_MOC_HDRS 
