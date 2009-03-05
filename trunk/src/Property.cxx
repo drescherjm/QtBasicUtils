@@ -90,6 +90,7 @@ QString	Property::toXML()
 		retVal = strTemp;
 	}
 	else  {
+		int x=x;
 		/*
 		int nId = QMetaType::type(strTypeName.toStdString().c_str());
 		void* ptr = QMetaType::construct(nId);
@@ -151,6 +152,7 @@ bool Property::fromXML( QDomElement & docElem)
 					QString strTypeName = docElem.attribute("tyName");
 					retVal = !strTypeName.isEmpty();
 					if (retVal) {
+#if 0
 						QString strType = strTypeName.right(11);
 						QString strTest = "PropertyMap";
 						if (strType.compare(strTest,Qt::CaseInsensitive) == 0) {
@@ -171,8 +173,7 @@ bool Property::fromXML( QDomElement & docElem)
 								}
 							}
 						}
-						
-						/*
+#else						
 						int nId = QMetaType::type(strTypeName.toStdString().c_str());
 
 						void* ptr = QMetaType::construct(nId);
@@ -193,7 +194,8 @@ bool Property::fromXML( QDomElement & docElem)
 									setObjectName(docElem.tagName());
 								}
 							}
-						}*/
+						}
+#endif 
 					}
 				}
 		}
