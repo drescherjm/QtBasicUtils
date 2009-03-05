@@ -194,6 +194,7 @@ bool Property::fromXML( QDomElement & docElem)
 									setObjectName(docElem.tagName());
 								}
 							}
+							QMetaType::destroy(nId,ptr);
 						}
 #endif 
 					}
