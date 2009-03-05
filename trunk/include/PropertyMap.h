@@ -30,6 +30,7 @@ public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
 	QString			toXML();
 	bool			fromXML(QString strXML);
+	bool			fromXML(QDomElement & domElem);
 	void			CopyProperty(QString strOldName, PropertyMap & other, 
 		QString strNewName="");
 	bool			RemoveProperty(QString strName);

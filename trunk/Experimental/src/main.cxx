@@ -129,6 +129,21 @@ int main(int argc, char* argv[])
 	QTUTILS::PropertyMap pc1;
 
 	pc1.insert(prop);
+
+	prop.setObjectName("Test");
+	prop.GetData() = QString("Test");
+	pc1.insert(prop);
+
+	QString strXML = pc1.toXML();
+
+	std::cout << strXML.toStdString() << std::endl << std::endl;
+
+	PropertyMap pm;
+	pm.fromXML(strXML);
+
+	QString strXML2 = pm.toXML();
+
+	std::cout << strXML2.toStdString() << std::endl << std::endl;
 		
 	std::cout << prop.GetData().typeName() << std::endl;
 

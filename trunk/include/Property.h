@@ -2,6 +2,7 @@
 #define __PROPERTY_H__
 
 #include <QVariant>
+#include <QDomElement>
 #include <QObject>
 
 namespace QTUTILS {
@@ -20,6 +21,7 @@ public:
 	QVariant&	GetData();
 	QString		toXML();
 	bool		fromXML(QString strXML);
+	bool		fromXML(QDomElement & domElem);
 private:
 	void		copy( const Property & other );
 	void		destroy();

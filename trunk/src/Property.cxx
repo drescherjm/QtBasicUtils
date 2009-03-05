@@ -412,23 +412,59 @@ bool Property::fromXML(QString strXML)
 	bool retVal = doc.setContent(strXML);
 	if (retVal) {
 		QDomElement docElem = doc.documentElement();
-		retVal = !docElem.isNull();
+		retVal = fromXML(docElem);
+	}
+	return retVal;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+bool Property::fromXML( QDomElement & docElem)
+{
+	bool retVal = !docElem.isNull();
+	if (retVal) {
+		QString strTypeID = docElem.attribute("tyID");
+		retVal = !strTypeID.isEmpty();
 		if (retVal) {
-			QString strTypeID = docElem.attribute("tyID");
-			retVal = !strTypeID.isEmpty();
-			if (retVal) {
-				QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
-				if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
-					m_vt = docElem.text();
-					retVal = m_vt.canConvert(ty);
-					if (retVal) {
-						m_vt.convert(ty);
-						setObjectName(docElem.tagName());
-					}
+			QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
+			if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
+				m_vt = docElem.text();
+				retVal = m_vt.canConvert(ty);
+				if (retVal) {
+					m_vt.convert(ty);
+					setObjectName(docElem.tagName());
 				}
 			}
+			else
+				if (ty == QVariant::UserType) {
+					QString strTypeName = docElem.attribute("tyName");
+					retVal = !strTypeName.isEmpty();
+					if (retVal) {
+						QString strType = strTypeName.right(11);
+						QString strTest = "PropertyMap";
+						if (strType.compare(strTest,Qt::CaseInsensitive) == 0) {
+
+							PropertyMap pm;
+							
+							QDomNode n = docElem.firstChild();
+
+							retVal = !n.isNull();
+
+							if (retVal) {
+								QDomElement e = n.toElement();
+								retVal = !e.isNull();
+								if (retVal) {
+									pm.fromXML(e);
+									GetData() = QVariant::fromValue(pm);
+									setObjectName(docElem.tagName());
+								}
+							}
+						}
+					}
+				}
 		}
 	}
+
 	return retVal;
 }
 

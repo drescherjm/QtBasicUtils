@@ -1,6 +1,7 @@
 #include "PropertyMap.h"
 
 #include <QDomDocument>
+#include <QTextStream>
 #include <iostream>
 
 namespace QTUTILS {
@@ -248,54 +249,52 @@ void printDomElem(QDomElement & e)
 
 	std::cout << e.text().toStdString() << std::endl;
 
+	std::cout << e.prefix().toStdString() << std::endl;
 
+	QString str;
+	QTextStream stream(&str);
+
+	e.save(stream,0);
+	
+	std::cout << str.toStdString() << std::endl;
 	std::cout << "Parse End." << std::endl << std::endl;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool PropertyMap::fromXML( QString strXML )
 {
-	/*QDomDocument doc;
-	bool retVal = doc.setContent(strXML);
-	if (retVal) {
-		QDomElement docElem = doc.documentElement();
-		retVal = !docElem.isNull();
-		if (retVal) {
-			QString strTypeID = docElem.attribute("tyID");
-			retVal = !strTypeID.isEmpty();
-			if (retVal) {
-				QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
-				if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
-					m_vt = docElem.text();
-					retVal = m_vt.canConvert(ty);
-					if (retVal) {
-						m_vt.convert(ty);
-						setObjectName(docElem.tagName());
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	QDomDocument doc;
 	doc.setContent(strXML);
-	QDomElement docElem = doc.documentElement();
 
-	printDomElem(docElem);
+	return fromXML(doc.documentElement());
+}
 
-	QDomNode n = docElem.firstChild();
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::fromXML(QDomElement & domElem)
+{
+	bool retVal;
+	QDomNode n = domElem;
+	retVal = !n.isNull();
+
 	while(!n.isNull()) {
 		QDomElement e = n.toElement(); // try to convert the node to an element.
 		if(!e.isNull()) {
-			printDomElem(e);
+			
+			Property prop;
+			if (prop.fromXML(e)) {
+				insert(prop);
+			}
+
 		}
+
 		n = n.nextSibling();
 	}
 
-	return false;
+	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS
