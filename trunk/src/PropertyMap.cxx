@@ -1,5 +1,8 @@
 #include "PropertyMap.h"
 
+#include <QDomDocument>
+#include <iostream>
+
 namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -222,6 +225,77 @@ void PropertyMap::addProperties(PropertyMap * pOther)
 			insert(**it);
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void printDomElem(QDomElement & e)
+{
+	std::cout << "Parse Begin" << std::endl;
+	std::cout << e.tagName().toStdString() << std::endl; // the node really is an element.
+	if(e.hasAttribute("tyID")) {
+		QString strAttr = e.attribute("tyID");
+		if (!strAttr.isEmpty()) {
+			std::cout << strAttr.toStdString() << std::endl;
+		}
+	}
+	if(e.hasAttribute("tyName")) {
+		QString strAttr = e.attribute("tyName");
+		if (!strAttr.isEmpty()) {
+			std::cout << strAttr.toStdString() << std::endl;
+		}
+	}
+
+	std::cout << e.text().toStdString() << std::endl;
+
+
+	std::cout << "Parse End." << std::endl << std::endl;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::fromXML( QString strXML )
+{
+	/*QDomDocument doc;
+	bool retVal = doc.setContent(strXML);
+	if (retVal) {
+		QDomElement docElem = doc.documentElement();
+		retVal = !docElem.isNull();
+		if (retVal) {
+			QString strTypeID = docElem.attribute("tyID");
+			retVal = !strTypeID.isEmpty();
+			if (retVal) {
+				QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
+				if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
+					m_vt = docElem.text();
+					retVal = m_vt.canConvert(ty);
+					if (retVal) {
+						m_vt.convert(ty);
+						setObjectName(docElem.tagName());
+					}
+				}
+			}
+		}
+	}
+	*/
+
+	QDomDocument doc;
+	doc.setContent(strXML);
+	QDomElement docElem = doc.documentElement();
+
+	printDomElem(docElem);
+
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement(); // try to convert the node to an element.
+		if(!e.isNull()) {
+			printDomElem(e);
+		}
+		n = n.nextSibling();
+	}
+
+	return false;
 }
 
 }; // namespace QTUTILS

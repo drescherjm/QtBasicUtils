@@ -3,6 +3,7 @@
 #include "QCmdParseError.h"
 #include "QCmdParseException.h"
 #include "QCmdHelpException.h"
+#include "PropertyMap.h"
 #include <iostream>
 
 namespace QTUTILS {
@@ -76,6 +77,35 @@ bool test2()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool test3()
+{
+	QTUTILS::PropertyMap pc;
+	QTUTILS::Property prop;
+	
+	prop.setObjectName("Age");
+	prop.GetData() = (int)37;
+	pc.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.GetData() = QString("John M. Drescher");
+	pc.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('M');
+	pc.insert(prop);
+
+	QString str = pc.toXML();
+
+
+	QTUTILS::PropertyMap pc1;
+
+	bool retVal = pc1.fromXML(str);
+
+	return retVal;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -93,6 +123,8 @@ int  QCmdTestXMLExport::Execute()
 	case 2:
 		bVal = test2();
 		break;
+	case 3:
+		bVal = test3();
 	default:
 		bVal = false;
 	}
