@@ -2,6 +2,7 @@
 
 #include <QDomDocument>
 #include <QTextStream>
+#include <QFile>
 #include <iostream>
 
 namespace QTUTILS {
@@ -90,14 +91,23 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 	iterator retVal = m_mapProps.end();
 	if (pProp != NULL) {
 		QString strName = CleanUpName(pProp->objectName());
+		pProp->setObjectName(strName);
 		retVal = m_mapProps.insert(strName,pProp);
+		if (retVal != m_mapProps.end()) {
+			Modify();
+		}
 	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+// The bMakeRoot will be used in the case that the PropertyMap is the root node in xml.
+// without this param an xml file of a ProperyMap would be invalid because each child 
+// would be considered a root node. If there is no root the fromXML would only import
+// the first child. Set this to false if the PropertyMap is not the root and is instead
+// embedded inside a Property.
 
-QString PropertyMap::toXML()
+QString PropertyMap::toXML( bool bMakeRoot /*= true*/ )
 {
 	QString name = objectName();
 
@@ -107,10 +117,13 @@ QString PropertyMap::toXML()
 	
 	QVariant::Type ty = QVariant::UserType;
 
-	QString retVal = QString("<%1 ty=\"%2\">\n")
-							.arg(name)
-							.arg(ty);
+	QString retVal;
 	
+	if (bMakeRoot) {
+		retVal= QString("<%1 ty=\"%2\">\n")
+			.arg(name)
+			.arg(ty);
+	}
 
 	iterator it = begin();
 	
@@ -118,8 +131,10 @@ QString PropertyMap::toXML()
 		retVal += (*it)->toXML();
 	}
 
-	retVal += QString("</%1>\n").arg(name);
-
+	if (bMakeRoot) {
+		retVal += QString("</%1>\n").arg(name);
+	}
+	
 	return retVal;
 }
 
@@ -132,6 +147,8 @@ QString PropertyMap::toXML()
 QString PropertyMap::CleanUpName(QString strName)
 {
 	strName = strName.simplified();
+
+	strName.replace(" ","_");
 	if (m_cs == Qt::CaseInsensitive) {
 		strName = strName.toUpper();
 	}
@@ -312,6 +329,42 @@ bool PropertyMap::fromXML(QDomElement & domElem)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::Load( QString strFile )
+{
+	QFile file(strFile);
+	bool retVal = file.open(QFile::ReadOnly|QFile::Text);
+	if (retVal) {
+		QString strXML;
+		QTextStream stream(&file);
+		strXML = stream.readAll();
+
+		retVal = fromXML(strXML);
+		if (retVal) {
+			ForceUnmodified();
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::Save( QString strFile )
+{
+	QString strXML = toXML(true);
+	bool retVal = !strXML.isEmpty();
+	if (retVal) {
+		QFile file(strFile);
+		retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);
+		if (retVal) {
+			QTextStream stream(&file);
+			stream << strXML;
+			ForceUnmodified();
+		}
+	}
+	return retVal;
+}
 /////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS

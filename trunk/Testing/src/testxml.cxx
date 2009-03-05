@@ -5,6 +5,7 @@
 #include "QCmdHelpException.h"
 #include "PropertyMap.h"
 #include <iostream>
+#include <QDate>
 
 namespace QTUTILS {
 
@@ -111,6 +112,143 @@ bool test3()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool test4()
+{
+
+	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
+	QTUTILS::Property prop;
+
+	prop.setObjectName("Age");
+	prop.GetData() = (int)37;
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.GetData() = QString("John M. Drescher");
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Best Friend");
+	prop.GetData() = QString("Kathy M. Zorn");
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('M');
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Person0");
+	prop.GetData() = QVariant::fromValue(pmJohn);
+	pmPeople.insert(prop);
+
+	prop.setObjectName("Age");
+	prop.GetData() = (int)40;
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.GetData() = QString("Kathy M. Zorn");
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Best Friend");
+	prop.GetData() = QString("John M. Drescher");
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('F');
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Person1");
+	prop.GetData() = QVariant::fromValue(pmKathy);
+	pmPeople.insert(prop);
+
+	QString str = pmPeople.toXML();
+
+	QTUTILS::PropertyMap pc1;
+
+	bool retVal = pc1.fromXML(str);
+
+	QString str1 = pc1.toXML();
+
+	if (retVal) {
+		retVal = (str.compare(str1,Qt::CaseInsensitive) == 0);
+	}
+
+	return retVal;	
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool test5()
+{
+
+	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
+	QTUTILS::Property prop;
+
+	prop.setObjectName("Age");
+	prop.GetData() = (int)37;
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.GetData() = QString("John M. Drescher");
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Best Friend");
+	prop.GetData() = QString("Kathy M. Zorn");
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('M');
+	pmJohn.insert(prop);
+
+	prop.setObjectName("DOB");
+	prop.GetData() = QDate(1972,1,10);
+	pmJohn.insert(prop);
+
+	prop.setObjectName("Person0");
+	prop.GetData() = QVariant::fromValue(pmJohn);
+	pmPeople.insert(prop);
+
+	prop.setObjectName("Age");
+	prop.GetData() = (int)40;
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.GetData() = QString("Kathy M. Zorn");
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Best Friend");
+	prop.GetData() = QString("John M. Drescher");
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.GetData() = QChar('F');
+	pmKathy.insert(prop);
+
+	prop.setObjectName("DOB");
+	prop.GetData() = QDate(1969,1,13);
+	pmKathy.insert(prop);
+
+	prop.setObjectName("Person1");
+	prop.GetData() = QVariant::fromValue(pmKathy);
+	pmPeople.insert(prop);
+
+	QString str = pmPeople.toXML();
+	bool retVal = pmPeople.Save("People.xml");
+	if (retVal) {
+		QTUTILS::PropertyMap pc1;
+
+		retVal = pc1.Load("People.xml");
+
+		QString str1 = pc1.toXML();
+
+		if (retVal) {
+			retVal = (str.compare(str1,Qt::CaseInsensitive) == 0);
+		}
+	}
+
+	return retVal;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -130,6 +268,12 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 3:
 		bVal = test3();
+		break;
+	case 4:
+		bVal = test4();
+		break;
+	case 5:
+		bVal = test5();
 		break;
 	default:
 		bVal = false;

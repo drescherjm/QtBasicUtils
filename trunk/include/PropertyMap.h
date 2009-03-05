@@ -28,7 +28,7 @@ public:
 	iterator		find(QString strName);
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
-	QString			toXML();
+	QString toXML(bool bMakeRoot = true);
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
 	void			CopyProperty(QString strOldName, PropertyMap & other, 
