@@ -96,11 +96,16 @@ bool test3()
 
 	QString str = pc.toXML();
 
-
 	QTUTILS::PropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 
+	QString str1 = pc1.toXML();
+
+	if (retVal) {
+		retVal = (str.compare(str1,Qt::CaseInsensitive) == 0);
+	}
+	
 	return retVal;	
 }
 
@@ -125,6 +130,7 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 3:
 		bVal = test3();
+		break;
 	default:
 		bVal = false;
 	}

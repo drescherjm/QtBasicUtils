@@ -100,16 +100,17 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 QString PropertyMap::toXML()
 {
 	QString name = objectName();
+
+	if (name.isEmpty()) {
+		name = "doc";
+	}
 	
 	QVariant::Type ty = QVariant::UserType;
 
-	QString retVal;
-		
-		
-	/*= QString("<%1 ty=\"%2\">\n")
-			.arg(name)
-			.arg(ty);
-	*/
+	QString retVal = QString("<%1 ty=\"%2\">\n")
+							.arg(name)
+							.arg(ty);
+	
 
 	iterator it = begin();
 	
@@ -117,7 +118,7 @@ QString PropertyMap::toXML()
 		retVal += (*it)->toXML();
 	}
 
-	//retVal += QString("</%1>\n").arg(name);
+	retVal += QString("</%1>\n").arg(name);
 
 	return retVal;
 }
@@ -264,10 +265,26 @@ void printDomElem(QDomElement & e)
 
 bool PropertyMap::fromXML( QString strXML )
 {
+	bool retVal;
+
 	QDomDocument doc;
 	doc.setContent(strXML);
 
-	return fromXML(doc.documentElement());
+	QDomElement docElem = doc.documentElement();
+
+	QDomNode n = docElem.firstChild();
+
+	retVal = !n.isNull();
+
+	if (retVal) {
+		QDomElement e = n.toElement();
+		retVal = !e.isNull();
+		if (retVal) {
+			retVal = fromXML(e);
+		}
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

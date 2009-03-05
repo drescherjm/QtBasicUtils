@@ -428,8 +428,24 @@ bool Property::fromXML( QDomElement & docElem)
 		if (retVal) {
 			QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
 			if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
-				m_vt = docElem.text();
-				retVal = m_vt.canConvert(ty);
+				
+				QString strText = docElem.text();
+				switch(ty){
+					// This case fails so we do the conversion manually
+					case QVariant::Char:
+						if (!strText.isEmpty()) {
+							m_vt = QChar(strText[0]);
+						}
+						else
+							m_vt =QChar();
+						
+						break;
+					default:
+						m_vt = strText;
+						retVal = m_vt.canConvert(ty);
+						break;
+				}
+				
 				if (retVal) {
 					m_vt.convert(ty);
 					setObjectName(docElem.tagName());
