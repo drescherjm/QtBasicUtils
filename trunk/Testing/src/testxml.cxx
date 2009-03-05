@@ -202,6 +202,10 @@ bool test5()
 	prop.GetData() = QDate(1972,1,10);
 	pmJohn.insert(prop);
 
+	prop.setObjectName("Some Extra data");
+	prop.GetData() = (float)-1.222;
+	pmJohn.insert(prop);
+
 	prop.setObjectName("Person0");
 	prop.GetData() = QVariant::fromValue(pmJohn);
 	pmPeople.insert(prop);
@@ -249,6 +253,53 @@ bool test5()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool test6()
+{
+	//This tests the update tracking of PropertyMap
+
+	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
+	QTUTILS::Property prop;
+
+	bool retVal = !pmJohn.HasChanged();
+
+	if (retVal) {
+		prop.setObjectName("Age");
+		prop.GetData() = (int)37;
+		pmJohn.insert(prop);
+		
+		retVal = pmJohn.HasChanged();
+
+		if (retVal) {
+			
+			pmJohn.ForceUnmodified();
+
+			retVal = !pmJohn.HasChanged();
+
+			if (retVal) {
+				prop.setObjectName("Name");
+				prop.GetData() = QString("John M. Drescher");
+				pmJohn.insert(prop);
+
+
+				prop.setObjectName("Best Friend");
+				prop.GetData() = QString("Kathy M. Zorn");
+				pmJohn.insert(prop);
+
+				prop.setObjectName("Sex");
+				prop.GetData() = QChar('M');
+				pmJohn.insert(prop);
+
+				retVal = pmJohn.HasChanged();
+			}
+
+		}		
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -274,6 +325,9 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 5:
 		bVal = test5();
+		break;
+	case 6:
+		bVal = test6();
 		break;
 	default:
 		bVal = false;

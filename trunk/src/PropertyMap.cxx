@@ -7,6 +7,8 @@
 
 namespace QTUTILS {
 
+int PropertyMap::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 PropertyMap::PropertyMap() : m_cs(Qt::CaseInsensitive)

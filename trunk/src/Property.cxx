@@ -89,6 +89,12 @@ QString	Property::toXML()
 
 		retVal = strTemp;
 	}
+	else  {
+		/*
+		int nId = QMetaType::type(strTypeName.toStdString().c_str());
+		void* ptr = QMetaType::construct(nId);
+		*/
+	}
 	return retVal;
 
 }
@@ -165,6 +171,29 @@ bool Property::fromXML( QDomElement & docElem)
 								}
 							}
 						}
+						
+						/*
+						int nId = QMetaType::type(strTypeName.toStdString().c_str());
+
+						void* ptr = QMetaType::construct(nId);
+
+						UserProperty* pProp = reinterpret_cast<UserProperty*>(ptr);
+						if (pProp) {
+							QDomNode n = docElem.firstChild();
+
+							retVal = !n.isNull();
+
+							if (retVal) {
+								QDomElement e = n.toElement();
+								retVal = !e.isNull();
+								if (retVal) {
+									pProp->fromXML(e);
+									GetData() = QVariant(nId,pProp);
+
+									setObjectName(docElem.tagName());
+								}
+							}
+						}*/
 					}
 				}
 		}

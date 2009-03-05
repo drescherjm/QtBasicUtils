@@ -2,14 +2,14 @@
 #define __PROPERTYMAP_H__
 
 #include "Property.h"
-#include "QUpdateTracker.h"
+#include "UserPropery.h"
 #include <QMap>
 
 namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class PropertyMap : public QObject, public QUpdateTracker
+class PropertyMap : public UserProperty
 {
 	Q_OBJECT
 public:
@@ -26,9 +26,11 @@ public:
 	iterator		begin();
 	iterator		end();
 	iterator		find(QString strName);
+	void			clear();
+	bool			empty() const;
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
-	QString toXML(bool bMakeRoot = true);
+	QString			toXML(bool bMakeRoot = true);
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
 	void			CopyProperty(QString strOldName, PropertyMap & other, 
@@ -42,12 +44,30 @@ public:
 protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
+public:
+	static	int		m_nMetaID;
 protected:
 	QString			CleanUpName(QString strName);
 private:
 	void			copy( const PropertyMap & other );
 	void			destroy();
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+inline void PropertyMap::clear()
+{
+	destroy();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+inline bool PropertyMap::empty() const
+{
+	return m_mapProps.empty();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS
 

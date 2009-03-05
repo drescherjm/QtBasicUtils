@@ -52,6 +52,14 @@ bool test_exportXML(QTUTILS::Property & prop)
 
 int main(int argc, char* argv[])
 {
+
+	int id = qRegisterMetaType<QTUTILS::PropertyMap>();
+
+	int id1 = QMetaType::type("QTUTILS::PropertyMap");
+
+	int id2 = QTUTILS::PropertyMap::m_nMetaID;
+
+
 	QDomDocument domDoc;
 
 	QList<XRVariant> vtList;
@@ -125,6 +133,15 @@ int main(int argc, char* argv[])
 
 	prop.setObjectName("Person");
 	prop.GetData() = QVariant::fromValue(pc);
+
+	int nUserType= prop.GetData().userType();
+	QString str = QMetaType::typeName(nUserType);
+
+	QTUTILS::Property pc2;
+	pc2.GetData() = QVariant(nUserType,new QTUTILS::PropertyMap(pc));
+
+	nUserType= pc2.GetData().userType();
+	str = QMetaType::typeName(nUserType);
 
 	QTUTILS::PropertyMap pc1;
 

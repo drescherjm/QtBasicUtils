@@ -106,6 +106,7 @@ SET( QtBasicUtils_SRCS
 	./src/QCmdHelp.cxx
 	./src/Property.cxx
 	./src/PropertyMap.cxx
+	./src/UserProperty.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -143,14 +144,13 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdArgQStringList.h
 	./include/QCmdArgFileList.h
 	./include/QCmdHelp.h
-	./include/Property.h
-	./include/PropertyMap.h
 	./include/QUpdateTracker.h
 )
 
 SET( QtBasicUtils_MOC_HDRS 
 	./include/Property.h
 	./include/PropertyMap.h
+	./include/UserPropery.h
 )
 
 SET( QtBasicUtils_INT_HDRS
@@ -183,6 +183,7 @@ include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SO
 add_library(QtBasicUtils 
 	${QtBasicUtils_SRCS} 
 	${QtBasicUtils_EXT_HDRS} 
+	${QtBasicUtils_MOC_HDRS} 
 	${QtBasicUtils_MOC_SRCS} 
 	${QtBasicUtils_INT_HDRS} 
 )
