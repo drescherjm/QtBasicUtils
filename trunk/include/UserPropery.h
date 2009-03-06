@@ -3,23 +3,32 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include <QObject>
 #include "QUpdateTracker.h"
+#include <QObject>
+#include <QVariant>
+#include <QDomElement>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-//namespace QTUTILS {
+namespace QTUTILS {
 
-class UserProperty : public QObject, public QTUTILS::QUpdateTracker
+class UserProperty : public QObject , public QTUTILS::QUpdateTracker
 {
+	Q_OBJECT
 public:
 	UserProperty();
 	UserProperty(const UserProperty & other);
 	UserProperty& operator=(const UserProperty & other);
+public:
+	virtual QString		toXML(bool bMakeRoot = true)=0;
+	virtual bool		fromXML(QString strXML)=0;
+	virtual bool		fromXML(QDomElement & domElem)=0;
 private:
 };
 
-//}; //namespace QTUTILS
-Q_DECLARE_METATYPE(UserProperty)
+}; //namespace QTUTILS
+
+//Q_DECLARE_METATYPE(QTUTILS::UserProperty);
+Q_DECLARE_METATYPE(QTUTILS::UserProperty*);
 
 #endif //__USERPROPERY_H__
