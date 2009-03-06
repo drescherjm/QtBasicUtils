@@ -43,7 +43,7 @@ inline bool QUpdateTracker::HasChanged()
 inline bool QUpdateTracker::ForceUnmodified()
 {
 	bool retVal = HasChanged();
-	m_bChanged = FALSE;
+	m_bChanged = false;
 	return retVal;
 }
 
