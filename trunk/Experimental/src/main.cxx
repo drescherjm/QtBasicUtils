@@ -143,6 +143,8 @@ int main(int argc, char* argv[])
 	nUserType= pc2.GetData().userType();
 	str = QMetaType::typeName(nUserType);
 
+	QTUTILS::UserProperty* pProp2 = prop.GetData().value<UserProperty*>();
+
 	QTUTILS::PropertyMap pc1;
 
 	pc1.insert(prop);

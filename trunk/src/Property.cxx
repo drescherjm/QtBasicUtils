@@ -115,7 +115,7 @@ bool Property::fromXML(QString strXML)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-bool Property::fromXML( QDomElement & docElem)
+bool Property::fromXML(QDomElement & docElem)
 {
 	bool retVal = !docElem.isNull();
 	if (retVal) {
