@@ -39,60 +39,60 @@ bool test_exportXML(QTUTILS::Property & prop)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test0()
+static bool test0()
 {
 
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	
 	return test_exportXML(prop);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test1()
+static bool test1()
 {
 
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)37;
+	prop.SetData((int)37);
 	
 	return test_exportXML(prop);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test2()
+static bool test2()
 {
 
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('M');
+	prop.SetData(QChar('M'));
 	
 	return test_exportXML(prop);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test3()
+static bool test3()
 {
 	QTUTILS::PropertyMap pc;
 	QTUTILS::Property prop;
 	
 	prop.setObjectName("Age");
-	prop.GetData() = (int)37;
+	prop.SetData((int)37);
 	pc.insert(prop);
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	pc.insert(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('M');
+	prop.SetData(QChar('M'));
 	pc.insert(prop);
 
 	QString str = pc.toXML();
@@ -112,50 +112,50 @@ bool test3()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test4()
+static bool test4()
 {
 
 	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)37;
+	prop.SetData((int)37);
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Best Friend");
-	prop.GetData() = QString("Kathy M. Zorn");
+	prop.SetData(QString("Kathy M. Zorn"));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('M');
+	prop.SetData(QChar('M'));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Person0");
-	prop.GetData() = QVariant::fromValue(pmJohn);
+	prop.SetData(QVariant::fromValue(pmJohn));
 	pmPeople.insert(prop);
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)40;
+	prop.SetData((int)40);
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("Kathy M. Zorn");
+	prop.SetData(QString("Kathy M. Zorn"));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Best Friend");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('F');
+	prop.SetData(QChar('F'));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Person1");
-	prop.GetData() = QVariant::fromValue(pmKathy);
+	prop.SetData(QVariant::fromValue(pmKathy));
 	pmPeople.insert(prop);
 
 	QString str = pmPeople.toXML();
@@ -176,62 +176,62 @@ bool test4()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test5()
+static bool test5()
 {
 
 	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)37;
+	prop.SetData((int)37);
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Best Friend");
-	prop.GetData() = QString("Kathy M. Zorn");
+	prop.SetData(QString("Kathy M. Zorn"));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('M');
+	prop.SetData(QChar('M'));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("DOB");
-	prop.GetData() = QDate(1972,1,10);
+	prop.SetData(QDate(1972,1,10));
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Some Extra data");
-	prop.GetData() = (float)-1.222;
+	prop.SetData((float)-1.222);
 	pmJohn.insert(prop);
 
 	prop.setObjectName("Person0");
-	prop.GetData() = QVariant::fromValue(pmJohn);
+	prop.SetData(QVariant::fromValue(pmJohn));
 	pmPeople.insert(prop);
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)40;
+	prop.SetData((int)40);
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("Kathy M. Zorn");
+	prop.SetData(QString("Kathy M. Zorn"));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Best Friend");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('F');
+	prop.SetData(QChar('F'));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("DOB");
-	prop.GetData() = QDate(1969,1,13);
+	prop.SetData(QDate(1969,1,13));
 	pmKathy.insert(prop);
 
 	prop.setObjectName("Person1");
-	prop.GetData() = QVariant::fromValue(pmKathy);
+	prop.SetData(QVariant::fromValue(pmKathy));
 	pmPeople.insert(prop);
 
 	QString str = pmPeople.toXML();
@@ -253,7 +253,7 @@ bool test5()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test6()
+static bool test6()
 {
 	//This tests the update tracking of PropertyMap
 
@@ -264,7 +264,7 @@ bool test6()
 
 	if (retVal) {
 		prop.setObjectName("Age");
-		prop.GetData() = (int)37;
+		prop.SetData((int)37);
 		pmJohn.insert(prop);
 		
 		retVal = pmJohn.HasChanged();
@@ -277,16 +277,16 @@ bool test6()
 
 			if (retVal) {
 				prop.setObjectName("Name");
-				prop.GetData() = QString("John M. Drescher");
+				prop.SetData(QString("John M. Drescher"));
 				pmJohn.insert(prop);
 
 
 				prop.setObjectName("Best Friend");
-				prop.GetData() = QString("Kathy M. Zorn");
+				prop.SetData(QString("Kathy M. Zorn"));
 				pmJohn.insert(prop);
 
 				prop.setObjectName("Sex");
-				prop.GetData() = QChar('M');
+				prop.SetData(QChar('M'));
 				pmJohn.insert(prop);
 
 				retVal = pmJohn.HasChanged();

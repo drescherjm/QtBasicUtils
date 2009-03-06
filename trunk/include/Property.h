@@ -5,6 +5,8 @@
 #include <QDomElement>
 #include <QObject>
 
+#include "UserPropPtr.h"
+
 namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +20,11 @@ public:
 	Property(const Property & other);
 	Property& operator=(const Property & other);
 public:
-	QVariant&	GetData();
+	const QVariant&		GetData() const;
+	QVariant&			SetData(const QVariant&);
+	QVariant&			SetData( const UserPropPtr & ptr);
+	operator UserPropPtr() const;
+public:
 	QString		toXML();
 	bool		fromXML(QString strXML);
 	bool		fromXML(QDomElement & domElem);

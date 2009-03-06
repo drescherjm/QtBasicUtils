@@ -2,7 +2,20 @@
 
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
 include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include ./include)
-add_executable(BasicTest ./src/basic.cxx ./src/testxml.cxx ./include/testxml.h)
+
+set(TEST_SRCS 
+	./src/basic.cxx 
+	./src/testxml.cxx
+	./src/testUserProps.cxx
+)
+
+set(TEST_HDRS
+	./include/testxml.h
+	./include/testUserProps.h
+)
+
+
+add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
 
 add_dependencies(BasicTest QtBasicUtils)
 
@@ -52,4 +65,13 @@ ADD_TEST(XMLExport3	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 3)
 ADD_TEST(XMLExport4	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 4)	
 ADD_TEST(XMLExport5	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 5)	
 ADD_TEST(XMLExport6	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 6)	
-ADD_TEST(XMLExport7	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 7)	
+
+ADD_TEST(UserProp0	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 0)	
+ADD_TEST(UserProp1	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 1)	
+ADD_TEST(UserProp2	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 2)	
+ADD_TEST(UserProp3	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 3)	
+ADD_TEST(UserProp4	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 4)	
+ADD_TEST(UserProp5	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 5)	
+
+
+

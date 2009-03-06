@@ -7,12 +7,13 @@
 #include <QObject>
 #include <QVariant>
 #include <QDomElement>
+#include <QSharedData>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 namespace QTUTILS {
 
-class UserProperty : public QObject , public QTUTILS::QUpdateTracker
+class UserProperty : public QObject , public QTUTILS::QUpdateTracker, public QSharedData
 {
 	Q_OBJECT
 public:

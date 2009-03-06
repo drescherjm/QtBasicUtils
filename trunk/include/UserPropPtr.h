@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QVariant>
+#include <QDomElement>
+#include <QExplicitlySharedDataPointer>
 
 namespace QTUTILS {
 
@@ -18,8 +20,18 @@ public:
 	UserPropPtr(UserProperty* pProp);
 	UserPropPtr(const UserPropPtr & other);
 	UserPropPtr& operator=(const UserPropPtr & other);
+public:
+	bool				isNull();
+	QString				toXML(bool bMakeRoot = true);
+	bool				fromXML(QString strXML);
+	bool				fromXML(QDomElement & domElem);
+	UserProperty*		data();
+	const UserProperty*	data() const;
+private:
+	void		copy(const UserPropPtr & other);
+	void		destroy();
 protected:
-	UserProperty*		m_pProp;
+	QExplicitlySharedDataPointer<UserProperty>	m_pProp;
 };
 
 }; //namespace QTUTILS

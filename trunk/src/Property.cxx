@@ -54,7 +54,7 @@ void Property::destroy()
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-QVariant& Property::GetData()
+const QVariant& Property::GetData() const
 {
 	return m_vt;
 }
@@ -89,12 +89,20 @@ QString	Property::toXML()
 
 		retVal = strTemp;
 	}
-	else  {
-		int x=x;
-		/*
-		int nId = QMetaType::type(strTypeName.toStdString().c_str());
-		void* ptr = QMetaType::construct(nId);
-		*/
+	else  if (GetData().canConvert<UserPropPtr>()) {
+		UserPropPtr ptr = GetData().value<UserPropPtr>();
+		if (!ptr.isNull()) {
+			retVal = ptr.toXML(false);
+			QString strName = objectName();
+			QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">\n%4</%1>\n")
+				.arg(strName)
+				.arg(ty)
+				.arg(GetData().typeName())
+				.arg(retVal);
+
+			retVal = strTemp;
+		}
+
 	}
 	return retVal;
 
@@ -189,7 +197,7 @@ bool Property::fromXML(QDomElement & docElem)
 								retVal = !e.isNull();
 								if (retVal) {
 									pProp->fromXML(e);
-									GetData() = QVariant(nId,pProp);
+									SetData(QVariant(nId,pProp));
 
 									setObjectName(docElem.tagName());
 								}
@@ -205,6 +213,28 @@ bool Property::fromXML(QDomElement & docElem)
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QVariant& Property::SetData( const QVariant& vt )
+{
+	m_vt = vt;
+	return m_vt;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QVariant& Property::SetData( const UserPropPtr & ptr )
+{
+	m_vt = QVariant::fromValue<UserPropPtr>(ptr);
+	return m_vt;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Property::operator UserPropPtr() const
+{
+	return GetData().value<UserPropPtr>();
+}
 //////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS

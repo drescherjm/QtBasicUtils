@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 	QTUTILS::Property prop;
 
 	prop.setObjectName("Name");
-	prop.GetData() = QString("John M. Drescher");
+	prop.SetData(QString("John M. Drescher"));
 	std::cout << prop.toXML().toStdString() << std::endl;
 
 	test_exportXML(prop);
@@ -97,14 +97,14 @@ int main(int argc, char* argv[])
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
-	prop.GetData() = (int)37;
+	prop.SetData((int)37);
 	pc.insert(prop);
 	std::cout << prop.toXML().toStdString() << std::endl;
 
 	test_exportXML(prop);
 
 	prop.setObjectName("Sex");
-	prop.GetData() = QChar('M');
+	prop.SetData(QChar('M'));
 
 	test_exportXML(prop);
 
@@ -132,13 +132,29 @@ int main(int argc, char* argv[])
 	}
 
 	prop.setObjectName("Person");
-	prop.GetData() = QVariant::fromValue(pc);
+	prop.SetData(QVariant::fromValue(pc));
 
 	int nUserType= prop.GetData().userType();
 	QString str = QMetaType::typeName(nUserType);
 
 	QTUTILS::Property pc2;
-	pc2.GetData() = QVariant(nUserType+1,new QTUTILS::PropertyMap(pc));
+	pc2.SetData(UserPropPtr(new QTUTILS::PropertyMap(pc)));
+
+	str = pc2.toXML();
+
+	if (pc2.GetData().canConvert<UserPropPtr>()) {
+		UserPropPtr ptr = pc2.GetData().value<UserPropPtr>();
+		str = ptr.toXML();
+		UserPropPtr ptr1 = pc2;
+		QString str_1 = ptr1.toXML();
+		QTUTILS::PropertyMap* pPM1 = dynamic_cast<QTUTILS::PropertyMap*>(ptr1.data());
+		if (pPM1) {
+			prop.SetData(QDate(1972,1,10));
+			prop.setObjectName("DOB");
+			pPM1->insert(prop);
+		}
+		QString str_2 = ptr1.toXML();
+	}
 
 	nUserType= pc2.GetData().userType();
 	str = QMetaType::typeName(nUserType);
@@ -151,7 +167,7 @@ int main(int argc, char* argv[])
 	pc1.insert(prop);
 
 	prop.setObjectName("Test");
-	prop.GetData() = QString("Test");
+	prop.SetData(QString("Test"));
 	pc1.insert(prop);
 
 	QString strXML = pc1.toXML();

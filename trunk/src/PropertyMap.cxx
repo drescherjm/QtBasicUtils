@@ -95,6 +95,10 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 	if (pProp != NULL) {
 		QString strName = CleanUpName(pProp->objectName());
 		pProp->setObjectName(strName);
+
+		// Remove the old if found otherwise there would be a memory leak.
+		RemoveProperty(strName); 
+
 		retVal = m_mapProps.insert(strName,pProp);
 		if (retVal != m_mapProps.end()) {
 			Modify();

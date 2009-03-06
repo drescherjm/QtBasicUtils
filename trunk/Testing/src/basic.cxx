@@ -7,6 +7,7 @@
 #include "QCmdParseException.h"
 #include "QCmdHelpException.h"
 #include "testxml.h"
+#include "testUserProps.h"
 
 #include <math.h>
 
@@ -247,6 +248,31 @@ int QCmdDoubleArgs::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class QCmdEnter : public QCmd
+{
+public:
+	QCmdEnter(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+QCmdEnter::QCmdEnter(QString strName, QString strDescription) :
+QCmd(strName,strDescription)
+{
+	
+}
+
+int QCmdEnter::Execute()
+{
+	
+	std::cout << "Press a key then enter to continue!" << std::endl;
+
+	int c;
+	std::cin >> c;
+
+	return QCmdParseError::STATUS_OK;
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -257,24 +283,28 @@ int main(int argc, char* argv[])
 
 
 	try {
+		QCmdEnter			cmdEnter("PAUSE","Use this to require user to press enter to exit." );
 		QCmdTest			cmdTest("Test","This is the test command");
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
 		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
-		QCmdTestXMLExport	cmdTestXMLEXP("XMLEXP","This tests varios exports of xml on the Property class.");
+		QCmdTestXMLExport	cmdTestXMLEXP("XMLEXP","This tests various exports of xml on the Property class.");
+		QCmdTestUserProps	cmdTestUserProps("USERPROP","This tests various exports of examples of using UserProps with the Property class.");
 
 
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
+		myCmdLine.AddCmd(&cmdEnter);
 		myCmdLine.AddCmd(&cmdTest);
 		myCmdLine.AddCmd(&cmdStrLstArg);
 		myCmdLine.AddCmd(&cmdStrLstOpt);
 		myCmdLine.AddCmd(&cmdFloatArgs);
 		myCmdLine.AddCmd(&cmdDoubleArgs);
 		myCmdLine.AddCmd(&cmdTestXMLEXP);
+		myCmdLine.AddCmd(&cmdTestUserProps);
 		myCmdLine.AddCmd(&myHelp);
 		
 		myCmdLine.Parse();
@@ -326,12 +356,6 @@ int main(int argc, char* argv[])
 
 		std::cout << "FAILED" << std::endl;
 	}
-
-
-#ifndef __GNUC__
-	int c;
-	std::cin >> c;
-#endif //ndef __GNUC__
 
 	return retVal;
 }
