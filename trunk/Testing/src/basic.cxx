@@ -281,7 +281,6 @@ int main(int argc, char* argv[])
 	
 	int retVal =0;
 
-
 	try {
 		QCmdEnter			cmdEnter("PAUSE","Use this to require user to press enter to exit." );
 		QCmdTest			cmdTest("Test","This is the test command");
