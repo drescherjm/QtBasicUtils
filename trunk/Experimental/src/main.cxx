@@ -138,12 +138,13 @@ int main(int argc, char* argv[])
 	QString str = QMetaType::typeName(nUserType);
 
 	QTUTILS::Property pc2;
-	pc2.GetData() = QVariant(nUserType,new QTUTILS::PropertyMap(pc));
+	pc2.GetData() = QVariant(nUserType+1,new QTUTILS::PropertyMap(pc));
 
 	nUserType= pc2.GetData().userType();
 	str = QMetaType::typeName(nUserType);
 
-	QTUTILS::UserProperty* pProp2 = prop.GetData().value<UserProperty*>();
+	QTUTILS::UserProperty* pProp2 = pc2.GetData().value<UserProperty*>();
+	QTUTILS::PropertyMap* pProp3 = pc2.GetData().value<PropertyMap*>();
 
 	QTUTILS::PropertyMap pc1;
 

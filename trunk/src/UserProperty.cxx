@@ -9,6 +9,7 @@
 #include <QFile>
 #include <iostream>
 */
+static int m_nMetaID = qRegisterMetaType<QTUTILS::UserProperty*>();
 
 namespace QTUTILS {
 

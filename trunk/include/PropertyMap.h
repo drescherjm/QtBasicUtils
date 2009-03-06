@@ -74,5 +74,6 @@ inline bool PropertyMap::empty() const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 Q_DECLARE_METATYPE(QTUTILS::PropertyMap)
+Q_DECLARE_METATYPE(QTUTILS::PropertyMap*)
 
 #endif //__PROPERTYMAP_H__

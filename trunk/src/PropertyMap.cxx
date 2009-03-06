@@ -8,6 +8,7 @@
 namespace QTUTILS {
 
 int PropertyMap::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
+static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap*>();
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
