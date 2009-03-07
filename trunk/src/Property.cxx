@@ -1,6 +1,6 @@
 #include "Property.h"
 #include "PropertyMap.h"
-
+#include "PropXMLHelper.h"
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
@@ -185,27 +185,10 @@ bool Property::fromXML(QDomElement & docElem)
 							}
 						}
 #else						
-						int nId = QMetaType::type(strTypeName.toStdString().c_str());
-
-						void* ptr = QMetaType::construct(nId);
-
-						UserProperty* pProp = reinterpret_cast<UserProperty*>(ptr);
-						if (pProp) {
-							QDomNode n = docElem.firstChild();
-
-							retVal = !n.isNull();
-
-							if (retVal) {
-								QDomElement e = n.toElement();
-								retVal = !e.isNull();
-								if (retVal) {
-									pProp->fromXML(e);
-									SetData(QVariant(nId,pProp));
-
-									setObjectName(docElem.tagName());
-								}
-							}
-							QMetaType::destroy(nId,ptr);
+						UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetfromXMLHelper(strTypeName);
+						retVal = (pHlpr != NULL);
+						if (retVal) {
+							retVal = pHlpr->fromXML(this,docElem);
 						}
 #endif 
 					}

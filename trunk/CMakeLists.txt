@@ -149,6 +149,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdHelp.h
 	./include/QUpdateTracker.h
 	./include/PropXMLHelper.h
+	./include/NonThreadSafeSingleton.h
 )
 
 SET( QtBasicUtils_MOC_HDRS 

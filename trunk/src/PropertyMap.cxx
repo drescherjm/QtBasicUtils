@@ -22,7 +22,10 @@ public:
 
 ProperyMapXMLHelper::ProperyMapXMLHelper(const char* className) : UserPropXMLHelper(className)
 {
-	PropXMLHelper::addHelper(this);
+	PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+	if (pPropXMLHelper != NULL) {
+		pPropXMLHelper->addHelper(this);
+	}	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +58,7 @@ bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 int PropertyMap::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
 static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap*>();
 
-ProperyMapXMLHelper hlpr(QMetaType::typeName(m_nMetaID));
+ProperyMapXMLHelper hlpr(QMetaType::typeName(PropertyMap::m_nMetaID));
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
