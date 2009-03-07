@@ -1,11 +1,63 @@
 #include "UserPropPtr.h"
 #include "UserPropery.h"
+#include "PropXMLHelper.h"
+#include "Property.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static int nTypeID =  qRegisterMetaType<QTUTILS::UserPropPtr>();
-
 namespace QTUTILS {
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	class UserPropPtrXMLHelper : public UserPropXMLHelper
+	{
+	public:
+		UserPropPtrXMLHelper(const char* className);
+	public:
+		virtual bool fromXML(Property* pProp,QDomElement & domElem);
+	};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	UserPropPtrXMLHelper::UserPropPtrXMLHelper(const char* className) : UserPropXMLHelper(className)
+	{
+		PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+		if (pPropXMLHelper != NULL) {
+			pPropXMLHelper->addHelper(this);
+		}	
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+	{
+		bool retVal = (pProp != NULL);
+		if (retVal) {
+			UserPropPtr ptr;
+
+			QDomNode n = docElem.firstChild();
+
+			retVal = !n.isNull();
+
+			if (retVal) {
+				QDomElement e = n.toElement();
+				retVal = !e.isNull();
+				if (retVal) {
+					ptr.fromXML(e);
+					pProp->SetData(QVariant::fromValue<UserPropPtr>(ptr));
+					pProp->setObjectName(docElem.tagName());
+				}
+			}
+		}
+		return retVal;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	static int m_nMetaID = qRegisterMetaType<QTUTILS::UserPropPtr>();
+
+	UserPropPtrXMLHelper hlpr(QMetaType::typeName(m_nMetaID));
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
