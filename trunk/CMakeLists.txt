@@ -108,6 +108,7 @@ SET( QtBasicUtils_SRCS
 	./src/PropertyMap.cxx
 	./src/UserProperty.cxx
 	./src/UserPropPtr.cxx
+	./src/PropertyList.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -153,6 +154,7 @@ SET( QtBasicUtils_MOC_HDRS
 	./include/PropertyMap.h
 	./include/UserPropery.h
 	./include/UserPropPtr.h
+	./include/PropertyList.h
 )
 
 SET( QtBasicUtils_INT_HDRS

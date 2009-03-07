@@ -46,7 +46,7 @@ void UserPropPtr::destroy()
 
 bool UserPropPtr::isNull()
 {
-	return (m_pProp == NULL);
+	return !m_pProp;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
