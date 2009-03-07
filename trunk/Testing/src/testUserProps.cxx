@@ -8,6 +8,7 @@
 #include "QCmdParseException.h"
 #include "QCmdHelpException.h"
 #include "PropertyMap.h"
+#include "PropertyList.h"
 #include <iostream>
 #include <QDate>
 
@@ -58,6 +59,35 @@ static bool add_John(PropertyMap* pPM)
 			
 		}
 		
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+static bool add_John(PropertyList* pPL)
+{
+	bool retVal = (pPL != NULL);
+
+	if (retVal) {
+		Property prop;
+
+		prop.SetData((int)37);
+		prop.setObjectName("Age");
+		pPL->push_back(prop);
+
+		prop.SetData(QChar('M'));
+		prop.setObjectName("Sex");
+		pPL->push_back(prop);
+
+		prop.SetData(QString("John M. Drescher"));
+		prop.setObjectName("Name");
+		pPL->push_back(prop);
+
+		prop.SetData(QDate(1972,1,10));
+		prop.setObjectName("DOB");
+		pPL->push_back(prop);
 	}
 
 	return retVal;
@@ -286,6 +316,35 @@ static bool test5()
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+static bool test6()
+{
+	bool retVal;
+	PropertyList* pPList = new PropertyList;
+	retVal = (pPList != NULL);
+
+	if (retVal) {
+		Property	prop;
+		UserPropPtr ptr(pPList);
+		retVal = add_John(dynamic_cast<PropertyList*>(ptr.data()));
+		prop.SetData(ptr);
+		prop.setObjectName("Person0");
+
+		if (retVal) {
+
+			retVal = prop.Save("PLUserSave.xml");
+
+			if (retVal) {
+				Property prop1;
+				prop1.Load("PLUserSave.xml");
+			}
+
+		}
+	}
+
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -315,11 +374,10 @@ int QTUTILS::QCmdTestUserProps::Execute()
 		break;
 	case 5:
 		bVal = test5();
-		break;/*
+		break;
 	case 6:
 		bVal = test6();
 		break;
-	*/
 	default:
 		bVal = false;
 	}

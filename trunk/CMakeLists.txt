@@ -109,6 +109,7 @@ SET( QtBasicUtils_SRCS
 	./src/UserProperty.cxx
 	./src/UserPropPtr.cxx
 	./src/PropertyList.cxx
+	./src/PropXMLHelper.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -147,6 +148,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdArgFileList.h
 	./include/QCmdHelp.h
 	./include/QUpdateTracker.h
+	./include/PropXMLHelper.h
 )
 
 SET( QtBasicUtils_MOC_HDRS 

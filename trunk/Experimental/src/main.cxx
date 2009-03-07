@@ -1,6 +1,7 @@
 #include "xrvariant.h"
 #include "Property.h"
 #include "PropertyMap.h"
+#include "PropertyList.h"
 
 #include <iostream>
 #include <QFile>

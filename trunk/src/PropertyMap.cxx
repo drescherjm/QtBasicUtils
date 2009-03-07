@@ -1,4 +1,5 @@
 #include "PropertyMap.h"
+#include "PropXMLHelper.h"
 
 #include <QDomDocument>
 #include <QTextStream>
@@ -7,8 +8,54 @@
 
 namespace QTUTILS {
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class ProperyMapXMLHelper : public UserPropXMLHelper
+{
+public:
+	ProperyMapXMLHelper(const char* className);
+public:
+	virtual bool fromXML(Property* pProp,QDomElement & domElem);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+ProperyMapXMLHelper::ProperyMapXMLHelper(const char* className) : UserPropXMLHelper(className)
+{
+	PropXMLHelper::addHelper(this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+{
+	bool retVal = (pProp != NULL);
+	if (retVal) {
+		PropertyMap pm;
+	
+		QDomNode n = docElem.firstChild();
+
+		retVal = !n.isNull();
+
+		if (retVal) {
+			QDomElement e = n.toElement();
+			retVal = !e.isNull();
+			if (retVal) {
+				pm.fromXML(e);
+				pProp->SetData(QVariant::fromValue<PropertyMap>(pm));
+				pProp->setObjectName(docElem.tagName());
+			}
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int PropertyMap::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
 static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap*>();
+
+ProperyMapXMLHelper hlpr(QMetaType::typeName(m_nMetaID));
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -255,35 +302,40 @@ void PropertyMap::addProperties(PropertyMap * pOther)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void printDomElem(QDomElement & e)
+//This is just for debugging
+#if 0
+
+static void printDomElem(QDomElement & e)
 {
 	std::cout << "Parse Begin" << std::endl;
 	std::cout << e.tagName().toStdString() << std::endl; // the node really is an element.
 	if(e.hasAttribute("tyID")) {
-		QString strAttr = e.attribute("tyID");
-		if (!strAttr.isEmpty()) {
-			std::cout << strAttr.toStdString() << std::endl;
-		}
+				QString strAttr = e.attribute("tyID");
+				if (!strAttr.isEmpty()) {
+					std::cout << strAttr.toStdString() << std::endl;
+				}
 	}
 	if(e.hasAttribute("tyName")) {
-		QString strAttr = e.attribute("tyName");
-		if (!strAttr.isEmpty()) {
-			std::cout << strAttr.toStdString() << std::endl;
-		}
+				QString strAttr = e.attribute("tyName");
+				if (!strAttr.isEmpty()) {
+					std::cout << strAttr.toStdString() << std::endl;
+				}
 	}
 
 	std::cout << e.text().toStdString() << std::endl;
 
 	std::cout << e.prefix().toStdString() << std::endl;
 
-	QString str;
-	QTextStream stream(&str);
+		QString str;
+			QTextStream stream(&str);
 
-	e.save(stream,0);
-	
-	std::cout << str.toStdString() << std::endl;
-	std::cout << "Parse End." << std::endl << std::endl;
+				e.save(stream,0);
+					
+				std::cout << str.toStdString() << std::endl;
+				std::cout << "Parse End." << std::endl << std::endl;
 }
+#endif //0
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
