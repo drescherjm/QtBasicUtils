@@ -24,6 +24,8 @@ public:
 	virtual QString		toXML(bool bMakeRoot = true)=0;
 	virtual bool		fromXML(QString strXML)=0;
 	virtual bool		fromXML(QDomElement & domElem)=0;
+	virtual bool		Load(QString strFile)=0;
+	virtual bool		Save(QString strFile)=0;
 private:
 };
 

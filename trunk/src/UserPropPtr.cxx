@@ -56,6 +56,15 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/ )
 	QString retVal;
 	if (!isNull()) {
 		retVal = m_pProp->toXML(bMakeRoot);
+		if (!retVal.isEmpty()) {
+			QString strOpen = QString("<UserProp tyName=\"%1\">")
+										.arg(typeName());
+			
+			retVal.prepend(strOpen);
+
+			retVal.append("</UserProp>");
+
+		}
 	}
 	return retVal;
 }
@@ -73,6 +82,53 @@ const UserProperty* UserPropPtr::data() const
 {
 	return m_pProp.data();
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString UserPropPtr::typeName() const
+{
+	QString retVal = data()->metaObject()->className();
+	if (!retVal.isEmpty()) {
+		retVal.append("*");
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool UserPropPtr::fromXML( QString strXML )
+{
+	bool retVal;
+
+	QDomDocument doc;
+	doc.setContent(strXML);
+
+	QDomElement docElem = doc.documentElement();
+
+	QString strTypeName = docElem.attribute("tyName");
+
+	QDomNode n = docElem.firstChild();
+
+	retVal = !n.isNull();
+
+	if (retVal) {
+		QDomElement e = n.toElement();
+		retVal = !e.isNull();
+		if (retVal) {
+			retVal = fromXML(e);
+		}
+	}
+
+	return retVal;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool UserPropPtr::fromXML( QDomElement & domElem )
+{
+	return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS

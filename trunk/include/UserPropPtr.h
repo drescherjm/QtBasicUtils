@@ -27,6 +27,7 @@ public:
 	bool				fromXML(QDomElement & domElem);
 	UserProperty*		data();
 	const UserProperty*	data() const;
+	QString				typeName() const; 
 private:
 	void		copy(const UserPropPtr & other);
 	void		destroy();

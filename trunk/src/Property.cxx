@@ -1,6 +1,8 @@
 #include "Property.h"
 #include "PropertyMap.h"
 
+#include <QFile>
+#include <QTextStream>
 #include <QRegExp>
 #include <QDomDocument>
 
@@ -94,6 +96,7 @@ QString	Property::toXML()
 		if (!ptr.isNull()) {
 			retVal = ptr.toXML(false);
 			QString strName = objectName();
+
 			QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">\n%4</%1>\n")
 				.arg(strName)
 				.arg(ty)
@@ -218,6 +221,7 @@ bool Property::fromXML(QDomElement & docElem)
 QVariant& Property::SetData( const QVariant& vt )
 {
 	m_vt = vt;
+	Modify();
 	return m_vt;
 }
 
@@ -226,6 +230,7 @@ QVariant& Property::SetData( const QVariant& vt )
 QVariant& Property::SetData( const UserPropPtr & ptr )
 {
 	m_vt = QVariant::fromValue<UserPropPtr>(ptr);
+	Modify();
 	return m_vt;
 }
 
@@ -236,5 +241,44 @@ Property::operator UserPropPtr() const
 	return GetData().value<UserPropPtr>();
 }
 //////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool Property::Load( QString strFile )
+{
+	QFile file(strFile);
+	bool retVal = file.open(QFile::ReadOnly|QFile::Text);
+	if (retVal) {
+		QString strXML;
+		QTextStream stream(&file);
+		strXML = stream.readAll();
+
+		retVal = fromXML(strXML);
+		if (retVal) {
+			ForceUnmodified();
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool Property::Save( QString strFile )
+{
+	QString strXML = toXML();
+	bool retVal = !strXML.isEmpty();
+	if (retVal) {
+		QFile file(strFile);
+		retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);
+		if (retVal) {
+			QTextStream stream(&file);
+			stream << strXML;
+			ForceUnmodified();
+		}
+	}
+	return retVal;
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
 
 }; // namespace QTUTILS

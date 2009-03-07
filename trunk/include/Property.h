@@ -6,12 +6,13 @@
 #include <QObject>
 
 #include "UserPropPtr.h"
+#include "QUpdateTracker.h"
 
 namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class Property : public QObject
+class Property : public QObject, public QTUTILS::QUpdateTracker
 {
 	Q_OBJECT
 public:
@@ -28,6 +29,8 @@ public:
 	QString		toXML();
 	bool		fromXML(QString strXML);
 	bool		fromXML(QDomElement & domElem);
+	bool		Load(QString strFile);
+	bool		Save(QString strFile);
 private:
 	void		copy( const Property & other );
 	void		destroy();
