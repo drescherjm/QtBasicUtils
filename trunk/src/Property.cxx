@@ -163,34 +163,11 @@ bool Property::fromXML(QDomElement & docElem)
 					QString strTypeName = docElem.attribute("tyName");
 					retVal = !strTypeName.isEmpty();
 					if (retVal) {
-#if 0
-						QString strType = strTypeName.right(11);
-						QString strTest = "PropertyMap";
-						if (strType.compare(strTest,Qt::CaseInsensitive) == 0) {
-
-							PropertyMap pm;
-							
-							QDomNode n = docElem.firstChild();
-
-							retVal = !n.isNull();
-
-							if (retVal) {
-								QDomElement e = n.toElement();
-								retVal = !e.isNull();
-								if (retVal) {
-									pm.fromXML(e);
-									GetData() = QVariant::fromValue(pm);
-									setObjectName(docElem.tagName());
-								}
-							}
-						}
-#else						
-						UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetfromXMLHelper(strTypeName);
+						UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
 						retVal = (pHlpr != NULL);
 						if (retVal) {
 							retVal = pHlpr->fromXML(this,docElem);
 						}
-#endif 
 					}
 				}
 		}

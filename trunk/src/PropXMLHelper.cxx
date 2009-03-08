@@ -7,7 +7,7 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropXMLHelper* PropXMLHelper::GetfromXMLHelper(QString strClassName)
+UserPropXMLHelper* PropXMLHelper::GetXMLHelper(QString strClassName)
 {
 	UserPropXMLHelper* retVal = NULL;
 	QMutexLocker lock(&m_mutex);

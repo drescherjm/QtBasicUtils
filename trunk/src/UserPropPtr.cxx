@@ -32,23 +32,45 @@ namespace QTUTILS {
 	bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 	{
 		bool retVal = (pProp != NULL);
+	
+		QDomNode n =docElem.firstChild();
+		retVal = !n.isNull();
 		if (retVal) {
-			UserPropPtr ptr;
-
-			QDomNode n = docElem.firstChild();
-
-			retVal = !n.isNull();
-
+			QDomElement e = n.toElement();
+			retVal = !e.isNull();
 			if (retVal) {
-				QDomElement e = n.toElement();
-				retVal = !e.isNull();
+				QString strTypeName = e.attribute("tyName");
+
+				UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
+
+
+				retVal = (pHlpr != NULL);
+			
 				if (retVal) {
-					ptr.fromXML(e);
-					pProp->SetData(QVariant::fromValue<UserPropPtr>(ptr));
-					pProp->setObjectName(docElem.tagName());
+					UserProperty* pUserProp = pHlpr->construct();
+					retVal = (pUserProp != NULL);
+					if (retVal) {
+						QDomNode n = e.firstChild();
+
+						retVal = !n.isNull();
+
+						if (retVal) {
+							QDomElement e = n.toElement();
+							retVal = !e.isNull();
+							if (retVal) {
+								pUserProp->fromXML(e);
+								pProp->SetData(UserPropPtr(pUserProp));
+
+								pProp->setObjectName(docElem.tagName());
+							}
+						}
+					}
 				}
 			}
+			
 		}
+
+
 		return retVal;
 	}
 
@@ -176,7 +198,7 @@ bool UserPropPtr::fromXML( QString strXML )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::fromXML( QDomElement & domElem )
+bool UserPropPtr::fromXML( QDomElement & docElem )
 {
 	return false;
 }

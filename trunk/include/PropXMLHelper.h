@@ -10,6 +10,7 @@
 namespace QTUTILS {
 
 class Property;
+class UserProperty;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,11 +19,12 @@ struct UserPropXMLHelper
 public:
 	UserPropXMLHelper(const char* strName);
 public:
-	const char* GetClassName() const;
+	const char*		GetClassName() const;
 public:
 	virtual bool	fromXML(Property* pProp,QDomElement & domElem)=0;
+	virtual UserProperty* construct();
 public:
-	const char* m_strClasName;
+	const char*		m_strClasName;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -41,11 +43,18 @@ inline const char* UserPropXMLHelper::GetClassName() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+inline UserProperty* UserPropXMLHelper::construct()
+{
+	return NULL;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 class PropXMLHelper : public NonThreadSafeSingleton<PropXMLHelper>
 {
 public:
 	bool addHelper(UserPropXMLHelper* pHlpr);
-	UserPropXMLHelper* GetfromXMLHelper(QString strClassName);
+	UserPropXMLHelper* GetXMLHelper(QString strClassName);
 
 	typedef QMap<QString,UserPropXMLHelper*> MapHelpers;
 private:

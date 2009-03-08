@@ -1,4 +1,5 @@
 #include "PropertyList.h"
+#include "PropXMLHelper.h"
 
 #include <QDomDocument>
 #include <QTextStream>
@@ -8,9 +9,48 @@
 namespace QTUTILS {
 
 	//int PropertyList::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList>();
-	static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList*>();
 
-	/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	class ProperyListXMLHelper : public UserPropXMLHelper
+	{
+	public:
+		ProperyListXMLHelper(const char* className);
+	public:
+		virtual bool fromXML(Property* pProp,QDomElement & domElem);
+		virtual UserProperty* construct();
+	};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	ProperyListXMLHelper::ProperyListXMLHelper(const char* className) : UserPropXMLHelper(className)
+	{
+		PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+		if (pPropXMLHelper != NULL) {
+			pPropXMLHelper->addHelper(this);
+		}	
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	bool ProperyListXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+	{
+		return false;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	UserProperty* ProperyListXMLHelper::construct()
+	{
+		return new PropertyList;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	int PropertyList::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList*>();
+	ProperyListXMLHelper hlpr(QMetaType::typeName(PropertyList::m_nMetaID));
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 	PropertyList::PropertyList() 
 	{

@@ -337,7 +337,13 @@ static bool test6()
 
 			if (retVal) {
 				Property prop1;
-				prop1.Load("PLUserSave.xml");
+				retVal = prop1.Load("PLUserSave.xml");
+				if (retVal) {
+					QString strXML0 = prop.toXML();
+					QString strXML1 = prop1.toXML();
+
+					retVal =(strXML0.compare(strXML1) == 0);
+				}
 			}
 
 		}
