@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 
 	int id1 = QMetaType::type("QTUTILS::PropertyMap");
 
-	int id2 = QTUTILS::PropertyMap::m_nMetaID;
+	//int id2 = QTUTILS::PropertyMap::m_nMetaID;
 
 
 	QDomDocument domDoc;

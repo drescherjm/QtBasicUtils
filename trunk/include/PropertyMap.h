@@ -44,8 +44,6 @@ public:
 protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
-public:
-	static	int		m_nMetaID;
 protected:
 	QString			CleanUpName(QString strName);
 private:

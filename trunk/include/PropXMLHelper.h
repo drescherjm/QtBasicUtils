@@ -21,32 +21,11 @@ public:
 public:
 	const char*		GetClassName() const;
 public:
-	virtual bool	fromXML(Property* pProp,QDomElement & domElem)=0;
+	virtual bool	fromXML(Property* pProp,QDomElement & domElem);
 	virtual UserProperty* construct();
 public:
 	const char*		m_strClasName;
 };
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-inline UserPropXMLHelper::UserPropXMLHelper(const char* strName) : m_strClasName(strName)
-{
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-inline const char* UserPropXMLHelper::GetClassName() const
-{
-	return m_strClasName;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-inline UserProperty* UserPropXMLHelper::construct()
-{
-	return NULL;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
