@@ -12,19 +12,16 @@ namespace QTUTILS {
 	class UserPropPtrXMLHelper : public UserPropXMLHelper
 	{
 	public:
-		UserPropPtrXMLHelper(const char* className);
+		UserPropPtrXMLHelper(int nMetaTypeID);
 	public:
 		virtual bool fromXML(Property* pProp,QDomElement & domElem);
 	};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	UserPropPtrXMLHelper::UserPropPtrXMLHelper(const char* className) : UserPropXMLHelper(className)
+	UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
 	{
-		PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
-		if (pPropXMLHelper != NULL) {
-			pPropXMLHelper->addHelper(this);
-		}	
+		
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +75,7 @@ namespace QTUTILS {
 
 	static int m_nMetaID = qRegisterMetaType<QTUTILS::UserPropPtr>();
 
-	UserPropPtrXMLHelper hlpr(QMetaType::typeName(m_nMetaID));
+	UserPropPtrXMLHelper hlpr(m_nMetaID);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////

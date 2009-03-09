@@ -48,7 +48,10 @@ namespace QTUTILS {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	int PropertyList::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList*>();
-	ProperyListXMLHelper hlpr(QMetaType::typeName(PropertyList::m_nMetaID));
+	//ProperyListXMLHelper hlpr(QMetaType::typeName(PropertyList::m_nMetaID));
+
+	UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
