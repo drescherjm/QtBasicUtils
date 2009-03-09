@@ -1,4 +1,5 @@
 #include "PropXMLHelper.h"
+#include <QMetaType>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -8,7 +9,15 @@ namespace QTUTILS {
 
 	UserPropXMLHelper::UserPropXMLHelper(const char* strName) : m_strClasName(strName)
 	{
+		Initialize();
+	}
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	UserPropXMLHelper::UserPropXMLHelper( int nMetaTypeId )
+	{
+		m_strClasName = QMetaType::typeName(nMetaTypeId);
+		Initialize();
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +39,16 @@ namespace QTUTILS {
 	bool UserPropXMLHelper::fromXML(Property* pProp,QDomElement & domElem)
 	{
 		return false;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void UserPropXMLHelper::Initialize()
+	{
+		PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+		if (pPropXMLHelper != NULL) {
+			pPropXMLHelper->addHelper(this);
+		}	
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////

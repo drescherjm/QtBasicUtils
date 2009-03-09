@@ -16,23 +16,29 @@ class UserPropPtr : public QObject
 {
 Q_OBJECT
 public:
+	typedef QExplicitlySharedDataPointer<UserProperty> SharedPtr;
+public:
 	UserPropPtr();
-	UserPropPtr(UserProperty* pProp);
+	UserPropPtr(UserProperty* pProp, bool bAutoDelete=true);
 	UserPropPtr(const UserPropPtr & other);
 	UserPropPtr& operator=(const UserPropPtr & other);
+	UserPropPtr(SharedPtr & other);
 public:
-	bool				isNull();
-	QString				toXML(bool bMakeRoot = true);
-	bool				fromXML(QString strXML);
-	bool				fromXML(QDomElement & domElem);
-	UserProperty*		data();
+	bool						isNull() const;
+	QString					toXML(bool bMakeRoot = true);
+	bool						fromXML(QString strXML);
+	bool						fromXML(QDomElement & domElem);
+	UserProperty*			data();
+	SharedPtr				GetPtr();
 	const UserProperty*	data() const;
-	QString				typeName() const; 
+	QString					typeName() const; 
+	bool						willAutoDelete() const;
 private:
-	void		copy(const UserPropPtr & other);
-	void		destroy();
+	void						copy(const UserPropPtr & other);
+	void						destroy();
 protected:
-	QExplicitlySharedDataPointer<UserProperty>	m_pProp;
+	SharedPtr			m_pProp;
+	UserProperty*		m_pPropRaw;
 };
 
 }; //namespace QTUTILS

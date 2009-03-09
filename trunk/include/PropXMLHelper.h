@@ -18,8 +18,11 @@ struct UserPropXMLHelper
 {
 public:
 	UserPropXMLHelper(const char* strName);
+	UserPropXMLHelper(int nMetaTypeId);
 public:
 	const char*		GetClassName() const;
+protected:
+	void	  Initialize();
 public:
 	virtual bool	fromXML(Property* pProp,QDomElement & domElem);
 	virtual UserProperty* construct();
@@ -43,6 +46,41 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template<class T>
+class UserPropPtrHelper : public UserPropXMLHelper
+{
+public:
+	UserPropPtrHelper(const char* strName);
+	UserPropPtrHelper(int nMetaTypeID);
+public:
+	virtual UserProperty* construct();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<class T>
+UserPropPtrHelper<T>::UserPropPtrHelper(const char* strName) : UserPropXMLHelper(strName)
+{
+	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<class T>
+UserPropPtrHelper<T>::UserPropPtrHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<class T>
+UserProperty* UserPropPtrHelper<T>::construct()
+{
+	return new T;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 };// namespace QTUTILS
 

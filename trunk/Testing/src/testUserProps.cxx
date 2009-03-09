@@ -354,6 +354,51 @@ static bool test6()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test7()
+{
+	bool retVal;
+	PropertyList* pPList = new PropertyList;
+	retVal = (pPList != NULL);
+
+	if (retVal) {
+		Property	prop;
+		UserPropPtr ptr(pPList);
+
+		retVal = add_John(dynamic_cast<PropertyList*>(ptr.data()));
+		int nItems = pPList->size();
+		prop.SetData(ptr);
+		prop.setObjectName("Person0");
+
+		if (retVal) {
+
+			retVal = prop.Save("PLUserSave.xml");
+
+			if (retVal) {
+				Property prop1;
+				retVal = prop1.Load("PLUserSave.xml");
+				if (retVal) {
+					QString strXML0 = prop.toXML();
+					QString strXML1 = prop1.toXML();
+
+					retVal =(strXML0.compare(strXML1) == 0);
+
+					if (retVal) {
+						UserPropPtr ptr1 = prop1;
+						QExplicitlySharedDataPointer<PropertyList> pPL = ptr1.GetPtr();
+						int nItems1=pPL.data()->size();
+						retVal = (nItems == nItems1);
+					}
+				}
+			}
+
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QTUTILS::QCmdTestUserProps::Execute()
 {
 	int nTest;
@@ -383,6 +428,9 @@ int QTUTILS::QCmdTestUserProps::Execute()
 		break;
 	case 6:
 		bVal = test6();
+		break;
+	case 7:
+		bVal = test7();
 		break;
 	default:
 		bVal = false;

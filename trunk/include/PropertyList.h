@@ -31,6 +31,7 @@ namespace QTUTILS {
 		iterator		begin();
 		iterator		end();
 		void			clear();
+		int			size() const;
 		bool			empty() const;
 	public:
 		QString			toXML(bool bMakeRoot = true);

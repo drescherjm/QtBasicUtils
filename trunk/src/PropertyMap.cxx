@@ -13,19 +13,16 @@ namespace QTUTILS {
 class ProperyMapXMLHelper : public UserPropXMLHelper
 {
 public:
-	ProperyMapXMLHelper(const char* className);
+	ProperyMapXMLHelper(int nMetaTypeID);
 public:
 	virtual bool fromXML(Property* pProp,QDomElement & domElem);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-ProperyMapXMLHelper::ProperyMapXMLHelper(const char* className) : UserPropXMLHelper(className)
+ProperyMapXMLHelper::ProperyMapXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
 {
-	PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
-	if (pPropXMLHelper != NULL) {
-		pPropXMLHelper->addHelper(this);
-	}	
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -85,8 +82,10 @@ UserProperty* ProperyMapPtrXMLHelper::construct()
 static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
 static int m_nMetaIDPtr = qRegisterMetaType<QTUTILS::PropertyMap*>();
 
-ProperyMapXMLHelper hlpr(QMetaType::typeName(m_nMetaID));
-ProperyMapPtrXMLHelper ptrHlpr(QMetaType::typeName(m_nMetaIDPtr));
+ProperyMapXMLHelper hlpr(m_nMetaID);
+//ProperyMapPtrXMLHelper ptrHlpr(QMetaType::typeName(m_nMetaIDPtr));
+
+UserPropPtrHelper<PropertyMap> ptrHlpr(m_nMetaIDPtr);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

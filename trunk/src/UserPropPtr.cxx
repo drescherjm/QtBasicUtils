@@ -83,16 +83,24 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr() : m_pProp(NULL)
+UserPropPtr::UserPropPtr() : m_pPropRaw(NULL)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr(UserProperty* pProp) : m_pProp(pProp)
+UserPropPtr::UserPropPtr(UserProperty* pProp, bool bSmart) 
 {
-
+	if (bSmart) {
+		m_pProp = pProp;
+		m_pPropRaw = NULL;
+	}
+	else
+	{
+		m_pProp.reset();
+		m_pPropRaw = pProp;
+	}	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -104,9 +112,17 @@ UserPropPtr::UserPropPtr( const UserPropPtr & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+UserPropPtr::UserPropPtr(SharedPtr & other)
+{
+	m_pProp = other;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void UserPropPtr::copy( const UserPropPtr & other )
 {
 	m_pProp = other.m_pProp;
+	m_pPropRaw = other.m_pPropRaw;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -118,9 +134,9 @@ void UserPropPtr::destroy()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::isNull()
+bool UserPropPtr::isNull() const
 {
-	return !m_pProp;
+	return (!m_pProp && (m_pPropRaw == NULL));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +145,7 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/ )
 {
 	QString retVal;
 	if (!isNull()) {
-		retVal = m_pProp->toXML(bMakeRoot);
+		retVal = data()->toXML(bMakeRoot);
 		if (!retVal.isEmpty()) {
 			QString strOpen = QString("<UserProp tyName=\"%1\">")
 										.arg(typeName());
@@ -147,14 +163,21 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/ )
 
 UserProperty* UserPropPtr::data() 
 {
-	return m_pProp.data();
+	return willAutoDelete() ? m_pProp.data() : m_pPropRaw;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const UserProperty* UserPropPtr::data() const
 {
-	return m_pProp.data();
+	return willAutoDelete() ? m_pProp.data() : m_pPropRaw;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool UserPropPtr::willAutoDelete() const
+{
+	return (m_pPropRaw == NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -201,6 +224,13 @@ bool UserPropPtr::fromXML( QString strXML )
 bool UserPropPtr::fromXML( QDomElement & docElem )
 {
 	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+UserPropPtr::SharedPtr UserPropPtr::GetPtr()
+{
+	return m_pProp;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -203,6 +203,6 @@ install (FILES
 )
 
 install (TARGETS QtBasicUtils DESTINATION lib)
-install (FILES ${QtBasicUtils_EXT_HDRS} DESTINATION include)
+install (FILES ${QtBasicUtils_EXT_HDRS} ${QtBasicUtils_MOC_HDRS} DESTINATION include)
 
 
