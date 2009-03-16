@@ -36,6 +36,7 @@ public:
 	void		clear();
 	iterator	begin();
 	iterator	end();
+	bool		isEmpty() const;
 public:
 	QStringList		m_strListFiles;
 	QString			m_strDefaultPath;
