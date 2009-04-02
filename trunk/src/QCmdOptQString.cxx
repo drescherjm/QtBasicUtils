@@ -47,10 +47,10 @@ namespace QTUTILS {
 	QString QCmdOptQString::GetSyntax()
 	{
 		QString retVal;
-		QString tempStr = GetDescription() + " [";
-		tempStr += "%s";
-		tempStr += ("]");
-		retVal.sprintf(tempStr.toAscii(),m_nDefaultValue);
+		retVal = QString("%1 [%2]")
+			.arg(GetDescription())
+			.arg(m_nValue);
+
 		return retVal;
 	}
 	
