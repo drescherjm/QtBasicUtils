@@ -23,6 +23,10 @@ add_dependencies(BasicTest QtBasicUtils)
 #add_dependencies(RUN_TEST BasicTest)
 #ENDIF(WIN32)
 
+file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S10.0")
+
+add_test(FileCMD0	${EXECUTABLE_OUTPUT_PATH}/BasicTest @test0.txt)
+
 ADD_TEST(Test0			${EXECUTABLE_OUTPUT_PATH}/BasicTest +?)
 ADD_TEST(Test1			${EXECUTABLE_OUTPUT_PATH}/BasicTest +Test 1.0)
 ADD_TEST(StringListArg0  ${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRLSTARG 1 2 3 4 . -S10)

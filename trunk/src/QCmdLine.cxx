@@ -4,6 +4,7 @@
 #include "QCmdParseException.h"
 #include <QFile>
 #include <QTextStream>
+#include <iostream>
 
 namespace QTUTILS {
 
@@ -250,6 +251,10 @@ namespace QTUTILS {
 			else
 				strList.push_back(strTemp);
 		}
+
+		foreach(QString str,strList) {
+			std::cout << str.toStdString() << std::endl;
+		}
 		return retVal;
 	}
 
@@ -358,9 +363,9 @@ namespace QTUTILS {
 
 			QTextStream in(&sourceFile);
 			while (!in.atEnd()) {
-				QString line = in.readLine();
-
-				strLstFile.push_back(line);
+				QString str;
+				in >> str;
+				strLstFile.push_back(str);
 			}
 		}
 		else
