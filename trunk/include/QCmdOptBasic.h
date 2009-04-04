@@ -40,16 +40,6 @@ typedef QCmdOptBasic<float,formatspec::FLTFMT>		QCmdOpt_float;
 typedef QCmdOptBasic<double,formatspec::DBLFMT>		QCmdOpt_double;
 typedef QCmdOptBasic<short,formatspec::SHORTFMT>	QCmdOpt_short;
 
-/*
-typedef CCmdArgNormal<BYTE,formatspec::BYTEFMT>		CCmdArgBYTE;
-typedef CCmdArgNormal<WORD,formatspec::WORDFMT>		CCmdArgWORD;
-typedef CCmdArgNormal<UINT,formatspec::UINTFMT>		CCmdArgUINT;
-typedef CCmdArgNormal<int,formatspec::INTFMT>		CCmdArgint;
-typedef CCmdArgNormal<float,formatspec::FLTFMT>		CCmdArgfloat;
-typedef CCmdArgNormal<double,formatspec::DBLFMT>	CCmdArgdouble;
-typedef CCmdArgNormal<short,formatspec::SHORTFMT>	CCmdArgshort;
-*/
-
 };//namespace QTUTILS
 
 #endif //__QCMDOPTBASIC_H__

@@ -1145,7 +1145,7 @@ QString QCmd::GetSyntax()
 		QString str;
 		for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
 			pCmdOpt = *it;
-			str.sprintf("  %c -- ",pCmdOpt->GetName().toAscii());
+			str = QString("  %1 -- ").arg(pCmdOpt->GetName());
 			retVal += str + pCmdOpt->GetSyntax();
 			retVal += ("\n");
 			str = pCmdOpt->GetExplanation();
@@ -1208,8 +1208,7 @@ int QCmd::Parse(QStringList & strLst)
 	QCmdOpt* pOpt=NULL;
 	QCmdArg* pArg=NULL;
 	QCmdArg* pTest= NULL;
-	//for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
-
+	
 	QArgList::iterator itArg = m_listArguments.begin();
 	for(QStringList::iterator it=strLst.begin(); it != strLst.end();++it) {
 		str = *it;

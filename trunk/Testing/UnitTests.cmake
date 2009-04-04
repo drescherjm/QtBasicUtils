@@ -23,9 +23,13 @@ add_dependencies(BasicTest QtBasicUtils)
 #add_dependencies(RUN_TEST BasicTest)
 #ENDIF(WIN32)
 
-file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S10.0")
+file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S9.0")
 
-add_test(FileCMD0	${EXECUTABLE_OUTPUT_PATH}/BasicTest @test0.txt)
+add_test(FileCMD0	${EXECUTABLE_OUTPUT_PATH}/BasicTest @${EXECUTABLE_OUTPUT_PATH}/test0.txt)
+
+#This will fail because the file should not exist.
+add_test(FileCMD1	${EXECUTABLE_OUTPUT_PATH}/BasicTest @${EXECUTABLE_OUTPUT_PATH}/../test111111111111111111.txt)
+SET_TESTS_PROPERTIES(FileCMD1 PROPERTIES WILL_FAIL TRUE)
 
 ADD_TEST(Test0			${EXECUTABLE_OUTPUT_PATH}/BasicTest +?)
 ADD_TEST(Test1			${EXECUTABLE_OUTPUT_PATH}/BasicTest +Test 1.0)

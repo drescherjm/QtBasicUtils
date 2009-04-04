@@ -8,6 +8,9 @@
 #include "QCmdHelpException.h"
 #include "testxml.h"
 #include "testUserProps.h"
+#include <QMessageBox>
+#include <QApplication>
+#include <QTimer>
 
 #include <math.h>
 
@@ -165,7 +168,8 @@ QCmd(strName,strDescription)
 	float fSum = fVal;
 	for(int i=1; i < NUM_FLOAT_ARGS;++i) {
 		QString str;
-		str.sprintf("F%d",i);
+		str = QString("F%1").arg(i);
+
 		AddArg(str,"This is an optional float value","",fVal);
 		fSum += fVal;
 	}
@@ -179,7 +183,7 @@ int QCmdFloatArgs::Execute()
 	for(int i=0; i < NUM_FLOAT_ARGS;++i) {
 		float fVal = 0.0;
 		QString str;
-		str.sprintf("F%d",i);
+		str = QString("F%1").arg(i);
 		GetArg(str,fVal);
 		fSum += fVal;
 	}
@@ -216,7 +220,7 @@ QCmd(strName,strDescription)
 	double fSum = fVal;
 	for(int i=1; i < NUM_DOUBLE_ARGS;++i) {
 		QString str;
-		str.sprintf("D%d",i);
+		str = QString("D%1").arg(i);
 		AddArg(str,"This is an optional double value","",fVal);
 		fSum += fVal;
 	}
@@ -230,7 +234,7 @@ int QCmdDoubleArgs::Execute()
 	for(int i=0; i < NUM_DOUBLE_ARGS;++i) {
 		double fVal = 0.0;
 		QString str;
-		str.sprintf("D%d",i);
+		str = QString("D%1").arg(i);
 		GetArg(str,fVal);
 		fSum += fVal;
 	}
@@ -281,6 +285,8 @@ int main(int argc, char* argv[])
 	
 	int retVal =0;
 
+	QApplication app(argc, argv);
+
 	try {
 		QCmdEnter			cmdEnter("PAUSE","Use this to require user to press enter to exit." );
 		QCmdTest			cmdTest("Test","This is the test command");
@@ -306,7 +312,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestUserProps);
 		myCmdLine.AddCmd(&myHelp);
 		
-		myCmdLine.Parse();
+		retVal = myCmdLine.Parse();
 
 		QCmd* pCmd;
 
@@ -329,6 +335,12 @@ int main(int argc, char* argv[])
 				else
 				{
 					std::cout << QCmdParseError::GetErrorString(retVal).toStdString() << std::endl;
+
+					QMessageBox msgBox;
+					msgBox.setText(QCmdParseError::GetErrorString(retVal));
+					QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+					msgBox.exec();
+
 				}
 				if (retVal == QCmdParseError::STATUS_OK) {
 					std::cout << "SUCCEEDED" << std::endl;
@@ -339,6 +351,12 @@ int main(int argc, char* argv[])
 			}
 			catch( QCmdParseException* e) {
 				std::cout << e->GetErrorString().toStdString() << std::endl;
+
+				QMessageBox msgBox;
+				msgBox.setText(e->GetErrorString());
+				QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+				msgBox.exec();
+
 				e->Delete();
 
 				retVal = -1;
@@ -349,6 +367,12 @@ int main(int argc, char* argv[])
 	}
 	catch( QCmdParseException* e) {
 		std::cout << e->GetErrorString().toStdString() << std::endl;
+
+		QMessageBox msgBox;
+		msgBox.setText(e->GetErrorString());
+		QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+		msgBox.exec();
+
 		e->Delete();
 
 		retVal = -1;

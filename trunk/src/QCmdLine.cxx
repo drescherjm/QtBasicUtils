@@ -244,6 +244,16 @@ namespace QTUTILS {
 					if (retVal == QCmdParseError::STATUS_OK) {
 						strList += strLstFile;
 					}
+					else
+					{
+						// This recreates the command line for the Throw
+						strList.push_back(strTemp);
+						for(++it; it != strListTmp.end();++it) {
+							strList.push_back(*it);
+						}
+						QCmdParseException::Throw(retVal," while parsing ",strList,
+							strTemp.mid(1));
+					}
 				}
 				else
 					strList.push_back(strTemp);
@@ -331,7 +341,9 @@ namespace QTUTILS {
 					if ( !IsCmdChar( str ) ) {
 						QCmd* pCmd = GetDefaultCmd();
 						if ( pCmd ) {
-							str.sprintf("%c%s",m_chCmdChar,GetCommandString(pCmd->GetName()));
+							str = QString("%1%2")
+								.arg(m_chCmdChar)
+								.arg(GetCommandString(pCmd->GetName()));
 							pStrLst->push_front(str);
 						}
 						else
@@ -348,7 +360,7 @@ namespace QTUTILS {
 				}
 			}
 		}
-
+		QCmdParseException::Throw(retVal," while parsing ",strList);
 		return retVal;
 	}
 

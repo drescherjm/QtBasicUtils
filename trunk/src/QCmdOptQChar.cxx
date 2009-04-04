@@ -64,9 +64,9 @@ namespace QTUTILS {
 	{
 		QString retVal;
 		QString tempStr = GetDescription() + (" [");
-		tempStr += "%c";
+		tempStr += "%1";
 		tempStr += ("]");
-		retVal.sprintf(tempStr.toAscii(),m_nDefaultValue);
+		retVal = QString(tempStr).arg(m_nDefaultValue);
 		return retVal;
 	}
 
