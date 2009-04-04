@@ -361,11 +361,49 @@ namespace QTUTILS {
 		QFile sourceFile(strFileName);
 		if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
+			int nQuoteCount = 0;
+
 			QTextStream in(&sourceFile);
+
+			//Attempt to handle quotes!
+			QString strQuoted;
+			
 			while (!in.atEnd()) {
 				QString str;
-				in >> str;
-				strLstFile.push_back(str);
+				in >> str; // This gets upto the first whitespace
+				str.trimmed();
+
+				if (!str.isEmpty()) {
+					int nQuotes = str.count('\"');
+
+					nQuoteCount += nQuotes;
+
+					if ( (nQuoteCount % 2) == 1) {
+						if (!strQuoted.isEmpty()) {
+							strQuoted.append(' ');
+						}
+						strQuoted.append(str);
+						str.clear();
+					}
+					else
+						if (strQuoted.isEmpty()) {
+							strLstFile.push_back(str);
+						}
+						else
+						{
+							if (!str.isEmpty()) {
+								strQuoted.append(' ');
+								strQuoted.append(str);
+							}
+							strLstFile.push_back(strQuoted);
+							strQuoted.clear();
+						}
+						
+				}
+				
+			}
+			if (!strQuoted.isEmpty()) {
+				strLstFile.push_back(strQuoted);
 			}
 		}
 		else
