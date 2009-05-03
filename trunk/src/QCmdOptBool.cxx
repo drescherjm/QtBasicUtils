@@ -5,8 +5,8 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QCmdOptBool::QCmdOptBool(QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue) : 
-QCmdOpt( ch, strDescription,strExplanation ), m_bValue(bDefaultValue), 
+QCmdOptBool::QCmdOptBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue) : 
+QCmdOpt( strName, strDescription,strExplanation ), m_bValue(bDefaultValue), 
 m_bDefaultValue(bDefaultValue)
 {
 
@@ -67,6 +67,17 @@ QString QCmdOptBool::GetSyntax()
 
 	retVal += "]";
 
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdOptBool::getValueDescription()
+{
+	QString retVal;
+	if (GetName() != "?") {
+		retVal = "[+-]";
+	}
 	return retVal;
 }
 

@@ -4,10 +4,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QChar ch, QString strDescription, 
+QCmdOptBasic<TYPE,fmt>::QCmdOptBasic(QString strName, QString strDescription, 
 									 QString strExplanation, TYPE nDefaultValue,
 									 TYPE nMinValue, 
-									 TYPE nMaxValue) : QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM(ch,
+									 TYPE nMaxValue) : QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM(strName,
 									 strDescription,strExplanation,
 									 nDefaultValue,nMinValue,nMaxValue
 									 )

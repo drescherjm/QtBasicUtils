@@ -4,9 +4,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QCmdOptBasicBase<TYPE>::QCmdOptBasicBase(QChar ch, QString strDescription, QString strExplanation, 
+QCmdOptBasicBase<TYPE>::QCmdOptBasicBase(QString strName, QString strDescription, QString strExplanation, 
 									 TYPE nDefaultValue) : 
-QCmdOpt( ch, strDescription,strExplanation ), m_nValue(nDefaultValue), 
+QCmdOpt( strName, strDescription,strExplanation ), m_nValue(nDefaultValue), 
 m_nDefaultValue(nDefaultValue)
 {
 

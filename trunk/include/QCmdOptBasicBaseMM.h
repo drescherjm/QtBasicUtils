@@ -8,7 +8,7 @@ namespace QTUTILS {
 	template <class TYPE> class QCmdOptBasicBaseMM : public QCmdOptBasicBase<TYPE>
 	{
 	public:
-		QCmdOptBasicBaseMM(QChar ch, QString strDescription, QString strExplanation, 
+		QCmdOptBasicBaseMM(QString strName, QString strDescription, QString strExplanation, 
 			TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
 		virtual QString GetSyntax()=0;
 		virtual int		ImportData( QString strValue )=0;

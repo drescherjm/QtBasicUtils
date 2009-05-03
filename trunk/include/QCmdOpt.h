@@ -13,34 +13,21 @@
 #ifndef __QCMDOPT_H__
 #define __QCMDOPT_H__
 
-#include "QCmdPart.h"
+#include "QNamedCmdPart.h"
 
 namespace QTUTILS {
 
-class QCmdOpt : public QCmdPart  
+class QCmdOpt : public QNamedCmdPart  
 {
 public:
-	QCmdOpt(QChar chLetter,QString strDescription, QString strExplanation);
+	QCmdOpt(QString strName,QString strDescription, QString strExplanation);
 	virtual ~QCmdOpt();
 public:
 	virtual int		ImportData( QString strValue )=0;
 	virtual QString GetSyntax( )=0;
 	virtual QString GetShortSyntax( );
-	QChar	GetName();
-protected:
-	QChar m_chLetter;
+	virtual bool	isExtendedOption();
 };
-
-inline QChar QCmdOpt::GetName()
-{
-	return m_chLetter;
-}
-
-inline QString QCmdOpt::GetShortSyntax()
-{
-	return GetName();
-}
-
 
 }; //namespace QTUTILS
 

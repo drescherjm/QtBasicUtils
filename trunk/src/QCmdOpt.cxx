@@ -4,8 +4,8 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QCmdOpt::QCmdOpt(QChar chLetter,QString strDescription, QString strExplanation) : 
-m_chLetter(chLetter), QCmdPart(strDescription,strExplanation)
+QCmdOpt::QCmdOpt(QString strName,QString strDescription, QString strExplanation) : 
+ QNamedCmdPart(strName,strDescription,strExplanation)
 {
 
 }
@@ -13,6 +13,28 @@ m_chLetter(chLetter), QCmdPart(strDescription,strExplanation)
 QCmdOpt::~QCmdOpt()
 {
 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdOpt::isExtendedOption()
+{
+	return (m_strName.length() > 1);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdOpt::GetShortSyntax()
+{
+	QString retVal;
+	if (!isExtendedOption()) {
+		retVal = GetName()+ getValueDescription();
+	}
+	else
+	{
+		retVal = GetName() + "="+getValueDescription();
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

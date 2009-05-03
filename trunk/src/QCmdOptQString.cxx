@@ -6,9 +6,9 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	QCmdOptQString::QCmdOptQString(QChar ch, QString strDescription, QString strExplanation,
+	QCmdOptQString::QCmdOptQString(QString strName, QString strDescription, QString strExplanation,
 		QString strDefaultValue, CMDSTRVERIFY pFnVerify ): 
-	QCmdOptBasicBase<QString>( ch, strDescription,strExplanation,strDefaultValue), 
+	QCmdOptBasicBase<QString>( strName, strDescription,strExplanation,strDefaultValue), 
 		m_pFnVerify(pFnVerify)
 	{
 

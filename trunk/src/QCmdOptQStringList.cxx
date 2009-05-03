@@ -6,9 +6,9 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	QCmdOptQStringList::QCmdOptQStringList(QChar ch, QString strDescription, QString strExplanation,
+	QCmdOptQStringList::QCmdOptQStringList(QString strName, QString strDescription, QString strExplanation,
 		QStringList strLstDefaultValue, CMDSTRVERIFY pFnVerify ): 
-	QCmdOptBasicBase<QStringList>( ch, strDescription,strExplanation, strLstDefaultValue ), 
+	QCmdOptBasicBase<QStringList>( strName, strDescription,strExplanation, strLstDefaultValue ), 
 		m_pFnVerify(pFnVerify),m_bWasDefault(false)
 	{
 
@@ -53,6 +53,8 @@ namespace QTUTILS {
 
 		return retVal;
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 	void QCmdOptQStringList::Initialize()
 	{

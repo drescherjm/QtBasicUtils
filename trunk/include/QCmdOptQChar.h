@@ -8,7 +8,7 @@ namespace QTUTILS {
 	class QCmdOptQChar : public QCmdOptBasicBaseMM<QChar>  
 	{
 	public:
-		QCmdOptQChar(QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+		QCmdOptQChar(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 			QChar chDefaultValue, QChar chMinVal, QChar chMaxVal);
 	public:
 		virtual int		ImportData( QString strValue );

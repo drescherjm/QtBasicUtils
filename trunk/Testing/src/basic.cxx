@@ -31,7 +31,7 @@ QCmd(strName,strDescription)
 	AddArg("CaseNumber","The case number","",(quint32)0);
 
 	float fTemp = 32.0f;
-	AddOpt('T',"Temperature","Temperature in Fahrenheit",fTemp);
+	AddOpt("T","Temperature","Temperature in Fahrenheit",fTemp);
 }
 
 int QCmdTest::Execute()
@@ -42,7 +42,7 @@ int QCmdTest::Execute()
 	std::cout << "CaseNumber=" << nCase << std::endl;
 
 	float fTemp = 100.0f;
-	GetOpt('T',fTemp);
+	GetOpt("T",fTemp);
 
 	std::cout << "Temperature=" << fTemp << std::endl;
 
@@ -73,7 +73,7 @@ QCmd(strName,strDescription)
 		nSum += it->toInt();
 	}
 
-	AddOpt('S',"The sum","This is the expected sum of Integer(s)",nSum);
+	AddOpt("S","The sum","This is the expected sum of Integer(s)",nSum);
 }
 
 int QCmdStringListArg::Execute()
@@ -90,7 +90,7 @@ int QCmdStringListArg::Execute()
 	}
 
 	int nExpectedSum = 0;
-	GetOpt('S',nExpectedSum);
+	GetOpt("S",nExpectedSum);
 
 	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << nSum << std::endl;
@@ -114,7 +114,7 @@ QCmd(strName,strDescription)
 	sl.push_back("0");
 	sl.push_back("1");
 	sl.push_back("2");
-	AddOpt('I',"The integers to sum","",sl);
+	AddOpt("I","The integers to sum","",sl);
 
 	int nSum = 0;
 	QStringList::iterator it;
@@ -122,14 +122,14 @@ QCmd(strName,strDescription)
 		nSum += it->toInt();
 	}
 
-	AddOpt('S',"The sum","This is the expected sum of Integer(s)",nSum);
+	AddOpt("S","The sum","This is the expected sum of Integer(s)",nSum);
 }
 
 int QCmdStringListOpt::Execute()
 {
 
 	QStringList sl;
-	GetOpt('I',sl);
+	GetOpt("I",sl);
 
 	int nSum = 0;
 	QStringList::iterator it;
@@ -139,7 +139,7 @@ int QCmdStringListOpt::Execute()
 	}
 
 	int nExpectedSum = 0;
-	GetOpt('S',nExpectedSum);
+	GetOpt("S",nExpectedSum);
 
 	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << nSum << std::endl;
@@ -174,7 +174,7 @@ QCmd(strName,strDescription)
 		fSum += fVal;
 	}
 		
-	AddOpt('S',"This is the sum of the required and optional float values","",fSum);
+	AddOpt("S","This is the sum of the required and optional float values","",fSum);
 }
 
 int QCmdFloatArgs::Execute()
@@ -189,7 +189,7 @@ int QCmdFloatArgs::Execute()
 	}
 
 	float fExpectedSum = 0.0;
-	GetOpt('S',fExpectedSum);
+	GetOpt("S",fExpectedSum);
 
 	std::cout << "Expected Sum=" << fExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << fSum << std::endl;
@@ -225,7 +225,7 @@ QCmd(strName,strDescription)
 		fSum += fVal;
 	}
 
-	AddOpt('S',"This is the sum of the required and optional double values","",fSum);
+	AddOpt("S","This is the sum of the required and optional double values","",fSum);
 }
 
 int QCmdDoubleArgs::Execute()
@@ -240,7 +240,7 @@ int QCmdDoubleArgs::Execute()
 	}
 
 	double fExpectedSum = 0.0;
-	GetOpt('S',fExpectedSum);
+	GetOpt("S",fExpectedSum);
 
 	std::cout << "Expected Sum=" << fExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << fSum << std::endl;
@@ -276,6 +276,77 @@ int QCmdEnter::Execute()
 	return QCmdParseError::STATUS_OK;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdOptBool : public QCmd
+{
+public:
+	QCmdOptBool(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdOptBool::QCmdOptBool( QString strName, QString strDescription ) :
+	QCmd(strName,strDescription)
+{
+	bool bTest = true;
+	AddOpt("B","Test command","",bTest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdOptBool::Execute()
+{	
+	int retVal;
+	bool bTest;
+	retVal = GetOpt("B",bTest);
+	if (retVal == QCmdParseError::STATUS_OK) {
+		retVal = (bTest == true) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdExtOpt : public QCmd
+{
+public:
+	QCmdExtOpt(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdExtOpt::QCmdExtOpt( QString strName, QString strDescription ) :
+QCmd(strName,strDescription)
+{
+	int nVal = 1;
+	AddOpt("V0","First Value","",nVal);
+	AddOpt("V1","Second Value","",nVal);
+	AddOpt("S","Sum","",nVal+nVal);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdExtOpt::Execute()
+{	
+	int retVal;
+	int nVal0	=1;
+	int nVal1	=0;
+	int nSum	=-1;
+	retVal = GetOpt("V0",nVal0);
+	if (retVal == QCmdParseError::STATUS_OK) {
+		retVal = GetOpt("V1",nVal1);
+		if (retVal == QCmdParseError::STATUS_OK) {
+			retVal = GetOpt("S",nSum);
+			if (retVal == QCmdParseError::STATUS_OK) {
+				retVal = (nVal0 + nVal1) == nSum ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+			}
+		}
+	}
+	return retVal;
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -292,6 +363,8 @@ int main(int argc, char* argv[])
 		QCmdTest			cmdTest("Test","This is the test command");
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
 		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
+		QCmdOptBool			cmdBoolOpt("BOOLOPT","This tests the bool an option.");
+		QCmdExtOpt			cmdExtOpt("EXTOPT","This tests the extended options.");
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
@@ -306,6 +379,8 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTest);
 		myCmdLine.AddCmd(&cmdStrLstArg);
 		myCmdLine.AddCmd(&cmdStrLstOpt);
+		myCmdLine.AddCmd(&cmdBoolOpt);
+		myCmdLine.AddCmd(&cmdExtOpt);
 		myCmdLine.AddCmd(&cmdFloatArgs);
 		myCmdLine.AddCmd(&cmdDoubleArgs);
 		myCmdLine.AddCmd(&cmdTestXMLEXP);

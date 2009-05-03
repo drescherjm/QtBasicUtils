@@ -15,7 +15,7 @@ namespace QTUTILS {
 typedef QList<QCmdArg*> QArgList;
 typedef QList<QCmdOpt*> QOptList;
 
-typedef QMap< QChar,QCmdOpt* > QOptMap;
+typedef QMap< QString,QCmdOpt* > QOptMap;
 typedef QMap< QString,QCmdArg* > QArgMap;
 
 typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
@@ -31,29 +31,29 @@ public:
 public:
 	virtual void Initialize();
 public:
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue = true);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, bool bDefaultValue = true);
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
 		quint32 nMaxValue = quint32_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, int nDefaultValue = 0, int nMinValue=INT_MIN, 
 		int nMaxValue = INT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, quint8 nDefaultValue = 0, quint8 nMinValue=0, 
 		quint8 nMaxValue = UCHAR_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, quint16 nDefaultValue = 0, quint16 nMinValue=0, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, quint16 nDefaultValue = 0, quint16 nMinValue=0, 
 		quint16 nMaxValue = USHRT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, short nDefaultValue = 0, short nMinValue=SHRT_MIN, 
 		short nMaxValue = SHRT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=NEG_FLOAT_MAX, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, float nDefaultValue = 0, float nMinValue=NEG_FLOAT_MAX, 
 		float nMaxValue = FLT_MAX);
-	int	AddOpt( QChar ch, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=NEG_DOUBLE_MAX, 
+	int	AddOpt( QString strName, QString strDescription, QString strExplanation, double nDefaultValue = 0, double nMinValue=NEG_DOUBLE_MAX, 
 		double nMaxValue = DBL_MAX);
-	int AddOpt( QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+	int AddOpt( QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 		QChar chDefaultValue, QChar chMinVal=SCHAR_MIN, QChar chMaxVal=SCHAR_MAX);
 
-	int AddOpt( QChar ch, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
+	int AddOpt( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
-	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QStringList & strLstDefaultValue, 
+	int	AddOpt(QString strName, QString strDescription, QString strExplanation, const  QStringList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
-	int	AddOpt(QChar ch, QString strDescription, QString strExplanation, const  QCmdLineFileList & strLstDefaultValue, 
+	int	AddOpt(QString strName, QString strDescription, QString strExplanation, const  QCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 
 	int AddArg( QString strName, QCmdArg* pArg=NULL);
@@ -81,18 +81,18 @@ public:
 	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  QCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 public:
-	int GetOpt(QChar ch, bool & bValue);
-	int GetOpt(QChar ch, quint32 & nValue);
-	int GetOpt(QChar ch, int & nValue);
-	int GetOpt(QChar ch, quint8 & nValue);
-	int GetOpt(QChar ch, quint16 & nValue);
-	int	GetOpt(QChar ch, short & nValue);
-	int GetOpt(QChar ch, float & nValue);
-	int GetOpt(QChar ch, double & nValue);
-	int	GetOpt(QChar ch, QChar & chValue);
-	int GetOpt(QChar ch, QString & nValue);
-	int	GetOpt(QChar ch, QStringList & nValue);
-	int	GetOpt(QChar ch, QCmdLineFileList & nValue);
+	int GetOpt(QString strName, bool & bValue);
+	int GetOpt(QString strName, quint32 & nValue);
+	int GetOpt(QString strName, int & nValue);
+	int GetOpt(QString strName, quint8 & nValue);
+	int GetOpt(QString strName, quint16 & nValue);
+	int	GetOpt(QString strName, short & nValue);
+	int GetOpt(QString strName, float & nValue);
+	int GetOpt(QString strName, double & nValue);
+	int	GetOpt(QString strName, QChar & chValue);
+	int GetOpt(QString strName, QString & nValue);
+	int	GetOpt(QString strName, QStringList & nValue);
+	int	GetOpt(QString strName, QCmdLineFileList & nValue);
 
 	int GetArg(QString strName, bool & bValue);
 	int GetArg(QString strName, quint32 & nValue);
@@ -118,9 +118,9 @@ public:
 	QString		GetLongDescription();
 protected:
 	int		Parse( QStringList & strLst );
-	int		AddOpt( QChar ch, QCmdOpt* pOpt = NULL );
-	QChar	GetOptChar( QChar ch );
-	int		FindOpt( QChar ch, QCmdOpt *& option );
+	int		AddOpt( QString strName, QCmdOpt* pOpt = NULL );
+	QString GetOptString( QString strName );
+	int		FindOpt( QString strName, QCmdOpt *& option );
 	int		FindArg(QString strName, QCmdArg *& ARGUMENT);
 protected:
 	QString		m_strName;

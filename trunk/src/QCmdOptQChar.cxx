@@ -2,14 +2,16 @@
 #include "QCmdParseError.h"
 
 namespace QTUTILS {
-	QCmdOptQChar::QCmdOptQChar(QChar ch, QString strDescription, QString strExplanation, bool bIgnoreCase, 
+	QCmdOptQChar::QCmdOptQChar(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 		QChar chDefaultValue, QChar chMinVal, QChar chMaxVal): 
-	QCmdOptBasicBaseMM<QChar>( ch, strDescription,strExplanation,
+	QCmdOptBasicBaseMM<QChar>( strName, strDescription,strExplanation,
 		chDefaultValue,chMinVal,chMaxVal),
 		m_bIgnoreCase(bIgnoreCase)
 	{
 
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 	int QCmdOptQChar::ImportData( QString strValue )
 	{

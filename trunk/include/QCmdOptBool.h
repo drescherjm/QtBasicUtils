@@ -20,12 +20,13 @@ namespace QTUTILS {
 class QCmdOptBool : public QCmdOpt  
 {
 public:
-	QCmdOptBool(QChar ch, QString strDescription, QString strExplanation, bool bDefaultValue);
+	QCmdOptBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue);
 	virtual int		ImportData( QString strValue );
 	virtual void	Initialize();
 	bool	GetValue();
 public:
 	virtual QString GetSyntax();
+	virtual QString getValueDescription();
 	bool	m_bValue;
 	bool	m_bDefaultValue;
 };

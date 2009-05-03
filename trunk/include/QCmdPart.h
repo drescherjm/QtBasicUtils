@@ -23,16 +23,16 @@ public:
 	QCmdPart( QString strDescription, QString strExplanation);
 	virtual ~QCmdPart();
 public:
-	int		MarkSet();
-	bool	HasValueBeenSet();
-	QString GetDescription();
-	QString	GetExplanation();
+	int				MarkSet();
+	bool			HasValueBeenSet();
+	QString			GetDescription();
+	QString			GetExplanation();
 	virtual int		ImportData( QString strValue )=0;
 	virtual void	Initialize();
 protected:
-	bool	m_bValueSet;
-	QString m_strDescription;
-	QString	m_strExplanation;
+	bool			m_bValueSet;
+	QString			m_strDescription;
+	QString			m_strExplanation;
 };
 
 inline QCmdPart::~QCmdPart()

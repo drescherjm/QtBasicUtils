@@ -110,6 +110,7 @@ SET( QtBasicUtils_SRCS
 	./src/UserPropPtr.cxx
 	./src/PropertyList.cxx
 	./src/PropXMLHelper.cxx
+	./src/QNamedCmdPart.cxx
 )
 
 SET( QtBasicUtils_EXT_HDRS 
@@ -123,6 +124,7 @@ SET( QtBasicUtils_EXT_HDRS
 	./include/QCmdParseException.h
 	./include/QCmdLineFileList.h
 	./include/QCmdPart.h
+	./include/QNamedCmdPart.h
 	./include/QCmdArg.h
 	./include/QCmdOpt.h
 	./include/QCmdOptBasicBase.h

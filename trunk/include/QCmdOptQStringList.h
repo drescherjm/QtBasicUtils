@@ -10,7 +10,7 @@ namespace QTUTILS {
 	class QCmdOptQStringList : public QCmdOptBasicBase<QStringList>  
 	{
 	public:
-		QCmdOptQStringList(QChar ch, QString strDescription, QString strExplanation,  
+		QCmdOptQStringList(QString strName, QString strDescription, QString strExplanation,  
 			QStringList strDefaultValue, CMDSTRVERIFY pfnVerify);
 	public:
 		virtual int		ImportData( QString strValue );

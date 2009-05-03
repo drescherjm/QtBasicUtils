@@ -2,10 +2,10 @@
 
 namespace QTUTILS {
 
-	/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-	QCmdArg::QCmdArg(QString strName,QString strDescription, QString strExplanation) : 
-m_strName(strName), QCmdPart(strDescription,strExplanation)
+QCmdArg::QCmdArg(QString strName,QString strDescription, QString strExplanation) : 
+QNamedCmdPart(strName,strDescription,strExplanation)
 {
 	m_bOptional = false;
 }
@@ -13,6 +13,15 @@ m_strName(strName), QCmdPart(strDescription,strExplanation)
 QCmdArg::~QCmdArg()
 {
 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdArg::GetShortSyntax()
+{
+	QString retVal = GetName();
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
