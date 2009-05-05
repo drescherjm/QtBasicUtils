@@ -1338,6 +1338,24 @@ int QCmd::SetArg( QString strName, QCmdLineFileList nValue )
 	return QCmdParseError::NOT_IMPLEMENTED;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::GetArg(QString strName, QCmdLineFileList & nValue)
+{
+	nValue.m_strListFiles.clear();
+	QCmdArg* pArg=NULL;
+	int retVal = m_pPrivate->FindArg(strName,pArg);
+	if ( wasSuccessful(retVal) ) {
+		QCmdArgFileList* pArgQString = dynamic_cast<QCmdArgFileList*>(pArg);
+		if ( pArgQString ) {
+			pArgQString->GetValue().CopyTo(nValue);
+		}
+		else
+			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
+	}
+	QCmdParseException::Throw(retVal,strName);
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
