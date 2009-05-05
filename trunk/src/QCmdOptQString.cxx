@@ -59,7 +59,9 @@ namespace QTUTILS {
 	{
 		QString retVal;
 		if (!isDefaultValue() ) {
-			retVal = QString("%1").arg(m_nValue);
+			retVal = QString("%1%2")
+				.arg(exportOptionName())
+				.arg(m_nValue);
 		}
 		return retVal;
 	}

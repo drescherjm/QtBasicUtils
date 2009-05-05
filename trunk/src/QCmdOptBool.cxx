@@ -77,6 +77,7 @@ QString QCmdOptBool::exportCommandString()
 {
 	QString retVal;
 	if ( !isDefaultValue() ) {
+		retVal += exportOptionName();
 		if ( GetValue() == true )
 			retVal = "+";
 		else

@@ -110,6 +110,7 @@ namespace QTUTILS {
 	{
 		QString retVal;
 		if (!isDefaultValue() ) {
+			retVal += exportOptionName();
 			QStringList strLst = GetValue();
 			if (!strLst.isEmpty()) {
 				foreach(QString str,strLst) {

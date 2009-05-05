@@ -615,7 +615,26 @@ int QCmd::qtutilsPrivate::Parse()
 
 QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
 {
-	QString retVal = chCommand + GetName();
+	QString retVal = chCommand + GetName()+ " ";
+
+	QArgList::iterator it = m_listArguments.begin();
+	for(; it != m_listArguments.end();++it) {
+		QCmdArg* pArg = *it;
+		QString strExport = pArg->exportCommandString();
+		if (!strExport.isEmpty()) {
+			retVal += strExport + " ";
+		}
+	}
+
+	QOptList::iterator itOpt = m_listOptions.begin();
+	for(; itOpt != m_listOptions.end();++itOpt) {
+		QCmdOpt* pOpt = *itOpt;
+		QString strExport = pOpt->exportCommandString();
+		if (!strExport.isEmpty()) {
+			retVal += strExport + " ";
+		}
+	}
+
 	return retVal;
 }
 

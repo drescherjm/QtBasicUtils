@@ -27,6 +27,7 @@ public:
 	virtual QString GetSyntax( )=0;
 	virtual QString GetShortSyntax( );
 	virtual bool	isExtendedOption();
+	virtual QString exportOptionName();
 };
 
 }; //namespace QTUTILS

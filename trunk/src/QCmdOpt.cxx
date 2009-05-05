@@ -36,6 +36,20 @@ QString QCmdOpt::GetShortSyntax()
 	}
 	return retVal;
 }
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdOpt::exportOptionName()
+{
+	QString retVal;
+	if (!isExtendedOption()) {
+		retVal = "-" + GetName();
+	}
+	else
+	{
+		retVal = "--" + GetName() + "=";
+	}
+	return retVal;		
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
