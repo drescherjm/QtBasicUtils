@@ -1500,6 +1500,104 @@ int QCmd::SetOpt( QString strName, QCmdLineFileList nValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+int QCmd::SetArg( QString strName, bool bValue )
+{
+	return m_pPrivate->SetArg<bool,QCmdArgBool>(strName,bValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, quint32 nValue )
+{
+	return m_pPrivate->SetArg<quint32,QCmdArg_quint32>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, int nValue )
+{
+	return m_pPrivate->SetArg<int,QCmdArg_int>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, quint8 nValue )
+{
+	return m_pPrivate->SetArg<quint8,QCmdArg_quint8>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, quint16 nValue )
+{
+	return m_pPrivate->SetArg<quint16,QCmdArg_quint16>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, short nValue )
+{
+	return m_pPrivate->SetArg<short,QCmdArg_short>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, float nValue )
+{
+	return m_pPrivate->SetArg<float,QCmdArg_float>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, double nValue )
+{
+	return m_pPrivate->SetArg<double,QCmdArg_double>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, QChar chValue )
+{
+	return m_pPrivate->SetArg<QChar,QCmdArgQChar>(strName,chValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, QString nValue )
+{
+	return m_pPrivate->SetArg<QString,QCmdArgQString>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, QStringList nValue )
+{
+	return m_pPrivate->SetArg<QStringList,QCmdArgQStringList>(strName,nValue);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::SetArg( QString strName, QCmdLineFileList nValue )
+{
+	/*
+	QCmdArg* pArgion;
+	int retVal = FindArg(GetArgString(strName),pArgion);
+	if (wasSuccessful(retVal)) {
+	if (pArgion != NULL) {
+	QCmdLineFileList* pIntArg = dynamic_cast<QCmdLineFileList*>(pArgion);
+	if (pIntArg != NULL) {
+	pIntArg->SetValue(nValue);
+	}
+	}
+	}
+	*/
+
+	return QCmdParseError::NOT_IMPLEMENTED;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool QCmd::wasSuccessful( int nRetCode ) const
 {
 	return (nRetCode == QCmdParseError::STATUS_OK);
