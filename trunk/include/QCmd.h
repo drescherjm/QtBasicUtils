@@ -56,7 +56,7 @@ public:
 	int	AddOpt(QString strName, QString strDescription, QString strExplanation, const  QCmdLineFileList & strLstDefaultValue, 
 		CMDSTRVERIFY pFnVerify=NULL);
 
-	int AddArg( QString strName, QCmdArg* pArg=NULL);
+	//int AddArg( QString strName, QCmdArg* pArg=NULL);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, bool bDefaultValue = true);
 	int	AddArg( QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue = 0, quint32 nMinValue=0, 
 		quint32 nMaxValue = quint32_MAX);
@@ -137,7 +137,7 @@ public:
 	virtual int Parse();
 	virtual int Execute();
 	void		EndRequiredArguments();
-	int			IsOption( QString & str, QCmdOpt *& pOption );
+	//int			IsOption( QString & str, QCmdOpt *& pOption );
 	virtual		QString GetSyntax();
 	QString		GetName();
 	QString		GetDescription();
@@ -147,20 +147,10 @@ public:
 	QStringList m_strLstCmd;
 protected:
 	int			Parse( QStringList & strLst );
-	int			AddOpt( QString strName, QCmdOpt* pOpt = NULL );
-	QString		GetOptString( QString strName );
-	int			FindOpt( QString strName, QCmdOpt *& option );
-	int			FindArg(QString strName, QCmdArg *& ARGUMENT);
-protected:
-	QString		m_strName;
-	bool		m_bOptional;
-	bool		m_bIgnoreCase;
-	QString		m_strDescription;
-	QString		m_strExplanation;
-	QOptList	m_listOptions;
-	QArgList	m_listArguments;
-	QOptMap		m_mapOpt;
-	QArgMap		m_mapArg;
+	//int			AddOpt( QString strName, QCmdOpt* pOpt = NULL );
+	//QString		GetOptString( QString strName );
+	//int			FindOpt( QString strName, QCmdOpt *& option );
+	//int			FindArg(QString strName, QCmdArg *& ARGUMENT);
 private:
 	friend struct	qtutilsPrivate;
 	struct			qtutilsPrivate;
@@ -168,18 +158,6 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-inline QString QCmd::GetName()
-{
-	return m_strName;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-inline QString QCmd::GetDescription()
-{
-	return m_strDescription;
-}
 
 }; // namespace QTUTILS
 
