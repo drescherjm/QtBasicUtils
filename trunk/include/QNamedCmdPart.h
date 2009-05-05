@@ -14,8 +14,10 @@ public:
 public:
 	virtual QString GetSyntax( )=0;
 	virtual QString GetShortSyntax( )=0;
+	virtual bool	isDefaultValue()=0;
 	virtual QString getValueDescription();
-	QString GetName();
+	virtual QString exportCommandString()=0;
+	QString			GetName();
 protected:
 	QString m_strName;
 };
@@ -26,7 +28,6 @@ inline QString QNamedCmdPart::GetName()
 {
 	return m_strName;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

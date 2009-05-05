@@ -65,4 +65,16 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class TYPE,char fmt[]>
+QString QCmdOptBasic<TYPE, fmt>::exportCommandString()
+{
+	QString retVal;
+	if ( !isDefaultValue() ) {
+		retVal = QString("%1").arg(m_nValue);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif //__QCMDOPTBASICXX__

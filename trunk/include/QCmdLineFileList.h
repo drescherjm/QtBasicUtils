@@ -16,12 +16,15 @@
 
 namespace QTUTILS {
 
-	class QCmdLineFileList
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdLineFileList
 {
 public:
 	QCmdLineFileList();
 	QCmdLineFileList(const QCmdLineFileList & other);
 	QCmdLineFileList& operator=(const QCmdLineFileList & other);
+	bool operator==(const QCmdLineFileList & other) const;
 public:
 	QString		GetSyntax();
 	int			CheckFileName(QString & strFile);
@@ -56,6 +59,8 @@ private:
 	void copy( const QCmdLineFileList & other );
 	void destroy();
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline QCmdLineFileList& QCmdLineFileList::operator=(const QCmdLineFileList & other )
 {

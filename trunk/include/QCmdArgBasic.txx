@@ -63,6 +63,17 @@ QString QCmdArgBasic<TYPE,fmt>::GetSyntax()
 	retVal.sprintf(tempStr.toStdString().c_str(),this->m_nDefaultValue);
 	return retVal;
 }
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QString QCmdArgBasic<TYPE, fmt>::exportCommandString()
+{
+	QString retVal;
+	if ( (!isOptional()) || (!isDefaultValue()) ) {
+		retVal = QString("%1").arg(m_nValue);
+	}
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

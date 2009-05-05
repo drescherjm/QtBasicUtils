@@ -23,7 +23,7 @@ public:
 	QCmdArg(QString strName,QString strDescription, QString strExplanation);
 	virtual ~QCmdArg();
 public:
-	virtual bool GetOptional();
+	virtual bool isOptional();
 	virtual void SetOptional(bool bOptional);
 	virtual QString GetShortSyntax( );
 	bool m_bOptional;
@@ -36,7 +36,7 @@ inline void QCmdArg::SetOptional(bool bOptional)
 	m_bOptional = bOptional;
 }
 
-inline bool QCmdArg::GetOptional()
+inline bool QCmdArg::isOptional()
 {
 	return m_bOptional;
 }

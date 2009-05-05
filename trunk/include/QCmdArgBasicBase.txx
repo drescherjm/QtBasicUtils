@@ -39,4 +39,10 @@ void QCmdArgBasicBase<TYPE>::SetValue(TYPE nValue)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class TYPE>
+bool QCmdArgBasicBase<TYPE>::isDefaultValue()
+{
+	return (m_nValue == m_nDefaultValue);
+}
+
 #endif //__QCMDARGBASICBASEXX__

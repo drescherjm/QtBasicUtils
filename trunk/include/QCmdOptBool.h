@@ -13,28 +13,23 @@
 #include <QChar>
 #include <QString>
 
-#include "QCmdOpt.h"
+#include "QCmdOptBasicBase.h"
 
 namespace QTUTILS {
 
-class QCmdOptBool : public QCmdOpt  
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdOptBool : public QCmdOptBasicBase<bool>
 {
 public:
-	QCmdOptBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue);
+	QCmdOptBool(QString strName,QString strDescription, QString strExplanation, bool bDefaultValue);
 	virtual int		ImportData( QString strValue );
-	virtual void	Initialize();
-	bool	GetValue();
-	void	SetValue(bool bVal);
 public:
 	virtual QString GetSyntax();
 	virtual QString getValueDescription();
-	bool	m_bValue;
-	bool	m_bDefaultValue;
+	virtual QString	exportCommandString();
 };
 
-inline  bool QCmdOptBool::GetValue()
-{
-	return m_bValue;
-}
+/////////////////////////////////////////////////////////////////////////////////////////
 
 }; //namespace QTUTILS

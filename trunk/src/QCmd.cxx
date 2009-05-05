@@ -46,6 +46,7 @@ public:
 	int		Parse(QStringList & strLst);
 	int		IsOption(QString & str, QCmdOpt *& pOption);
 	bool	wasSuccessful( int nRetCode ) const;
+	QString exportCommandString(QChar chCommand);
 public:
 	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
 		QString strDescription, QString strExplanation, ValType nDefaultValue,
@@ -392,7 +393,7 @@ QString QCmd::qtutilsPrivate::GetSyntax()
 
 	for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
 		pCmdArg = *it;
-		if ( pCmdArg->GetOptional() ) {
+		if ( pCmdArg->isOptional() ) {
 			retVal += ("[");
 			retVal += pCmdArg->GetShortSyntax();
 			retVal += ("] ");
@@ -516,7 +517,7 @@ int QCmd::qtutilsPrivate::Parse(QStringList & strLst)
 	if ( itArg != m_listArguments.end() ) {
 		pArg = *itArg;
 		itArg++;
-		if ( !pArg->GetOptional() ) {
+		if ( !pArg->isOptional() ) {
 			retVal = QCmdParseError::NOT_ENOUGH_ARGUMENTS;
 		}
 	}
@@ -607,6 +608,14 @@ int QCmd::qtutilsPrivate::Parse()
 		}
 	}
 	retVal = Parse(m_pParent->m_strLstCmd);
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
+{
+	QString retVal = chCommand + GetName();
 	return retVal;
 }
 
@@ -1322,20 +1331,19 @@ int QCmd::SetArg( QString strName, QStringList nValue )
 
 int QCmd::SetArg( QString strName, QCmdLineFileList nValue )
 {
-	/*
-	QCmdArg* pArgion;
-	int retVal = FindArg(GetArgString(strName),pArgion);
-	if (wasSuccessful(retVal)) {
-	if (pArgion != NULL) {
-	QCmdLineFileList* pIntArg = dynamic_cast<QCmdLineFileList*>(pArgion);
-	if (pIntArg != NULL) {
-	pIntArg->SetValue(nValue);
+	nValue.m_strListFiles.clear();
+	QCmdArg* pArg=NULL;
+	int retVal = m_pPrivate->FindArg(strName,pArg);
+	if ( wasSuccessful(retVal) ) {
+		QCmdArgFileList* pArgQString = dynamic_cast<QCmdArgFileList*>(pArg);
+		if ( pArgQString ) {
+			pArgQString->SetValue(nValue);
+		}
+		else
+			retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 	}
-	}
-	}
-	*/
-
-	return QCmdParseError::NOT_IMPLEMENTED;
+	QCmdParseException::Throw(retVal,strName);
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -1398,6 +1406,16 @@ QString QCmd::GetSyntax()
 	QString retVal;
 	if (m_pPrivate != NULL) {
 		retVal = m_pPrivate->GetSyntax();
+	}
+	return retVal;
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::exportCommandString(QChar chCommand)
+{
+	QString retVal;
+	if (m_pPrivate != NULL) {
+		retVal = m_pPrivate->exportCommandString(chCommand);
 	}
 	return retVal;
 }

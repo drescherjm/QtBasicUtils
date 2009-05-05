@@ -143,6 +143,10 @@ public:
 	QString		GetDescription();
 	QString		GetLongDescription();
 	bool		wasSuccessful(int nRetCode) const;
+	
+	// Basically the reverse of what parse does. This generates the string that can
+	// be placed on the command line to initialize this command in the current state.
+	QString		exportCommandString(QChar chCommand);
 public:
 	QStringList m_strLstCmd;
 protected:

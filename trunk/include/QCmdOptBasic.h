@@ -13,6 +13,7 @@ public:
 public:
 	virtual QString GetSyntax();
 	virtual int		ImportData( QString strValue );
+	virtual QString exportCommandString();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

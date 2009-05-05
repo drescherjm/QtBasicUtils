@@ -144,6 +144,8 @@ int QCmdStringListOpt::Execute()
 	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << nSum << std::endl;
 
+	QString str = exportCommandString('+');
+
 	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 }
 

@@ -13,6 +13,7 @@ public:
 		TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
 public:
 	virtual QString GetSyntax();
+	virtual QString exportCommandString();
 	virtual int		ImportData( QString strValue );
 };
 

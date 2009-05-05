@@ -5,7 +5,6 @@
 #include "QCmdLineFileList.h"
 #include "QCmd.h"
 
-
 namespace QTUTILS {
 
 class QCmdArgFileList : public QCmdArgBasicBase<QCmdLineFileList>

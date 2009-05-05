@@ -6,8 +6,7 @@ namespace QTUTILS {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdOptBool::QCmdOptBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue) : 
-QCmdOpt( strName, strDescription,strExplanation ), m_bValue(bDefaultValue), 
-m_bDefaultValue(bDefaultValue)
+QCmdOptBasicBase<bool>( strName, strDescription,strExplanation,bDefaultValue)
 {
 
 }
@@ -27,10 +26,10 @@ int QCmdOptBool::ImportData( QString strValue )
 			if ( strTemp.length() == 1 ) {
 				switch(strTemp[0].toAscii()) {
 				case '+':
-					m_bValue = true;
+					m_nValue = true;
 					break;
 				case '-':
-					m_bValue = false;
+					m_nValue = false;
 					break;
 				default:
 					retVal = QCmdParseError::PARAM_INVALID_DATA;
@@ -39,18 +38,10 @@ int QCmdOptBool::ImportData( QString strValue )
 			}
 			else
 			{
-				m_bValue = true;
+				m_nValue = true;
 			}
 	}
 	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void QCmdOptBool::Initialize()
-{
-	m_bValue = m_bDefaultValue;
-	QCmdPart::Initialize();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +51,7 @@ QString QCmdOptBool::GetSyntax()
 	QString retVal = GetDescription();
 	
 	retVal += " [";
-	if ( m_bDefaultValue == true )
+	if ( m_nDefaultValue == true )
 		retVal += "TRUE";
 	else
 		retVal += "FALSE";
@@ -82,9 +73,16 @@ QString QCmdOptBool::getValueDescription()
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void QCmdOptBool::SetValue( bool bVal )
+QString QCmdOptBool::exportCommandString()
 {
-	m_bValue = bVal;
+	QString retVal;
+	if ( !isDefaultValue() ) {
+		if ( GetValue() == true )
+			retVal = "+";
+		else
+			retVal = "-";
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
