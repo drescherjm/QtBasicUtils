@@ -28,6 +28,9 @@ struct QCmd::qtutilsPrivate
 public:
 	qtutilsPrivate(QCmd* pParent);
 public:
+	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
+		QString strDescription, QString strExplanation, ValType nDefaultValue,
+		ValType nMinVal, ValType nMaxVal);
 	template <typename ValType,typename OptType> int SetOpt(QString strName, ValType);
 	template <typename ValType,typename ArgType> int SetArg(QString strName, ValType);
 public:
@@ -35,6 +38,7 @@ public:
 	QString		m_strStringListEnd;
 	QChar		m_chOption;
 };
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QCmd::qtutilsPrivate::qtutilsPrivate(QCmd* pParent) : m_pParent(pParent)
 {
@@ -82,6 +86,38 @@ int QCmd::qtutilsPrivate::SetArg(QString strName, ValType val)
 	}
 	return retVal;	
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename ValType,typename OptType>
+int QCmd::qtutilsPrivate::AddOpt( QString strName, 
+				QString strDescription, QString strExplanation, 
+				ValType nDefaultValue, ValType nMinVal, ValType nMaxVal )
+{
+	int retVal = (m_pParent != NULL) ? QCmdParseError::STATUS_OK : QCmdParseError::MEMORY_CORRUPTION_ERROR;
+	if (retVal == QCmdParseError::STATUS_OK) {
+		QString strOpt = m_pParent->GetOptString(strName);
+		retVal = m_pParent->AddOpt( strOpt );
+		if ( m_pParent->wasSuccessful(retVal) ) {
+			OptType* ptr;
+			ptr = new OptType(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
+			if ( ptr ) {
+				retVal = m_pParent->AddOpt( strOpt, ptr );
+			}
+			else
+			{
+				retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
+			}
+		}
+	}
+	
+	QCmdParseException::Throw(retVal,strName);
+	return retVal;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -161,21 +197,8 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, quint32 nDefaultValue,
 				 quint32 nMinVal, quint32 nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_quint32* ptr;
-		ptr = new QCmdOpt_quint32(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<quint32,QCmdOpt_quint32>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -183,41 +206,15 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, int nDefaultValue,
 				 int nMinVal, int nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_int* ptr;
-		ptr = new QCmdOpt_int(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<int,QCmdOpt_int>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, quint8 nDefaultValue,
 				 quint8 nMinVal, quint8 nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_quint8* ptr;
-		ptr = new QCmdOpt_quint8(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<quint8,QCmdOpt_quint8>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -225,21 +222,8 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, quint16 nDefaultValue,
 				 quint16 nMinVal, quint16 nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_quint16* ptr;
-		ptr = new QCmdOpt_quint16(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<quint16,QCmdOpt_quint16>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -247,21 +231,8 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, short nDefaultValue,
 				 short nMinVal, short nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_short* ptr;
-		ptr = new QCmdOpt_short(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<short,QCmdOpt_short>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -269,21 +240,8 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, float nDefaultValue,
 				 float nMinVal, float nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_float* ptr;
-		ptr = new QCmdOpt_float(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<float,QCmdOpt_float>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -291,21 +249,8 @@ int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation
 int QCmd::AddOpt(QString strName, QString strDescription, QString strExplanation, double nDefaultValue,
 				 double nMinVal, double nMaxVal)
 {
-	QString strOpt = GetOptString(strName);
-	int retVal = AddOpt( strOpt );
-	if ( wasSuccessful(retVal) ) {
-		QCmdOpt_double* ptr;
-		ptr = new QCmdOpt_double(strOpt,strDescription,strExplanation,nDefaultValue,nMinVal,nMaxVal);
-		if ( ptr ) {
-			retVal = AddOpt( strOpt, ptr );
-		}
-		else
-		{
-			retVal =  QCmdParseError::MEMORY_ALLOCATION_ERROR;
-		}
-	}
-	QCmdParseException::Throw(retVal,strName);
-	return retVal;
+	return m_pPrivate->AddOpt<double,QCmdOpt_double>(strName,strDescription,
+		strExplanation,nDefaultValue,nMinVal,nMaxVal);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
