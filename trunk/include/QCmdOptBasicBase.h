@@ -14,6 +14,7 @@ namespace QTUTILS {
 		virtual int		ImportData( QString strValue )=0;
 		virtual void	Initialize();
 		TYPE	GetValue();
+		void	SetValue(TYPE nVal);
 	public:
 		TYPE	m_nValue;
 		TYPE	m_nDefaultValue;

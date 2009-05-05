@@ -278,16 +278,16 @@ int QCmdEnter::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class QCmdOptBool : public QCmd
+class QCmdOptBoolTest : public QCmd
 {
 public:
-	QCmdOptBool(QString strName, QString strDescription);
+	QCmdOptBoolTest(QString strName, QString strDescription);
 	virtual int Execute();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QCmdOptBool::QCmdOptBool( QString strName, QString strDescription ) :
+QCmdOptBoolTest::QCmdOptBoolTest( QString strName, QString strDescription ) :
 	QCmd(strName,strDescription)
 {
 	bool bTest = true;
@@ -296,13 +296,23 @@ QCmdOptBool::QCmdOptBool( QString strName, QString strDescription ) :
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmdOptBool::Execute()
+int QCmdOptBoolTest::Execute()
 {	
 	int retVal;
 	bool bTest;
 	retVal = GetOpt("B",bTest);
 	if (retVal == QCmdParseError::STATUS_OK) {
 		retVal = (bTest == true) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+		if (retVal == QCmdParseError::STATUS_OK) {
+			bool bVal = false;
+			retVal = SetOpt("B",bVal);
+			if (wasSuccessful(retVal)) {
+				retVal = GetOpt("B",bTest);
+				if (wasSuccessful(retVal)) {
+						retVal = (bTest == false) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+				}
+			}
+		}
 	}
 	return retVal;
 }
@@ -363,7 +373,7 @@ int main(int argc, char* argv[])
 		QCmdTest			cmdTest("Test","This is the test command");
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
 		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
-		QCmdOptBool			cmdBoolOpt("BOOLOPT","This tests the bool an option.");
+		QCmdOptBoolTest			cmdBoolOpt("BOOLOPT","This tests the bool an option.");
 		QCmdExtOpt			cmdExtOpt("EXTOPT","This tests the extended options.");
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");

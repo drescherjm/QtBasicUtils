@@ -94,6 +94,19 @@ public:
 	int	GetOpt(QString strName, QStringList & nValue);
 	int	GetOpt(QString strName, QCmdLineFileList & nValue);
 
+	int SetOpt(QString strName, bool bValue);
+	int SetOpt(QString strName, quint32 nValue);
+	int SetOpt(QString strName, int nValue);
+	int SetOpt(QString strName, quint8 nValue);
+	int SetOpt(QString strName, quint16 nValue);
+	int	SetOpt(QString strName, short nValue);
+	int SetOpt(QString strName, float nValue);
+	int SetOpt(QString strName, double nValue);
+	int	SetOpt(QString strName, QChar chValue);
+	int SetOpt(QString strName, QString nValue);
+	int	SetOpt(QString strName, QStringList nValue);
+	int	SetOpt(QString strName, QCmdLineFileList nValue);
+
 	int GetArg(QString strName, bool & bValue);
 	int GetArg(QString strName, quint32 & nValue);
 	int GetArg(QString strName, int & nValue);
@@ -106,9 +119,9 @@ public:
 	int	GetArg(QString strName, QString & nValue);
 	int	GetArg(QString strName, QStringList & nValue);
 	int	GetArg(QString strName, QCmdLineFileList & nValue);
+
 public:
 	virtual int Parse();
-	QStringList m_strLstCmd;
 	virtual int Execute();
 	void		EndRequiredArguments();
 	int			IsOption( QString & str, QCmdOpt *& pOption );
@@ -116,12 +129,15 @@ public:
 	QString		GetName();
 	QString		GetDescription();
 	QString		GetLongDescription();
+	bool		wasSuccessful(int nRetCode) const;
+public:
+	QStringList m_strLstCmd;
 protected:
-	int		Parse( QStringList & strLst );
-	int		AddOpt( QString strName, QCmdOpt* pOpt = NULL );
-	QString GetOptString( QString strName );
-	int		FindOpt( QString strName, QCmdOpt *& option );
-	int		FindArg(QString strName, QCmdArg *& ARGUMENT);
+	int			Parse( QStringList & strLst );
+	int			AddOpt( QString strName, QCmdOpt* pOpt = NULL );
+	QString		GetOptString( QString strName );
+	int			FindOpt( QString strName, QCmdOpt *& option );
+	int			FindArg(QString strName, QCmdArg *& ARGUMENT);
 protected:
 	QString		m_strName;
 	bool		m_bOptional;
@@ -133,14 +149,19 @@ protected:
 	QOptMap		m_mapOpt;
 	QArgMap		m_mapArg;
 private:
-	QString		m_strStringListEnd;
-	QChar		m_chOption;
+	friend struct qtutilsPrivate;
+	struct			qtutilsPrivate;
+	qtutilsPrivate* m_pPrivate;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline QString QCmd::GetName()
 {
 	return m_strName;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline QString QCmd::GetDescription()
 {

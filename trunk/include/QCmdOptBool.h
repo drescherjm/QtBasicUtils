@@ -24,6 +24,7 @@ public:
 	virtual int		ImportData( QString strValue );
 	virtual void	Initialize();
 	bool	GetValue();
+	void	SetValue(bool bVal);
 public:
 	virtual QString GetSyntax();
 	virtual QString getValueDescription();
