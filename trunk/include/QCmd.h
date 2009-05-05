@@ -120,6 +120,19 @@ public:
 	int	GetArg(QString strName, QStringList & nValue);
 	int	GetArg(QString strName, QCmdLineFileList & nValue);
 
+	int SetArg(QString strName, bool bValue);
+	int SetArg(QString strName, quint32 nValue);
+	int SetArg(QString strName, int nValue);
+	int SetArg(QString strName, quint8 nValue);
+	int SetArg(QString strName, quint16 nValue);
+	int	SetArg(QString strName, short nValue);
+	int SetArg(QString strName, float nValue);
+	int SetArg(QString strName, double nValue);
+	int	SetArg(QString strName, QChar chValue);
+	int SetArg(QString strName, QString nValue);
+	int	SetArg(QString strName, QStringList nValue);
+	int	SetArg(QString strName, QCmdLineFileList nValue);
+
 public:
 	virtual int Parse();
 	virtual int Execute();
@@ -149,7 +162,7 @@ protected:
 	QOptMap		m_mapOpt;
 	QArgMap		m_mapArg;
 private:
-	friend struct qtutilsPrivate;
+	friend struct	qtutilsPrivate;
 	struct			qtutilsPrivate;
 	qtutilsPrivate* m_pPrivate;
 };

@@ -29,6 +29,7 @@ public:
 	qtutilsPrivate(QCmd* pParent);
 public:
 	template <typename ValType,typename OptType> int SetOpt(QString strName, ValType);
+	template <typename ValType,typename ArgType> int SetArg(QString strName, ValType);
 public:
 	QCmd*		m_pParent;
 	QString		m_strStringListEnd;
@@ -45,13 +46,37 @@ QCmd::qtutilsPrivate::qtutilsPrivate(QCmd* pParent) : m_pParent(pParent)
 template <typename ValType,typename OptType>
 int QCmd::qtutilsPrivate::SetOpt(QString strName, ValType val)
 {
+	int retVal = (m_pParent != NULL) ? QCmdParseError::STATUS_OK : QCmdParseError::MEMORY_CORRUPTION_ERROR;
 	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			OptType* pOptType = dynamic_cast<OptType*>(pOption);
-			if (pOptType != NULL) {
-				pOptType->SetValue(val);
+	if (retVal == QCmdParseError::STATUS_OK) {
+		retVal = m_pParent->FindOpt(m_pParent->GetOptString(strName),pOption);
+		if (m_pParent->wasSuccessful(retVal)) {
+			if (pOption != NULL) {
+				OptType* pOptType = dynamic_cast<OptType*>(pOption);
+				if (pOptType != NULL) {
+					pOptType->SetValue(val);
+				}
+			}
+		}
+	}
+	return retVal;	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename ValType,typename ArgType>
+int QCmd::qtutilsPrivate::SetArg(QString strName, ValType val)
+{
+	int retVal = (m_pParent != NULL) ? QCmdParseError::STATUS_OK : QCmdParseError::MEMORY_CORRUPTION_ERROR;
+	QCmdArg* pArgument;
+	if (retVal == QCmdParseError::STATUS_OK) {
+		retVal = m_pParent->FindArg(strName,pArgument);
+		if (m_pParent->wasSuccessful(retVal)) {
+			if (pArgument != NULL) {
+				ArgType* pArgType = dynamic_cast<ArgType*>(pArgument);
+				if (pArgType != NULL) {
+					pArgType->SetValue(val);
+				}
 			}
 		}
 	}
@@ -1380,186 +1405,84 @@ int QCmd::IsOption(QString & str, QCmdOpt *& pOption)
 
 int QCmd::SetOpt( QString strName, bool bValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOptBool* pBoolOpt = dynamic_cast<QCmdOptBool*>(pOption);
-			if (pBoolOpt != NULL) {
-				pBoolOpt->SetValue(bValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<bool,QCmdOptBool>(strName,bValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, quint32 nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_quint32* pIntOpt = dynamic_cast<QCmdOpt_quint32*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<quint32,QCmdOpt_quint32>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, int nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_int* pIntOpt = dynamic_cast<QCmdOpt_int*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<int,QCmdOpt_int>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, quint8 nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_quint8* pIntOpt = dynamic_cast<QCmdOpt_quint8*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<quint8,QCmdOpt_quint8>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, quint16 nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_quint16* pIntOpt = dynamic_cast<QCmdOpt_quint16*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;	
+	return m_pPrivate->SetOpt<quint16,QCmdOpt_quint16>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, short nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_short* pIntOpt = dynamic_cast<QCmdOpt_short*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<short,QCmdOpt_short>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, float nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_float* pIntOpt = dynamic_cast<QCmdOpt_float*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<float,QCmdOpt_float>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, double nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOpt_double* pIntOpt = dynamic_cast<QCmdOpt_double*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<double,QCmdOpt_double>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, QChar chValue )
 {
-	/*
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOptQChar* pIntOpt = dynamic_cast<QCmdOptQChar*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(chValue);
-			}
-		}
-	}
-	return retVal;
-	*/
-
 	return m_pPrivate->SetOpt<QChar,QCmdOptQChar>(strName,chValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, QString nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOptQString* pIntOpt = dynamic_cast<QCmdOptQString*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<QString,QCmdOptQString>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, QStringList nValue )
 {
-	QCmdOpt* pOption;
-	int retVal = FindOpt(GetOptString(strName),pOption);
-	if (wasSuccessful(retVal)) {
-		if (pOption != NULL) {
-			QCmdOptQStringList* pIntOpt = dynamic_cast<QCmdOptQStringList*>(pOption);
-			if (pIntOpt != NULL) {
-				pIntOpt->SetValue(nValue);
-			}
-		}
-	}
-	return retVal;
+	return m_pPrivate->SetOpt<QStringList,QCmdOptQStringList>(strName,nValue);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmd::SetOpt( QString strName, QCmdLineFileList nValue )
 {
+	/*
 	QCmdOpt* pOption;
 	int retVal = FindOpt(GetOptString(strName),pOption);
 	if (wasSuccessful(retVal)) {
@@ -1570,6 +1493,9 @@ int QCmd::SetOpt( QString strName, QCmdLineFileList nValue )
 			}
 		}
 	}
+	*/
+
+	return QCmdParseError::NOT_IMPLEMENTED;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
