@@ -18,6 +18,7 @@ namespace QTUTILS {
 		virtual QString GetSyntax();
 		virtual QString GetShortSyntax( );
 		virtual	void	Initialize();
+		virtual QString	exportCommandString();
 	protected:
 		void	Insert(QString strValue);
 	protected:

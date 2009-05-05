@@ -106,4 +106,22 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	QString QCmdArgQStringList::exportCommandString()
+	{
+		QString retVal;
+		if (!isOptional() || !isDefaultValue() ) {
+			QStringList strLst = GetValue();
+			if (!strLst.isEmpty()) {
+				foreach(QString str,strLst) {
+					retVal += str + " ";
+				}
+			}
+			retVal += ".";
+
+		}
+		return retVal;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 }; // namespace QTUTILS

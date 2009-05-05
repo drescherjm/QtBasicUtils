@@ -57,6 +57,19 @@ QString QCmdArgBool::GetSyntax()
 	retVal += "]";
 	return retVal;
 }
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdArgBool::exportCommandString()
+{
+	QString retVal;
+	if ( !isOptional() || !isDefaultValue() ) {
+		if ( GetValue() == true )
+			retVal = "+";
+		else
+			retVal = "-";
+	}
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -17,6 +17,7 @@ public:
 	virtual void		Initialize();
 	virtual QString		GetSyntax();
 	virtual QString		GetShortSyntax( );
+	virtual QString		exportCommandString();
 public:
 	CMDSTRVERIFY		m_pFnVerify;
 };

@@ -14,6 +14,7 @@ namespace QTUTILS {
 	public:
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();
+		virtual QString exportCommandString();
 	public:
 		bool	m_bIgnoreCase;
 	};

@@ -53,7 +53,18 @@ namespace QTUTILS {
 
 		return retVal;
 	}
-	
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	QString QCmdOptQString::exportCommandString()
+	{
+		QString retVal;
+		if (!isDefaultValue() ) {
+			retVal = QString("%1").arg(m_nValue);
+		}
+		return retVal;
+	}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS

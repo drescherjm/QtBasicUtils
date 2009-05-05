@@ -89,6 +89,24 @@ namespace QTUTILS {
 		return retVal;
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	QString QCmdArgFileList::exportCommandString()
+	{
+		QString retVal;
+		if (!isOptional() || !isDefaultValue() ) {
+			QStringList strLst = GetValue().m_strListFiles;
+			if (!strLst.isEmpty()) {
+				foreach(QString str,strLst) {
+					retVal += str + " ";
+				}
+			}
+			retVal += ".";
+
+		}
+		return retVal;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 }; // namespace QTUTILS

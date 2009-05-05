@@ -23,6 +23,7 @@ public:
 	virtual int		ImportData( QString strValue );
 public:
 	virtual QString GetSyntax();
+	virtual QString exportCommandString();
 };
 
 }; //namespace QTUTILS
