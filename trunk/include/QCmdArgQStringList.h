@@ -10,9 +10,13 @@ namespace QTUTILS {
 
 	class QCmdArgQStringList : public QCmdArgBasicBase<QStringList>  
 	{
+		typedef QCmdArgBasicBase<QStringList> SuperClass;
 	public:
 		QCmdArgQStringList(QString str, QString strDescription, QString strExplanation,  
 			QStringList strDefaultValue, CMDSTRVERIFY pfnVerify);
+		QCmdArgQStringList(const QCmdArgQStringList & other);
+		QCmdArgQStringList& operator=(const QCmdArgQStringList & other);
+		virtual QCmdArgQStringList* Clone();
 	public:
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();
@@ -24,6 +28,9 @@ namespace QTUTILS {
 	protected:
 		CMDSTRVERIFY	m_pFnVerify;
 		bool			m_bWasDefault;
+	private:
+		void			copy( const QCmdArgQStringList & other );
+		void			destroy();
 	};
 
 }; //namespace QTUTILS
