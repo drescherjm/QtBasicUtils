@@ -21,12 +21,18 @@ class QCmdArg : public QNamedCmdPart
 {
 public:
 	QCmdArg(QString strName,QString strDescription, QString strExplanation);
+	QCmdArg(const QCmdArg & other);
+	QCmdArg& operator=(const QCmdArg & other);
 	virtual ~QCmdArg();
 public:
-	virtual bool isOptional();
-	virtual void SetOptional(bool bOptional);
+	virtual bool	isOptional();
+	virtual void	SetOptional(bool bOptional);
 	virtual QString GetShortSyntax( );
-	bool m_bOptional;
+public:
+	bool	m_bOptional;
+private:
+	void			copy( const QCmdArg & other );
+	void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

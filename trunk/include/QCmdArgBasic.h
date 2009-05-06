@@ -11,10 +11,17 @@ template <class TYPE,char fmt[]> class QCmdArgBasic : public QCmdArgBasicBaseMM<
 public:
 	QCmdArgBasic(QString strName, QString strDescription, QString strExplanation, 
 		TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
+
+	QCmdArgBasic(const QCmdArgBasic<TYPE, fmt> & other);
+	QCmdArgBasic<TYPE, fmt>& operator=(const QCmdArgBasic<TYPE, fmt> & other);
+
 public:
 	virtual QString GetSyntax();
 	virtual QString exportCommandString();
 	virtual int		ImportData( QString strValue );
+private:
+	void			copy( const QCmdArgBasic<TYPE, fmt> & other );
+	void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
