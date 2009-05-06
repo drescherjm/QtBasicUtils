@@ -21,6 +21,8 @@ class QCmdOpt : public QNamedCmdPart
 {
 public:
 	QCmdOpt(QString strName,QString strDescription, QString strExplanation);
+	QCmdOpt(const QCmdOpt & other);
+	QCmdOpt& operator=(const QCmdOpt & other);
 	virtual ~QCmdOpt();
 public:
 	virtual int		ImportData( QString strValue )=0;
@@ -28,6 +30,9 @@ public:
 	virtual QString GetShortSyntax( );
 	virtual bool	isExtendedOption();
 	virtual QString exportOptionName();
+private:
+	void			copy( const QCmdOpt & other );
+	void			destroy();
 };
 
 }; //namespace QTUTILS

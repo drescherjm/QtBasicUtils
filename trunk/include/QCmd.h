@@ -28,6 +28,12 @@ class QCmd
 public:
 	QCmd(QString strName,QString strDescription, QString strExplanation=QString(),bool bIgnoreCase = true);
 	virtual ~QCmd();
+
+	/*
+	virtual QCmd* Clone();
+	virtual QCmd* New();
+	*/
+
 public:
 	virtual void Initialize();
 public:

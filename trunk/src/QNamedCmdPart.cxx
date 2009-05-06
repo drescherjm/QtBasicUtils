@@ -12,7 +12,40 @@ QTUTILS::QNamedCmdPart::QNamedCmdPart( QString strName,QString strDescription, Q
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QTUTILS::QNamedCmdPart::QNamedCmdPart( const QNamedCmdPart & other ) : QCmdPart(other)
+{
+	copy(other);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QString QTUTILS::QNamedCmdPart::getValueDescription()
 {
 	return QString("<Value>");
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QTUTILS::QNamedCmdPart::copy( const QNamedCmdPart & other )
+{
+	m_strName = other.m_strName;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QTUTILS::QNamedCmdPart::destroy()
+{
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QTUTILS::QNamedCmdPart& QTUTILS::QNamedCmdPart::operator=( const QNamedCmdPart & other )
+{
+	
+	QCmdPart::operator =(other);
+
+	if ( &other != this ) {
+		destroy();
+		copy(other);
+	}
+	return (*this);
 }

@@ -21,6 +21,8 @@ class QCmdPart
 {
 public:
 	QCmdPart( QString strDescription, QString strExplanation);
+	QCmdPart(const QCmdPart & other);
+	QCmdPart& operator=(const QCmdPart & other);
 	virtual ~QCmdPart();
 public:
 	int				MarkSet();
@@ -29,6 +31,9 @@ public:
 	QString			GetExplanation();
 	virtual int		ImportData( QString strValue )=0;
 	virtual void	Initialize();
+private:
+	void			copy( const QCmdPart & other );
+	void			destroy();
 protected:
 	bool			m_bValueSet;
 	QString			m_strDescription;
