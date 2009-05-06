@@ -14,4 +14,43 @@ m_nMaxValue(nMaxValue)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class TYPE>
+QTUTILS::QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM( const QCmdOptBasicBaseMM<TYPE> & other ) : QCmdOptBasicBase<TYPE>(other)
+{
+	copy(other);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE>
+QCmdOptBasicBaseMM<TYPE>& QTUTILS::QCmdOptBasicBaseMM<TYPE>::operator=( const QCmdOptBasicBaseMM<TYPE> & other )
+{
+	QTUTILS::QCmdOptBasicBase<TYPE>::operator =(other);
+
+	if ( &other != this ) {
+		destroy();
+		copy(other);
+	}
+	return (*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE>
+void QTUTILS::QCmdOptBasicBaseMM<TYPE>::destroy()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE>
+void QTUTILS::QCmdOptBasicBaseMM<TYPE>::copy( const QCmdOptBasicBaseMM & other )
+{
+	m_nMaxValue = other.m_nMaxValue;
+	m_nMinValue = other.m_nMinValue;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif //__QCMDOPTBASICBASEMMXX__

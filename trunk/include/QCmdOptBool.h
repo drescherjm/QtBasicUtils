@@ -21,13 +21,19 @@ namespace QTUTILS {
 
 class QCmdOptBool : public QCmdOptBasicBase<bool>
 {
+	typedef QCmdOptBasicBase<bool> SuperClass;
 public:
 	QCmdOptBool(QString strName,QString strDescription, QString strExplanation, bool bDefaultValue);
 	virtual int		ImportData( QString strValue );
+	QCmdOptBool(const QCmdOptBool & other);
+	QCmdOptBool& operator=(const QCmdOptBool & other);
 public:
 	virtual QString GetSyntax();
 	virtual QString getValueDescription();
 	virtual QString	exportCommandString();
+private:
+	void			copy( const QCmdOptBool & other );
+	void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

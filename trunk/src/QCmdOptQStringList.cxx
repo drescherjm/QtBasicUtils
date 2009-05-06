@@ -16,6 +16,27 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	QCmdOptQStringList::QCmdOptQStringList( const QCmdOptQStringList & other ) : SuperClass(other)
+	{
+		copy(other);
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	QCmdOptQStringList& QCmdOptQStringList::operator=( const QCmdOptQStringList & other ) 
+	{
+		SuperClass::operator =(other);
+
+		if ( &other != this ) {
+			destroy();
+			copy(other);
+		}
+
+		return (*this);
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 	void QCmdOptQStringList::Insert(QString str)
 	{
 		// Remove the default value after first non default insert
@@ -121,6 +142,21 @@ namespace QTUTILS {
 			
 		}
 		return retVal;
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void QCmdOptQStringList::copy( const QCmdOptQStringList & other )
+	{
+		m_pFnVerify = other.m_pFnVerify;
+		m_bWasDefault = other.m_bWasDefault;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void QCmdOptQStringList::destroy()
+	{
+
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////

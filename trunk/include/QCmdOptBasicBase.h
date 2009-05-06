@@ -3,6 +3,8 @@
 
 #include "QCmdOpt.h"
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 namespace QTUTILS {
 
 	template <class TYPE> class QCmdOptBasicBase : public QCmdOpt  
@@ -10,6 +12,8 @@ namespace QTUTILS {
 	public:
 		QCmdOptBasicBase(QString strName, QString strDescription, QString strExplanation, 
 			TYPE nDefaultValue);
+		QCmdOptBasicBase(const QCmdOptBasicBase<TYPE> & other);
+		QCmdOptBasicBase<TYPE>& operator=(const QCmdOptBasicBase<TYPE> & other);
 		virtual QString GetSyntax()=0;
 		virtual int		ImportData( QString strValue )=0;
 		virtual void	Initialize();
@@ -19,6 +23,9 @@ namespace QTUTILS {
 	public:
 		TYPE	m_nValue;
 		TYPE	m_nDefaultValue;
+	private:
+		void			copy( const QCmdOptBasicBase & other );
+		void			destroy();
 	};
 
 /////////////////////////////////////////////////////////////////////////////////////////
