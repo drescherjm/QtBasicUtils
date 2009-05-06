@@ -77,4 +77,51 @@ QString QCmdArgBasic<TYPE, fmt>::exportCommandString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class TYPE,char fmt[]>
+void QTUTILS::QCmdArgBasic<TYPE, fmt>::destroy()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+void QTUTILS::QCmdArgBasic<TYPE, fmt>::copy( const QCmdArgBasic<TYPE, fmt> & other )
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QCmdArgBasic<TYPE, fmt>& QTUTILS::QCmdArgBasic<TYPE, fmt>::operator=( const QCmdArgBasic<TYPE, fmt> & other )
+{
+	SuperClass::operator =(other);
+
+	if ( &other != this ) {
+		destroy();
+		copy(other);
+	}
+	return (*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QTUTILS::QCmdArgBasic<TYPE, fmt>::QCmdArgBasic( const QCmdArgBasic<TYPE, fmt> & other ) : SuperClass(other)
+{
+	copy(other);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QCmdArgBasic<TYPE, fmt>* QCmdArgBasic<TYPE, fmt>::Clone()
+{
+	return new QCmdArgBasic<TYPE, fmt>(*this);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif //__QCMDARGBASIC_TXX__

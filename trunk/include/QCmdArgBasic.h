@@ -8,6 +8,7 @@ namespace QTUTILS {
 
 template <class TYPE,char fmt[]> class QCmdArgBasic : public QCmdArgBasicBaseMM<TYPE>  
 {
+	typedef  QCmdArgBasicBaseMM<TYPE> SuperClass;
 public:
 	QCmdArgBasic(QString strName, QString strDescription, QString strExplanation, 
 		TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
@@ -15,6 +16,7 @@ public:
 	QCmdArgBasic(const QCmdArgBasic<TYPE, fmt> & other);
 	QCmdArgBasic<TYPE, fmt>& operator=(const QCmdArgBasic<TYPE, fmt> & other);
 
+	virtual QCmdArgBasic<TYPE, fmt>* Clone();
 public:
 	virtual QString GetSyntax();
 	virtual QString exportCommandString();
