@@ -22,8 +22,9 @@ class QCmdPart
 public:
 	QCmdPart( QString strDescription, QString strExplanation);
 	QCmdPart(const QCmdPart & other);
-	QCmdPart& operator=(const QCmdPart & other);
-	virtual ~QCmdPart();
+	QCmdPart&	operator=(const QCmdPart & other);
+	virtual		QCmdPart* Clone()=0;
+	virtual		~QCmdPart();
 public:
 	int				MarkSet();
 	bool			HasValueBeenSet();

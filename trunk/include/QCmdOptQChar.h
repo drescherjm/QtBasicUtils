@@ -13,6 +13,7 @@ namespace QTUTILS {
 			QChar chDefaultValue, QChar chMinVal, QChar chMaxVal);
 		QCmdOptQChar(const QCmdOptQChar & other);
 		QCmdOptQChar& operator=(const QCmdOptQChar & other);
+		virtual QCmdOptQChar* Clone();
 	public:
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();

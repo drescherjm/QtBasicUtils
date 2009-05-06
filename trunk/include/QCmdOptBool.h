@@ -27,6 +27,7 @@ public:
 	virtual int		ImportData( QString strValue );
 	QCmdOptBool(const QCmdOptBool & other);
 	QCmdOptBool& operator=(const QCmdOptBool & other);
+	virtual		QCmdOptBool* Clone();
 public:
 	virtual QString GetSyntax();
 	virtual QString getValueDescription();

@@ -14,6 +14,8 @@ namespace QTUTILS {
 			QString strDefaultValue, CMDSTRVERIFY pfnVerify);
 		QCmdOptQString(const QCmdOptQString & other);
 		QCmdOptQString& operator=(const QCmdOptQString & other);
+
+		virtual QCmdOptQString* Clone();
 	public:
 		virtual int		ImportData( QString strValue );
 		virtual QString GetSyntax();

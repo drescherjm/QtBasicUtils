@@ -29,10 +29,8 @@ public:
 	QCmd(QString strName,QString strDescription, QString strExplanation=QString(),bool bIgnoreCase = true);
 	virtual ~QCmd();
 
-	/*
 	virtual QCmd* Clone();
 	virtual QCmd* New();
-	*/
 
 public:
 	virtual void Initialize();
@@ -157,10 +155,10 @@ public:
 	QStringList m_strLstCmd;
 protected:
 	int			Parse( QStringList & strLst );
-	//int			AddOpt( QString strName, QCmdOpt* pOpt = NULL );
-	//QString		GetOptString( QString strName );
-	//int			FindOpt( QString strName, QCmdOpt *& option );
-	//int			FindArg(QString strName, QCmdArg *& ARGUMENT);
+	QOptList	getOptions();
+	QArgList	getArguments();
+	void		setOptions(QOptList & lstOptions);
+	void		setArguments(QArgList & lstArguments);
 private:
 	friend struct	qtutilsPrivate;
 	struct			qtutilsPrivate;
