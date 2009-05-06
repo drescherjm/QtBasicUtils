@@ -27,6 +27,7 @@ class QCmd
 {
 public:
 	QCmd(QString strName,QString strDescription, QString strExplanation=QString(),bool bIgnoreCase = true);
+	QCmd(const QCmd & other);
 	virtual ~QCmd();
 
 	virtual QCmd* Clone();
@@ -155,14 +156,21 @@ public:
 	QStringList m_strLstCmd;
 protected:
 	int			Parse( QStringList & strLst );
-	QOptList	getOptions();
-	QArgList	getArguments();
+
+	// When called with bDuplicate==true these clone the Options or Arguments instead of
+	// using the same pointer. 
+	QOptList	getOptions(bool bDuplicate=false) const;
+	QArgList	getArguments(bool bDuplicate=false) const;
+	
 	void		setOptions(QOptList & lstOptions);
 	void		setArguments(QArgList & lstArguments);
 private:
 	friend struct	qtutilsPrivate;
 	struct			qtutilsPrivate;
 	qtutilsPrivate* m_pPrivate;
+private:
+	void			copy(const QCmd & other);
+	void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

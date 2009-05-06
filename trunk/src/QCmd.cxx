@@ -650,6 +650,13 @@ QCmd::QCmd(QString strName,QString strDescription, QString strExplanation,bool b
 			(bool)false);
 	}	
 }
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmd::QCmd( const QCmd & other )
+{
+	m_pPrivate = new qtutilsPrivate(this,QString(),QString());
+	copy(other);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1443,15 +1450,47 @@ QString QCmd::exportCommandString(QChar chCommand)
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QOptList QCmd::getOptions()
+QOptList QCmd::getOptions(bool bDuplicate) const
 {
-	return m_pPrivate->m_listOptions;	
+	QOptList retVal;
+	if (!bDuplicate) {
+		retVal = m_pPrivate->m_listOptions;
+	}
+	else
+	{	
+		QOptList lstOldOpts = m_pPrivate->m_listOptions;
+		foreach(QCmdOpt* pOpt,lstOldOpts) {
+			if (pOpt != NULL) {
+				QCmdOpt* pClone = dynamic_cast<QCmdOpt*>(pOpt->Clone());
+				if (pClone) {
+					retVal.push_back(pClone);
+				}
+			}
+		}
+	}
+	return retVal;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QArgList QCmd::getArguments()
+QTUTILS::QArgList QCmd::getArguments(bool bDuplicate) const
 {
-	return m_pPrivate->m_listArguments;
+	QArgList retVal;
+	if (!bDuplicate) {
+		retVal = m_pPrivate->m_listArguments;
+	}
+	else
+	{	
+		QArgList lstOldArgs = m_pPrivate->m_listArguments;
+		foreach(QCmdArg* pArg,lstOldArgs) {
+			if (pArg != NULL) {
+				QCmdArg* pClone = dynamic_cast<QCmdArg*>(pArg->Clone());
+				if (pClone) {
+					retVal.push_back(pClone);
+				}
+			}
+		}
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -1459,14 +1498,7 @@ QTUTILS::QArgList QCmd::getArguments()
 
 QCmd* QCmd::Clone()
 {
-	QCmd* retVal = New();
-	if (retVal != NULL) {
-		QArgList lstArgs = getArguments();
-		QArgList lstNewArgs;
-		foreach(QCmdArg* pArg,lstArgs) {
-			
-		}
-	}
+	QCmd* retVal = NULL;
 	return retVal;
 }
 
@@ -1476,6 +1508,7 @@ QCmd* QCmd::New()
 {
 	return NULL;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmd::setOptions( QOptList & lstOptions )
@@ -1487,6 +1520,26 @@ void QCmd::setOptions( QOptList & lstOptions )
 void QCmd::setArguments( QArgList & lstArguments )
 {
 	m_pPrivate->m_listArguments = lstArguments;
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmd::copy( const QCmd & other )
+{
+	m_pPrivate->m_strName = other.m_pPrivate->m_strName;
+	m_pPrivate->m_strExplanation = other.m_pPrivate->m_strExplanation;
+	m_pPrivate->m_strDescription = other.m_pPrivate->m_strDescription;
+	m_pPrivate->m_chOption = other.m_pPrivate->m_chOption;
+	m_pPrivate->m_bOptional = other.m_pPrivate->m_bOptional;
+	m_pPrivate->m_bIgnoreCase = other.m_pPrivate->m_bIgnoreCase;
+		
+	setArguments(other.getArguments(true));
+	setOptions(other.getOptions(true));
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmd::destroy()
+{
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
