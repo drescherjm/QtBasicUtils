@@ -14,6 +14,7 @@ namespace QTUTILS {
 			TYPE nDefaultValue);
 		QCmdOptBasicBase(const QCmdOptBasicBase<TYPE> & other);
 		QCmdOptBasicBase<TYPE>& operator=(const QCmdOptBasicBase<TYPE> & other);
+	public:
 		virtual QString GetSyntax()=0;
 		virtual int		ImportData( QString strValue )=0;
 		virtual void	Initialize();
@@ -27,7 +28,7 @@ namespace QTUTILS {
 		void			copy( const QCmdOptBasicBase & other );
 		void			destroy();
 	};
-
+	
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #include "QCmdOptBasicBase.txx"

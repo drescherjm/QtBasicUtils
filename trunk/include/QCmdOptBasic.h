@@ -7,13 +7,22 @@ namespace QTUTILS {
 
 template <class TYPE,char fmt[]> class QCmdOptBasic : public QCmdOptBasicBaseMM<TYPE>  
 {
+	typedef QCmdOptBasicBaseMM<TYPE> SuperClass;
 public:
 	QCmdOptBasic(QString strName, QString strDescription, QString strExplanation, 
 		TYPE nDefaultValue,TYPE nMinValue, TYPE nMaxValue);
+
+	QCmdOptBasic(const QCmdOptBasic<TYPE, fmt> & other);
+	QCmdOptBasic<TYPE, fmt>& operator=(const QCmdOptBasic<TYPE, fmt> & other);
+	
+	virtual QCmdOptBasic<TYPE, fmt>* Clone();
 public:
 	virtual QString GetSyntax();
 	virtual int		ImportData( QString strValue );
 	virtual QString exportCommandString();
+private:
+	void			copy( const QCmdOptBasic<TYPE, fmt> & other );
+	void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

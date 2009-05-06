@@ -79,4 +79,50 @@ QString QCmdOptBasic<TYPE, fmt>::exportCommandString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+template <class TYPE,char fmt[]>
+void QTUTILS::QCmdOptBasic<TYPE, fmt>::destroy()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+void QTUTILS::QCmdOptBasic<TYPE, fmt>::copy( const QCmdOptBasic<TYPE, fmt> & other )
+{
+	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QCmdOptBasic<TYPE, fmt>& QTUTILS::QCmdOptBasic<TYPE, fmt>::operator=( const QCmdOptBasic<TYPE, fmt> & other )
+{
+	SuperClass::operator =(other);
+
+	if ( &other != this ) {
+		destroy();
+		copy(other);
+	}
+	return (*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QTUTILS::QCmdOptBasic<TYPE, fmt>::QCmdOptBasic( const QCmdOptBasic<TYPE, fmt> & other ) : SuperClass(other)
+{
+	copy(other);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <class TYPE,char fmt[]>
+QCmdOptBasic<TYPE, fmt>* QCmdOptBasic<TYPE, fmt>::Clone()
+{
+	return new QCmdOptBasic<TYPE, fmt>(*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif //__QCMDOPTBASICXX__
