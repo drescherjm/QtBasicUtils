@@ -43,6 +43,8 @@ public:
 	QString	GetDescription();
 	QString	GetExplanation();
 	int     Parse();
+	void	refreshArgMap();
+	void	refreshOptMap();
 	int		Parse(QStringList & strLst);
 	int		IsOption(QString & str, QCmdOpt *& pOption);
 	bool	wasSuccessful( int nRetCode ) const;
@@ -128,9 +130,12 @@ int QCmd::qtutilsPrivate::SetOpt(QString strName, ValType val)
 				if (pOptType != NULL) {
 					pOptType->SetValue(val);
 				}
+				else
+					retVal = QCmdParseError::OPTION_WRONG_TYPE;
 			}
 		}
 	}
+	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
 	return retVal;	
 }
 
@@ -149,9 +154,12 @@ int QCmd::qtutilsPrivate::SetArg(QString strName, ValType val)
 				if (pArgType != NULL) {
 					pArgType->SetValue(val);
 				}
+				else
+					retVal = QCmdParseError::ARGUMENT_WRONG_TYPE;
 			}
 		}
 	}
+	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
 	return retVal;	
 }
 
@@ -636,6 +644,28 @@ QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
 	}
 
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmd::qtutilsPrivate::refreshArgMap()
+{
+	foreach(QCmdArg* pArg, m_listArguments) {
+		if (pArg != NULL) {
+			m_mapArg.insert(pArg->GetName(),pArg);
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmd::qtutilsPrivate::refreshOptMap()
+{
+	foreach(QCmdOpt* pOpt, m_listOptions) {
+		if (pOpt != NULL) {
+			m_mapOpt.insert(pOpt->GetName(),pOpt);
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1448,6 +1478,7 @@ QString QCmd::exportCommandString(QChar chCommand)
 	}
 	return retVal;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QOptList QCmd::getOptions(bool bDuplicate) const
@@ -1470,6 +1501,7 @@ QOptList QCmd::getOptions(bool bDuplicate) const
 	}
 	return retVal;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QTUTILS::QArgList QCmd::getArguments(bool bDuplicate) const
@@ -1515,12 +1547,14 @@ void QCmd::setOptions( QOptList & lstOptions )
 {
 	m_pPrivate->m_listOptions = lstOptions;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmd::setArguments( QArgList & lstArguments )
 {
 	m_pPrivate->m_listArguments = lstArguments;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmd::copy( const QCmd & other )
@@ -1534,7 +1568,11 @@ void QCmd::copy( const QCmd & other )
 		
 	setArguments(other.getArguments(true));
 	setOptions(other.getOptions(true));
+
+	m_pPrivate->refreshArgMap();
+	m_pPrivate->refreshOptMap();
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmd::destroy()
