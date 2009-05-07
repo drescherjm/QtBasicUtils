@@ -85,9 +85,9 @@ QString QCmdOptBool::exportCommandString()
 	if ( !isDefaultValue() ) {
 		retVal += exportOptionName();
 		if ( GetValue() == true )
-			retVal = "+";
+			retVal += "+";
 		else
-			retVal = "-";
+			retVal += "-";
 	}
 	return retVal;
 }
