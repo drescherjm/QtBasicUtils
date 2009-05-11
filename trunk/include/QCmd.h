@@ -161,6 +161,9 @@ protected:
 	// using the same pointer. 
 	QOptList	getOptions(bool bDuplicate=false) const;
 	QArgList	getArguments(bool bDuplicate=false) const;
+
+	int			FindOpt(QString strName, QCmdOpt *& option);
+	int			FindArg(QString strName, QCmdArg *& pArg);
 	
 	void		setOptions(QOptList & lstOptions);
 	void		setArguments(QArgList & lstArguments);

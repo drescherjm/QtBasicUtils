@@ -37,7 +37,7 @@ public:
 	int		FindOpt(QString strName, QCmdOpt *& option);
 	QString GetOptString( QString strName );
 	int		AddArg(QString strName, QCmdArg* pArg = NULL);
-	int		FindArg(QString strName, QCmdArg *& ARGUMENT);
+	int		FindArg(QString strName, QCmdArg *& pArg);
 	QString GetSyntax();
 	QString	GetName();
 	QString	GetDescription();
@@ -1578,6 +1578,18 @@ void QCmd::copy( const QCmd & other )
 void QCmd::destroy()
 {
 
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::FindOpt( QString strName, QCmdOpt *& option )
+{
+	return m_pPrivate->FindOpt(strName,option);
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::FindArg( QString strName, QCmdArg *& pArg )
+{
+	return m_pPrivate->FindArg(strName,pArg);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
