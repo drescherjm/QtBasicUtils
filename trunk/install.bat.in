@@ -1,2 +1,2 @@
 devenv @PROJECT_BINARY_DIR@\@PROJECT_NAME@.sln /build Debug /project INSTALL
-devenv @PROJECT_BINARY_DIR@\@PROJECT_NAME@.sln /build Release /project INSTALL
+devenv @PROJECT_BINARY_DIR@\@PROJECT_NAME@.sln /build @RELEASE_BUILD_NAME@ /project INSTALL
