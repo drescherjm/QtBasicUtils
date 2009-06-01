@@ -139,14 +139,15 @@ public:
 	int	SetArg(QString strName, QCmdLineFileList nValue);
 
 public:
-	virtual int Parse();
-	virtual int Execute();
-	void		EndRequiredArguments();
-	//int			IsOption( QString & str, QCmdOpt *& pOption );
+	virtual		int		Parse();
+	virtual		int		Execute();
 	virtual		QString GetSyntax();
-	QString		GetName();
-	QString		GetDescription();
-	QString		GetLongDescription();
+	virtual		QString	GetName();
+	virtual		QString	GetDescription();
+	virtual		QString	GetLongDescription();
+
+public:
+	void		EndRequiredArguments();
 	bool		wasSuccessful(int nRetCode) const;
 	
 	// Basically the reverse of what parse does. This generates the string that can
@@ -163,8 +164,8 @@ protected:
 	QArgList	getArguments(bool bDuplicate=false) const;
 
 	int			FindOpt(QString strName, QCmdOpt *& option);
-	int			FindArg(QString strName, QCmdArg *& pArg);
-	
+	int			FindArg(QString strName, QCmdArg *& pArgument);
+
 	void		setOptions(QOptList & lstOptions);
 	void		setArguments(QArgList & lstArguments);
 private:
