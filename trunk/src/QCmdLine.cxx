@@ -416,4 +416,25 @@ namespace QTUTILS {
 
 		return retVal;
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdList QCmdLine::getAvailableCommands()
+{
+	return m_listCmds;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmdLine::setAvailableCommands( QCmdList & lstCommands )
+{
+	m_listCmds.clear();
+	m_mapCmd.clear();
+
+	QCmdList::iterator it = lstCommands.begin();
+	for(;it != lstCommands.end();++it) {
+		AddCmd(*it);
+	}
+}
+
 }; //namespace QTUTILS

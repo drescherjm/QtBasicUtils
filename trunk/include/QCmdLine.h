@@ -25,22 +25,27 @@ namespace QTUTILS {
 		int			Parse();
 		QString		GetSyntax();
 		int			AddCmd( QCmd* pCmd );
+		QCmdList	getAvailableCommands();
+		void		setAvailableCommands(QCmdList & lstCommands);
 
 	public:
 		typedef		QStrLstList::iterator iterator;
 		iterator	begin();
 		iterator	end();
 		int			GetNextCommand(QCmdLine::iterator & it, QCmd *& pCmd);
+
 	protected:
 		int			ParseFile(QString strFileName,QStringList & strLstFile);
 		int			PreProcess(QStringList & strList);
 		QCmd*		GetDefaultCmd();
-		void		destroy();
+		
 		bool		IsCmdChar(QString str);
 		QString		GetCommandString( QString strCmd);
 		bool		IsHelpCmd(QString str);
 		void		Initialize();
 		int			Parse( QStringList & strList);
+	private:
+		void		destroy();
 	private:
 		QStringList		m_strLstCmdLine;
 		QStrLstList		m_strLstLstCmdLine;
