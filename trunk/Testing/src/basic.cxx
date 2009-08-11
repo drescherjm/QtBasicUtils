@@ -321,6 +321,47 @@ int QCmdOptBoolTest::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class QCmdOptExtBoolTest : public QCmd
+{
+public:
+	QCmdOptExtBoolTest(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdOptExtBoolTest::QCmdOptExtBoolTest( QString strName, QString strDescription ) :
+QCmd(strName,strDescription)
+{
+	bool bTest = true;
+	AddOpt("use_extended","Extended bool test","",bTest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdOptExtBoolTest::Execute()
+{	
+	int retVal;
+	bool bTest;
+	retVal = GetOpt("use_extended",bTest);
+	if (retVal == QCmdParseError::STATUS_OK) {
+		retVal = (bTest == true) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+		if (retVal == QCmdParseError::STATUS_OK) {
+			bool bVal = false;
+			retVal = SetOpt("use_extended",bVal);
+			if (wasSuccessful(retVal)) {
+				retVal = GetOpt("use_extended",bTest);
+				if (wasSuccessful(retVal)) {
+					retVal = (bTest == false) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+				}
+			}
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 class QCmdExtOpt : public QCmd
 {
 public:
@@ -375,7 +416,8 @@ int main(int argc, char* argv[])
 		QCmdTest			cmdTest("Test","This is the test command");
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
 		QCmdStringListOpt	cmdStrLstOpt("STRLSTOPT","This tests the string list as an option.");
-		QCmdOptBoolTest			cmdBoolOpt("BOOLOPT","This tests the bool an option.");
+		QCmdOptBoolTest		cmdBoolOpt("BOOLOPT","This tests the bool an option.");
+		QCmdOptExtBoolTest	cmdExtBoolOpt("EXTBOOLOPT","This tests the bool an extended option.");
 		QCmdExtOpt			cmdExtOpt("EXTOPT","This tests the extended options.");
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
@@ -392,6 +434,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdStrLstArg);
 		myCmdLine.AddCmd(&cmdStrLstOpt);
 		myCmdLine.AddCmd(&cmdBoolOpt);
+		myCmdLine.AddCmd(&cmdExtBoolOpt);
 		myCmdLine.AddCmd(&cmdExtOpt);
 		myCmdLine.AddCmd(&cmdFloatArgs);
 		myCmdLine.AddCmd(&cmdDoubleArgs);

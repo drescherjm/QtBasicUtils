@@ -555,6 +555,15 @@ int QCmd::qtutilsPrivate::IsOption(QString & str, QCmdOpt *& pOption)
 				if (!strLst.isEmpty()) {
 					QString strName = strLst.front();
 					strLst.pop_front();
+
+					//The following is for boolean options. With these the = is not 
+					//necessary. 
+					if (strName.endsWith('+') || strName.endsWith('-')) {
+						QString boolValue = QString(strName.right(1));
+						strLst.push_front(boolValue);
+						strName.chop(1);
+					}
+
 					retVal = FindOpt(GetOptString(strName),pOption);
 					if ( wasSuccessful(retVal) ) {
 						if (!strLst.isEmpty()) {
