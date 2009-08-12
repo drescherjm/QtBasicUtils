@@ -73,7 +73,7 @@ QString QCmdOptBool::getValueDescription()
 {
 	QString retVal;
 	if (GetName() != "?") {
-		retVal = "[+-]";
+		retVal = "[+- ]";
 	}
 	return retVal;
 }
@@ -84,10 +84,22 @@ QString QCmdOptBool::exportCommandString()
 	QString retVal;
 	if ( !isDefaultValue() ) {
 		retVal += exportOptionName();
+
+#ifdef  USE_LONG_FORMAT
 		if ( GetValue() == true )
 			retVal += "+";
 		else
 			retVal += "-";
+#else
+		//Since a bool option generally means true if present without the - we can omit
+		//the + syntax. For example -B+ can be simplified to -B
+
+		if (!GetValue()) {
+			retVal += "-";
+		}
+
+#endif //def USE_LONG_FORMAT
+
 	}
 	return retVal;
 }
@@ -121,6 +133,24 @@ QCmdOptBool& QCmdOptBool::operator=( const QCmdOptBool & other )
 QCmdOptBool* QCmdOptBool::Clone()
 {
 	return new QCmdOptBool(*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdOptBool::exportOptionName()
+{
+	QString retVal;
+	if (!isExtendedOption()) {
+		retVal = "-";
+	}
+	else
+	{
+		retVal = "--";
+	}
+
+	retVal += GetName();
+
+	return retVal;	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

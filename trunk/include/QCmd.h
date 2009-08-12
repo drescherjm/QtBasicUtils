@@ -153,6 +153,9 @@ public:
 	// Basically the reverse of what parse does. This generates the string that can
 	// be placed on the command line to initialize this command in the current state.
 	QString		exportCommandString(QChar chCommand);
+
+	//This is everything in exportCommandString() except the Command itself.
+	QString		exportArgumentsAndOptionsString();
 public:
 	QStringList m_strLstCmd;
 protected:

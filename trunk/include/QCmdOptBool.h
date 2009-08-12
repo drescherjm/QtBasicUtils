@@ -32,6 +32,7 @@ public:
 	virtual QString GetSyntax();
 	virtual QString getValueDescription();
 	virtual QString	exportCommandString();
+	virtual QString exportOptionName();
 private:
 	void			copy( const QCmdOptBool & other );
 	void			destroy();

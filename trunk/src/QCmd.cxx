@@ -49,6 +49,7 @@ public:
 	int		IsOption(QString & str, QCmdOpt *& pOption);
 	bool	wasSuccessful( int nRetCode ) const;
 	QString exportCommandString(QChar chCommand);
+	QString exportArgumentsAndOptionsString();
 public:
 	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
 		QString strDescription, QString strExplanation, ValType nDefaultValue,
@@ -61,6 +62,7 @@ public:
 
 	template <typename ValType,typename OptType> int GetOpt(QString strName, ValType & val);
 	template <typename ValType,typename OptType> int GetArg(QString strName, ValType & val);
+	
 public:
 	QCmd*		m_pParent;
 	QString		m_strStringListEnd;
@@ -630,10 +632,9 @@ int QCmd::qtutilsPrivate::Parse()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
+QString QCmd::qtutilsPrivate::exportArgumentsAndOptionsString()
 {
-	QString retVal = chCommand + GetName()+ " ";
-
+	QString retVal;
 	QArgList::iterator it = m_listArguments.begin();
 	for(; it != m_listArguments.end();++it) {
 		QCmdArg* pArg = *it;
@@ -651,6 +652,17 @@ QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
 			retVal += strExport + " ";
 		}
 	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::qtutilsPrivate::exportCommandString(QChar chCommand)
+{
+	QString retVal = chCommand + GetName()+ " ";
+
+	retVal += exportArgumentsAndOptionsString();
 
 	return retVal;
 }
@@ -1484,6 +1496,17 @@ QString QCmd::exportCommandString(QChar chCommand)
 	QString retVal;
 	if (m_pPrivate != NULL) {
 		retVal = m_pPrivate->exportCommandString(chCommand);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::exportArgumentsAndOptionsString()
+{
+	QString retVal;
+	if (m_pPrivate != NULL) {
+		retVal = m_pPrivate->exportArgumentsAndOptionsString();
 	}
 	return retVal;
 }
