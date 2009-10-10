@@ -69,8 +69,8 @@ template <class TYPE,char fmt[]>
 QString QCmdArgBasic<TYPE, fmt>::exportCommandString()
 {
 	QString retVal;
-	if ( (!isOptional()) || (!isDefaultValue()) ) {
-		retVal = QString("%1").arg(m_nValue);
+        if ( (!this->isOptional()) || (!this->isDefaultValue()) ) {
+                retVal = QString("%1").arg(this->m_nValue);
 	}
 	return retVal;
 }

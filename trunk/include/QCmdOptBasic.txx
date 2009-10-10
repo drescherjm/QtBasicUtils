@@ -69,10 +69,10 @@ template <class TYPE,char fmt[]>
 QString QCmdOptBasic<TYPE, fmt>::exportCommandString()
 {
 	QString retVal;
-	if ( !isDefaultValue() ) {
+        if ( !this->isDefaultValue() ) {
 		retVal = QString("%1%2")
-					.arg(exportOptionName())
-					.arg(m_nValue);
+                                        .arg(this->exportOptionName())
+                                        .arg(this->m_nValue);
 	}
 	return retVal;
 }

@@ -544,7 +544,7 @@ int QCmd::qtutilsPrivate::IsOption(QString & str, QCmdOpt *& pOption)
 		if ( str[0] == '-' ) {
 			if (str[1] != '-') {
 				if ( !str[1].isDigit() ) {
-					QString strName = str[1];
+                                        QString strName(str[1]);
 					retVal = FindOpt(GetOptString(strName),pOption);
 					if ( wasSuccessful(retVal) ) {
 						str = QString( str.mid(2) );
@@ -1597,9 +1597,12 @@ void QCmd::copy( const QCmd & other )
 	m_pPrivate->m_chOption = other.m_pPrivate->m_chOption;
 	m_pPrivate->m_bOptional = other.m_pPrivate->m_bOptional;
 	m_pPrivate->m_bIgnoreCase = other.m_pPrivate->m_bIgnoreCase;
-		
-	setArguments(other.getArguments(true));
-	setOptions(other.getOptions(true));
+
+        QArgList args = other.getArguments(true);
+        this->setArguments(args);
+
+        QOptList options = other.getOptions(true);
+        this->setOptions(options);
 
 	m_pPrivate->refreshArgMap();
 	m_pPrivate->refreshOptMap();

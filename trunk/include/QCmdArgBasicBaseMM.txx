@@ -6,9 +6,9 @@
 template <class TYPE>
 QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM(QString strName, QString strDescription, QString strExplanation, 
 		TYPE nDefaultValue, TYPE nMinValue, TYPE nMaxValue) : 
-		QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBase(strName, strDescription,strExplanation,
+                SuperClass::QCmdArgBasicBase(strName, strDescription,strExplanation,
 		nDefaultValue ), m_nMinValue(nMinValue),
-m_nMaxValue(nMaxValue)
+                m_nMaxValue(nMaxValue)
 {
 
 }
@@ -57,3 +57,4 @@ QTUTILS::QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM( const QCmdArgBasicBaseMM<
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #endif //__QCmdArgBasicBaseMMMMXX__
+
