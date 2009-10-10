@@ -1,6 +1,7 @@
 #ifndef __USERPROPPTR_H__
 #define __USERPROPPTR_H__
 
+#include "UserPropery.h"
 #include <QObject>
 #include <QVariant>
 #include <QDomElement>
@@ -8,7 +9,7 @@
 
 namespace QTUTILS {
 
-class UserProperty;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,7 +17,7 @@ class UserPropPtr : public QObject
 {
 Q_OBJECT
 public:
-	typedef QExplicitlySharedDataPointer<UserProperty> SharedPtr;
+        typedef QExplicitlySharedDataPointer<UserProperty> SharedPtr;
 public:
 	UserPropPtr();
 	UserPropPtr(UserProperty* pProp, bool bAutoDelete=true);
