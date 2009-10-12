@@ -2,9 +2,13 @@ PROJECT(QtBasicUtils)
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6 FATAL_ERROR)
 
+#########################################################################################
+
 option (BUILD_TESTING "Build Tests" ON)
 option (BUILD_EXPERIMENTAL "Build Experimental Code" ON)
 option (MAKE_DEBUGRELEASE 			"Add support for building a Release Target with debug info" ON)
+
+#########################################################################################
 
 IF (MAKE_DEBUGRELEASE)
 SET (CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "Debug;RelWithDebInfo" FORCE)
