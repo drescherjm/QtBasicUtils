@@ -8,6 +8,25 @@ option (BUILD_TESTING "Build Tests" ON)
 option (BUILD_EXPERIMENTAL "Build Experimental Code" ON)
 option (MAKE_DEBUGRELEASE 			"Add support for building a Release Target with debug info" ON)
 
+IF(WIN32)
+
+#The following command changes \ to / in the Program Files Path so CMake will not complain
+#about bad escape sequences.
+IF(CMAKE_SIZEOF_VOID_P MATCHES 4)
+string (REPLACE "\\" "/" PGM_FILES $ENV{PROGRAMFILES})
+ELSE(CMAKE_SIZEOF_VOID_P MATCHES 4)
+# On WIN64 use the 64 bit program files..
+string (REPLACE "\\" "/" PGM_FILES $ENV{ProgramW6432})
+ENDIF(CMAKE_SIZEOF_VOID_P MATCHES 4)
+
+SET (DEFAULT_INSTALL_PATH ${PGM_FILES}/UPMC/${CMAKE_PROJECT_NAME} CACHE STRING "Default Install Path")
+
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+   set (CMAKE_INSTALL_PREFIX ${DEFAULT_INSTALL_PATH} CACHE FORCE)
+endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+
+ENDIF(WIN32)
+
 #########################################################################################
 
 IF (MAKE_DEBUGRELEASE)
@@ -20,20 +39,6 @@ ENDIF (MAKE_DEBUGRELEASE)
 
 IF(WIN32)
 ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE)
-ENDIF(WIN32)
-
-IF(WIN32)
-
-#The following command changes \ to / in the Program Files Path so CMake will not complain
-#about bad escape sequences.
-IF(CMAKE_SIZEOF_VOID_P MATCHES 4)
-string (REPLACE "\\" "/" PGM_FILES $ENV{PROGRAMFILES})
-ELSE(CMAKE_SIZEOF_VOID_P MATCHES 4)
-# On WIN64 use the 64 bit program files..
-string (REPLACE "\\" "/" PGM_FILES $ENV{ProgramW6432})
-ENDIF(CMAKE_SIZEOF_VOID_P MATCHES 4)
-
-SET (CMAKE_INSTALL_PREFIX ${PGM_FILES}/UPMC/${CMAKE_PROJECT_NAME} CACHE STRING "Default Install Path" FORCE)
 ENDIF(WIN32)
 
 SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
