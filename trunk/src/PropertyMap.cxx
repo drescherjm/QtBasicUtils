@@ -53,7 +53,7 @@ bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
-ProperyMapXMLHelper hlpr(m_nMetaID);
+static ProperyMapXMLHelper hlpr(m_nMetaID);
 
 static int m_nMetaIDPtr = qRegisterMetaType<QTUTILS::PropertyMap*>();
 UserPropPtrHelper<PropertyMap> ptrHlpr(m_nMetaIDPtr);

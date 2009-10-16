@@ -14,7 +14,7 @@ namespace QTUTILS {
 // hlpr->construct() to do the actual object construction.
 
 int PropertyList::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList*>();
-UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
+static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
