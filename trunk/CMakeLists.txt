@@ -8,6 +8,20 @@ option (BUILD_TESTING "Build Tests" ON)
 option (BUILD_EXPERIMENTAL "Build Experimental Code" ON)
 option (MAKE_DEBUGRELEASE 			"Add support for building a Release Target with debug info" ON)
 
+#########################################################################################
+
+IF (MAKE_DEBUGRELEASE)
+SET (CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "Debug;RelWithDebInfo" FORCE)
+SET (RELEASE_BUILD_NAME "RelWithDebInfo")
+ELSE(MAKE_DEBUGRELEASE)
+SET (CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Debug;Release" FORCE)
+SET (RELEASE_BUILD_NAME "Release")
+ENDIF (MAKE_DEBUGRELEASE)
+
+IF(WIN32)
+ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE)
+ENDIF(WIN32)
+
 IF(WIN32)
 
 #The following command changes \ to / in the Program Files Path so CMake will not complain
@@ -222,6 +236,23 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
+
+#########################################################################################
+
+IF(MSVC)
+FOREACH(DLL QtCore QtXml QtTest QtGui QtNetwork QtScript QtSQL)
+        INSTALL(FILES
+            "${QT_LIBRARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
+            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug
+        )
+		INSTALL(FILES
+            "${QT_LIBRARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
+            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/RelWithDebInfo
+        )
+ENDFOREACH(DLL)
+ENDIF(MSVC)
+
+#########################################################################################
 
 add_library(QtBasicUtils 
 	${QtBasicUtils_SRCS} 
