@@ -399,6 +399,25 @@ static bool test7()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test8()
+{
+	// These are to test the assignment operator.
+	PropertyMap map1;
+	add_John(&map1);
+
+	PropertyMap map2;
+	add_Kathy(&map2);
+
+	map1 = map2;
+	PropertyMap map3 = map2;
+
+	PropertyMap map4(map1);
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QTUTILS::QCmdTestUserProps::Execute()
 {
 	int nTest;
@@ -431,6 +450,9 @@ int QTUTILS::QCmdTestUserProps::Execute()
 		break;
 	case 7:
 		bVal = test7();
+		break;
+	case 8:
+		bVal = test8();
 		break;
 	default:
 		bVal = false;
