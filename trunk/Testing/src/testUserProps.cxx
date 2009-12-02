@@ -135,6 +135,35 @@ static bool add_Kathy(PropertyMap* pPM)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool add_Kathy(PropertyList* pPL)
+{
+	bool retVal = (pPL != NULL);
+
+	if (retVal) {
+		Property prop;
+
+		prop.SetData((int)40);
+		prop.setObjectName("Age");
+		pPL->push_back(prop);
+
+		prop.SetData(QChar('F'));
+		prop.setObjectName("Sex");
+		pPL->push_back(prop);
+
+		prop.SetData(QString("Kathy M. Zorn"));
+		prop.setObjectName("Name");
+		pPL->push_back(prop);
+
+		prop.SetData(QDate(1969,1,13));
+		prop.setObjectName("DOB");
+		pPL->push_back(prop);
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 static bool test0()
 {
 	bool retVal;
@@ -418,6 +447,25 @@ static bool test8()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test9()
+{
+	// These are to test the assignment operator.
+	PropertyList list1;
+	add_John(&list1);
+
+	PropertyList list2;
+	add_Kathy(&list2);
+
+	list1 = list2;
+	PropertyList list3 = list2;
+
+	PropertyList list4(list1);
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QTUTILS::QCmdTestUserProps::Execute()
 {
 	int nTest;
@@ -453,6 +501,9 @@ int QTUTILS::QCmdTestUserProps::Execute()
 		break;
 	case 8:
 		bVal = test8();
+		break;
+	case 9:
+		bVal = test9();
 		break;
 	default:
 		bVal = false;

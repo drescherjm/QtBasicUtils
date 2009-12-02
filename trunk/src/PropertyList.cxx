@@ -69,6 +69,7 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 		for(; it != end();++it) {
 			delete *it;
 		}
+		m_lstProps.clear();
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
