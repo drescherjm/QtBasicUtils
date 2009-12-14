@@ -242,11 +242,11 @@ include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SO
 IF(MSVC)
 FOREACH(DLL QtCore QtXml QtTest QtGui QtNetwork QtScript QtSQL)
         INSTALL(FILES
-            "${QT_LIBRARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
+            "${QT_BINARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
             DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug
         )
 		INSTALL(FILES
-            "${QT_LIBRARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
+            "${QT_BINARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
             DESTINATION ${EXECUTABLE_OUTPUT_PATH}/RelWithDebInfo
         )
 ENDFOREACH(DLL)
