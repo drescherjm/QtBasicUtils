@@ -117,16 +117,18 @@ void PropertyMap::destroy()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::begin()
+PropertyMap::iterator PropertyMap::begin() const
 {
-	return m_mapProps.begin();
+	PropertyMap::iterator retVal = m_mapProps.begin();
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::end()
+PropertyMap::iterator PropertyMap::end() const
 {
-	return m_mapProps.end();
+	PropertyMap::iterator retVal = m_mapProps.end();
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +202,7 @@ QString PropertyMap::toXML( bool bMakeRoot /*= true*/ )
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString PropertyMap::CleanUpName(QString strName)
+QString PropertyMap::CleanUpName( QString strName ) const
 {
 	strName = strName.simplified();
 
@@ -214,10 +216,11 @@ QString PropertyMap::CleanUpName(QString strName)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::find(QString strName)
+PropertyMap::iterator PropertyMap::find( QString strName ) const
 {
 	strName = CleanUpName(strName);
-	return m_mapProps.find(strName);
+	PropertyMap::iterator retVal = m_mapProps.find(strName);
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -232,10 +235,9 @@ void PropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyMap::CopyProperty(QString strName, PropertyMap & other,
-							   QString strNewName)
+void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, QString strNewName/*=""*/ )
 {
-	PropertyMap::iterator it = other.find(strName);
+	PropertyMap::iterator it = other.find(strNewName);
 	if ( it != other.end()) {
 		Property prop = **it;
 		

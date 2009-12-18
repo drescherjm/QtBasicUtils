@@ -23,9 +23,9 @@ public:
 
 	iterator		insert(Property* pProp);
 	iterator		insert(Property & prop);
-	iterator		begin();
-	iterator		end();
-	iterator		find(QString strName);
+	iterator		begin() const;
+	iterator		end() const;
+	iterator		find(QString strName) const;
 	void			clear();
 	bool			empty() const;
 public:
@@ -33,8 +33,7 @@ public:
 	QString			toXML(bool bMakeRoot = true);
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
-	void			CopyProperty(QString strOldName, PropertyMap & other, 
-		QString strNewName="");
+	void CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);
 	void			addProperties(PropertyMap * other);
@@ -45,7 +44,7 @@ protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
 protected:
-	QString			CleanUpName(QString strName);
+	QString CleanUpName(QString strName) const;
 private:
 	void			copy( const PropertyMap & other );
 	void			destroy();
