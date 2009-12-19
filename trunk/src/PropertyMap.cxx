@@ -237,6 +237,11 @@ void PropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 
 void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, QString strNewName/*=""*/ )
 {
+	
+	if (strNewName.isEmpty()) {
+		strNewName = strOldName;
+	}
+
 	PropertyMap::iterator it = other.find(strNewName);
 	if ( it != other.end()) {
 		Property prop = **it;

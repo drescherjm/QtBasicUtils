@@ -12,6 +12,13 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *	A Property is an extended QVariant that allows for importing and exporting. It's most useful
+ *  with the two collection classes (PropertyMap and PropertyList) that are designed to 
+ *  hold 0 or more Properties.
+ *  \seealso PropertyMap, PropertyList
+ */
+
 class Property : public QObject, public QTUTILS::QUpdateTracker
 {
 	Q_OBJECT

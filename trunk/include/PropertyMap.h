@@ -9,6 +9,11 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * This class defines a map of Properties. The key to the map here is the name of the property  
+ * which is added in Property::setObjectName.
+ */
+
 class PropertyMap : public UserProperty
 {
 	Q_OBJECT
@@ -33,7 +38,7 @@ public:
 	QString			toXML(bool bMakeRoot = true);
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
-	void CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
+	void			CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);
 	void			addProperties(PropertyMap * other);
@@ -44,7 +49,7 @@ protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
 protected:
-	QString CleanUpName(QString strName) const;
+	QString			CleanUpName(QString strName) const;
 private:
 	void			copy( const PropertyMap & other );
 	void			destroy();
