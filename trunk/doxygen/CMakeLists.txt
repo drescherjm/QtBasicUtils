@@ -1,4 +1,4 @@
-# $Id: CMakeLists.txt,v 1.1 2009-12-18 01:33:31 jdrescher Exp $
+# $Id: CMakeLists.txt,v 1.2 2009-12-20 01:24:56 jdrescher Exp $
 # $Name: not supported by cvs2svn $
 #
 # Build file for CMake in order to generate the documentation.
@@ -82,24 +82,9 @@ ENDIF (DOT)
 SET(DOXYGEN_LANGUAGE "English" CACHE STRING "Language used by doxygen")
 MARK_AS_ADVANCED(DOXYGEN_LANGUAGE)
 
-#SET(DOXYGEN_SOURCE_DIR
-#	${STUDY_MANAGER_SRC}/src
-#	${STUDY_MANAGER_SRC}/Include
-#	${STUDY_MANAGER_SRC}/Libraries/Internal/smDatabase/Include
-#	${STUDY_MANAGER_SRC}/Libraries/Internal/smDatabase/src
-#	)
-
-SET(DOXYGEN_OUTPUT_DIR wanted_output_dir)
+SET(DOXYGEN_OUTPUT_DIR documentation)
 STRING(REGEX REPLACE ";" " " DOXYGEN_INPUT_LIST "${DOXYGEN_SOURCE_DIR}")
 
-
-
 CONFIGURE_FILE(doxygen.conf.in ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
-#SET(HTML_TARGET Dox)
-#ADD_CUSTOM_TARGET( doxygen ALL
-#		      ${DOXYGEN} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
-#		      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf)
-
-
 
 GENERATE_DOCUMENTATION(doxygen.conf)
