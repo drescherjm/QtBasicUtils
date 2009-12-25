@@ -12,6 +12,8 @@ namespace QTUTILS {
 /**
  * This class defines a map of Properties. The key to the map here is the name of the property  
  * which is added in Property::setObjectName.
+ *
+ * \sa Property, PropertyList
  */
 
 class PropertyMap : public UserProperty

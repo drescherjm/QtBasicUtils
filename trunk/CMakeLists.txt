@@ -76,7 +76,7 @@ IF( DOXYGEN_FOUND )
     IF( DOXYFILE_FOUND )
         # Add target
 
-ADD_CUSTOM_TARGET( documentation ALL ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE}" > "${CMAKE_CURRENT_BINARY_DIR}/doxygen.log" )
+ADD_CUSTOM_TARGET( documentation ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE}" > "${CMAKE_CURRENT_BINARY_DIR}/doxygen.log" )
 
 # Add .tag file and generated documentation to the list of files we must erase when distcleaning
 

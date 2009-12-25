@@ -178,6 +178,11 @@ bool Property::fromXML(QDomElement & docElem)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+*  SetData sets value of the Property to the user supplied QVariant.  Also after the 
+*  value is set the Modified flag is set.
+*/
+
 QVariant& Property::SetData( const QVariant& vt )
 {
 	m_vt = vt;
@@ -186,6 +191,11 @@ QVariant& Property::SetData( const QVariant& vt )
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+*  SetData sets value of the Property to the user supplied UserPropPtr.  Also after the 
+*  value is set the Modified flag is set.
+*/
 
 QVariant& Property::SetData( const UserPropPtr & ptr )
 {
@@ -200,7 +210,12 @@ Property::operator UserPropPtr() const
 {
 	return GetData().value<UserPropPtr>();
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+*	Load reads the Property from and XML file.
+*/
 
 bool Property::Load( QString strFile )
 {
@@ -220,6 +235,11 @@ bool Property::Load( QString strFile )
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *	Save exports the Property to XML and saves that. After the save the Modified flag
+ *  is reset.
+ */
 
 bool Property::Save( QString strFile )
 {
