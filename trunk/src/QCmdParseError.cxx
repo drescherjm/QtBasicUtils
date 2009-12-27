@@ -37,11 +37,16 @@ namespace QTUTILS {
 		break;
 	case OPTION_NOT_FOUND:
 		if ( !str1.isEmpty() ) {
-			strError = ("ERROR: The option -%1 was not defined for the command %2. %3");
+			strError = ("ERROR: The option -%1 was not defined for the command %2.%3");
 		}
 		else
 		{
 			strError = ("ERROR:  The option -%1 was not defined for this this command. %2%3");
+		}
+
+		str2 = QString("\nNOTE: This is normally caused by a call to GetOpt() with something passed that is not defined as an option.");
+		if (str0.length() > 1) {
+			str0.prepend("-");
 		}
 		break;
 	case OPTION_WRONG_TYPE:
