@@ -43,10 +43,12 @@ public:
 	void			CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);
-	void			addProperties(PropertyMap * other);
+	
 
 	bool			Load(QString strFile);
 	bool			Save(QString strFile);
+public:
+	virtual	void	addProperties(PropertyMap * other);	
 protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
