@@ -272,8 +272,10 @@ bool PropertyMap::RenameProperty(QString strOldName,QString strNewName)
 				pProp->setObjectName(strNewName);
 				retVal = (insert(pProp) != end());
 				if (!retVal) {
-					// WARNING: This should never get here
-					// TODO: Add critical logging					
+					/**
+					 *	\warning This should never get here
+					 *  \todo Add critical logging	
+					 */			
 				}
 			}
 		}
