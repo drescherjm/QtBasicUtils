@@ -38,6 +38,7 @@ SET (DEFAULT_INSTALL_PATH ${PGM_FILES}/UPMC/${CMAKE_PROJECT_NAME} CACHE STRING "
 set (CMAKE_INSTALL_PREFIX ${DEFAULT_INSTALL_PATH} CACHE STRING "Install path" FORCE)
 
 ENDIF(WIN32)
+
 #########################################################################################
 
 MACRO(ADD_TO_DOC FOLDER_TO_ADD_TO_DOCS)
