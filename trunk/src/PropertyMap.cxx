@@ -140,6 +140,12 @@ PropertyMap::iterator PropertyMap::insert(Property & prop)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *  \brief This member inserts a Property that is allocated on the heap.
+ *
+ *	\warning Do not pass this a pointer to a stack allocated Property.
+ */
+
 PropertyMap::iterator PropertyMap::insert(Property* pProp)
 {
 	iterator retVal = m_mapProps.end();
