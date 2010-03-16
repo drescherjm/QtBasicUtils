@@ -47,6 +47,7 @@ public:
 
 	bool			Load(QString strFile);
 	bool			Save(QString strFile);
+	void			Print(std::ostream & st);
 public:
 	virtual	void	addProperties(PropertyMap * other);	
 protected:

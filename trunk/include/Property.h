@@ -7,6 +7,7 @@
 
 #include "UserPropPtr.h"
 #include "QUpdateTracker.h"
+#include <iosfwd>
 
 namespace QTUTILS {
 
@@ -39,6 +40,7 @@ public:
 	bool		fromXML(QDomElement & domElem);
 	bool		Load(QString strFile);
 	bool		Save(QString strFile);
+	void		Print(std::ostream & st);
 private:
 	void		copy( const Property & other );
 	void		destroy();

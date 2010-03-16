@@ -39,6 +39,7 @@ namespace QTUTILS {
 		bool			fromXML(QDomElement & domElem);
 		bool			Load(QString strFile);
 		bool			Save(QString strFile);
+		void			Print(std::ostream & st);
 	protected:
 		List			m_lstProps;
 	protected:
