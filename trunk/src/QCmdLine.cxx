@@ -58,6 +58,18 @@ namespace QTUTILS {
 		m_pPrivate = new qtutilsPrivate(strProgName,strLst);
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	QCmdLine::QCmdLine(int argc, char *argv[])
+	{
+		m_pPrivate = new qtutilsPrivate();
+		if ( argc > 0 ) {
+			m_pPrivate->m_strProgName = argv[0];
+			for(int i=1;i < argc;i++) {
+				m_pPrivate->m_strLstCmdLine.push_back(argv[i]);
+			}
+		}
+	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -192,19 +204,6 @@ namespace QTUTILS {
 			strCmd = strCmd.toUpper();
 		}
 		return strCmd;
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-	QCmdLine::QCmdLine(int argc, char *argv[])
-	{
-		m_pPrivate = new qtutilsPrivate();
-		if ( argc > 0 ) {
-			m_pPrivate->m_strProgName = argv[0];
-			for(int i=1;i < argc;i++) {
-				m_pPrivate->m_strLstCmdLine.push_back(argv[i]);
-			}
-		}
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
