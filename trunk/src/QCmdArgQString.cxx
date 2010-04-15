@@ -65,7 +65,15 @@ namespace QTUTILS {
 	{
 		QString retVal;
 		if (!isOptional() || !isDefaultValue() ) {
-			retVal = QString("%1").arg(m_nValue);
+			if (m_nValue.contains(QRegExp("\\s+"))) {
+				retVal = QString("\"%1\"")
+					.arg(m_nValue);
+			}
+			else
+			{			
+				retVal = QString("%1")
+					.arg(m_nValue);
+			}
 		}
 		return retVal;
 	}

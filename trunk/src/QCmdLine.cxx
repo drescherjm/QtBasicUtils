@@ -7,13 +7,55 @@
 #include <iostream>
 
 namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	class QCmdLine::qtutilsPrivate
+	{
+	public:
+		qtutilsPrivate();
+		qtutilsPrivate(QString strProgName, QStringList & strLst);
+	public:
+		void	initialize();
+	public:
+		QStringList		m_strLstCmdLine;
+		QStrLstList		m_strLstLstCmdLine;
+		QCmdList		m_listCmds;
+		QCmdMap			m_mapCmd;
+		QString			m_strProgName;
+		bool			m_bIgnoreCase;
+		QChar			m_chCmdChar;
+		QString			m_strCmdSep;
+	};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+	
+	QCmdLine::qtutilsPrivate::qtutilsPrivate() 
+	{
+		initialize();
+	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	QCmdLine::QCmdLine(QString strProgName, QStringList & strLst) :  
+	QCmdLine::qtutilsPrivate::qtutilsPrivate(QString strProgName, QStringList & strLst) :
 		m_strProgName(strProgName),m_strLstCmdLine(strLst)
+	{
+		initialize();
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	void QCmdLine::qtutilsPrivate::initialize()
+	{
+		m_strCmdSep = (";");
+		m_chCmdChar = '+';
+		m_bIgnoreCase = TRUE;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	QCmdLine::QCmdLine(QString strProgName, QStringList & strLst)
 	{		
-		Initialize();
+		m_pPrivate = new qtutilsPrivate(strProgName,strLst);
 	}
 
 
@@ -21,7 +63,7 @@ namespace QTUTILS {
 
 	QCmdLine::QCmdLine()
 	{
-		Initialize();	
+		m_pPrivate = new qtutilsPrivate();	
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -29,20 +71,21 @@ namespace QTUTILS {
 	QCmdLine::~QCmdLine()
 	{
 		destroy();
+		delete m_pPrivate;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	QCmdLine::iterator QCmdLine::begin()
 	{
-		return m_strLstLstCmdLine.begin();
+		return m_pPrivate->m_strLstLstCmdLine.begin();
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	QCmdLine::iterator QCmdLine::end()
 	{
-		return m_strLstLstCmdLine.end();
+		return m_pPrivate->m_strLstLstCmdLine.end();
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -56,16 +99,16 @@ namespace QTUTILS {
 			if ( pCmd != NULL ) {
 				strCmd = GetCommandString(pCmd->GetName());
 
-				QCmdMap::iterator it = m_mapCmd.find(strCmd);
+				QCmdMap::iterator it = m_pPrivate->m_mapCmd.find(strCmd);
 
-				if ( it != m_mapCmd.end() ) {
+				if ( it != m_pPrivate->m_mapCmd.end() ) {
 					pCmd = it.value();
 					retVal = QCmdParseError::COMMAND_ALLREADY_ADDED;
 				}	
 				else
 					if ( pCmd != NULL ) {
-						m_mapCmd.insert(strCmd,pCmd);
-						m_listCmds.push_back(pCmd);
+						m_pPrivate->m_mapCmd.insert(strCmd,pCmd);
+						m_pPrivate->m_listCmds.push_back(pCmd);
 					}
 					QCmdHelp* pCmdHelp = dynamic_cast<QCmdHelp*>(pCmd);
 					if ( pCmdHelp ) {
@@ -85,7 +128,7 @@ namespace QTUTILS {
 		QStringList* pStrLstCmd;
 		QString str;
 
-		if ( !m_listCmds.isEmpty() ) {
+		if ( !m_pPrivate->m_listCmds.isEmpty() ) {
 			if ( it != end() ) {
 				
 				pStrLstCmd = *it;
@@ -102,9 +145,9 @@ namespace QTUTILS {
 						// m_bIgnoreCase is true
 						str = GetCommandString(str.mid(1));
 
-						QCmdMap::iterator itMap = m_mapCmd.find(str);
+						QCmdMap::iterator itMap = m_pPrivate->m_mapCmd.find(str);
 
-						if ( itMap != m_mapCmd.end() ) {
+						if ( itMap != m_pPrivate->m_mapCmd.end() ) {
 							
 							pCmd = itMap.value();
 
@@ -143,18 +186,9 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	void QCmdLine::Initialize()
-	{
-		m_strCmdSep = (";");
-		m_chCmdChar = '+';
-		m_bIgnoreCase = TRUE;
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
 	QString QCmdLine::GetCommandString(QString strCmd)
 	{
-		if (m_bIgnoreCase) {
+		if (m_pPrivate->m_bIgnoreCase) {
 			strCmd = strCmd.toUpper();
 		}
 		return strCmd;
@@ -164,11 +198,11 @@ namespace QTUTILS {
 
 	QCmdLine::QCmdLine(int argc, char *argv[])
 	{
-		Initialize();
+		m_pPrivate = new qtutilsPrivate();
 		if ( argc > 0 ) {
-			m_strProgName = argv[0];
+			m_pPrivate->m_strProgName = argv[0];
 			for(int i=1;i < argc;i++) {
-				m_strLstCmdLine.push_back(argv[i]);
+				m_pPrivate->m_strLstCmdLine.push_back(argv[i]);
 			}
 		}
 	}
@@ -181,9 +215,9 @@ namespace QTUTILS {
 		QCmd* pCmd;
 		
 		QCmdList::iterator it;
-		for (it = m_listCmds.begin(); it != m_listCmds.end();++it) {
+		for (it = m_pPrivate->m_listCmds.begin(); it != m_pPrivate->m_listCmds.end();++it) {
 			pCmd = *it;
-			retVal += m_strProgName + (" ");
+			retVal += m_pPrivate->m_strProgName + (" ");
 			retVal += pCmd->GetSyntax();
 			retVal += ("\n ");
 		}
@@ -198,12 +232,12 @@ namespace QTUTILS {
 		
 		QStrLstList::iterator it;
 
-		for(it = m_strLstLstCmdLine.begin(); it != m_strLstLstCmdLine.end();++it) {
+		for(it = m_pPrivate->m_strLstLstCmdLine.begin(); it != m_pPrivate->m_strLstLstCmdLine.end();++it) {
 			pLst = *it;
 			delete pLst;
 		}
 
-		m_strLstLstCmdLine.clear();
+		m_pPrivate->m_strLstLstCmdLine.clear();
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -211,8 +245,8 @@ namespace QTUTILS {
 	QCmd* QCmdLine::GetDefaultCmd()
 	{
 		QCmd* retVal = NULL;
-		if ( !m_listCmds.isEmpty() ) { 
-			retVal = *m_listCmds.begin();
+		if ( !m_pPrivate->m_listCmds.isEmpty() ) { 
+			retVal = *m_pPrivate->m_listCmds.begin();
 		}
 		return retVal;
 	}
@@ -268,7 +302,7 @@ namespace QTUTILS {
 		bool retVal = FALSE;
 
 		if ( !str.isEmpty() ) {
-			retVal = (str[0] == m_chCmdChar);
+			retVal = (str[0] == m_pPrivate->m_chCmdChar);
 		}
 		return retVal;
 	}
@@ -278,7 +312,7 @@ namespace QTUTILS {
 
 	int QCmdLine::Parse()
 	{
-		return Parse(m_strLstCmdLine);
+		return Parse(m_pPrivate->m_strLstCmdLine);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -302,7 +336,7 @@ namespace QTUTILS {
 				}
 				else
 					if ( IsCmdChar( str ) ) {
-						m_strLstLstCmdLine.push_back(pStrLst);
+						m_pPrivate->m_strLstLstCmdLine.push_back(pStrLst);
 						pStrLst = new QStringList;
 						pStrLst->push_back(str);
 					}
@@ -313,7 +347,7 @@ namespace QTUTILS {
 			}
 			if ( pStrLst != NULL ) {
 				if ( !pStrLst->isEmpty()) {
-					m_strLstLstCmdLine.push_back(pStrLst);
+					m_pPrivate->m_strLstLstCmdLine.push_back(pStrLst);
 					pStrLst = NULL; 
 				}
 				else
@@ -335,7 +369,7 @@ namespace QTUTILS {
 						QCmd* pCmd = GetDefaultCmd();
 						if ( pCmd ) {
 							str = QString("%1%2")
-								.arg(m_chCmdChar)
+								.arg(m_pPrivate->m_chCmdChar)
 								.arg(GetCommandString(pCmd->GetName()));
 							pStrLst->push_front(str);
 						}
@@ -421,15 +455,15 @@ namespace QTUTILS {
 
 QCmdList QCmdLine::getAvailableCommands()
 {
-	return m_listCmds;
+	return m_pPrivate->m_listCmds;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmdLine::setAvailableCommands( QCmdList & lstCommands )
 {
-	m_listCmds.clear();
-	m_mapCmd.clear();
+	m_pPrivate->m_listCmds.clear();
+	m_pPrivate->m_mapCmd.clear();
 
 	QCmdList::iterator it = lstCommands.begin();
 	for(;it != lstCommands.end();++it) {

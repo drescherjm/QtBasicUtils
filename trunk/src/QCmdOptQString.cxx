@@ -81,9 +81,17 @@ namespace QTUTILS {
 	{
 		QString retVal;
 		if (!isDefaultValue() ) {
-			retVal = QString("%1%2")
-				.arg(exportOptionName())
-				.arg(m_nValue);
+			if (m_nValue.contains(QRegExp("\\s+"))) {
+				retVal = QString("%1\"%2\"")
+					.arg(exportOptionName())
+					.arg(m_nValue);
+			}
+			else
+			{			
+				retVal = QString("%1%2")
+					.arg(exportOptionName())
+					.arg(m_nValue);
+			}
 		}
 		return retVal;
 	}

@@ -42,19 +42,12 @@ namespace QTUTILS {
 		bool		IsCmdChar(QString str);
 		QString		GetCommandString( QString strCmd);
 		bool		IsHelpCmd(QString str);
-		void		Initialize();
 		int			Parse( QStringList & strList);
 	private:
 		void		destroy();
 	private:
-		QStringList		m_strLstCmdLine;
-		QStrLstList		m_strLstLstCmdLine;
-		QCmdList		m_listCmds;
-		QCmdMap			m_mapCmd;
-		QString			m_strProgName;
-		bool			m_bIgnoreCase;
-		QChar			m_chCmdChar;
-		QString			m_strCmdSep;
+		class		qtutilsPrivate;
+		qtutilsPrivate* m_pPrivate;	
 	};
 
 /////////////////////////////////////////////////////////////////////////////////////////
