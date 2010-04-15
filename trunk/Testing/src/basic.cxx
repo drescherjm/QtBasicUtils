@@ -404,6 +404,39 @@ int QCmdExtOpt::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class QCmdStringOpt : public QCmd
+{
+public:
+	QCmdStringOpt(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdStringOpt::QCmdStringOpt( QString strName, QString strDescription ) :
+QCmd(strName,strDescription)
+{
+	QString str;
+	AddOpt("S0","First String","",str);
+	AddOpt("S1","Second String","",str);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdStringOpt::Execute()
+{	
+	int retVal = QCmdParseError::STATUS_OK;
+	QString s0,s1;
+
+	GetOpt("S0",s0);
+	GetOpt("S1",s1);
+
+	return retVal;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char* argv[])
 {
 	
@@ -424,6 +457,8 @@ int main(int argc, char* argv[])
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
 		QCmdTestXMLExport	cmdTestXMLEXP("XMLEXP","This tests various exports of xml on the Property class.");
 		QCmdTestUserProps	cmdTestUserProps("USERPROP","This tests various exports of examples of using UserProps with the Property class.");
+		QCmdStringOpt		cmdStringOpt("STRINGOPT","This command accepts two optional strings.");
+
 
 
 		QCmdLine myCmdLine(argc,argv);
@@ -440,6 +475,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdDoubleArgs);
 		myCmdLine.AddCmd(&cmdTestXMLEXP);
 		myCmdLine.AddCmd(&cmdTestUserProps);
+		myCmdLine.AddCmd(&cmdStringOpt);
 		myCmdLine.AddCmd(&myHelp);
 		
 		retVal = myCmdLine.Parse();

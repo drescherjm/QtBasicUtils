@@ -19,6 +19,9 @@ add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
 
 add_dependencies(BasicTest QtBasicUtils)
 
+ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT --S0="Test" --S1='John Drescher')
+ADD_TEST(StringOpts1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT --S0="Check Mate" --S1="John Drescher")
+
 file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S9.0")
 
 add_test(FileCMD0	${EXECUTABLE_OUTPUT_PATH}/BasicTest @${EXECUTABLE_OUTPUT_PATH}/test0.txt)
@@ -74,6 +77,10 @@ SET_TESTS_PROPERTIES(DoubleArgs7 PROPERTIES WILL_FAIL TRUE)
 ADD_TEST(DoubleArgs8	     ${EXECUTABLE_OUTPUT_PATH}/BasicTest +DOUBLEARGS 1.0 2.0 2.0 2.0 2.0 1.0 -S10.0)	
 SET_TESTS_PROPERTIES(DoubleArgs8 PROPERTIES WILL_FAIL TRUE)
 
+
+
+# Test XML Classes..
+
 ADD_TEST(XMLExport0	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 0)	
 ADD_TEST(XMLExport1	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 1)	
 ADD_TEST(XMLExport2	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +XMLEXP 2)	
@@ -96,6 +103,8 @@ ADD_TEST(UserProp6	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 6)
 ADD_TEST(UserProp7	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 7)	
 ADD_TEST(UserProp8_PropMap_operator=			${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 8)	
 ADD_TEST(UserProp9_PropList_operator=	  		${EXECUTABLE_OUTPUT_PATH}/BasicTest +USERPROP 9)	
+
+
 
 
 
