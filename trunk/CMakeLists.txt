@@ -42,24 +42,9 @@ FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )
 
-IF(MSVC)
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/install.bat.in"
-	"${PROJECT_BINARY_DIR}/Batch/install.bat"
-)
-
-ENDIF(MSVC)
-
-
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
 	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
-)
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/install.bat.in"
-	"${PROJECT_BINARY_DIR}/Batch/install.bat"
 )
 
 set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/include )
