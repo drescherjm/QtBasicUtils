@@ -23,24 +23,14 @@ cmake_policy(SET CMP0015 NEW)
 
 option (BUILD_TESTING 				"Build Tests" ON)
 option (BUILD_EXPERIMENTAL 			"Build Experimental Code" ON)
-option (MAKE_DEBUGRELEASE 			"Add support for building a Release Target with debug info" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
-
-#########################################################################################
-
-IF (MAKE_DEBUGRELEASE)
-SET (CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "Debug;RelWithDebInfo" FORCE)
-SET (RELEASE_BUILD_NAME "RelWithDebInfo")
-ELSE(MAKE_DEBUGRELEASE)
-SET (CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Debug;Release" FORCE)
-SET (RELEASE_BUILD_NAME "Release")
-ENDIF (MAKE_DEBUGRELEASE)
 
 #########################################################################################
 
 include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SetReleaseConfiguration.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 
 #########################################################################################
