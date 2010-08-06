@@ -1,4 +1,4 @@
-# $Id: CMakeLists.txt,v 1.2 2009-12-20 01:24:56 jdrescher Exp $
+# $Id$
 # $Name: not supported by cvs2svn $
 #
 # Build file for CMake in order to generate the documentation.
