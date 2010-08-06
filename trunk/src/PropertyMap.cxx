@@ -447,7 +447,10 @@ bool PropertyMap::Save( QString strFile )
 void PropertyMap::Print( std::ostream & st )
 {
 	QString str = toXML();
+
+	st << "Begin: " << metaObject()->className() << std::endl;
 	st << qPrintable(str) << std::endl;
+	st << "End: " << metaObject()->className() << std::endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
