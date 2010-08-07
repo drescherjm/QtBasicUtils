@@ -31,6 +31,7 @@ include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/SetReleaseConfiguration.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 
 #########################################################################################
