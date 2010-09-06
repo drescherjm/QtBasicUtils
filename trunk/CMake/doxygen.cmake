@@ -33,30 +33,31 @@ IF( DOXYGEN_FOUND )
     IF( DOXYFILE_FOUND )
         # Add target
 
-ADD_CUSTOM_TARGET( documentation ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE}" > "${CMAKE_CURRENT_BINARY_DIR}/doxygen.log" )
+	ADD_CUSTOM_TARGET( documentation ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE}" > "${CMAKE_CURRENT_BINARY_DIR}/doxygen.log" )
 
-# Add .tag file and generated documentation to the list of files we must erase when distcleaning
+	# Add .tag file and generated documentation to the list of files we must erase when distcleaning
 
         # Read doxygen configuration file
 
-FILE( READ ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE} DOXYFILE_CONTENTS )
+	message( STATUS "Doxygen Config file= " ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE} )
+	FILE( READ ${CMAKE_CURRENT_BINARY_DIR}/${DOXYGEN_CONFIG_FILE} DOXYFILE_CONTENTS )
 
         STRING( REGEX REPLACE "\n" ";" DOXYFILE_LINES ${DOXYFILE_CONTENTS} )
 
         # Parse .tag filename and add to list of files to delete if it exists
         FOREACH( DOXYLINE ${DOXYFILE_CONTENTS} )
 
-STRING( REGEX REPLACE ".*GENERATE_TAGFILE *= *([^ ^\n]+).*" "\\1" DOXYGEN_TAG_FILE ${DOXYLINE} )
+			STRING( REGEX REPLACE ".*GENERATE_TAGFILE *= *([^ ^\n]+).*" "\\1" DOXYGEN_TAG_FILE ${DOXYLINE} )
 
         ENDFOREACH( DOXYLINE )
         ADD_TO_DISTCLEAN( ${PROJECT_BINARY_DIR}/${DOXYGEN_TAG_FILE} )
 
 
-# Parse doxygen output doc dir and add to list of files to delete if it exists
+		# Parse doxygen output doc dir and add to list of files to delete if it exists
 
         FOREACH( DOXYLINE ${DOXYFILE_CONTENTS} )
 
-STRING( REGEX REPLACE ".*OUTPUT_DIRECTORY *= *([^ ^\n]+).*" "\\1" DOXYGEN_DOC_DIR ${DOXYLINE} )
+			STRING( REGEX REPLACE ".*OUTPUT_DIRECTORY *= *([^ ^\n]+).*" "\\1" DOXYGEN_DOC_DIR ${DOXYLINE} )
 
         ENDFOREACH( DOXYLINE )
         ADD_TO_DISTCLEAN( ${PROJECT_BINARY_DIR}/${DOXYGEN_DOC_DIR} )
