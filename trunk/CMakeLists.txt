@@ -27,6 +27,7 @@ option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
 
 #########################################################################################
 
+include(${PROJECT_SOURCE_DIR}/CMake/GetRuntime.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
@@ -42,6 +43,11 @@ SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single out
 FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )
+
+# The following line will add support to copy the Qt dlls to the Debug and Release folders 
+# so that you can debug the application without the user having to deal with .dll path 
+# settings inside visual studio. 
+include(${PROJECT_SOURCE_DIR}/CMake/GetQtRuntime.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
@@ -170,18 +176,18 @@ include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SO
 
 #########################################################################################
 
-IF(MSVC)
-FOREACH(DLL QtCore QtXml QtTest QtGui QtNetwork QtScript QtSQL)
-        INSTALL(FILES
-            "${QT_BINARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
-            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug
-        )
-		INSTALL(FILES
-            "${QT_BINARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
-            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/RelWithDebInfo
-        )
-ENDFOREACH(DLL)
-ENDIF(MSVC)
+#IF(MSVC)
+#FOREACH(DLL QtCore QtXml QtTest QtGui QtNetwork QtScript QtSQL)
+#        INSTALL(FILES
+#            "${QT_BINARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
+#            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug
+#        )
+#		INSTALL(FILES
+#            "${QT_BINARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
+#            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/RelWithDebInfo
+#        )
+#ENDFOREACH(DLL)
+#ENDIF(MSVC)
 
 #########################################################################################
 
