@@ -29,6 +29,8 @@ public:
 	virtual ~Property();
 	Property(const Property & other);
 	Property& operator=(const Property & other);
+
+	bool	  operator==(const Property & other) const;
 public:
 	const QVariant&		GetData() const;
 	QVariant&			SetData(const QVariant&);

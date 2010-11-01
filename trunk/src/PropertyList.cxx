@@ -76,12 +76,27 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 
 	PropertyList::iterator PropertyList::begin()
 	{
-		return m_lstProps.begin();
+		PropertyList::iterator retVal = m_lstProps.begin();
+		return retVal;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	PropertyList::iterator PropertyList::end()
+	{
+		return m_lstProps.end();
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	PropertyList::const_iterator PropertyList::begin() const
+	{
+		return m_lstProps.begin();
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	PropertyList::const_iterator PropertyList::end() const
 	{
 		return m_lstProps.end();
 	}
@@ -327,5 +342,21 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+	
+	bool PropertyList::operator==( const PropertyList & other ) const
+	{
+		bool retVal = (other.size() == size());
+		if (retVal) {
+			const_iterator it1 = begin();
+			const_iterator it2 = other.begin();
+			for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
+				Property* p1 = *it1;
+				Property* p2 = *it2;
+				retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
+			}
+		}
+		return retVal;
+	}
 
 }; // namespace QTUTILS

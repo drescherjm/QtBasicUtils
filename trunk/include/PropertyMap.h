@@ -24,17 +24,22 @@ public:
 	virtual ~PropertyMap();
 	PropertyMap(const PropertyMap & other);
 	PropertyMap& operator=(const PropertyMap & other);
+	bool operator==(const PropertyMap & other) const;
 public:
 	typedef QMap<QString,Property*> Map;
 	typedef Map::iterator iterator;
+	typedef Map::const_iterator const_iterator;
 
 	iterator		insert(Property* pProp);
 	iterator		insert(Property & prop);
-	iterator		begin() const;
-	iterator		end() const;
+	iterator		begin();
+	iterator		end();
+	const_iterator	begin() const;
+	const_iterator	end() const;
 	iterator		find(QString strName) const;
 	void			clear();
 	bool			empty() const;
+	int				size() const;
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
 	QString			toXML(bool bMakeRoot = true);

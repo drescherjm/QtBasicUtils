@@ -117,7 +117,7 @@ void PropertyMap::destroy()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::begin() const
+PropertyMap::iterator PropertyMap::begin() 
 {
 	PropertyMap::iterator retVal = m_mapProps.begin();
 	return retVal;
@@ -125,11 +125,28 @@ PropertyMap::iterator PropertyMap::begin() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::end() const
+PropertyMap::iterator PropertyMap::end() 
 {
 	PropertyMap::iterator retVal = m_mapProps.end();
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+PropertyMap::const_iterator PropertyMap::begin() const
+{
+	PropertyMap::const_iterator retVal = m_mapProps.begin();
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+PropertyMap::const_iterator PropertyMap::end() const
+{
+	PropertyMap::const_iterator retVal = m_mapProps.end();
+	return retVal;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -451,6 +468,30 @@ void PropertyMap::Print( std::ostream & st )
 	st << "Begin: " << metaObject()->className() << std::endl;
 	st << qPrintable(str) << std::endl;
 	st << "End: " << metaObject()->className() << std::endl;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool PropertyMap::operator==( const PropertyMap & other ) const
+{
+	bool retVal = (other.size() == size());
+	if (retVal) {
+		const_iterator it1 = begin();
+		const_iterator it2 = other.begin();
+		for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
+			Property* p1 = *it1;
+			Property* p2 = *it2;
+			retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int PropertyMap::size() const
+{
+	return m_mapProps.count();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

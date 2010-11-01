@@ -19,8 +19,8 @@ add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
 
 add_dependencies(BasicTest QtBasicUtils)
 
-ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT --S0="Test" --S1='John Drescher')
-ADD_TEST(StringOpts1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT --S0="Check Mate" --S1="John Drescher")
+ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT2 --S0="Test" --S1='John Drescher')
+ADD_TEST(StringOpts1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +STRINGOPT2 --S0="Check Mate" --S1="John Drescher")
 
 file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S9.0")
 
