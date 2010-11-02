@@ -61,6 +61,16 @@ int main(int argc, char* argv[])
 	//int id2 = QTUTILS::PropertyMap::m_nMetaID;
 
 
+	{
+		PropertyMap map;
+
+		PropertyMap::iterator it = map.find("John");
+		if (it != map.end()) {
+			std::cerr << "Something bad happened" << std::endl;
+		}
+	}
+
+
 	QDomDocument domDoc;
 
 	QList<XRVariant> vtList;
