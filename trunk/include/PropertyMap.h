@@ -36,7 +36,8 @@ public:
 	iterator		end();
 	const_iterator	begin() const;
 	const_iterator	end() const;
-	iterator		find(QString strName) const;
+	iterator		find(QString strName);
+	const_iterator	find(QString strName) const;
 	void			clear();
 	bool			empty() const;
 	int				size() const;

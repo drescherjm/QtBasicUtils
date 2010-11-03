@@ -13,8 +13,75 @@
 #include <QTimer>
 
 #include <math.h>
+#include "PropertyMap.h"
+#include "PropertyList.h"
 
 using namespace QTUTILS;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdTestPropertyMapSimple : public QCmd
+{
+public:
+	QCmdTestPropertyMapSimple(QString strName, QString strDescription);
+	virtual int Execute();
+public:
+	int testIterator();
+	int testConstIterator();
+public:
+	enum { TEST_ITERATOR=0,TEST_CONST_ITERATOR=1 };
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestPropertyMapSimple::QCmdTestPropertyMapSimple( QString strName, QString strDescription ) :
+	QCmd(strName,strDescription)
+{
+	AddArg("TestNumber","The test number","",(quint32)TEST_CONST_ITERATOR);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestPropertyMapSimple::Execute()
+{
+	int retVal = QCmdParseError::USER_EXECUTION_ERROR;
+	quint32 nTest;
+	GetArg("TestNumber",nTest);
+
+	switch (nTest) {
+	case TEST_ITERATOR:
+		retVal = testIterator();
+		break;
+	case TEST_CONST_ITERATOR:
+		retVal = testConstIterator();
+		break;
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestPropertyMapSimple::testConstIterator()
+{
+	PropertyMap map;
+	PropertyMap::const_iterator it = map.find("Test");
+
+	int retVal = (it == map.end()) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestPropertyMapSimple::testIterator()
+{
+	PropertyMap map;
+	PropertyMap::iterator it = map.find("Test");
+
+	int retVal = (it == map.end()) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -457,6 +524,7 @@ int main(int argc, char* argv[])
 		QCmdOptBoolTest		cmdBoolOpt("BOOLOPT","This tests the bool an option.");
 		QCmdOptExtBoolTest	cmdExtBoolOpt("EXTBOOLOPT","This tests the bool an extended option.");
 		QCmdExtOpt			cmdExtOpt("EXTOPT","This tests the extended options.");
+		QCmdTestPropertyMapSimple cmdTestPropertyMap("PROPMAP","This command tests the property map.");
 
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
@@ -472,6 +540,7 @@ int main(int argc, char* argv[])
 
 		myCmdLine.AddCmd(&cmdEnter);
 		myCmdLine.AddCmd(&cmdTest);
+		myCmdLine.AddCmd(&cmdTestPropertyMap);
 		myCmdLine.AddCmd(&cmdStrLstArg);
 		myCmdLine.AddCmd(&cmdStrLstOpt);
 		myCmdLine.AddCmd(&cmdBoolOpt);

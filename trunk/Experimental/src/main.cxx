@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 	{
 		PropertyMap map;
 
-		PropertyMap::iterator it = map.find("John");
+		PropertyMap::const_iterator it = map.find("John");
 		if (it != map.end()) {
 			std::cerr << "Something bad happened" << std::endl;
 		}

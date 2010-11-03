@@ -239,12 +239,22 @@ QString PropertyMap::CleanUpName( QString strName ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::find( QString strName ) const
+PropertyMap::iterator PropertyMap::find( QString strName ) 
 {
 	strName = CleanUpName(strName);
 	PropertyMap::iterator retVal = m_mapProps.find(strName);
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+PropertyMap::const_iterator PropertyMap::find( QString strName ) const
+{
+	strName = CleanUpName(strName);
+	PropertyMap::const_iterator retVal = m_mapProps.find(strName);
+	return retVal;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
