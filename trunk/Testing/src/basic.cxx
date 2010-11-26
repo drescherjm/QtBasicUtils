@@ -506,6 +506,43 @@ int QCmdStringOpt::Execute()
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdUnitTest : public QCmd
+{
+public:
+	QCmdUnitTest(QString strName, QString strDescription, int nStrings=5);
+	virtual int Execute();
+public:
+	void	setVarToUpdate(bool * pBool);
+protected:
+	bool*	m_pUnitTesting;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdUnitTest::QCmdUnitTest( QString strName, QString strDescription,int nStrings ) :
+QCmd(strName,strDescription) 
+{
+	m_pUnitTesting = false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdUnitTest::Execute()
+{	
+	if (m_pUnitTesting != NULL) {
+		*m_pUnitTesting = true;
+	}
+	return QCmdParseError::STATUS_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmdUnitTest::setVarToUpdate( bool * pBool )
+{
+	m_pUnitTesting = pBool;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -516,7 +553,12 @@ int main(int argc, char* argv[])
 
 	QApplication app(argc, argv);
 
+	bool bUnitTestting = false;
+
 	try {
+		QCmdUnitTest		cmdUnitTest("UT","Activate unit testing.");
+		cmdUnitTest.setVarToUpdate(&bUnitTestting);
+
 		QCmdEnter			cmdEnter("PAUSE","Use this to require user to press enter to exit." );
 		QCmdTest			cmdTest("Test","This is the test command");
 		QCmdStringListArg	cmdStrLstArg("STRLSTARG","This tests the string list as an argument.");
@@ -533,11 +575,10 @@ int main(int argc, char* argv[])
 		QCmdStringOpt		cmdStringOpt2("STRINGOPT2","This command accepts 2 optional strings.",2);
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
 
-
-
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
+		myCmdLine.AddCmd(&cmdUnitTest);
 		myCmdLine.AddCmd(&cmdEnter);
 		myCmdLine.AddCmd(&cmdTest);
 		myCmdLine.AddCmd(&cmdTestPropertyMap);
@@ -576,12 +617,14 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
-					std::cout << QCmdParseError::GetErrorString(retVal).toStdString() << std::endl;
-
-					QMessageBox msgBox;
-					msgBox.setText(QCmdParseError::GetErrorString(retVal));
-					QTimer::singleShot(6000, &msgBox, SLOT(accept()));
-					msgBox.exec();
+					std::cerr << QCmdParseError::GetErrorString(retVal).toStdString() << std::endl;
+					
+					if (!bUnitTestting) {
+						QMessageBox msgBox;
+						msgBox.setText(QCmdParseError::GetErrorString(retVal));
+						QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+						msgBox.exec();
+					}
 
 				}
 				if (retVal == QCmdParseError::STATUS_OK) {
@@ -592,12 +635,14 @@ int main(int argc, char* argv[])
 				}
 			}
 			catch( QCmdParseException* e) {
-				std::cout << e->GetErrorString().toStdString() << std::endl;
+				std::cerr << e->GetErrorString().toStdString() << std::endl;
 
-				QMessageBox msgBox;
-				msgBox.setText(e->GetErrorString());
-				QTimer::singleShot(6000, &msgBox, SLOT(accept()));
-				msgBox.exec();
+				if (!bUnitTestting) {
+					QMessageBox msgBox;
+					msgBox.setText(e->GetErrorString());
+					QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+					msgBox.exec();
+				}
 
 				e->Delete();
 
@@ -610,10 +655,12 @@ int main(int argc, char* argv[])
 	catch( QCmdParseException* e) {
 		std::cout << e->GetErrorString().toStdString() << std::endl;
 
-		QMessageBox msgBox;
-		msgBox.setText(e->GetErrorString());
-		QTimer::singleShot(6000, &msgBox, SLOT(accept()));
-		msgBox.exec();
+		if (!bUnitTestting) {
+			QMessageBox msgBox;
+			msgBox.setText(e->GetErrorString());
+			QTimer::singleShot(6000, &msgBox, SLOT(accept()));
+			msgBox.exec();
+		}
 
 		e->Delete();
 
