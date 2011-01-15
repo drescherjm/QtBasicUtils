@@ -423,6 +423,10 @@ bool PropertyMap::fromXML(QDomElement & domElem)
 			if (prop.fromXML(e)) {
 				insert(prop);
 			}
+			else
+			{
+				retVal = false;
+			}
 
 		}
 

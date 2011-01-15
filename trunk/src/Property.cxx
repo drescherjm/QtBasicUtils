@@ -132,6 +132,11 @@ bool Property::fromXML(QDomElement & docElem)
 	if (retVal) {
 		QString strTypeID = docElem.attribute("tyID");
 		retVal = !strTypeID.isEmpty();
+		if (!retVal) {
+			// Assume the type is a QString if the xml did not specify the type.
+			strTypeID = QString("%1").arg(QVariant::String);
+			retVal = true;
+		}
 		if (retVal) {
 			QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
 			if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {

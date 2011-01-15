@@ -15,6 +15,7 @@
 #include <math.h>
 #include "PropertyMap.h"
 #include "PropertyList.h"
+#include "testxmlimp.h"
 
 using namespace QTUTILS;
 
@@ -571,6 +572,7 @@ int main(int argc, char* argv[])
 		QCmdFloatArgs		cmdFloatArgs("FLOATARGS","This tests float as an arguments.");
 		QCmdDoubleArgs		cmdDoubleArgs("DOUBLEARGS","This tests double as an arguments.");
 		QCmdTestXMLExport	cmdTestXMLEXP("XMLEXP","This tests various exports of xml on the Property class.");
+		QCmdTestXMLImport	cmdTestXMLIMP("XMLIMP","This tests various imports of xml on the Property class.");
 		QCmdTestUserProps	cmdTestUserProps("USERPROP","This tests various exports of examples of using UserProps with the Property class.");
 		QCmdStringOpt		cmdStringOpt2("STRINGOPT2","This command accepts 2 optional strings.",2);
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
@@ -590,6 +592,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdFloatArgs);
 		myCmdLine.AddCmd(&cmdDoubleArgs);
 		myCmdLine.AddCmd(&cmdTestXMLEXP);
+		myCmdLine.AddCmd(&cmdTestXMLIMP);
 		myCmdLine.AddCmd(&cmdTestUserProps);
 		myCmdLine.AddCmd(&cmdStringOpt2);
 		myCmdLine.AddCmd(&cmdStringOpt5);

@@ -300,6 +300,19 @@ static bool test6()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test7()
+{
+	QString testXML("<xml ty=\"127\"><RMTPatientID>HB016603</RMTPatientID></xml>");
+	PropertyMap map;
+	bool retVal = map.fromXML(testXML);
+	if (retVal) {
+
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -328,6 +341,9 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 6:
 		bVal = test6();
+		break;
+	case 7:
+		bVal = test7();
 		break;
 	default:
 		bVal = false;

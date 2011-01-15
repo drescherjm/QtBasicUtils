@@ -1,24 +1,5 @@
 #This file contains the automated unit testing for QtBasicUtils
 
-LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include ./include)
-
-set(TEST_SRCS 
-	./src/basic.cxx 
-	./src/testxml.cxx
-	./src/testUserProps.cxx
-)
-
-set(TEST_HDRS
-	./include/testxml.h
-	./include/testUserProps.h
-)
-
-
-add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
-
-add_dependencies(BasicTest QtBasicUtils)
-
 ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Test" --S1='John Drescher')
 ADD_TEST(StringOpts1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Check Mate" --S1="John Drescher")
 
@@ -91,6 +72,8 @@ ADD_TEST(XMLExport3	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +XMLEXP 3)
 ADD_TEST(XMLExport4	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +XMLEXP 4)	
 ADD_TEST(XMLExport5	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +XMLEXP 5)	
 ADD_TEST(XMLExport6	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +XMLEXP 6)	
+
+ADD_TEST(XMLImport0	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +XMLIMP 0)	
 
 ADD_TEST(UserProp0	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 0)	
 ADD_TEST(UserProp1	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 1)	
