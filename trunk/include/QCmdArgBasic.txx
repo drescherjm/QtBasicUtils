@@ -1,6 +1,8 @@
 #ifndef __QCMDARGBASIC_TXX__
 #define __QCMDARGBASIC_TXX__
 
+#include <stdio.h>
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>

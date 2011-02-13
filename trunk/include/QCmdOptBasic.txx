@@ -1,6 +1,8 @@
 #ifndef __QCMDOPTBASICXX__
 #define __QCMDOPTBASICXX__
 
+#include <stdio.h>
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>

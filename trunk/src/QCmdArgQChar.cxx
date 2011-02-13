@@ -1,6 +1,7 @@
 #include "QCmdArgQChar.h"
 #include "QCmdArgBasicBaseMM.h"
 #include "QCmdParseError.h"
+#include <stdio.h>
 
 namespace QTUTILS {
 QCmdArgQChar::QCmdArgQChar(QString str, QString strDescription, QString strExplanation, 

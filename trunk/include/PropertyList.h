@@ -19,7 +19,7 @@ namespace QTUTILS {
 		virtual ~PropertyList();
 		PropertyList(const PropertyList & other);
 		PropertyList& operator=(const PropertyList & other);
-		bool PropertyList::operator==( const PropertyList & other ) const;
+		bool operator==( const PropertyList & other ) const;
 	public:
 		typedef QList<Property*> List;
 		typedef List::iterator iterator;

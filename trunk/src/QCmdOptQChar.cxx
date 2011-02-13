@@ -1,5 +1,6 @@
 #include "QCmdOptQChar.h"
 #include "QCmdParseError.h"
+#include <stdio.h>
 
 namespace QTUTILS {
 QCmdOptQChar::QCmdOptQChar(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
