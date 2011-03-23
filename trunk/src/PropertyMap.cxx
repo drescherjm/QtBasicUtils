@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QFile>
 #include <iostream>
+#include <QStringList>
 
 namespace QTUTILS {
 
@@ -506,6 +507,43 @@ bool PropertyMap::operator==( const PropertyMap & other ) const
 int PropertyMap::size() const
 {
 	return m_mapProps.count();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *	\brief
+ *	This member will test if the subset of Properties given by the list lstPropNames 
+ *	have equal values in the other PropertyMap.
+ *
+ *	\note
+ *	The return value will be false if either of the PropertyMaps does not have a 
+ *	Property in its collection or the lstPropNames is empty.
+ *
+ */
+
+bool PropertyMap::EqualSubset( QStringList lstPropNames, const PropertyMap & other )
+{
+	bool retVal = !lstPropNames.empty();
+	if (retVal) {
+		Property prop1,prop2;
+		const_iterator it1, it2;
+		foreach(QString strName,lstPropNames) {
+			it1 = find(strName);
+			it2 = other.find(strName);
+			retVal = (( it1 != end()) && (it2 != other.end()));
+			if (retVal) {
+				Property* p1 = *it1;
+				Property* p2 = *it2;
+
+				retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
+			}
+			if (!retVal) {
+				break;
+			}
+		}
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
