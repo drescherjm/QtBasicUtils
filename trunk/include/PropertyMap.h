@@ -68,6 +68,11 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *	\brief
+ *	This member function removes all items from the PropertyMap.
+ */
+
 inline void PropertyMap::clear()
 {
 	destroy();
