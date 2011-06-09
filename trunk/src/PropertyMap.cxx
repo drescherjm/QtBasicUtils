@@ -276,7 +276,7 @@ void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, Q
 		strNewName = strOldName;
 	}
 
-	PropertyMap::const_iterator it = other.find(strNewName);
+	PropertyMap::const_iterator it = other.find(strOldName);
 	if ( it != other.end()) {
 		Property prop = **it;
 		
