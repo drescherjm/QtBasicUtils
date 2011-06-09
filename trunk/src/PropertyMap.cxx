@@ -280,7 +280,7 @@ void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, Q
 	if ( it != other.end()) {
 		Property prop = **it;
 		
-		if (strNewName.isEmpty()) {
+		if (!strNewName.isEmpty()) {
 			prop.setObjectName(strNewName);
 		}
 
