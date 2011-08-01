@@ -8,14 +8,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set (${PROJECT_NAME}_VERSION_MAJOR 1)
 set (${PROJECT_NAME}_VERSION_MINOR 0)
 set (${PROJECT_NAME}_VERSION_PATCH 0)
+set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
 include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
-
-IF(WIN32)
-	IF (CMAKE_SIZEOF_VOID_P MATCHES 8)
-		set (${PROJECT_NAME}_VERSION_PATCH "${${PROJECT_NAME}_VERSION_PATCH}.win64")
-	ENDIF(CMAKE_SIZEOF_VOID_P MATCHES 8)
-ENDIF(WIN32)
 
 #########################################################################################
 
@@ -31,12 +26,21 @@ option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
 #########################################################################################
 
 include(${PROJECT_SOURCE_DIR}/CMake/GetRuntime.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SiteConfig.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GetCompilerVersion.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/HelperMacros.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/MSVC64BitPortability.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SetReleaseConfiguration.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/DisableBufferSecurityCheck.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SupportRunJobs.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 
 #########################################################################################
@@ -62,15 +66,6 @@ set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/include )
 set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
 set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
 set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
-	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-)
-
-export_library_dependencies (
-	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibraryDepends.cmake"
-)
 
 SET( ${PROJECT_NAME}_SRCS
 	./src/main.cxx
@@ -203,10 +198,24 @@ add_library(${PROJECT_NAME}
 	${${PROJECT_NAME}_INT_HDRS} 
 )
 
+set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include )
+export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+)
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake.in"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}USE.cmake"
+	@ONLY
+)
+
 install (FILES
 	${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
 	${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibraryDepends.cmake
-	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Use.cmake
+	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake
 	DESTINATION lib
 )
 
