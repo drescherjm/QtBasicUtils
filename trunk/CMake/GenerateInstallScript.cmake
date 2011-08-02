@@ -21,6 +21,8 @@ set ( BUILD_CMD5 )
 set ( BUILD_CMD6 )
 set ( BUILD_CMD7 )
 set ( BUILD_CMD8 )
+set ( BUILD_CMD9 )
+set ( BUILD_CMD10 )
 
 configure_file( 	
 	"${PROJECT_SOURCE_DIR}/install.bat.in"
@@ -59,6 +61,7 @@ set ( BUILD_CMD5 )
 set ( BUILD_CMD6 )
 set ( BUILD_CMD7 )
 set ( BUILD_CMD8 )
+set ( BUILD_CMD9 )
 
 set ( BUILD_CMD0 "call ${PROJECT_BINARY_DIR}/GetRuntime.bat" )
 
@@ -85,8 +88,13 @@ if (USE_RUNJOBS_PARALLEL_BUILDING)
 	set ( BUILD_CMD6 )
 	set ( BUILD_CMD7 )
 	set ( BUILD_CMD8 )
+	set ( BUILD_CMD9 )
 	
 endif(USE_RUNJOBS_PARALLEL_BUILDING)
+
+if (PACKAGE_FOR_INSTALL)
+	setup_build_command_for_script( ${PROJECT_PACKAGE_TYPE} BUILD_CMD10 PACKAGE)
+endif(PACKAGE_FOR_INSTALL)
 
 configure_file( 	
 	"${PROJECT_SOURCE_DIR}/install.bat.in"
