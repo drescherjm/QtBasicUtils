@@ -175,21 +175,6 @@ include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SO
 
 #########################################################################################
 
-#IF(MSVC)
-#FOREACH(DLL QtCore QtXml QtTest QtGui QtNetwork QtScript QtSQL)
-#        INSTALL(FILES
-#            "${QT_BINARY_DIR}/${DLL}d${QT_VERSION_MAJOR}.dll"
-#            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug
-#        )
-#		INSTALL(FILES
-#            "${QT_BINARY_DIR}/${DLL}${QT_VERSION_MAJOR}.dll"
-#            DESTINATION ${EXECUTABLE_OUTPUT_PATH}/RelWithDebInfo
-#        )
-#ENDFOREACH(DLL)
-#ENDIF(MSVC)
-
-#########################################################################################
-
 add_library(${PROJECT_NAME} 
 	${${PROJECT_NAME}_SRCS} 
 	${${PROJECT_NAME}_EXT_HDRS} 
