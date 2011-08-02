@@ -27,10 +27,40 @@ configure_file(
 	"${PROJECT_BINARY_DIR}/Batch/clean.bat"
 )
 
+#########################################################################################
+
+set ( BUILD_CMD0 )
+set ( BUILD_CMD1 )
+set ( BUILD_CMD2 )
+set ( BUILD_CMD3 )
+set ( BUILD_CMD4 )
 set ( BUILD_CMD5 )
 set ( BUILD_CMD6 )
 set ( BUILD_CMD7 )
 set ( BUILD_CMD8 )
+set ( BUILD_CMD9 )
+set ( BUILD_CMD10 )
+
+FILE( TO_NATIVE_PATH "${PROJECT_BINARY_DIR}" PROJECT_BUILD_FOLDER_NATIVE )
+
+set ( BUILD_CMD0 "pushd ." )
+set ( BUILD_CMD1 "cd ${PROJECT_BUILD_FOLDER_NATIVE}" )
+set ( BUILD_CMD2 "cmake ${PROJECT_SOURCE_DIR}" )
+set ( BUILD_CMD3 "popd" )
+
+configure_file( 	
+	"${PROJECT_SOURCE_DIR}/install.bat.in"
+	"${PROJECT_BINARY_DIR}/Batch/configure.bat"
+)
+
+#########################################################################################
+
+set ( BUILD_CMD5 )
+set ( BUILD_CMD6 )
+set ( BUILD_CMD7 )
+set ( BUILD_CMD8 )
+
+set ( BUILD_CMD0 "call ${PROJECT_BINARY_DIR}/GetRuntime.bat" )
 
 setup_build_command_for_script( RelWithDebInfo BUILD_CMD1)
 setup_build_command_for_script( Release BUILD_CMD2)
