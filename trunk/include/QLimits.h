@@ -14,6 +14,7 @@
 #ifndef __QLIMITS_H__
 #define __QLIMITS_H__
 
+#ifndef INT8_MAX
 /* Minimum of signed integral types.  */
 # define INT8_MIN		(-128)
 # define INT16_MIN		(-32767-1)
@@ -30,6 +31,7 @@
 # define UINT16_MAX		(65535)
 # define UINT32_MAX		(4294967295U)
 # define UINT64_MAX		(__UINT64_C(18446744073709551615))
+#endif //ndef INT8_MAX
 
 #ifndef INT_MAX
 #define INT_MAX INT32_MAX
