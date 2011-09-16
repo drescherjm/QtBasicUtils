@@ -10,10 +10,10 @@ set ( UPDATE_CMD8 )
 set ( UPDATE_CMD9 )
 set ( UPDATE_CMD10 )
 
-set ( UPDATE_CMD0 "pushd .")
-set ( UPDATE_CMD1 "cd \"${CMAKE_SOURCE_DIR}\"")
-set ( UPDATE_CMD2 "svn up")
-set ( UPDATE_CMD3 "popd")
+set ( UPDATE_CMD0 "@pushd .")
+set ( UPDATE_CMD1 "@cd \"${CMAKE_SOURCE_DIR}\"")
+set ( UPDATE_CMD2 "@svn up")
+set ( UPDATE_CMD3 "@popd")
 
 configure_file( 	
 	"${PROJECT_SOURCE_DIR}/update.bat.in"
