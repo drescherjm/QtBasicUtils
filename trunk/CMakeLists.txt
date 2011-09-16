@@ -41,6 +41,7 @@ include(${PROJECT_SOURCE_DIR}/CMake/DisableBufferSecurityCheck.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/SupportRunJobs.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 
 #########################################################################################
