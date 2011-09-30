@@ -34,6 +34,7 @@ public:
 public:
 	void	Initialize();
 	int		AddOpt(QString strName, QCmdOpt* pOpt = NULL);
+	int		testOptionName(QString strName);
 	int		FindOpt(QString strName, QCmdOpt *& option);
 	QString GetOptString( QString strName );
 	int		AddArg(QString strName, QCmdArg* pArg = NULL);
@@ -173,16 +174,21 @@ int QCmd::qtutilsPrivate::GetOpt( QString strName, ValType & val )
 	int retVal = (m_pParent != NULL) ? QCmdParseError::STATUS_OK : QCmdParseError::MEMORY_CORRUPTION_ERROR;
 	QCmdOpt* pOption = NULL;
 	if (retVal == QCmdParseError::STATUS_OK) {
-		QString strOpt = GetOptString(strName);
-		retVal = FindOpt(strOpt,pOption);
-		if ( m_pParent->wasSuccessful(retVal) ) {
-			OptType* pOptType= dynamic_cast<OptType*>(pOption);
-			if ( pOptType ) {
-				val = pOptType->GetValue();
-			}
-			else
-				retVal = QCmdParseError::OPTION_WRONG_TYPE;
-		}	
+
+		retVal = testOptionName(strName);
+		if (m_pParent->wasSuccessful(retVal)) {
+			QString strOpt = GetOptString(strName);
+			retVal = FindOpt(strOpt,pOption);
+			if ( m_pParent->wasSuccessful(retVal) ) {
+				OptType* pOptType= dynamic_cast<OptType*>(pOption);
+				if ( pOptType ) {
+					val = pOptType->GetValue();
+				}
+				else
+					retVal = QCmdParseError::OPTION_WRONG_TYPE;
+			}	
+		}
+
 	}
 	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
 	return retVal;
@@ -235,7 +241,7 @@ int QCmd::qtutilsPrivate::AddOpt( QString strName,
 		}
 	}
 	
-	QCmdParseException::Throw(retVal,strName);
+	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
 	return retVal;	
 }
 
@@ -287,20 +293,24 @@ void QCmd::qtutilsPrivate::Initialize()
 int QCmd::qtutilsPrivate::AddOpt(QString strName, QCmdOpt* pOpt)
 {
 	QString strOpt = GetOptString(strName);
-	int retVal = QCmdParseError::STATUS_OK;
+	int retVal = testOptionName(strName);
 
-	QOptMap::iterator it = m_mapOpt.find(strOpt);
+	if (wasSuccessful(retVal)) {
+		QOptMap::iterator it = m_mapOpt.find(strOpt);
 
-	if ( it != m_mapOpt.end() ) {
-		retVal = QCmdParseError::OPTION_ALLREADY_ADDED;
-	}	
-	else
-		if ( pOpt != NULL ) {
-			m_mapOpt.insert(strOpt,pOpt);
-			m_listOptions.push_back(pOpt);
-		}
-		QCmdParseException::Throw(retVal,strName);
-		return retVal;
+		if ( it != m_mapOpt.end() ) {
+			retVal = QCmdParseError::OPTION_ALLREADY_ADDED;
+		}	
+		else
+			if ( pOpt != NULL ) {
+				m_mapOpt.insert(strOpt,pOpt);
+				m_listOptions.push_back(pOpt);
+			}
+
+	}
+
+	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -687,6 +697,19 @@ void QCmd::qtutilsPrivate::refreshOptMap()
 			m_mapOpt.insert(pOpt->GetName(),pOpt);
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmd::qtutilsPrivate::testOptionName( QString strName )
+{
+	int retVal = QCmdParseError::STATUS_OK;
+	if (wasSuccessful(retVal)) {
+		if (strName.contains(QRegExp("[+-]"))) {
+			retVal = QCmdParseError::INVALID_OPTION_NAME;
+		}
+	}
+	return retVal;
 }
 
 //////////////////////////////////////////////////////////////////////

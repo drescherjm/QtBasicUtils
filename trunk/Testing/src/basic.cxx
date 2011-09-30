@@ -547,6 +547,134 @@ void QCmdUnitTest::setVarToUpdate( bool * pBool )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class QCmdTestInvalidOptBadAddOpt0 : public QCmd
+{
+public:
+	QCmdTestInvalidOptBadAddOpt0(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestInvalidOptBadAddOpt0::QCmdTestInvalidOptBadAddOpt0( QString strName, QString strDescription) : 
+QCmd(strName,strDescription)
+{
+	bool bTest = true;
+	AddOpt("--test","This is a test","",bTest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestInvalidOptBadAddOpt0::Execute()
+{
+	return QCmdParseError::STATUS_OK;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdTestInvalidOptBadAddOpt1 : public QCmd
+{
+public:
+	QCmdTestInvalidOptBadAddOpt1(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestInvalidOptBadAddOpt1::QCmdTestInvalidOptBadAddOpt1( QString strName, QString strDescription) : 
+QCmd(strName,strDescription)
+{
+	bool bTest = true;
+	AddOpt("test+","This is a test","",bTest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestInvalidOptBadAddOpt1::Execute()
+{
+	return QCmdParseError::STATUS_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdTestInvalidOptBadAddOpt3 : public QCmd
+{
+public:
+	QCmdTestInvalidOptBadAddOpt3(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestInvalidOptBadAddOpt3::QCmdTestInvalidOptBadAddOpt3( QString strName, QString strDescription) : 
+QCmd(strName,strDescription)
+{
+	bool bTest = true;
+	AddOpt("test","This is a test","",bTest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestInvalidOptBadAddOpt3::Execute()
+{
+	return QCmdParseError::STATUS_OK;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmdTestInvalidOpt : public QCmd
+{
+public:
+	QCmdTestInvalidOpt(QString strName, QString strDescription);
+	virtual int Execute();
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestInvalidOpt::QCmdTestInvalidOpt( QString strName, QString strDescription) : 
+	QCmd(strName,strDescription)
+{
+	QStringList sl; 
+	sl << "BADADDOPT0" << "BADADDOPT1" << "GOODADDOPT0";
+	AddOpt("tests","Enter the subcommand to test.","",sl);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestInvalidOpt::Execute()
+{
+	QCoreApplication *pApp = QCoreApplication::instance();
+	if (pApp != NULL) {
+		QStringList lstCmdLine;
+		QCmdLine cmdline(pApp->applicationName(),lstCmdLine);
+
+		QStringList slTests;
+		GetOpt("tests",slTests);
+
+		if (slTests.contains("BADADDOPT0",Qt::CaseInsensitive)) {
+			QCmdTestInvalidOptBadAddOpt0 myCmdTestInvalidOptInt("BADADDOPT0","This command tests invalid options.");
+			cmdline.AddCmd(&myCmdTestInvalidOptInt);
+		}
+
+		if (slTests.contains("BADADDOPT1",Qt::CaseInsensitive)) {
+			QCmdTestInvalidOptBadAddOpt1 myCmdTestInvalidOptInt("BADADDOPT1","This command tests invalid options.");
+			cmdline.AddCmd(&myCmdTestInvalidOptInt);
+		}
+
+		if (slTests.contains("GOODADDOPT0",Qt::CaseInsensitive)) {
+			QCmdTestInvalidOptBadAddOpt3 myCmdTestInvalidOptInt("GOODADDOPT0","This command tests a good option..");
+			cmdline.AddCmd(&myCmdTestInvalidOptInt);
+		}
+
+	}
+
+	return QCmdParseError::STATUS_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char* argv[])
 {
 	
@@ -577,6 +705,8 @@ int main(int argc, char* argv[])
 		QCmdStringOpt		cmdStringOpt2("STRINGOPT2","This command accepts 2 optional strings.",2);
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
 
+		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
+
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
@@ -596,6 +726,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestUserProps);
 		myCmdLine.AddCmd(&cmdStringOpt2);
 		myCmdLine.AddCmd(&cmdStringOpt5);
+		myCmdLine.AddCmd(&cmdTestInvalidOpt);
 		myCmdLine.AddCmd(&myHelp);
 		
 		retVal = myCmdLine.Parse();

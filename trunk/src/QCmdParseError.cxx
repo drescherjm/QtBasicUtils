@@ -14,6 +14,9 @@ namespace QTUTILS {
 	case PARAM_NOT_OPTION:
 		strError = ("PARAM_NOT_OPTION %1%2%3");
 		break;
+	case INVALID_OPTION_NAME:
+		strError = ("ERROR: INVALID_OPTION_NAME %1 when parsing the command %2 %3");
+		break;
 	case PARAM_EXTRA_DATA: 
 		strError = ("ERROR: Found extra data while parsing parameter%1. %2%3");
 		break;
