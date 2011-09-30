@@ -654,12 +654,12 @@ int QCmdTestInvalidOpt::Execute()
 		GetOpt("tests",slTests);
 
 		if (slTests.contains("BADADDOPT0",Qt::CaseInsensitive)) {
-			QCmdTestInvalidOptBadAddOpt0 myCmdTestInvalidOptInt("BADADDOPT0","This command tests invalid options.");
+			QCmdTestInvalidOptBadAddOpt0 myCmdTestInvalidOptInt("BADADDOPT0","This command tests an invalid option name containing a -.");
 			cmdline.AddCmd(&myCmdTestInvalidOptInt);
 		}
 
 		if (slTests.contains("BADADDOPT1",Qt::CaseInsensitive)) {
-			QCmdTestInvalidOptBadAddOpt1 myCmdTestInvalidOptInt("BADADDOPT1","This command tests invalid options.");
+			QCmdTestInvalidOptBadAddOpt1 myCmdTestInvalidOptInt("BADADDOPT1","This command tests an invalid option name containing a +.");
 			cmdline.AddCmd(&myCmdTestInvalidOptInt);
 		}
 
