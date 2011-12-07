@@ -81,7 +81,7 @@ if (USE_RUNJOBS_PARALLEL_BUILDING)
 	)
 	
 	set ( BUILD_CMD1 "${RUNJOBS_EXECUTABLE} ${PROJECT_BINARY_DIR}/Batch/build.job" )
-	set ( BUILD_CMD2 )
+	set ( BUILD_CMD2 "${RUNJOBS_EXECUTABLE} ${PROJECT_BINARY_DIR}/Batch/build.job" )
 	set ( BUILD_CMD3 )
 	set ( BUILD_CMD4 )
 	set ( BUILD_CMD5 )
