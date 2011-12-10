@@ -6,7 +6,6 @@
 #include <QString>
 #include <QMap>
 #include "QCmdLineFileList.h"
-//#include "QLimits.h"
 #include <limits>
 #include "QCmdArg.h"
 #include "QCmdOpt.h"
