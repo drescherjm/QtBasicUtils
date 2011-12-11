@@ -1,7 +1,7 @@
 #ifndef __SMDBMACROS_H__
 #define __SMDBMACROS_H__
 
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -11,12 +11,12 @@
  *	helpers.
  */
 
-#define SM_DECLARE_SMINFO_HELPERS(thisClass,baseClass) \
+#define QBU_DECLARE_SMINFO_HELPERS(thisClass,baseClass) \
 public: \
-	SM_DECLARE_SUPERCLASS(baseClass) \
-	SM_DECLARE_CONSTRUCTOR_DESTRUCTOR(thisClass) \
-	SM_DECLARE_CPY_ASGN_BASE_INCLUDED(thisClass) \
-	SM_DECLARE_CPY_ASGN_HELPERS(thisClass) \
+	QBU_DECLARE_SUPERCLASS(baseClass) \
+	QBU_DECLARE_CONSTRUCTOR_DESTRUCTOR(thisClass) \
+	QBU_DECLARE_CPY_ASGN_BASE_INCLUDED(thisClass) \
+	QBU_DECLARE_CPY_ASGN_HELPERS(thisClass) \
 public: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ public: \
  *  derived classes. 
  */
 
-#define SM_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
+#define QBU_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
 	void thisClass::copy(const thisClass & other) {} \
 	\
 	void thisClass::destroy() \
@@ -47,7 +47,7 @@ public: \
  *
  */
 
-#define SM_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass) \
+#define QBU_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass) \
 	thisClass::thisClass( const thisClass & other ) : Superclass() \
 	{ \
 		Superclass::copy(other); \
@@ -66,17 +66,17 @@ public: \
 *	derived classes.
 */
 
-#define SM_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
+#define QBU_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
 	thisClass& thisClass::operator=( const Superclass & other ) \
 	{ \
 		Superclass::operator =(other); \
 		return *this; \
 	} \
-	SM_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(thisClass,Superclass)
+	QBU_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(thisClass,Superclass)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#define SM_IMPLEMENT_INFO_CONSTRUCTOR_DESTRUCTOR(thisClass) \
+#define QBU_IMPLEMENT_INFO_CONSTRUCTOR_DESTRUCTOR(thisClass) \
 	thisClass::thisClass() : Superclass() {} \
 	\
 	thisClass::~thisClass() \
@@ -86,9 +86,9 @@ public: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#define SM_IMPLEMENT_INFO_HELPERS(thisClass) \
-	SM_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
-	SM_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
-	SM_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass)
+#define QBU_IMPLEMENT_INFO_HELPERS(thisClass) \
+	QBU_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
+	QBU_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
+	QBU_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass)
 	
 #endif //__SMDBMACROS_H__

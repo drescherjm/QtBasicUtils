@@ -1,6 +1,6 @@
 #include "qbuInfo.h"
 #include <QList>
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@
 class qbuTableColumnDef : public qbuInfo
 {
 	Q_OBJECT
-	SM_DECLARE_SUPERCLASS(qbuInfo);
+	QBU_DECLARE_SUPERCLASS(qbuInfo);
 public:
 	qbuTableColumnDef();
 	qbuTableColumnDef(const qbuTableColumnDef & other);

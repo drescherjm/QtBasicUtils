@@ -2,7 +2,7 @@
 #define __SMINSERTQUERY_H__
 
 #include "qbuQuery.h"
-#include "smMacros.h"
+#include "qbuMacros.h"
 #include "qbuDBConstants.h"
 
 class qbuDatabase;
@@ -21,7 +21,7 @@ class smSelectQuery;
 
 class qbuInsertQuery : public qbuQuery
 {
-	SM_DECLARE_SUPERCLASS(qbuQuery);
+	QBU_DECLARE_SUPERCLASS(qbuQuery);
 public:
 	qbuInsertQuery(QSqlDatabase db);
 	virtual ~qbuInsertQuery();

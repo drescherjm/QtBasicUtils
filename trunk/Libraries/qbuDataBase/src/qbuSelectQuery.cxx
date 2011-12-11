@@ -92,7 +92,7 @@ QString smSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList 
 smSelectQuery::smSelectQuery(QSqlDatabase db) : Superclass(db)
 {
 	m_pPrivate = new qbuPrivate();
-	setSelectOption(SM_SELECT_DEFAULT);
+	setSelectOption(QBU_SELECT_DEFAULT);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -180,11 +180,11 @@ bool smSelectQuery::generateQuery()
 					.arg(strQuery)
 					.arg(lastError().text());
 
-#ifdef SM_HAVE_EXCEPTIONS
+#ifdef QBU_HAVE_EXCEPTIONS
 				throw smException(__FILE__,__LINE__,qPrintable(strError),"smSelectQuery::generateQuery");
 #else
 				qDebug() << qPrintable(strError);
-#endif //def SM_HAVE_EXCEPTIONS
+#endif //def QBU_HAVE_EXCEPTIONS
 
 			}
 
@@ -358,10 +358,10 @@ bool smSelectQuery::generateSQL( QString & strSQL )
 		if (retVal) {
 			QString strSelectOption;
 			switch(m_pPrivate->m_SelectOption) {
-				case SM_SELECT_DISTINCT:
+				case QBU_SELECT_DISTINCT:
 					strSelectOption = "DISTINCT ";
 					break;
-				case SM_SELECT_ALL:
+				case QBU_SELECT_ALL:
 					strSelectOption = "ALL ";
 					break;
 			}

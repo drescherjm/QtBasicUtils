@@ -1,7 +1,7 @@
 #ifndef __SMDBSAVEPOINT_H__
 #define __SMDBSAVEPOINT_H__
 
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 class qbuDatabase;
 

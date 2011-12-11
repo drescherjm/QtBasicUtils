@@ -26,7 +26,7 @@ IMPLEMENT_SA_SET(qbuTableColumnDef,NotNull,bool,qbuTableColumnDef::g_strNotNull)
 IMPLEMENT_SA_SET(qbuTableColumnDef,PrimaryKey,bool,qbuTableColumnDef::g_strPrimaryKey);
 
 //Implement the assignment operator
-SM_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(qbuTableColumnDef,Superclass);
+QBU_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(qbuTableColumnDef,Superclass);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

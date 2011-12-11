@@ -1,7 +1,7 @@
 #ifndef __SMDBTRANSACTION_H__
 #define __SMDBTRANSACTION_H__
 
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 class qbuDatabase;
 

@@ -1,14 +1,11 @@
-#ifndef __SMINFO_H__
-#define __SMINFO_H__
-
 #include "qbuPropertyMap.h"
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class qbuInfo : public qbuPropertyMap
 {
-	SM_DECLARE_SUPERCLASS(qbuPropertyMap);
+	QBU_DECLARE_SUPERCLASS(qbuPropertyMap);
 	Q_OBJECT
 public:
 	qbuInfo();
@@ -27,4 +24,3 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMINFO_H__

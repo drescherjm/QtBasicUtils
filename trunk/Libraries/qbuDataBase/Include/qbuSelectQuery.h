@@ -26,7 +26,7 @@ public:
 	smSelectQuery(QSqlDatabase db);
 	virtual ~smSelectQuery();
 public:
-	enum	SelectOption { SM_SELECT_DEFAULT, SM_SELECT_DISTINCT, SM_SELECT_ALL };
+	enum	SelectOption { QBU_SELECT_DEFAULT, QBU_SELECT_DISTINCT, QBU_SELECT_ALL };
 public:
 	virtual	bool	generateSQL(QString & strSQL);
 	virtual bool	generateQuery();

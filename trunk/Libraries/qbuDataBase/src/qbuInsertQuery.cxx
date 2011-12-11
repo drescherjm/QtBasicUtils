@@ -122,11 +122,11 @@ bool qbuInsertQuery::create( smSelectQuery* pQuery,qbuTable* pTable,
 				.arg(pTable->getTableName())
 				.arg(lastError().text());
 
-#ifdef SM_HAVE_EXCEPTIONS
+#ifdef QBU_HAVE_EXCEPTIONS
 			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuInsertQuery::create");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def SM_HAVE_EXCEPTIONS
+#endif //def QBU_HAVE_EXCEPTIONS
 		}
 
 	}

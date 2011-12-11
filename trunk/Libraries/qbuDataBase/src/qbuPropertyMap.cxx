@@ -1,16 +1,15 @@
-#include "smBasePCH.h"
-#include "smPropertyMap.h"
+#include "qbuPropertyMap.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smPropertyMap::hasField( QString strFieldName ) const
+bool qbuPropertyMap::hasField( QString strFieldName ) const
 {
 	return (find(strFieldName) != end());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smPropertyMap::operator==( const smPropertyMap & other ) const
+bool qbuPropertyMap::operator==( const qbuPropertyMap & other ) const
 {
 	return Superclass::operator ==(other);
 }

@@ -46,11 +46,11 @@ bool smCreateViewQuery::create( QString strViewName, QString strViewQuery, bool 
 				.arg(strViewName)
 				.arg(lastError().text());
 
-#ifdef SM_HAVE_EXCEPTIONS
+#ifdef QBU_HAVE_EXCEPTIONS
 			throw smException(__FILE__,__LINE__,qPrintable(strError),"smCreateViewQuery::create");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def SM_HAVE_EXCEPTIONS
+#endif //def QBU_HAVE_EXCEPTIONS
 
 		}
 

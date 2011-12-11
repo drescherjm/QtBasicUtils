@@ -2,7 +2,7 @@
 #define __SMDATABASE_H__
 
 #include <QSqlDatabase>
-#include "smMacros.h"
+#include "qbuMacros.h"
 #include "smStringList.h"
 
 class qbuDBSettingsTableBase;
@@ -20,7 +20,7 @@ class qbuData;
 
 class qbuDatabase : public QSqlDatabase
 {
-	SM_DECLARE_SUPERCLASS(QSqlDatabase);
+	QBU_DECLARE_SUPERCLASS(QSqlDatabase);
 public:
 	qbuDatabase();
 	qbuDatabase(const Superclass &other);

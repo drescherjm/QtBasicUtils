@@ -126,7 +126,7 @@ include_directories(
 	${PROJECT_BINARY_DIR} 
 	${PROJECT_BINARY_DIR}/.. 
 	${PROJECT_SOURCE_DIR}/Include
-	${STUDY_MANAGER_SRC}/Include
+	${PROJECT_SOURCE_DIR}/../../Include
 )
 
 add_library(${PROJECT_NAME} 
