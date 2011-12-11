@@ -1,13 +1,13 @@
 #ifndef __SMINSERTQUERY_H__
 #define __SMINSERTQUERY_H__
 
-#include "smQuery.h"
+#include "qbuQuery.h"
 #include "smMacros.h"
-#include "smDBConstants.h"
+#include "qbuDBConstants.h"
 
-class smDatabase;
-class smPropertyMap;
-class smTable;
+class qbuDatabase;
+class qbuPropertyMap;
+class qbuTable;
 class smSelectQuery;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -15,29 +15,29 @@ class smSelectQuery;
 /**
  *	This class helps the process of creating a database View.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smInsertQuery : public smQuery
+class qbuInsertQuery : public qbuQuery
 {
-	SM_DECLARE_SUPERCLASS(smQuery);
+	SM_DECLARE_SUPERCLASS(qbuQuery);
 public:
-	smInsertQuery(QSqlDatabase db);
-	virtual ~smInsertQuery();
+	qbuInsertQuery(QSqlDatabase db);
+	virtual ~qbuInsertQuery();
 
 public:
-	bool	create(smPropertyMap* pData,smTable* pTable,
+	bool	create(qbuPropertyMap* pData,qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
-	bool	create(smSelectQuery* pQuery,smTable* pTable,
+	bool	create(smSelectQuery* pQuery,qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
 	bool	generateQueryString(QString & strInsertQuery, smSelectQuery* pQuery,
-		smTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
+		qbuTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
 	bool	generateQueryString(QString & strInsertQuery, 
-		smPropertyMap* pData, smTable* pTable,
+		qbuPropertyMap* pData, qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 protected:
 	QString handleInsertMode( smdb::InsertMode im );

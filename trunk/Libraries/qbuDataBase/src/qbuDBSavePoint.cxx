@@ -1,17 +1,13 @@
-//#ifdef _MSC_VER
-#include "smDBBasePCH.h"
-//#endif //def _MSC_VER
-
-#include "smDBSavePoint.h"
-#include "smDatabase.h"
-#include "smQuery.h"
+#include "qbuDBSavePoint.h"
+#include "qbuDatabase.h"
+#include "qbuQuery.h"
 #include <QUuid>
 #include "smLog.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBSavePoint::smDBSavePoint(smDatabase* pDB) : m_pDB(pDB), m_bSavePointStarted(false),
+qbuDBSavePoint::qbuDBSavePoint(qbuDatabase* pDB) : m_pDB(pDB), m_bSavePointStarted(false),
 	m_bFailSavePoint(false)
 {
 	if (m_pDB != NULL) {
@@ -21,7 +17,7 @@ smDBSavePoint::smDBSavePoint(smDatabase* pDB) : m_pDB(pDB), m_bSavePointStarted(
 		m_strSavePoint.replace("{","\'");
 		m_strSavePoint.replace("}","\'");
 
-		smQuery query(*m_pDB);
+		qbuQuery query(*m_pDB);
 
 		m_bSavePointStarted = query.exec(QString("SAVEPOINT %1;").arg(m_strSavePoint));
 
@@ -33,10 +29,10 @@ smDBSavePoint::smDBSavePoint(smDatabase* pDB) : m_pDB(pDB), m_bSavePointStarted(
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBSavePoint::~smDBSavePoint()
+qbuDBSavePoint::~qbuDBSavePoint()
 {
 	if (m_bSavePointStarted && (m_pDB != NULL)) {
-		smQuery query(*m_pDB);
+		qbuQuery query(*m_pDB);
 
 		QString strCommand;
 		if (m_bFailSavePoint) {
@@ -65,7 +61,7 @@ smDBSavePoint::~smDBSavePoint()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDBSavePoint::failSavePoint( bool bFail )
+void qbuDBSavePoint::failSavePoint( bool bFail )
 {
 	m_bFailSavePoint = bFail;
 }

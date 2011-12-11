@@ -3,7 +3,7 @@
 
 #include "smMacros.h"
 
-class smDatabase;
+class qbuDatabase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,28 +16,28 @@ class smDatabase;
  *	- When this object goes out of scope the SavePoints is automatically released. 
  *	- Unlike transactions SAVEPOINTS can be nested.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
- *	\see smDBTransaction
+ *	\see qbuDBTransaction
  */
 
-class smDBSavePoint 
+class qbuDBSavePoint 
 {
 public:
-	smDBSavePoint(smDatabase * pDB);
-	virtual ~smDBSavePoint();
+	qbuDBSavePoint(qbuDatabase * pDB);
+	virtual ~qbuDBSavePoint();
 public:
 	void			failSavePoint(bool bFail);
 private:
-	smDatabase*		m_pDB;
+	qbuDatabase*		m_pDB;
 	bool			m_bSavePointStarted;
 	bool			m_bFailSavePoint;
 	QString			m_strSavePoint;
 private:
 	// The following are intentionally not implemented to prevent copying this object.
-	smDBSavePoint& operator=(const smDBSavePoint & noAssign );
-	smDBSavePoint(const smDBSavePoint & noCopy );
-	smDBSavePoint();
+	qbuDBSavePoint& operator=(const qbuDBSavePoint & noAssign );
+	qbuDBSavePoint(const qbuDBSavePoint & noCopy );
+	qbuDBSavePoint();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

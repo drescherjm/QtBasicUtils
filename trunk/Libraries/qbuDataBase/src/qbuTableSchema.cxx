@@ -1,8 +1,8 @@
-#include "smDBBasePCH.h"
-#include "smTableSchema.h"
+#include "qbuDBBasePCH.h"
+#include "qbuTableSchema.h"
 #include "smSelectQuery.h"
-#include "smTable.h"
-#include "smDatabase.h"
+#include "qbuTable.h"
+#include "qbuDatabase.h"
 #include "smException.h"
 
 #include <QSqlRecord>
@@ -13,20 +13,20 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smTableSchema::smTableSchema( smTable* pTable ) : m_pTable(pTable)
+qbuTableSchema::qbuTableSchema( qbuTable* pTable ) : m_pTable(pTable)
 {
 
 }
 
 /*
-bool smSelectQuery::getRecord( smPropertyMap* pPropMap )
+bool smSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 {
 	bool retVal = (m_pPrivate != NULL) && (pPropMap != NULL);
 	if (retVal) {
 		retVal = isValid();
 		if (retVal) {
 			int nField=0;
-			foreach(smDBColDef col,m_pPrivate->m_lstSelect) {
+			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
 				if (!isNull(nField)) {
 					QTUTILS::Property prop;
 					prop.setObjectName(col.getNameOrAlias());
@@ -51,11 +51,11 @@ bool smSelectQuery::getRecord( smPropertyMap* pPropMap )
  *	result in the m_lstColumns variable.
  */
 
-bool smTableSchema::analyzeTable()
+bool qbuTableSchema::analyzeTable()
 {
 	bool retVal = (m_pTable != NULL);
 	if (retVal) {
-		smQuery query(*m_pTable->m_pDB);
+		qbuQuery query(*m_pTable->m_pDB);
 		QString strQuery = QString("PRAGMA table_info(%1);").arg(m_pTable->getTableName());
 		retVal = query.prepare(strQuery);
 		if (retVal) {
@@ -65,7 +65,7 @@ bool smTableSchema::analyzeTable()
 			retVal = (query.exec());
 			if (retVal) {
 				while (query.next() && retVal) {
-					smTableColumnDef info;
+					qbuTableColumnDef info;
 					QSqlRecord record = query.record();
 					int nIndex = record.indexOf("Name");
 					if (nIndex >= 0) {
@@ -109,19 +109,19 @@ bool smTableSchema::analyzeTable()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTableSchema::verifyTable( smInfo* pInfo )
+bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 {
 	bool retVal = (pInfo != NULL);
 	smStringList lst = pInfo->getDBFieldNames();
 
 	QStringList				lstMissing;
-	smTableColumnDefList	lstCurrent = m_lstColumns;
-	smTableColumnDefList	lstExtra;
+	qbuTableColumnDefList	lstCurrent = m_lstColumns;
+	qbuTableColumnDefList	lstExtra;
 
 	// Note: We still want to verify if the counts are different so that we can produce debug output.
 	retVal = ((lst.count() > 0) ||  (m_lstColumns.count() > 0) );
 	if (retVal) {
-		smTableColumnDefList::iterator it = m_lstColumns.begin();
+		qbuTableColumnDefList::iterator it = m_lstColumns.begin();
 		for(; it != m_lstColumns.end(); ++it ) {
 			QString strName;
 			bool bFound = (it->getName(strName));
@@ -140,13 +140,13 @@ bool smTableSchema::verifyTable( smInfo* pInfo )
 
 		retVal = (lst.empty() && lstExtra.empty());
 		if (!retVal) {
-			QString strError = QString("smTableSchema::verifyTable failed for the table %1 ").arg(m_pTable->getTableName());
+			QString strError = QString("qbuTableSchema::verifyTable failed for the table %1 ").arg(m_pTable->getTableName());
 			if (!lst.empty()) {
 				strError += "\nThe database table is missing the following columns that are in the info class: " + lst.toCSVString();
 			}
 			if (!lstExtra.empty()) {
 				strError += "\nThe database table has the following columns that are not in the info class: ";
-				foreach(smTableColumnDef col,lstExtra) {
+				foreach(qbuTableColumnDef col,lstExtra) {
 					QString strName;
 					if (col.getName(strName)) {
 						strError += strName + " ";
@@ -154,7 +154,7 @@ bool smTableSchema::verifyTable( smInfo* pInfo )
 				}
 				
 			}
-			//strError += "\nsmTableSchema::verifyTable end " + m_pTable->getTableName();
+			//strError += "\nqbuTableSchema::verifyTable end " + m_pTable->getTableName();
 			QLOG_CRIT() << qPrintable(strError);
 		}
 	}

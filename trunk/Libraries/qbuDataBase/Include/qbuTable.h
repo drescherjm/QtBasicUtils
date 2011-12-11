@@ -1,40 +1,40 @@
 #ifndef __SMTABLE_H__
 #define __SMTABLE_H__
 
-class smDatabase;
-class smPropertyMap;
-class smInfo;
+class qbuDatabase;
+class qbuPropertyMap;
+class qbuInfo;
 
 #include <QObject>
 #include <QStringList>
-#include "smInsertQuery.h"
+#include "qbuInsertQuery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  *	This is the base class for all database tables.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  */
 
-class smTable : public QObject
+class qbuTable : public QObject
 {
-	friend class smTableSchema;
-	friend class smInsertQuery;
+	friend class qbuTableSchema;
+	friend class qbuInsertQuery;
 public:
-	smTable(smDatabase* pDataBase);
-	virtual ~smTable();
+	qbuTable(qbuDatabase* pDataBase);
+	virtual ~qbuTable();
 
 public:
 	virtual bool	upgradeTable(int nOldSchema, int nNewSchema);
-	virtual smInfo* createInfoClass() const =0;
+	virtual qbuInfo* createInfoClass() const =0;
 	virtual bool	verifySchema();
 	virtual bool	fixKnownProblems();
 	virtual const QStringList&	getRequiredFieldList() const;
-	virtual bool				verifyRequiredFields(smInfo * pInfo) const;
-	virtual bool				verifyRequiredFields(smInfo * pInfo, const QStringList & lst) const;
+	virtual bool				verifyRequiredFields(qbuInfo * pInfo) const;
+	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
-	virtual int		count(QStringList lstFields = QStringList(), smPropertyMap* pPropMap = NULL);
+	virtual int		count(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = NULL);
 
 protected:
 	virtual bool				renameTable(QString strNewName);
@@ -46,16 +46,16 @@ protected:
 	virtual	bool				isValidField(QString strName);
 public:
 	/**
-	 *	This generates a select query to insert values from a smPropertyMap derivative
+	 *	This generates a select query to insert values from a qbuPropertyMap derivative
 	 *  into the database.
 	 */
-	bool insertData(smPropertyMap* pData,smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+	bool insertData(qbuPropertyMap* pData,smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 	
 protected:
-	smDatabase*		m_pDB;
+	qbuDatabase*		m_pDB;
 private:
-	class		smPrivate;
-	smPrivate*	m_pPrivate;
+	class		qbuPrivate;
+	qbuPrivate*	m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

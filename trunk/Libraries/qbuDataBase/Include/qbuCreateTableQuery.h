@@ -1,9 +1,6 @@
-#ifndef __SMCREATETABLEQUERY_H__
-#define __SMCREATETABLEQUERY_H__
+#include "qbuQuery.h"
 
-#include "smQuery.h"
-
-class smDatabase;
+class qbuDatabase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,14 +8,14 @@ class smDatabase;
  *	\brief
  *	This class helps in creating database queries.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
 */
 
-class smCreateTableQuery : public smQuery
+class smCreateTableQuery : public qbuQuery
 {
 public:
-	typedef smQuery Superclass;
+	typedef qbuQuery Superclass;
 public:
 	smCreateTableQuery(QSqlDatabase db);
 	virtual ~smCreateTableQuery();
@@ -29,11 +26,9 @@ public:
 	// Note this is only the column definitions.
 	QString generateColumnsQueryString();
 private:
-	class	smPrivate;
-	smPrivate*		m_pPrivate;
+	class	qbuPrivate;
+	qbuPrivate*		m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-#endif //__SMCREATETABLEQUERY_H__
 

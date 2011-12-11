@@ -1,25 +1,24 @@
-#include "smDBBasePCH.h"
-#include "smInsertQuery.h"
+#include "qbuInsertQuery.h"
 #include "smException.h"
 #include <QStringList>
-#include "smPropertyMap.h"
-#include "..\Include\smTable.h"
-#include "..\..\smDatabase\smDatabasePCH.h"
+#include "qbuPropertyMap.h"
+#include "..\Include\qbuTable.h"
+#include "..\..\qbuDatabase\qbuDatabasePCH.h"
 #include "smSelectQuery.h"
 #include "smStringList.h"
-#include "smDBColumnDef.h"
-#include "smDBColumnDefList.h"
+#include "qbuDBColumnDef.h"
+#include "qbuDBColumnDefList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smInsertQuery::smInsertQuery(QSqlDatabase db) : Superclass(db)
+qbuInsertQuery::qbuInsertQuery(QSqlDatabase db) : Superclass(db)
 {
 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smInsertQuery::~smInsertQuery()
+qbuInsertQuery::~qbuInsertQuery()
 {
 	
 }
@@ -42,7 +41,7 @@ QString generateInsertString(QStringList lst, QString strPrepend)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smInsertQuery::create( smPropertyMap* pData,smTable* pTable,
+bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 						   smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/ )
 {
 	bool retVal = ((pData != NULL) && (pTable != NULL));
@@ -50,7 +49,7 @@ bool smInsertQuery::create( smPropertyMap* pData,smTable* pTable,
 
 		QStringList lst;
 
-		smPropertyMap::iterator it = pData->begin();
+		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
 			QTUTILS::Property* pProp = *it;
 			QString strName = pProp->objectName();
@@ -110,7 +109,7 @@ bool smInsertQuery::create( smPropertyMap* pData,smTable* pTable,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smInsertQuery::create( smSelectQuery* pQuery,smTable* pTable, 
+bool qbuInsertQuery::create( smSelectQuery* pQuery,qbuTable* pTable, 
 						   smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
 {
 	QString strInsert;
@@ -124,7 +123,7 @@ bool smInsertQuery::create( smSelectQuery* pQuery,smTable* pTable,
 				.arg(lastError().text());
 
 #ifdef SM_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smInsertQuery::create");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuInsertQuery::create");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def SM_HAVE_EXCEPTIONS
@@ -141,7 +140,7 @@ bool smInsertQuery::create( smSelectQuery* pQuery,smTable* pTable,
 *	This member generates the proper SQL INSERT command for the smdb::InsertMode im.
 */
 
-QString smInsertQuery::handleInsertMode( smdb::InsertMode im )
+QString qbuInsertQuery::handleInsertMode( smdb::InsertMode im )
 {
 	QString retVal;
 	switch(im) {
@@ -170,8 +169,8 @@ QString smInsertQuery::handleInsertMode( smdb::InsertMode im )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smInsertQuery::generateQueryString( QString & strInsert, smPropertyMap* pData,
-										smTable* pTable, 
+bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* pData,
+										qbuTable* pTable, 
 										smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING*/ )
 {
 	bool retVal = ((pData != NULL) && (pTable != NULL));
@@ -179,7 +178,7 @@ bool smInsertQuery::generateQueryString( QString & strInsert, smPropertyMap* pDa
 
 		QStringList lst;
 
-		smPropertyMap::iterator it = pData->begin();
+		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
 			QTUTILS::Property* pProp = *it;
 			QString strName = pProp->objectName();
@@ -239,8 +238,8 @@ bool smInsertQuery::generateQueryString( QString & strInsert, smPropertyMap* pDa
  *	@param strInsertQuery is the returned query. 
  */
 
-bool smInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuery* pQuery, 
-										 smTable* pTable, 
+bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuery* pQuery, 
+										 qbuTable* pTable, 
 										 smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
 {
 	bool retVal = (pQuery != NULL);
@@ -255,14 +254,14 @@ bool smInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuery
 			strInsert = handleInsertMode(im);
 			strInsert += pTable->getTableName();
 
-			smDBColumnDefList* pList = pQuery->getSelectFields();
+			qbuDBColumnDefList* pList = pQuery->getSelectFields();
 			retVal = (pList != NULL);
 			if (retVal) {
 
 				smStringList sl;
 
 				// Get the header names from the smSelectQuery
-				foreach(smDBColDef colDef,*pList) {
+				foreach(qbuDBColDef colDef,*pList) {
 					sl.push_back(colDef.getNameOnly());
 				}
 
@@ -278,7 +277,7 @@ bool smInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuery
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smInsertQuery::generateQueryString( QString & strInsertQuery, 
+bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, 
 										 QString strQuery, 
 										 QString strTable, 
 										 smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )

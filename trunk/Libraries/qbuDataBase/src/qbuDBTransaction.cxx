@@ -1,14 +1,14 @@
 //#ifdef _MSC_VER
-#include "smDBBasePCH.h"
+#include "qbuDBBasePCH.h"
 //#endif //def _MSC_VER
 
-#include "smDBTransaction.h"
-#include "smDatabase.h"
+#include "qbuDBTransaction.h"
+#include "qbuDatabase.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBTransaction::smDBTransaction(smDatabase* pDB) : m_pDB(pDB), m_bTransactionStarted(false),
+qbuDBTransaction::qbuDBTransaction(qbuDatabase* pDB) : m_pDB(pDB), m_bTransactionStarted(false),
 	m_bFailTransaction(false)
 {
 	if (m_pDB != NULL) {
@@ -18,7 +18,7 @@ smDBTransaction::smDBTransaction(smDatabase* pDB) : m_pDB(pDB), m_bTransactionSt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBTransaction::~smDBTransaction()
+qbuDBTransaction::~qbuDBTransaction()
 {
 	if (m_bTransactionStarted && (m_pDB != NULL)) {
 		if (!m_bFailTransaction) {
@@ -34,7 +34,7 @@ smDBTransaction::~smDBTransaction()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDBTransaction::failTransaction( bool bFail )
+void qbuDBTransaction::failTransaction( bool bFail )
 {
 	m_bFailTransaction = bFail;
 }

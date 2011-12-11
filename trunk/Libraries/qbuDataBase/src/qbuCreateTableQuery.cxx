@@ -1,10 +1,10 @@
-#include "smDBBasePCH.h"
+#include "qbuDBBasePCH.h"
 #include "smCreateTableQuery.h"
 #include <QStringList>
 #include "Property.h"
-#include "smPropertyMap.h"
+#include "qbuPropertyMap.h"
 #include <QList>
-#include "smDatabaseFunctions.h"
+#include "qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -49,10 +49,10 @@ QString sqlColumn::getColDef() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smCreateTableQuery::smPrivate
+class smCreateTableQuery::qbuPrivate
 {
 public:
-	smPrivate();
+	qbuPrivate();
 public:
 	bool addColumn( QString strCoumnName,QString strDataType,QString strConstraint, bool bPrimaryKey );
 	bool insertPrimaryKeys(QString & strQuery);
@@ -63,14 +63,14 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateTableQuery::smPrivate::smPrivate() : m_bHasPrimaryKeys(false)
+smCreateTableQuery::qbuPrivate::qbuPrivate() : m_bHasPrimaryKeys(false)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::smPrivate::addColumn( QString strCoumnName,QString strDataType,
+bool smCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString strDataType,
 											   QString strConstraint, bool bPrimaryKey )
 {
 	bool retVal = (!strCoumnName.isEmpty());
@@ -91,7 +91,7 @@ bool smCreateTableQuery::smPrivate::addColumn( QString strCoumnName,QString strD
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::smPrivate::insertPrimaryKeys( QString & strQuery )
+bool smCreateTableQuery::qbuPrivate::insertPrimaryKeys( QString & strQuery )
 {
 	bool retVal = !m_bHasPrimaryKeys;
 	if (!retVal) {
@@ -121,7 +121,7 @@ bool smCreateTableQuery::smPrivate::insertPrimaryKeys( QString & strQuery )
 
 smCreateTableQuery::smCreateTableQuery(QSqlDatabase db) : Superclass(db)
 {
-	m_pPrivate = new smPrivate();
+	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

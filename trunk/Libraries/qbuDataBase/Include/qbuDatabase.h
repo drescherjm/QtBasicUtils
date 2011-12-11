@@ -5,8 +5,8 @@
 #include "smMacros.h"
 #include "smStringList.h"
 
-class smDBSettingsTableBase;
-class smData;
+class qbuDBSettingsTableBase;
+class qbuData;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,18 +14,18 @@ class smData;
  *	This is the base class for all database classes used in the application.
  *
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smDatabase : public QSqlDatabase
+class qbuDatabase : public QSqlDatabase
 {
 	SM_DECLARE_SUPERCLASS(QSqlDatabase);
 public:
-	smDatabase();
-	smDatabase(const Superclass &other);
-	smDatabase &operator=(const Superclass &other);
-	virtual ~smDatabase();
+	qbuDatabase();
+	qbuDatabase(const Superclass &other);
+	qbuDatabase &operator=(const Superclass &other);
+	virtual ~qbuDatabase();
 public:
 	int				getDBSchemaVersion();
 	bool			tableExists(QString strTableName, Qt::CaseSensitivity cs = Qt::CaseInsensitive);
@@ -40,7 +40,7 @@ public:
 	virtual bool	attachDatabase(QString strDatabaseFileName, QString strDBAlias);
 
 	// Attach a database file to the connection.
-	virtual bool	attachDatabase(smDatabase* pDB, QString strDBAlias);
+	virtual bool	attachDatabase(qbuDatabase* pDB, QString strDBAlias);
 
 	virtual bool	detachDatabaseByAlias(QString strAlias);
 	virtual bool	detachDatabaseByName(QString strDBName);
@@ -54,11 +54,11 @@ public:
 	virtual bool	hasConnection();
 
 	virtual bool	verifyDBSchema();
-	virtual	smDBSettingsTableBase*	getSettingsTable() =0;
+	virtual	qbuDBSettingsTableBase*	getSettingsTable() =0;
 
 	virtual	QString	getDefaultAttachName()=0;
 
-	virtual bool	createTemporaryViews(smData* pData);
+	virtual bool	createTemporaryViews(qbuData* pData);
 
 protected:
 	
@@ -69,13 +69,13 @@ protected:
 	virtual bool	setDBSchemaVersion(int nSchema);
 	virtual bool	verifyCoverage(smStringList & lstSucceeded, smStringList & lstFailed);
 protected:
-	smDatabase(const smDatabase &other);
-	smDatabase &operator=(const smDatabase &other);
+	qbuDatabase(const qbuDatabase &other);
+	qbuDatabase &operator=(const qbuDatabase &other);
 
 private:
-	class smPrivate;
-	smPrivate*		m_pPrivate;
-	void	copy(const smDatabase & other);
+	class qbuPrivate;
+	qbuPrivate*		m_pPrivate;
+	void	copy(const qbuDatabase & other);
 	void	destroy();
 
 };

@@ -23,7 +23,7 @@ public: \
 
 /**
  *	\brief 
- *	This macro implements the copy() and destroy() member functions for all smInfo 
+ *	This macro implements the copy() and destroy() member functions for all qbuInfo 
  *  derived classes. 
  */
 
@@ -39,7 +39,7 @@ public: \
 
 /**
  *	\brief 
- *	This macro implements the copy constructors for the smInfo class derived classes.
+ *	This macro implements the copy constructors for the qbuInfo class derived classes.
  *	\note
  *	The code may look unusual but it is correct. The reason why we do not use the 
  *  standard copy constructor assignment is because this will cause a pure virtual
@@ -62,7 +62,7 @@ public: \
 
 /**
 *	\brief 
-*	This macro implements the assignment operators (operator=) for the smInfo class 
+*	This macro implements the assignment operators (operator=) for the qbuInfo class 
 *	derived classes.
 */
 

@@ -1,5 +1,4 @@
-#include "smDBBasePCH.h"
-#include "smDatabaseFunctions.h"
+#include "qbuDatabaseFunctions.h"
 #include <QRegExp>
 #include <QVariant>
 

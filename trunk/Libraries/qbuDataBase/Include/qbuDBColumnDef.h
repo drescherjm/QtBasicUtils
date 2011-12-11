@@ -7,23 +7,23 @@
 
 /**
  *	\note
- *	Please take note of the addXXX const functions returning smDBColDefs. They do 
+ *	Please take note of the addXXX const functions returning qbuDBColDefs. They do 
  *	respect the const and do not change the value of the this object. The returned 
  *	value contains the update.
  */
 
-struct smDBColDef
+struct qbuDBColDef
 {
 public:
-	smDBColDef(QString strField, QString strAlias);
-	smDBColDef(QString strField, bool bAutoQuote=true);
-	smDBColDef( const smDBColDef & other );
-	smDBColDef& operator=(const smDBColDef other);
+	qbuDBColDef(QString strField, QString strAlias);
+	qbuDBColDef(QString strField, bool bAutoQuote=true);
+	qbuDBColDef( const qbuDBColDef & other );
+	qbuDBColDef& operator=(const qbuDBColDef other);
 public:
-	smDBColDef addTableAlias(QString strTableAlias) const;
-	smDBColDef addAlias(QString strAlias) const;
-	smDBColDef addName(QString strAlias, bool bAutoQuote=true) const;
-	smDBColDef addExpression(QString strExpression) const;
+	qbuDBColDef addTableAlias(QString strTableAlias) const;
+	qbuDBColDef addAlias(QString strAlias) const;
+	qbuDBColDef addName(QString strAlias, bool bAutoQuote=true) const;
+	qbuDBColDef addExpression(QString strExpression) const;
 public:
 	//Get the string that will be suitable for a column-def for a query.
 	QString getFullString() const;
@@ -37,7 +37,7 @@ public:
 	//Return only the name 
 	QString getNameOnly() const;
 private:
-	void	copy(const smDBColDef & other);
+	void	copy(const qbuDBColDef & other);
 	void	addNameInt(QString strName,bool bAutoQuote);
 public:
 	QString		m_strName;

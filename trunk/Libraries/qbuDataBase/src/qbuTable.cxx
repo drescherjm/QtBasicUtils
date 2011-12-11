@@ -1,21 +1,21 @@
-#include "smDBBasePCH.h"
-#include "smTable.h"
-#include "smDatabase.h"
-#include "smPropertyMap.h"
+#include "qbuDBBasePCH.h"
+#include "qbuTable.h"
+#include "qbuDatabase.h"
+#include "qbuPropertyMap.h"
 #include <QStringList>
 #include <QSqlQuery>
 #include "smException.h"
 #include <iostream>
-#include "smTableSchema.h"
+#include "qbuTableSchema.h"
 #include "smStringList.h"
-#include "..\smDatabase\smDatabasePCH.h"
+#include "..\qbuDatabase\qbuDatabasePCH.h"
 #include "smLog.h"
 #include "smSelectQuery.h"
 #include "Property.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smTable::smPrivate
+class qbuTable::qbuPrivate
 {
 public:
 
@@ -23,14 +23,14 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smTable::smTable( smDatabase* pDataBase ) : m_pDB(pDataBase)
+qbuTable::qbuTable( qbuDatabase* pDataBase ) : m_pDB(pDataBase)
 {
-	m_pPrivate = new smPrivate();	
+	m_pPrivate = new qbuPrivate();	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smTable::~smTable()
+qbuTable::~qbuTable()
 {
 	delete m_pPrivate;
 }
@@ -42,10 +42,10 @@ smTable::~smTable()
 *	This is the base upgradeTable. 
 *	\details
 *	This function checks if the table needs to be created. If so it does and calls
-*  smTable::insertInitialValues() to insert these initial values. 
+*  qbuTable::insertInitialValues() to insert these initial values. 
 */
 
-bool smTable::upgradeTable( int nOldSchema, int nNewSchema )
+bool qbuTable::upgradeTable( int nOldSchema, int nNewSchema )
 {
 	bool retVal = m_pDB->tableExists(getTableName()) ;
 	if (!retVal) {
@@ -60,7 +60,7 @@ bool smTable::upgradeTable( int nOldSchema, int nNewSchema )
 				QLOG_CRIT() << strError;
 
 #ifdef SM_HAVE_EXCEPTIONS
-				throw smException(__FILE__,__LINE__,qPrintable(strError),"smTable::upgradeTable");
+				throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::upgradeTable");
 #endif //def SM_HAVE_EXCEPTIONS
 
 			}
@@ -75,12 +75,12 @@ bool smTable::upgradeTable( int nOldSchema, int nNewSchema )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::insertData( smPropertyMap* pData,smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/ )
+bool qbuTable::insertData( qbuPropertyMap* pData,smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/ )
 {
 	bool retVal = (pData != NULL);
 
 	if (retVal) {
-		smInsertQuery query(*m_pDB);
+		qbuInsertQuery query(*m_pDB);
 		retVal = query.create(pData,this,im);
 		if (retVal) {
 			retVal = query.exec();
@@ -110,7 +110,7 @@ bool smTable::insertData( smPropertyMap* pData,smdb::InsertMode im /*= IM_NO_EXT
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::isValidField( QString strName )
+bool qbuTable::isValidField( QString strName )
 {
 	return true;
 }
@@ -122,7 +122,7 @@ bool smTable::isValidField( QString strName )
 *	This member creates the table in the database using a CREATE TABLE SQL command.
 */
 
-bool smTable::internalCreateTable( QString strTableName, QString strTableSQL )
+bool qbuTable::internalCreateTable( QString strTableName, QString strTableSQL )
 {
 	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
 	if (retVal) {
@@ -145,7 +145,7 @@ bool smTable::internalCreateTable( QString strTableName, QString strTableSQL )
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef SM_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smTable::internalCreateTable");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::internalCreateTable");
 #endif //def SM_HAVE_EXCEPTIONS
 
 		}
@@ -159,7 +159,7 @@ bool smTable::internalCreateTable( QString strTableName, QString strTableSQL )
 *	\brief The purpose of the member function is to add a column to an existing table.
 */
 
-bool smTable::addColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
+bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
 {
 	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
 	if (retVal) {
@@ -187,7 +187,7 @@ bool smTable::addColumn( QString strCoumnName,QString strDataType,QString strCon
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef SM_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smTable::addColumn");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::addColumn");
 #endif //def SM_HAVE_EXCEPTIONS
 
 		}
@@ -197,7 +197,7 @@ bool smTable::addColumn( QString strCoumnName,QString strDataType,QString strCon
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::renameTable( QString strNewName )
+bool qbuTable::renameTable( QString strNewName )
 {
 	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
 	if (retVal) {
@@ -224,7 +224,7 @@ bool smTable::renameTable( QString strNewName )
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef SM_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smTable::renameTable");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::renameTable");
 #endif //def SM_HAVE_EXCEPTIONS
 
 		}
@@ -234,13 +234,13 @@ bool smTable::renameTable( QString strNewName )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::verifySchema()
+bool qbuTable::verifySchema()
 {
-	smTableSchema schema(this);
+	qbuTableSchema schema(this);
 	bool retVal = schema.analyzeTable();
 	if (retVal) {
 
-		std::auto_ptr<smInfo> ptr(createInfoClass());
+		std::auto_ptr<qbuInfo> ptr(createInfoClass());
 		retVal = (ptr.get() != NULL);
 		if (retVal) {
 			retVal = schema.verifyTable(ptr.get());
@@ -252,7 +252,7 @@ bool smTable::verifySchema()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const QStringList& smTable::getRequiredFieldList() const
+const QStringList& qbuTable::getRequiredFieldList() const
 {
 	static QStringList lst;
 	return lst;
@@ -260,14 +260,14 @@ const QStringList& smTable::getRequiredFieldList() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::verifyRequiredFields( smInfo * pInfo ) const
+bool qbuTable::verifyRequiredFields( qbuInfo * pInfo ) const
 {
 	return verifyRequiredFields(pInfo,getRequiredFieldList());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smTable::verifyRequiredFields( smInfo * pInfo, const QStringList & lstFields ) const
+bool qbuTable::verifyRequiredFields( qbuInfo * pInfo, const QStringList & lstFields ) const
 {
 	bool retVal = (pInfo != NULL);
 	if (retVal) {
@@ -283,7 +283,7 @@ bool smTable::verifyRequiredFields( smInfo * pInfo, const QStringList & lstField
 		retVal = lstMissingRequired.isEmpty();
 		if (!retVal) {
 			QLOG_WARN() << "A query on table " << qPrintable(getTableName())
-				<< " will fail because the following fields are not defined in the smInfo class: " << qPrintable(lstMissingRequired.toCSVString());
+				<< " will fail because the following fields are not defined in the qbuInfo class: " << qPrintable(lstMissingRequired.toCSVString());
 
 		}
 	}
@@ -302,20 +302,20 @@ bool smTable::verifyRequiredFields( smInfo * pInfo, const QStringList & lstField
  *
  */
 
-bool smTable::fixKnownProblems()
+bool qbuTable::fixKnownProblems()
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int smTable::count( QStringList lstFields /*= QStringList()*/, smPropertyMap* pPropMap /*= NULL*/ )
+int qbuTable::count( QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= NULL*/ )
 {
 	int retVal = -1;
 	smSelectQuery query(*m_pDB);
 
 	// Setup a typical Count(*) query
-	smDBColDef countval = smDBColDef("COUNT(*)",false).addAlias("Count");
+	qbuDBColDef countval = qbuDBColDef("COUNT(*)",false).addAlias("Count");
 
 	query.addSelectField(countval);
 	query.addFromField(getTableName());
@@ -327,7 +327,7 @@ int smTable::count( QStringList lstFields /*= QStringList()*/, smPropertyMap* pP
 
 	// Now get the value of the count.
 	if (query.generateQuery() && query.exec() && query.next()) {
-		smPropertyMap ret;
+		qbuPropertyMap ret;
 		if (query.getRecord(&ret)) {
 			ret.getField<int>("Count",retVal);
 		}

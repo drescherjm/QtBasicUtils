@@ -101,7 +101,6 @@ SET( ${PROJECT_NAME}_SRCS
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
 	./include/${PROJECT_NAME}.h
-	./include/QLimits.h
 	./include/QCmd.h
 	./include/QCmdLine.h
 	./include/QCmdExtra.h

@@ -1,9 +1,9 @@
-#include "smDBBasePCH.h"
-#include "smDBColumnDefList.h"
+#include "qbuDBBasePCH.h"
+#include "qbuDBColumnDefList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBColumnDefList::toString()
+QString qbuDBColumnDefList::toString()
 {
 	QString retVal;
 

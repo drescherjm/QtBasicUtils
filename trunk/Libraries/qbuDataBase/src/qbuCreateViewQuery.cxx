@@ -1,4 +1,4 @@
-#include "smDBBasePCH.h"
+#include "qbuDBBasePCH.h"
 #include "smCreateViewQuery.h"
 #include "smException.h"
 

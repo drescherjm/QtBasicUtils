@@ -3,7 +3,7 @@
 
 #include "smMacros.h"
 
-class smDatabase;
+class qbuDatabase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,26 +12,26 @@ class smDatabase;
  *  from the requirement to have to remember to commit the transaction. When this object
  *  goes out of scope the transaction is automatically committed. 
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smDBTransaction 
+class qbuDBTransaction 
 {
 public:
-	smDBTransaction(smDatabase * pDB);
-	virtual ~smDBTransaction();
+	qbuDBTransaction(qbuDatabase * pDB);
+	virtual ~qbuDBTransaction();
 public:
 	void			failTransaction(bool bFail);
 private:
-	smDatabase*		m_pDB;
+	qbuDatabase*		m_pDB;
 	bool			m_bTransactionStarted;
 	bool			m_bFailTransaction;
 private:
 	// The following are intentionally not implemented to prevent copying this object.
-	smDBTransaction& operator=(const smDBTransaction & noAssign );
-	smDBTransaction(const smDBTransaction & noCopy );
-	smDBTransaction();
+	qbuDBTransaction& operator=(const qbuDBTransaction & noAssign );
+	qbuDBTransaction(const qbuDBTransaction & noCopy );
+	qbuDBTransaction();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

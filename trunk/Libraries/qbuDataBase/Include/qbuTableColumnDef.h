@@ -1,4 +1,4 @@
-#include "smInfo.h"
+#include "qbuInfo.h"
 #include <QList>
 #include "smMacros.h"
 
@@ -9,21 +9,21 @@
  *	This class is used to hold the table column definition.
  *
  *	\details
- *	Currently this class is only with the smTableSchema to hold the database schema.
+ *	Currently this class is only with the qbuTableSchema to hold the database schema.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  */
 
-class smTableColumnDef : public smInfo
+class qbuTableColumnDef : public qbuInfo
 {
 	Q_OBJECT
-	SM_DECLARE_SUPERCLASS(smInfo);
+	SM_DECLARE_SUPERCLASS(qbuInfo);
 public:
-	smTableColumnDef();
-	smTableColumnDef(const smTableColumnDef & other);
-	smTableColumnDef(const Superclass & other);
-	smTableColumnDef& operator=(const smTableColumnDef & other);
-	smTableColumnDef& operator=(const Superclass & other);
+	qbuTableColumnDef();
+	qbuTableColumnDef(const qbuTableColumnDef & other);
+	qbuTableColumnDef(const Superclass & other);
+	qbuTableColumnDef& operator=(const qbuTableColumnDef & other);
+	qbuTableColumnDef& operator=(const Superclass & other);
 public:
 	bool setName(QString strName);
 	bool setType(QString strName);
@@ -43,11 +43,11 @@ public:
 	static const QString g_strPrimaryKey;
 
 private:
-	void copy(const smTableColumnDef & other);
+	void copy(const qbuTableColumnDef & other);
 	void destroy();
 };
 
-typedef QList<smTableColumnDef> smTableColumnDefList;
+typedef QList<qbuTableColumnDef> qbuTableColumnDefList;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

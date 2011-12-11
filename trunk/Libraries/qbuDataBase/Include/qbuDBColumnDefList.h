@@ -1,21 +1,21 @@
 #ifndef __SMDBCOLUMNDEFLIST_H__
 #define __SMDBCOLUMNDEFLIST_H__
 
-#include "smDBColumnDef.h"
+#include "qbuDBColumnDef.h"
 #include <QList>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  *	\brief
- *	This class implements a list of smDBColDefs
+ *	This class implements a list of qbuDBColDefs
  *
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smDBColumnDefList : public QList<smDBColDef>
+class qbuDBColumnDefList : public QList<qbuDBColDef>
 {
 public:
 	QString toString();

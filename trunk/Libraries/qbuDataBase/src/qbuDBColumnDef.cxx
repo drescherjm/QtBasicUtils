@@ -1,10 +1,10 @@
-#include "smDBBasePCH.h"
-#include "smDBColumnDef.h"
-#include "smDatabaseFunctions.h"
+#include "qbuDBBasePCH.h"
+#include "qbuDBColumnDef.h"
+#include "qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBColDef::getNameOrAlias() const
+QString qbuDBColDef::getNameOrAlias() const
 {
 	QString retVal = m_strAlias;
 	if (retVal.isEmpty()) {
@@ -15,7 +15,7 @@ QString smDBColDef::getNameOrAlias() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBColDef::getFullString() const
+QString qbuDBColDef::getFullString() const
 {
 	QString retVal = getFullName();
 	if (!m_strAlias.isEmpty()) {
@@ -26,7 +26,7 @@ QString smDBColDef::getFullString() const
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBColDef::smDBColDef( QString strFieldName, QString strAlias ) : 
+qbuDBColDef::qbuDBColDef( QString strFieldName, QString strAlias ) : 
     m_strName(singleQuoteIfNecissary(strFieldName)),
 	m_strAlias(singleQuoteIfNecissary(strAlias))
 {
@@ -35,14 +35,14 @@ smDBColDef::smDBColDef( QString strFieldName, QString strAlias ) :
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBColDef::smDBColDef( QString strFieldName, bool bAutoQuote ) 
+qbuDBColDef::qbuDBColDef( QString strFieldName, bool bAutoQuote ) 
 {
 	addNameInt(strFieldName,bAutoQuote);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBColDef::smDBColDef( const smDBColDef & other )
+qbuDBColDef::qbuDBColDef( const qbuDBColDef & other )
 {
 	copy(other);
 }
@@ -50,13 +50,13 @@ smDBColDef::smDBColDef( const smDBColDef & other )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	Returns a new smDBColDef containing a copy of this object with the TableAlias
+ *	Returns a new qbuDBColDef containing a copy of this object with the TableAlias
  *  set from the param strTableAlias.
  */
 
-smDBColDef smDBColDef::addTableAlias( QString strTableAlias ) const
+qbuDBColDef qbuDBColDef::addTableAlias( QString strTableAlias ) const
 {
-	smDBColDef retVal(*this);
+	qbuDBColDef retVal(*this);
 	retVal.m_strTableAlias = singleQuoteIfNecissary(strTableAlias);
 	return retVal;
 }
@@ -64,13 +64,13 @@ smDBColDef smDBColDef::addTableAlias( QString strTableAlias ) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new smDBColDef containing a copy of this object with the Alias
+*	Returns a new qbuDBColDef containing a copy of this object with the Alias
 *   set from the param strAlias.
 */
 
-smDBColDef smDBColDef::addAlias( QString strAlias ) const
+qbuDBColDef qbuDBColDef::addAlias( QString strAlias ) const
 {
-	smDBColDef retVal(*this);
+	qbuDBColDef retVal(*this);
 	retVal.m_strAlias = singleQuoteIfNecissary(strAlias);
 	return retVal;
 }
@@ -78,20 +78,20 @@ smDBColDef smDBColDef::addAlias( QString strAlias ) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new smDBColDef containing a copy of this object with the Name
+*	Returns a new qbuDBColDef containing a copy of this object with the Name
 *   set from the param strName.
 */
 
-smDBColDef smDBColDef::addName(QString strName, bool bAutoQuote/* =true */ ) const
+qbuDBColDef qbuDBColDef::addName(QString strName, bool bAutoQuote/* =true */ ) const
 {
-	smDBColDef retVal(*this);
+	qbuDBColDef retVal(*this);
 	retVal.addNameInt(strName,bAutoQuote);
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDBColDef::copy( const smDBColDef & other )
+void qbuDBColDef::copy( const qbuDBColDef & other )
 {
 	m_strName = other.m_strName;
 	m_strAlias = other.m_strAlias;
@@ -106,7 +106,7 @@ void smDBColDef::copy( const smDBColDef & other )
  *  name was set to StudyID and the TableAlias set to T1
  */
 
-QString smDBColDef::getFullName() const
+QString qbuDBColDef::getFullName() const
 {
 	QString retVal = m_strName;
 	if (!m_strTableAlias.isEmpty()) {
@@ -118,7 +118,7 @@ QString smDBColDef::getFullName() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBColDef::getNameOnly() const
+QString qbuDBColDef::getNameOnly() const
 {
 	QString retVal = m_strName;
 	return retVal;
@@ -126,7 +126,7 @@ QString smDBColDef::getNameOnly() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBColDef& smDBColDef::operator=( const smDBColDef other )
+qbuDBColDef& qbuDBColDef::operator=( const qbuDBColDef other )
 {
 	if ( &other != this ) {
 		copy(other);
@@ -136,14 +136,14 @@ smDBColDef& smDBColDef::operator=( const smDBColDef other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBColDef smDBColDef::addExpression( QString strExpression ) const
+qbuDBColDef qbuDBColDef::addExpression( QString strExpression ) const
 {
 	return addName(strExpression,false);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDBColDef::addNameInt( QString strName,bool bAutoQuote )
+void qbuDBColDef::addNameInt( QString strName,bool bAutoQuote )
 {
 	if (bAutoQuote) {
 		m_strName = singleQuoteIfNecissary(strName);

@@ -1,8 +1,4 @@
-//#ifdef _MSC_VER
-#include "smDBBasePCH.h"
-//#endif //def _MSC_VER
-
-#include "smDatabase.h"
+#include "qbuDatabase.h"
 
 #include <QSqlQuery>
 #include <QVariant>
@@ -15,9 +11,9 @@
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/sequenced_index.hpp>
 #include <boost/multi_index/mem_fun.hpp>
-#include "smDatabaseFunctions.h"
+#include "qbuDatabaseFunctions.h"
 #include <iostream>
-#include "../smDBTables/include/smDBSettingsTableBase.h"
+#include "../qbuDBTables/include/qbuDBSettingsTableBase.h"
 
 using namespace ::boost;
 using namespace ::boost::multi_index;
@@ -43,10 +39,10 @@ attachedDB::attachedDB() : m_nCount(0)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smDatabase::smPrivate
+class qbuDatabase::qbuPrivate
 {
 public:
-	~smPrivate();
+	~qbuPrivate();
 public:
 	struct DBName {};
 	struct DBAlias {};
@@ -62,10 +58,10 @@ public:
 	bool	isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias );
 	bool	incrementAttachedCount(QString strDatabaseFileName);
 	bool	decrementAttachedCount(QString strDatabaseFileName);
-	bool	detachDatabaseByAlias(smDatabase* pPublic,QString strAlias);
-	bool	detachDatabaseByName(smDatabase* pPublic,QString strDBName);
+	bool	detachDatabaseByAlias(qbuDatabase* pPublic,QString strAlias);
+	bool	detachDatabaseByName(qbuDatabase* pPublic,QString strDBName);
 	template<typename tag>
-	bool	detachDatabase(smDatabase* pPublic,QString strKey);
+	bool	detachDatabase(qbuDatabase* pPublic,QString strKey);
 public:
 	setAttachedDB	m_setAttachedDBs;
 };
@@ -73,7 +69,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename tag>
-bool smDatabase::smPrivate::detachDatabase( smDatabase* pPublic,QString strKey )
+bool qbuDatabase::qbuPrivate::detachDatabase( qbuDatabase* pPublic,QString strKey )
 {
 	bool retVal = (pPublic != NULL);
 	if (retVal) {
@@ -102,14 +98,14 @@ bool smDatabase::smPrivate::detachDatabase( smDatabase* pPublic,QString strKey )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase::smPrivate::~smPrivate()
+qbuDatabase::qbuPrivate::~qbuPrivate()
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::smPrivate::isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias )
+bool qbuDatabase::qbuPrivate::isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias )
 {
 	setAttachedDB::iterator it = m_setAttachedDBs.get<DBName>().find(strDatabaseFileName);
 	bool retVal = (it != m_setAttachedDBs.end());
@@ -121,7 +117,7 @@ bool smDatabase::smPrivate::isDatabaseAttached( QString strDatabaseFileName, QSt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::smPrivate::incrementAttachedCount( QString strDatabaseFileName )
+bool qbuDatabase::qbuPrivate::incrementAttachedCount( QString strDatabaseFileName )
 {
 	setAttachedDB::iterator it = m_setAttachedDBs.get<DBName>().find(strDatabaseFileName);
 	bool retVal = (it != m_setAttachedDBs.end());
@@ -135,7 +131,7 @@ bool smDatabase::smPrivate::incrementAttachedCount( QString strDatabaseFileName 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::smPrivate::decrementAttachedCount( QString strDatabaseFileName )
+bool qbuDatabase::qbuPrivate::decrementAttachedCount( QString strDatabaseFileName )
 {
 	setAttachedDB::iterator it = m_setAttachedDBs.get<DBName>().find(strDatabaseFileName);
 	bool retVal = (it != m_setAttachedDBs.end());
@@ -149,7 +145,7 @@ bool smDatabase::smPrivate::decrementAttachedCount( QString strDatabaseFileName 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::smPrivate::detachDatabaseByAlias( smDatabase* pPublic,QString strAlias )
+bool qbuDatabase::qbuPrivate::detachDatabaseByAlias( qbuDatabase* pPublic,QString strAlias )
 {
 	bool retVal = (pPublic != NULL);
 	if (retVal) {
@@ -160,7 +156,7 @@ bool smDatabase::smPrivate::detachDatabaseByAlias( smDatabase* pPublic,QString s
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::smPrivate::detachDatabaseByName( smDatabase* pPublic,QString strDBName )
+bool qbuDatabase::qbuPrivate::detachDatabaseByName( qbuDatabase* pPublic,QString strDBName )
 {
 	bool retVal = (pPublic != NULL);
 	if (retVal) {
@@ -171,28 +167,28 @@ bool smDatabase::smPrivate::detachDatabaseByName( smDatabase* pPublic,QString st
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase::smDatabase() : Superclass()
+qbuDatabase::qbuDatabase() : Superclass()
 {
-	m_pPrivate = new smPrivate();
+	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase::smDatabase( const smDatabase &other ) : Superclass(other)
+qbuDatabase::qbuDatabase( const qbuDatabase &other ) : Superclass(other)
 {
-	m_pPrivate = new smPrivate();
+	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase::smDatabase( const Superclass &other ) : Superclass(other)
+qbuDatabase::qbuDatabase( const Superclass &other ) : Superclass(other)
 {
-	m_pPrivate = new smPrivate();
+	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase::~smDatabase()
+qbuDatabase::~qbuDatabase()
 {
 	destroy();
 }
@@ -211,7 +207,7 @@ smDatabase::~smDatabase()
  *	
  */
 
-int smDatabase::getDBSchemaVersion()
+int qbuDatabase::getDBSchemaVersion()
 {
 	int retVal = -1;
 	if (isOpen()) {
@@ -223,7 +219,7 @@ int smDatabase::getDBSchemaVersion()
 		}
 		*/
 
-		std::auto_ptr<smDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
 		if (pSettingsTable.get() != NULL) {
 			retVal = pSettingsTable->getDBSchemaVersion();
 		}
@@ -233,7 +229,7 @@ int smDatabase::getDBSchemaVersion()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase & smDatabase::operator=( const smDatabase &other )
+qbuDatabase & qbuDatabase::operator=( const qbuDatabase &other )
 {
 	Superclass::operator=(other);
 
@@ -247,7 +243,7 @@ smDatabase & smDatabase::operator=( const smDatabase &other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDatabase & smDatabase::operator=( const Superclass &other )
+qbuDatabase & qbuDatabase::operator=( const Superclass &other )
 {
 	Superclass::operator=(other);
 
@@ -265,7 +261,7 @@ smDatabase & smDatabase::operator=( const Superclass &other )
  *  version that this code provides..
  */
 
-bool smDatabase::performUpgrade()
+bool qbuDatabase::performUpgrade()
 {
 	bool retVal = isOpen();
 	if (retVal) {
@@ -296,7 +292,7 @@ bool smDatabase::performUpgrade()
  *
  */
 
-int smDatabase::getApplicationSchemaVersion()
+int qbuDatabase::getApplicationSchemaVersion()
 {
 	return 0;
 }
@@ -308,7 +304,7 @@ int smDatabase::getApplicationSchemaVersion()
  *	This member function determines if the database schema needs to be upgraded. 
  */
 
-bool smDatabase::needsUpgrade( int nSchema/*=-2*/ )
+bool qbuDatabase::needsUpgrade( int nSchema/*=-2*/ )
 {
 	bool retVal = (nSchema < 0);
 	if (retVal) {
@@ -332,16 +328,16 @@ bool smDatabase::needsUpgrade( int nSchema/*=-2*/ )
  *	exist.
  */
 
-bool smDatabase::preUpgradeDB( int nOldSchema, int nNewSchema )
+bool qbuDatabase::preUpgradeDB( int nOldSchema, int nNewSchema )
 {
 	bool retVal;
-	retVal = tableExists(smDBSettingsTableBase::g_strTable);
+	retVal = tableExists(qbuDBSettingsTableBase::g_strTable);
 	if (!retVal) {
 		retVal = createSettingsTable();
 	}
 	if (retVal) {
 		// Update the settings table.
-		std::auto_ptr<smDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
 		retVal = (pSettingsTable.get() != NULL);
 		if (retVal) {
 			pSettingsTable->upgradeTable(nOldSchema,nNewSchema);
@@ -369,7 +365,7 @@ bool smDatabase::preUpgradeDB( int nOldSchema, int nNewSchema )
  *
  */
 
-bool smDatabase::upgradeDB( int nOldSchema, int nNewSchema )
+bool qbuDatabase::upgradeDB( int nOldSchema, int nNewSchema )
 {
 	bool retVal = (nOldSchema == nNewSchema);
 	if (!retVal) {
@@ -386,15 +382,15 @@ bool smDatabase::upgradeDB( int nOldSchema, int nNewSchema )
 /**
  *	\brief
  *	This member creates a table called DBSettings.
- *	\sa smDatabase::getDBSchemaVersion
+ *	\sa qbuDatabase::getDBSchemaVersion
  */
 
-bool smDatabase::createSettingsTable()
+bool qbuDatabase::createSettingsTable()
 {
 	bool retVal = isOpen();
 	if (retVal) {
 
-		std::auto_ptr<smDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
 		retVal = (pSettingsTable.get() != NULL);
 		if (retVal) {
 			pSettingsTable->createTable(0);
@@ -405,12 +401,12 @@ bool smDatabase::createSettingsTable()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::setDBSchemaVersion( int nSchema )
+bool qbuDatabase::setDBSchemaVersion( int nSchema )
 {
 	bool retVal = isOpen();
 	if (retVal) {
 				
-		std::auto_ptr<smDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
 		retVal = (pSettingsTable.get() != NULL);
 		if (retVal) {
 			pSettingsTable->setDBSchemaVersion(nSchema);
@@ -427,16 +423,16 @@ bool smDatabase::setDBSchemaVersion( int nSchema )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDatabase::copy( const smDatabase & other )
+void qbuDatabase::copy( const qbuDatabase & other )
 {
 	if (m_pPrivate == NULL) {
-		m_pPrivate = new smPrivate();
+		m_pPrivate = new qbuPrivate();
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDatabase::destroy()
+void qbuDatabase::destroy()
 {
 	delete m_pPrivate;
 	m_pPrivate = NULL;
@@ -444,7 +440,7 @@ void smDatabase::destroy()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::attachDatabase( QString strDatabaseFileName, QString strDBAlias )
+bool qbuDatabase::attachDatabase( QString strDatabaseFileName, QString strDBAlias )
 {
 	bool retVal = false;
 
@@ -473,7 +469,7 @@ bool smDatabase::attachDatabase( QString strDatabaseFileName, QString strDBAlias
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::attachDatabase( smDatabase* pDB, QString strDBAlias )
+bool qbuDatabase::attachDatabase( qbuDatabase* pDB, QString strDBAlias )
 {
 	bool retVal = (pDB != NULL);
 	if (retVal) {
@@ -488,14 +484,14 @@ bool smDatabase::attachDatabase( smDatabase* pDB, QString strDBAlias )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDatabase::generateConnectionName( QString strDataBaseName )
+QString qbuDatabase::generateConnectionName( QString strDataBaseName )
 {
 	return QString("__%1").arg(strDataBaseName);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::hasConnection()
+bool qbuDatabase::hasConnection()
 {
 	QString strConnection = connectionName();
 	return !strConnection.isEmpty();
@@ -508,7 +504,7 @@ bool smDatabase::hasConnection()
  *	This member function returns true if the table exists in this database.
  */
 
-bool smDatabase::tableExists( QString strTableName, Qt::CaseSensitivity cs )
+bool qbuDatabase::tableExists( QString strTableName, Qt::CaseSensitivity cs )
 {
 	QStringList lstTables = tables();
 	return lstTables.contains(strTableName,cs);
@@ -522,7 +518,7 @@ bool smDatabase::tableExists( QString strTableName, Qt::CaseSensitivity cs )
  */
 
 
-bool smDatabase::viewExists( QString strTableName, Qt::CaseSensitivity cs /*= Qt::CaseInsensitive*/ )
+bool qbuDatabase::viewExists( QString strTableName, Qt::CaseSensitivity cs /*= Qt::CaseInsensitive*/ )
 {
 	QStringList lstViews = tables(QSql::Views);
 	return lstViews.contains(strTableName,cs);
@@ -530,28 +526,28 @@ bool smDatabase::viewExists( QString strTableName, Qt::CaseSensitivity cs /*= Qt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::verifyDBSchema()
+bool qbuDatabase::verifyDBSchema()
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias )
+bool qbuDatabase::isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias )
 {
 	return (m_pPrivate != NULL) ? m_pPrivate->isDatabaseAttached(strDatabaseFileName,strDBAlias) : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::detachDatabaseByAlias( QString strDBAlias )
+bool qbuDatabase::detachDatabaseByAlias( QString strDBAlias )
 {
 	return (m_pPrivate != NULL) ? m_pPrivate->detachDatabaseByAlias(this,strDBAlias) : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::detachDatabaseByName( QString strDBName )
+bool qbuDatabase::detachDatabaseByName( QString strDBName )
 {
 	return (m_pPrivate != NULL) ? m_pPrivate->detachDatabaseByName(this,strDBName) : false;
 }
@@ -563,7 +559,7 @@ bool smDatabase::detachDatabaseByName( QString strDBName )
  *	This member verifies if we called verify on all tables that exist in the database.
  */
 
-bool smDatabase::verifyCoverage( smStringList & lstSucceeded, smStringList & lstFailed )
+bool qbuDatabase::verifyCoverage( smStringList & lstSucceeded, smStringList & lstFailed )
 {
 	bool retVal = (!lstSucceeded.isEmpty() || !lstFailed.isEmpty());
 	if (retVal) {
@@ -637,7 +633,7 @@ bool smDatabase::verifyCoverage( smStringList & lstSucceeded, smStringList & lst
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDatabase::createTemporaryViews( smData* pData )
+bool qbuDatabase::createTemporaryViews( qbuData* pData )
 {
 	return true;
 }
@@ -654,7 +650,7 @@ bool smDatabase::createTemporaryViews( smData* pData )
  *
  */
 
-bool smDatabase::fixKnownProblems()
+bool qbuDatabase::fixKnownProblems()
 {
 	return true;
 }

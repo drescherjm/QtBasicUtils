@@ -8,15 +8,15 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  */
 
-class smQuery : public QSqlQuery
+class qbuQuery : public QSqlQuery
 {
 public:
 	typedef QSqlQuery Superclass;
 public:
-	smQuery(QSqlDatabase db = QSqlDatabase());
+	qbuQuery(QSqlDatabase db = QSqlDatabase());
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

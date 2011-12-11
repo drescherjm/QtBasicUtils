@@ -1,23 +1,23 @@
 #ifndef __SMCREATEVIEWQUERY_H__
 #define __SMCREATEVIEWQUERY_H__
 
-#include "smQuery.h"
+#include "qbuQuery.h"
 
-class smDatabase;
+class qbuDatabase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  *	This class helps the process of creating a database View.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smCreateViewQuery : public smQuery
+class smCreateViewQuery : public qbuQuery
 {
 public:
-	typedef smQuery Superclass;
+	typedef qbuQuery Superclass;
 public:
 	smCreateViewQuery(QSqlDatabase db);
 	virtual ~smCreateViewQuery();

@@ -1,12 +1,12 @@
 #ifndef __SMSELECTQUERY_H__
 #define __SMSELECTQUERY_H__
 
-#include "smQuery.h"
-#include "smDBColumnDef.h"
+#include "qbuQuery.h"
+#include "qbuDBColumnDef.h"
 
-class smPropertyMap;
-class smDatabase;
-class smDBColumnDefList;
+class qbuPropertyMap;
+class qbuDatabase;
+class qbuDBColumnDefList;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,14 +14,14 @@ class smDBColumnDefList;
  *	\brief
  *	This class helps in generating select queries.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  *
  */
 
-class smSelectQuery : public smQuery
+class smSelectQuery : public qbuQuery
 {
 public:
-	typedef smQuery Superclass;
+	typedef qbuQuery Superclass;
 public:
 	smSelectQuery(QSqlDatabase db);
 	virtual ~smSelectQuery();
@@ -33,38 +33,38 @@ public:
 public:
 	bool	setSelectOption(SelectOption option);
 	bool	addSelectField(QString strField,QString strAlias=QString(),QString strTableAlias=QString());
-	bool	addSelectField(const smDBColDef & colDef);
+	bool	addSelectField(const qbuDBColDef & colDef);
 	bool	addSelectFields(const QStringList & lstFields,QString strTableAlias=QString());
 	bool	addFromField(QString strField,QString strAlias=QString());
 	bool	addFromField(smSelectQuery & nestedQuery,QString strAlias);
 	bool	setWhereClause(QString strWhere);
 	bool	appendWhereExpression(QString strExpression);
-	bool	appendWhereExpressions(QStringList & lstWhereFields, smPropertyMap* pProps);
+	bool	appendWhereExpressions(QStringList & lstWhereFields, qbuPropertyMap* pProps);
 	bool	addOrderByField(QString strField,QString strTableAlias=QString());
 	bool	addGroupByField(QString strField,QString strTableAlias=QString());
 
-	bool	addOrderByField(const smDBColDef & colDef);
-	bool	addGroupByField(const smDBColDef & colDef);
+	bool	addOrderByField(const qbuDBColDef & colDef);
+	bool	addGroupByField(const qbuDBColDef & colDef);
 
 	bool	addOrderByFields(const QStringList & lstFields, QString strTableAlias=QString() );
 	bool	addGroupByFields(const QStringList & lstFields, QString strTableAlias=QString() );
 
 	bool	appendHavingExpression(QString strExpression);
 	
-	bool	getRecord(smPropertyMap* pPropMap);
+	bool	getRecord(qbuPropertyMap* pPropMap);
 
-	smDBColumnDefList*	getSelectFields( );
+	qbuDBColumnDefList*	getSelectFields( );
 public:
-	static bool genExpr(QString & strExpr,smPropertyMap* pProps, QString strField, QString strTableAlias="",QString strOperator=QString("="));
-	static QString genExpr(const smDBColDef & first, const smDBColDef & second,QString strOperator=QString("="));
-	static QString genExpr(const smDBColDef & first, QString strSecond,QString strOperator=QString("="));
+	static bool genExpr(QString & strExpr,qbuPropertyMap* pProps, QString strField, QString strTableAlias="",QString strOperator=QString("="));
+	static QString genExpr(const qbuDBColDef & first, const qbuDBColDef & second,QString strOperator=QString("="));
+	static QString genExpr(const qbuDBColDef & first, QString strSecond,QString strOperator=QString("="));
 	static QString genExpr(QString strFirst, QString strSecond,QString strOperator=QString("="));
 	static QString genExprTableAlias(QString strField, QString strTA1, QString strTA2, QString strOperator=QString("="));
 public:
 	static bool	g_bDumpQueries;
 private:
-	class	smPrivate;
-	smPrivate*		m_pPrivate;
+	class	qbuPrivate;
+	qbuPrivate*		m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

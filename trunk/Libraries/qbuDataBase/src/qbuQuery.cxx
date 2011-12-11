@@ -1,9 +1,9 @@
-#include "smDBBasePCH.h"
-#include "smQuery.h"
+#include "qbuDBBasePCH.h"
+#include "qbuQuery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smQuery::smQuery( QSqlDatabase db /*= QSqlDatabase()*/ ) : Superclass(db)
+qbuQuery::qbuQuery( QSqlDatabase db /*= QSqlDatabase()*/ ) : Superclass(db)
 {
 
 }

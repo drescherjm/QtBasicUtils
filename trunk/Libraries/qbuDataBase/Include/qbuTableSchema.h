@@ -2,9 +2,9 @@
 #define __SMTABLESCHEMA_H__
 
 #include <QObject>
-#include "smTableColumnDef.h"
+#include "qbuTableColumnDef.h"
 
-class smTable;
+class qbuTable;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,19 +12,19 @@ class smTable;
  *	\brief
  *	This class helps verify if the C++ table definition matches the database schema.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  */
 
-class smTableSchema : public QObject
+class qbuTableSchema : public QObject
 {
 public:
-	smTableSchema(smTable* pTable);
+	qbuTableSchema(qbuTable* pTable);
 public:
 	virtual	bool	analyzeTable();
-	virtual bool	verifyTable(smInfo* pInfo);
+	virtual bool	verifyTable(qbuInfo* pInfo);
 protected:
-	smTableColumnDefList	m_lstColumns;
-	smTable*				m_pTable;
+	qbuTableColumnDefList	m_lstColumns;
+	qbuTable*				m_pTable;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
