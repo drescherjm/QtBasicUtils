@@ -7,10 +7,10 @@
 #include "smException.h"
 #include <iostream>
 #include "qbuTableSchema.h"
-#include "smStringList.h"
+#include "qbuStringList.h"
 #include "..\qbuDatabase\qbuDatabasePCH.h"
 #include "smLog.h"
-#include "smSelectQuery.h"
+#include "qbuSelectQuery.h"
 #include "Property.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ bool qbuTable::verifyRequiredFields( qbuInfo * pInfo, const QStringList & lstFie
 {
 	bool retVal = (pInfo != NULL);
 	if (retVal) {
-		smStringList lstMissingRequired;
+		qbuStringList lstMissingRequired;
 
 		const QStringList& lst = lstFields;
 		foreach(QString str, lst) {
@@ -312,7 +312,7 @@ bool qbuTable::fixKnownProblems()
 int qbuTable::count( QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= NULL*/ )
 {
 	int retVal = -1;
-	smSelectQuery query(*m_pDB);
+	qbuSelectQuery query(*m_pDB);
 
 	// Setup a typical Count(*) query
 	qbuDBColDef countval = qbuDBColDef("COUNT(*)",false).addAlias("Count");

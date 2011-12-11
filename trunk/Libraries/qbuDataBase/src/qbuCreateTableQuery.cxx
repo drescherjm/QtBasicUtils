@@ -1,5 +1,4 @@
-#include "qbuDBBasePCH.h"
-#include "smCreateTableQuery.h"
+#include "qbuCreateTableQuery.h"
 #include <QStringList>
 #include "Property.h"
 #include "qbuPropertyMap.h"
@@ -49,7 +48,7 @@ QString sqlColumn::getColDef() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smCreateTableQuery::qbuPrivate
+class qbuCreateTableQuery::qbuPrivate
 {
 public:
 	qbuPrivate();
@@ -63,14 +62,14 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateTableQuery::qbuPrivate::qbuPrivate() : m_bHasPrimaryKeys(false)
+qbuCreateTableQuery::qbuPrivate::qbuPrivate() : m_bHasPrimaryKeys(false)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString strDataType,
+bool qbuCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString strDataType,
 											   QString strConstraint, bool bPrimaryKey )
 {
 	bool retVal = (!strCoumnName.isEmpty());
@@ -91,7 +90,7 @@ bool smCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString str
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::qbuPrivate::insertPrimaryKeys( QString & strQuery )
+bool qbuCreateTableQuery::qbuPrivate::insertPrimaryKeys( QString & strQuery )
 {
 	bool retVal = !m_bHasPrimaryKeys;
 	if (!retVal) {
@@ -119,21 +118,21 @@ bool smCreateTableQuery::qbuPrivate::insertPrimaryKeys( QString & strQuery )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateTableQuery::smCreateTableQuery(QSqlDatabase db) : Superclass(db)
+qbuCreateTableQuery::qbuCreateTableQuery(QSqlDatabase db) : Superclass(db)
 {
 	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateTableQuery::~smCreateTableQuery()
+qbuCreateTableQuery::~qbuCreateTableQuery()
 {
 	delete m_pPrivate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::addColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
+bool qbuCreateTableQuery::addColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -144,7 +143,7 @@ bool smCreateTableQuery::addColumn( QString strCoumnName,QString strDataType,QSt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateTableQuery::addPKColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
+bool qbuCreateTableQuery::addPKColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -155,7 +154,7 @@ bool smCreateTableQuery::addPKColumn( QString strCoumnName,QString strDataType,Q
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smCreateTableQuery::generateColumnsQueryString()
+QString qbuCreateTableQuery::generateColumnsQueryString()
 {
 	QString retVal;
 	if (m_pPrivate != NULL) {

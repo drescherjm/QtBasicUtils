@@ -559,14 +559,14 @@ bool qbuDatabase::detachDatabaseByName( QString strDBName )
  *	This member verifies if we called verify on all tables that exist in the database.
  */
 
-bool qbuDatabase::verifyCoverage( smStringList & lstSucceeded, smStringList & lstFailed )
+bool qbuDatabase::verifyCoverage( qbuStringList & lstSucceeded, qbuStringList & lstFailed )
 {
 	bool retVal = (!lstSucceeded.isEmpty() || !lstFailed.isEmpty());
 	if (retVal) {
 		
-		smStringList lstTables = tables();
-		smStringList lstExtra;
-		smStringList lstTemp;
+		qbuStringList lstTables = tables();
+		qbuStringList lstExtra;
+		qbuStringList lstTemp;
 
 		// First match all tables where the verify succeeded.
 		foreach(QString str,lstSucceeded) {
@@ -601,7 +601,7 @@ bool qbuDatabase::verifyCoverage( smStringList & lstSucceeded, smStringList & ls
 				// At this point there are more tables in the database than what we verified. We need
 				// to see if all of these are temporary tables.
 
-				smStringList lstLeftOver = lstTables;
+				qbuStringList lstLeftOver = lstTables;
 
 				// Scan to see if all items left are temporary tables.
 				foreach(QString str,lstLeftOver) {

@@ -1,7 +1,3 @@
-//#ifdef _MSC_VER
-#include "qbuDBBasePCH.h"
-//#endif //def _MSC_VER
-
 #include "qbuDBTransaction.h"
 #include "qbuDatabase.h"
 

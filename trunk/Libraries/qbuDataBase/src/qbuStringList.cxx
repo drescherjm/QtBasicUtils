@@ -1,16 +1,15 @@
-#include "smBasePCH.h"
-#include "smStringList.h"
+#include "qbuStringList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smStringList::toCSVString()
+QString qbuStringList::toCSVString()
 {
 	return toDelimitedString(", ");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smStringList::toDelimitedString( QString delimiter/*=","*/ )
+QString qbuStringList::toDelimitedString( QString delimiter/*=","*/ )
 {
 	QString retVal;
 	if (!isEmpty()) {
@@ -34,7 +33,7 @@ QString smStringList::toDelimitedString( QString delimiter/*=","*/ )
  *
  */
 
-int smStringList::removeAll( QString strRemove,Qt::CaseSensitivity cs )
+int qbuStringList::removeAll( QString strRemove,Qt::CaseSensitivity cs )
 {
 	int retVal=0;
 
@@ -65,7 +64,7 @@ int smStringList::removeAll( QString strRemove,Qt::CaseSensitivity cs )
  *
  */
 
-int smStringList::indexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=0*/ ) const
+int qbuStringList::indexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=0*/ ) const
 {
 	int retVal = -1;
 	if (cs == Qt::CaseInsensitive) {
@@ -90,7 +89,7 @@ int smStringList::indexOf( const QString & str, Qt::CaseSensitivity cs, int from
  *
  */
 
-int smStringList::lastIndexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=-1*/ ) const
+int qbuStringList::lastIndexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=-1*/ ) const
 {
 	int retVal = -1;
 	if (cs == Qt::CaseInsensitive) {

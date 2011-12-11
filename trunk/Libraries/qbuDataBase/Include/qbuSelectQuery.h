@@ -18,13 +18,13 @@ class qbuDBColumnDefList;
  *
  */
 
-class smSelectQuery : public qbuQuery
+class qbuSelectQuery : public qbuQuery
 {
 public:
 	typedef qbuQuery Superclass;
 public:
-	smSelectQuery(QSqlDatabase db);
-	virtual ~smSelectQuery();
+	qbuSelectQuery(QSqlDatabase db);
+	virtual ~qbuSelectQuery();
 public:
 	enum	SelectOption { QBU_SELECT_DEFAULT, QBU_SELECT_DISTINCT, QBU_SELECT_ALL };
 public:
@@ -36,7 +36,7 @@ public:
 	bool	addSelectField(const qbuDBColDef & colDef);
 	bool	addSelectFields(const QStringList & lstFields,QString strTableAlias=QString());
 	bool	addFromField(QString strField,QString strAlias=QString());
-	bool	addFromField(smSelectQuery & nestedQuery,QString strAlias);
+	bool	addFromField(qbuSelectQuery & nestedQuery,QString strAlias);
 	bool	setWhereClause(QString strWhere);
 	bool	appendWhereExpression(QString strExpression);
 	bool	appendWhereExpressions(QStringList & lstWhereFields, qbuPropertyMap* pProps);

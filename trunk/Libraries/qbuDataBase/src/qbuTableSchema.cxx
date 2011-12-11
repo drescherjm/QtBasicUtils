@@ -1,6 +1,6 @@
 #include "qbuDBBasePCH.h"
 #include "qbuTableSchema.h"
-#include "smSelectQuery.h"
+#include "qbuSelectQuery.h"
 #include "qbuTable.h"
 #include "qbuDatabase.h"
 #include "smException.h"
@@ -8,7 +8,7 @@
 #include <QSqlRecord>
 #include <QStringList>
 #include <iostream>
-#include "smStringList.h"
+#include "qbuStringList.h"
 #include "smLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ qbuTableSchema::qbuTableSchema( qbuTable* pTable ) : m_pTable(pTable)
 }
 
 /*
-bool smSelectQuery::getRecord( qbuPropertyMap* pPropMap )
+bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 {
 	bool retVal = (m_pPrivate != NULL) && (pPropMap != NULL);
 	if (retVal) {
@@ -98,7 +98,7 @@ bool qbuTableSchema::analyzeTable()
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smSelectQuery::generateQuery");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -112,7 +112,7 @@ bool qbuTableSchema::analyzeTable()
 bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 {
 	bool retVal = (pInfo != NULL);
-	smStringList lst = pInfo->getDBFieldNames();
+	qbuStringList lst = pInfo->getDBFieldNames();
 
 	QStringList				lstMissing;
 	qbuTableColumnDefList	lstCurrent = m_lstColumns;

@@ -12,13 +12,13 @@ class qbuDatabase;
  *
 */
 
-class smCreateTableQuery : public qbuQuery
+class qbuCreateTableQuery : public qbuQuery
 {
 public:
 	typedef qbuQuery Superclass;
 public:
-	smCreateTableQuery(QSqlDatabase db);
-	virtual ~smCreateTableQuery();
+	qbuCreateTableQuery(QSqlDatabase db);
+	virtual ~qbuCreateTableQuery();
 public:
 	bool	addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());
 	bool	addPKColumn(QString strCoumnName,QString strDataType,QString strConstraint /*=QString("NOT NULL")*/);

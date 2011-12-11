@@ -1,5 +1,4 @@
-#include "qbuDBBasePCH.h"
-#include "smSelectQuery.h"
+#include "qbuSelectQuery.h"
 #include <QStringList>
 #include "Property.h"
 #include "qbuPropertyMap.h"
@@ -11,11 +10,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::g_bDumpQueries = false;
+bool qbuSelectQuery::g_bDumpQueries = false;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smSelectQuery::qbuPrivate
+class qbuSelectQuery::qbuPrivate
 {
 public:
 	qbuDBColumnDefList			m_lstSelect;
@@ -24,7 +23,7 @@ public:
 	qbuDBColumnDefList			m_lstOrderBy;
 	QString						m_strWhereClause;
 	QString						m_strHavingClause;
-	smSelectQuery::SelectOption	m_SelectOption;
+	qbuSelectQuery::SelectOption	m_SelectOption;
 public:
 	QString		generateCSVList(QStringList lst);
 	QString		generateCSVList(QStringList lst, QStringList lstAliases);
@@ -35,7 +34,7 @@ public:
 
 //This takes a QString lists and inserts commas between each item.
 
-QString smSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
+QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
@@ -50,7 +49,7 @@ QString smSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
 
 
 // NOTE: it is advanced after alias is retrieved if not at the end
-QString smSelectQuery::qbuPrivate::getNextAlias( QStringList lst, QStringList::iterator & it )
+QString qbuSelectQuery::qbuPrivate::getNextAlias( QStringList lst, QStringList::iterator & it )
 {
 	QString retVal;
 	if (it != lst.end()) {
@@ -71,7 +70,7 @@ QString smSelectQuery::qbuPrivate::getNextAlias( QStringList lst, QStringList::i
  *	This takes a QString lists and inserts commas between each item. And supports aliases
  */
 
-QString smSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
+QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
@@ -89,7 +88,7 @@ QString smSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smSelectQuery::smSelectQuery(QSqlDatabase db) : Superclass(db)
+qbuSelectQuery::qbuSelectQuery(QSqlDatabase db) : Superclass(db)
 {
 	m_pPrivate = new qbuPrivate();
 	setSelectOption(QBU_SELECT_DEFAULT);
@@ -97,7 +96,7 @@ smSelectQuery::smSelectQuery(QSqlDatabase db) : Superclass(db)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smSelectQuery::~smSelectQuery()
+qbuSelectQuery::~qbuSelectQuery()
 {
 	delete m_pPrivate;
 }
@@ -105,7 +104,7 @@ smSelectQuery::~smSelectQuery()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addSelectField(QString strField,QString strAlias/*=QString()*/,QString strTableAlias)
+bool qbuSelectQuery::addSelectField(QString strField,QString strAlias/*=QString()*/,QString strTableAlias)
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -119,7 +118,7 @@ bool smSelectQuery::addSelectField(QString strField,QString strAlias/*=QString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addSelectField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addSelectField( const qbuDBColDef & colDef )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -130,7 +129,7 @@ bool smSelectQuery::addSelectField( const qbuDBColDef & colDef )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addFromField( QString strField,QString strAlias/*=QString()*/)
+bool qbuSelectQuery::addFromField( QString strField,QString strAlias/*=QString()*/)
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -148,7 +147,7 @@ bool smSelectQuery::addFromField( QString strField,QString strAlias/*=QString()*
  *	This member adds a nested select query in the from field. 
  */
 
-bool smSelectQuery::addFromField( smSelectQuery & nestedQuery,QString strAlias )
+bool qbuSelectQuery::addFromField( qbuSelectQuery & nestedQuery,QString strAlias )
 {
 	bool retVal;
 	QString strNested;
@@ -163,7 +162,7 @@ bool smSelectQuery::addFromField( smSelectQuery & nestedQuery,QString strAlias )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::generateQuery()
+bool qbuSelectQuery::generateQuery()
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -181,7 +180,7 @@ bool smSelectQuery::generateQuery()
 					.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw smException(__FILE__,__LINE__,qPrintable(strError),"smSelectQuery::generateQuery");
+				throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
 #else
 				qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS
@@ -200,7 +199,7 @@ bool smSelectQuery::generateQuery()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::setWhereClause( QString strWhere )
+bool qbuSelectQuery::setWhereClause( QString strWhere )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -211,7 +210,7 @@ bool smSelectQuery::setWhereClause( QString strWhere )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::getRecord( qbuPropertyMap* pPropMap )
+bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 {
 	bool retVal = (m_pPrivate != NULL) && (pPropMap != NULL);
 	if (retVal) {
@@ -236,7 +235,7 @@ bool smSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // This is used to set the option that comes just after the select. Currently the options 
-bool smSelectQuery::setSelectOption( SelectOption option )
+bool qbuSelectQuery::setSelectOption( SelectOption option )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -247,7 +246,7 @@ bool smSelectQuery::setSelectOption( SelectOption option )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::appendWhereExpression( QString strExpression )
+bool qbuSelectQuery::appendWhereExpression( QString strExpression )
 {
 	bool retVal = (m_pPrivate != NULL);
 
@@ -267,7 +266,7 @@ bool smSelectQuery::appendWhereExpression( QString strExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addSelectFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::addSelectFields( const QStringList & lstFields, QString strTableAlias )
 {
 	bool retVal = !lstFields.isEmpty();
 
@@ -283,7 +282,7 @@ bool smSelectQuery::addSelectFields( const QStringList & lstFields, QString strT
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addGroupByField( QString strField, QString strTableAlias )
+bool qbuSelectQuery::addGroupByField( QString strField, QString strTableAlias )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -298,7 +297,7 @@ bool smSelectQuery::addGroupByField( QString strField, QString strTableAlias )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addGroupByField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addGroupByField( const qbuDBColDef & colDef )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -311,7 +310,7 @@ bool smSelectQuery::addGroupByField( const qbuDBColDef & colDef )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addOrderByField( QString strField, QString strTableAlias )
+bool qbuSelectQuery::addOrderByField( QString strField, QString strTableAlias )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -327,7 +326,7 @@ bool smSelectQuery::addOrderByField( QString strField, QString strTableAlias )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addOrderByField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addOrderByField( const qbuDBColDef & colDef )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -347,7 +346,7 @@ bool smSelectQuery::addOrderByField( const qbuDBColDef & colDef )
  *	
  */
 
-bool smSelectQuery::generateSQL( QString & strSQL )
+bool qbuSelectQuery::generateSQL( QString & strSQL )
 {
 	bool retVal;
 	QString strSelect = m_pPrivate->m_lstSelect.toString();
@@ -405,7 +404,7 @@ bool smSelectQuery::generateSQL( QString & strSQL )
  *  for example: ( T1.StudyID = T2.StudyID ) 
  */
 
-QString smSelectQuery::genExpr( const qbuDBColDef & first, const qbuDBColDef & second,
+QString qbuSelectQuery::genExpr( const qbuDBColDef & first, const qbuDBColDef & second,
 									 QString strOperator/*=QString("=")*/ )
 {
 	QString retVal;
@@ -420,7 +419,7 @@ QString smSelectQuery::genExpr( const qbuDBColDef & first, const qbuDBColDef & s
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smSelectQuery::genExpr( const qbuDBColDef & first, QString strSecond,QString strOperator/*=QString("=")*/ )
+QString qbuSelectQuery::genExpr( const qbuDBColDef & first, QString strSecond,QString strOperator/*=QString("=")*/ )
 {
 	QString retVal;
 	QString strFirst = first.getFullName();
@@ -434,7 +433,7 @@ QString smSelectQuery::genExpr( const qbuDBColDef & first, QString strSecond,QSt
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strField, 
+bool qbuSelectQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strField, 
 							QString strTableAlias/*=""*/,QString strOperator/*=QString("=")*/ )
 {
 	bool retVal = (pProps != NULL);
@@ -456,7 +455,7 @@ bool smSelectQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString s
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smSelectQuery::genExpr( QString strFirst, QString strSecond,QString strOperator/*=QString("=")*/ )
+QString qbuSelectQuery::genExpr( QString strFirst, QString strSecond,QString strOperator/*=QString("=")*/ )
 {
 	QString retVal;
 	if ( (!strFirst.isEmpty()) && (!strSecond.isEmpty()) ) {
@@ -475,12 +474,12 @@ QString smSelectQuery::genExpr( QString strFirst, QString strSecond,QString strO
  *	Suppose you wanted to generate the following expression:
  *	( T1.StudyID = T2.StudyID ) 
  *
- *	If you use the smSelectQuery::genExpr() members above that would require 3 calls 
+ *	If you use the qbuSelectQuery::genExpr() members above that would require 3 calls 
  *	instead of the one with this member. 
- *	smSelectQuery::genExprTableAlias( smStudyInfo::g_strStudyID, "T1","T2" );
+ *	qbuSelectQuery::genExprTableAlias( qbuStudyInfo::g_strStudyID, "T1","T2" );
  */
 
-QString smSelectQuery::genExprTableAlias( QString strField, QString strTA1, QString strTA2, QString strOperator/*=QString("=")*/ )
+QString qbuSelectQuery::genExprTableAlias( QString strField, QString strTA1, QString strTA2, QString strOperator/*=QString("=")*/ )
 {
 	qbuDBColDef colDef1 = qbuDBColDef(strField).addTableAlias(strTA1);
 	qbuDBColDef colDef2 = qbuDBColDef(strField).addTableAlias(strTA2);
@@ -490,14 +489,14 @@ QString smSelectQuery::genExprTableAlias( QString strField, QString strTA1, QStr
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColumnDefList* smSelectQuery::getSelectFields()
+qbuDBColumnDefList* qbuSelectQuery::getSelectFields()
 {
 	return (m_pPrivate != NULL) ? &m_pPrivate->m_lstSelect : NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addOrderByFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::addOrderByFields( const QStringList & lstFields, QString strTableAlias )
 {
 	bool retVal = !lstFields.isEmpty();
 
@@ -513,7 +512,7 @@ bool smSelectQuery::addOrderByFields( const QStringList & lstFields, QString str
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::addGroupByFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::addGroupByFields( const QStringList & lstFields, QString strTableAlias )
 {
 	bool retVal = !lstFields.isEmpty();
 
@@ -536,7 +535,7 @@ bool smSelectQuery::addGroupByFields( const QStringList & lstFields, QString str
  *	This member will fail if you have not added any group by fields.
  */
 
-bool smSelectQuery::appendHavingExpression( QString strExpression )
+bool qbuSelectQuery::appendHavingExpression( QString strExpression )
 {
 	bool retVal = (m_pPrivate != NULL);
 	if (retVal) {
@@ -558,13 +557,13 @@ bool smSelectQuery::appendHavingExpression( QString strExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smSelectQuery::appendWhereExpressions( QStringList & lstWhereFields, qbuPropertyMap* pProps )
+bool qbuSelectQuery::appendWhereExpressions( QStringList & lstWhereFields, qbuPropertyMap* pProps )
 {
 	bool retVal = (pProps != NULL);
 	if (retVal) {
 		foreach(QString str,lstWhereFields) {
 			QString strExpr;
-			retVal = smSelectQuery::genExpr(strExpr,pProps,str);
+			retVal = qbuSelectQuery::genExpr(strExpr,pProps,str);
 			if (retVal) {
 				appendWhereExpression(strExpr);
 			}

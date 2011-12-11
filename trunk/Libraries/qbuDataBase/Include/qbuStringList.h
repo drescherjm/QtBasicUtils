@@ -13,15 +13,15 @@
  *	\ingroup smBase
  */
 
-class smStringList : public QStringList
+class qbuStringList : public QStringList
 {
 	SM_DECLARE_SUPERCLASS(QStringList);
 public:
-	inline smStringList() { }
-	inline explicit smStringList(const QString &i) { append(i); }
-	inline smStringList(const smStringList &l) : QStringList(l) { }
-	inline smStringList(const QStringList &l) : QStringList(l) { }
-	inline smStringList(const QList<QString> &l) : QStringList(l) { }
+	inline qbuStringList() { }
+	inline explicit qbuStringList(const QString &i) { append(i); }
+	inline qbuStringList(const qbuStringList &l) : QStringList(l) { }
+	inline qbuStringList(const QStringList &l) : QStringList(l) { }
+	inline qbuStringList(const QList<QString> &l) : QStringList(l) { }
 public:
 	int		removeAll(QString strRemove,Qt::CaseSensitivity cs);
 	int		indexOf(const QString & str, Qt::CaseSensitivity cs, int from=0) const;

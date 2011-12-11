@@ -1,24 +1,24 @@
 #include "qbuDBBasePCH.h"
-#include "smCreateViewQuery.h"
+#include "qbuCreateViewQuery.h"
 #include "smException.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateViewQuery::smCreateViewQuery(QSqlDatabase db) : Superclass(db)
+qbuCreateViewQuery::qbuCreateViewQuery(QSqlDatabase db) : Superclass(db)
 {
 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smCreateViewQuery::~smCreateViewQuery()
+qbuCreateViewQuery::~qbuCreateViewQuery()
 {
 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smCreateViewQuery::create( QString strViewName, QString strViewQuery, bool bTempView )
+bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool bTempView )
 {
 	bool retVal = !strViewQuery.isEmpty();
 	if (retVal) {
@@ -47,7 +47,7 @@ bool smCreateViewQuery::create( QString strViewName, QString strViewQuery, bool 
 				.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"smCreateViewQuery::create");
+			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS

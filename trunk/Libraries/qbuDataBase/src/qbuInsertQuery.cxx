@@ -4,8 +4,8 @@
 #include "qbuPropertyMap.h"
 #include "..\Include\qbuTable.h"
 #include "..\..\qbuDatabase\qbuDatabasePCH.h"
-#include "smSelectQuery.h"
-#include "smStringList.h"
+#include "qbuSelectQuery.h"
+#include "qbuStringList.h"
 #include "qbuDBColumnDef.h"
 #include "qbuDBColumnDefList.h"
 
@@ -109,7 +109,7 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuInsertQuery::create( smSelectQuery* pQuery,qbuTable* pTable, 
+bool qbuInsertQuery::create( qbuSelectQuery* pQuery,qbuTable* pTable, 
 						   smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
 {
 	QString strInsert;
@@ -238,7 +238,7 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
  *	@param strInsertQuery is the returned query. 
  */
 
-bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuery* pQuery, 
+bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, qbuSelectQuery* pQuery, 
 										 qbuTable* pTable, 
 										 smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
 {
@@ -258,9 +258,9 @@ bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, smSelectQuer
 			retVal = (pList != NULL);
 			if (retVal) {
 
-				smStringList sl;
+				qbuStringList sl;
 
-				// Get the header names from the smSelectQuery
+				// Get the header names from the qbuSelectQuery
 				foreach(qbuDBColDef colDef,*pList) {
 					sl.push_back(colDef.getNameOnly());
 				}

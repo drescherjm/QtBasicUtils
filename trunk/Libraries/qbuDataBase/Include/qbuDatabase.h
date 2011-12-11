@@ -3,7 +3,7 @@
 
 #include <QSqlDatabase>
 #include "qbuMacros.h"
-#include "smStringList.h"
+#include "qbuStringList.h"
 
 class qbuDBSettingsTableBase;
 class qbuData;
@@ -67,7 +67,7 @@ protected:
 	virtual bool	preUpgradeDB(int nOldSchema, int nNewSchema);
 	virtual bool	createSettingsTable();
 	virtual bool	setDBSchemaVersion(int nSchema);
-	virtual bool	verifyCoverage(smStringList & lstSucceeded, smStringList & lstFailed);
+	virtual bool	verifyCoverage(qbuStringList & lstSucceeded, qbuStringList & lstFailed);
 protected:
 	qbuDatabase(const qbuDatabase &other);
 	qbuDatabase &operator=(const qbuDatabase &other);

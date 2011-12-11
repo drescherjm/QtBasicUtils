@@ -8,7 +8,7 @@
 class qbuDatabase;
 class qbuPropertyMap;
 class qbuTable;
-class smSelectQuery;
+class qbuSelectQuery;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,10 +30,10 @@ public:
 	bool	create(qbuPropertyMap* pData,qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
-	bool	create(smSelectQuery* pQuery,qbuTable* pTable,
+	bool	create(qbuSelectQuery* pQuery,qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
-	bool	generateQueryString(QString & strInsertQuery, smSelectQuery* pQuery,
+	bool	generateQueryString(QString & strInsertQuery, qbuSelectQuery* pQuery,
 		qbuTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
 
 	bool	generateQueryString(QString & strInsertQuery, 

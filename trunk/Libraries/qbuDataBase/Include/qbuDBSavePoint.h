@@ -1,7 +1,8 @@
-#ifndef __SMDBSAVEPOINT_H__
-#define __SMDBSAVEPOINT_H__
+#ifndef __QBUDBSAVEPOINT_H__
+#define __QBUDBSAVEPOINT_H__
 
 #include "qbuMacros.h"
+#include <QString>
 
 class qbuDatabase;
 
@@ -42,5 +43,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
-#endif //__SMDBSAVEPOINT_H__
+#endif //__QBUDBSAVEPOINT_H__

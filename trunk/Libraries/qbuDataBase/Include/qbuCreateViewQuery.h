@@ -14,13 +14,13 @@ class qbuDatabase;
  *
  */
 
-class smCreateViewQuery : public qbuQuery
+class qbuCreateViewQuery : public qbuQuery
 {
 public:
 	typedef qbuQuery Superclass;
 public:
-	smCreateViewQuery(QSqlDatabase db);
-	virtual ~smCreateViewQuery();
+	qbuCreateViewQuery(QSqlDatabase db);
+	virtual ~qbuCreateViewQuery();
 public:
 	bool	create(QString strViewName, QString strViewQuery, bool bTempView = false);
 };
