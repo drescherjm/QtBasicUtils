@@ -51,6 +51,7 @@ SET( ${PROJECT_NAME}_SRCS
 	./src/qbuDatabaseFunctions.cxx
 	./src/qbuInsertQuery.cxx
 	./src/qbuPropertyMap.cxx
+	./src/qbuStringList.cxx
 )
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
@@ -71,6 +72,7 @@ SET( ${PROJECT_NAME}_EXT_HDRS
 	./Include/qbuDBConstants.h
 	./Include/qbuDBMacros.h
 	./Include/qbuPropertyMap.h
+	./Include/qbuStringList.h
 )
 
 SET( ${PROJECT_NAME}_MOC_HDRS 
