@@ -1,4 +1,3 @@
-#include "qbuDBBasePCH.h"
 #include "qbuTableColumnDef.h"
 #include "Property.h"
 #include "qbuDatabaseMacros.h"

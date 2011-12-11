@@ -12,15 +12,14 @@ PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
 
-#include "smBasePCH.h"
-#include "smException.h"
+#include "qbuException.h"
 #include <sstream>
 #include <QSharedData>
-#include "smitkIndent.h"
+//#include "smitkIndent.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smException::smPrivate : public QSharedData
+class qbuException::smPrivate : public QSharedData
 {
 protected:
 	// Constructor. Might throw an exception.
@@ -45,7 +44,7 @@ protected:
 private:
 	void operator=(const smPrivate&); //purposely not implemented
 
-	friend class smException;
+	friend class qbuException;
 
 	// The data members should never change after construction of the ExceptionData object,
 	// to ensure the consistency of the exception data.
@@ -59,12 +58,12 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smException::smException()
+qbuException::qbuException()
 {
 	// The default construction never throws an exception.
 }
 
-smException::smException(
+qbuException::qbuException(
 								 const char *file,
 								 unsigned int lineNumber,
 								 const char *desc,
@@ -73,7 +72,7 @@ smException::smException(
 	m_pPrivate = new smPrivate(file == 0 ? "" : file, lineNumber, desc == 0 ? "" : desc, loc == 0 ? "" : loc);
 }
 
-smException::smException(
+qbuException::qbuException(
 								 const std::string& file,
 								 unsigned int lineNumber,
 								 const std::string& desc,
@@ -82,7 +81,7 @@ smException::smException(
 	m_pPrivate = new smPrivate(file, lineNumber, desc, loc);
 }
 
-smException::smException( const smException &orig )
+qbuException::qbuException( const qbuException &orig )
 :
 Superclass(orig),
 m_pPrivate(orig.m_pPrivate)
@@ -91,14 +90,14 @@ m_pPrivate(orig.m_pPrivate)
 }
 
 
-smException::~smException() throw()
+qbuException::~qbuException() throw()
 {
 	// During destruction, the reference count of the ReferenceCountedExceptionData will be decreased
 	// automatically, by the destructor of the smart pointer.
 }
 
-const smException::smPrivate *
-smException::GetExceptionData() const
+const qbuException::smPrivate *
+qbuException::GetExceptionData() const
 {
 	// Note: dynamic_cast does a runtime check if the m_ExceptionData pointer is indeed
 	// pointing to an ExceptionData object. In this case, a static_cast could have been
@@ -109,8 +108,8 @@ smException::GetExceptionData() const
 	return thisData;
 }
 
-smException &
-smException::operator= ( const smException &orig )
+qbuException &
+qbuException::operator= ( const qbuException &orig )
 {
 	// Note: there is no superclass assignment here, because std::exception::operator= 
 	// appears have a bug on some platforms, including MSVC 2003. As reported by Jouni Kiviniemi:
@@ -122,7 +121,7 @@ smException::operator= ( const smException &orig )
 }
 
 bool
-smException::operator==( const smException &orig )
+qbuException::operator==( const qbuException &orig )
 {
 	// operator== is reimplemented, but it still behaves like the previous version, from ITK 3.6.0.
 	const smPrivate *const thisData = this->GetExceptionData();
@@ -143,7 +142,7 @@ smException::operator==( const smException &orig )
 }
 
 void
-smException::SetLocation(const std::string& s)
+qbuException::SetLocation(const std::string& s)
 {
 	const bool IsNull = !m_pPrivate;
 	m_pPrivate = new smPrivate(
@@ -154,7 +153,7 @@ smException::SetLocation(const std::string& s)
 }
 
 void
-smException::SetDescription(const std::string& s) 
+qbuException::SetDescription(const std::string& s) 
 {
 	const bool IsNull =  !m_pPrivate;
 	m_pPrivate = new smPrivate(
@@ -165,65 +164,65 @@ smException::SetDescription(const std::string& s)
 }
 
 void
-smException::SetLocation(const char * s)
+qbuException::SetLocation(const char * s)
 {
 	std::string location;
 	if( s ) 
 	{
 		location = s;
 	}
-	smException::SetLocation( location );
+	qbuException::SetLocation( location );
 }
 
 void
-smException::SetDescription(const char *s)
+qbuException::SetDescription(const char *s)
 {
 	std::string description;
 	if( s ) 
 	{
 		description = s;
 	}
-	smException::SetDescription( description );
+	qbuException::SetDescription( description );
 }
 
 const char *
-smException::GetLocation() const 
+qbuException::GetLocation() const 
 {
 	// Note: std::string::c_str() might throw an exception.
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_Location.c_str();
 }
 
 const char *
-smException::GetDescription() const
+qbuException::GetDescription() const
 {
 	// Note: std::string::c_str() might throw an exception.
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_Description.c_str();
 }
 
 const char *
-smException::GetFile() const 
+qbuException::GetFile() const 
 {
 	// Note: std::string::c_str() might throw an exception.
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_File.c_str();
 }
 
 unsigned int
-smException::GetLine() const 
+qbuException::GetLine() const 
 {
 	return !m_pPrivate ? 0 : this->GetExceptionData()->m_Line;
 }
 
 const char *
-smException::what() const throw()
+qbuException::what() const throw()
 { 
 	const smPrivate * const thisData = this->GetExceptionData();
 
 	// Note: m_What.c_str() wouldn't be safe, because c_str() might throw an exception.
-	return thisData ? thisData->m_WhatPointer : "smException";
+	return thisData ? thisData->m_WhatPointer : "qbuException";
 }
 
 void
-smException
+qbuException
 ::Print(std::ostream& os) const
 {
 	smitkIndent indent;

@@ -1,9 +1,8 @@
-#include "qbuDBBasePCH.h"
 #include "qbuTableSchema.h"
 #include "qbuSelectQuery.h"
 #include "qbuTable.h"
 #include "qbuDatabase.h"
-#include "smException.h"
+#include "qbuException.h"
 
 #include <QSqlRecord>
 #include <QStringList>
@@ -98,7 +97,7 @@ bool qbuTableSchema::analyzeTable()
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}

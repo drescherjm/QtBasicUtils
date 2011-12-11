@@ -1,10 +1,9 @@
-#include "qbuDBBasePCH.h"
 #include "qbuTable.h"
 #include "qbuDatabase.h"
 #include "qbuPropertyMap.h"
 #include <QStringList>
 #include <QSqlQuery>
-#include "smException.h"
+#include "qbuException.h"
 #include <iostream>
 #include "qbuTableSchema.h"
 #include "qbuStringList.h"
@@ -60,7 +59,7 @@ bool qbuTable::upgradeTable( int nOldSchema, int nNewSchema )
 				QLOG_CRIT() << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::upgradeTable");
+				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::upgradeTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 			}
@@ -145,7 +144,7 @@ bool qbuTable::internalCreateTable( QString strTableName, QString strTableSQL )
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::internalCreateTable");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::internalCreateTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -187,7 +186,7 @@ bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strCo
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::addColumn");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::addColumn");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -224,7 +223,7 @@ bool qbuTable::renameTable( QString strNewName )
 			QLOG_CRIT() << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::renameTable");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::renameTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}

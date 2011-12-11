@@ -1,5 +1,5 @@
 #include "qbuInsertQuery.h"
-#include "smException.h"
+#include "qbuException.h"
 #include <QStringList>
 #include "qbuPropertyMap.h"
 #include "..\Include\qbuTable.h"
@@ -123,7 +123,7 @@ bool qbuInsertQuery::create( qbuSelectQuery* pQuery,qbuTable* pTable,
 				.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuInsertQuery::create");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuInsertQuery::create");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS

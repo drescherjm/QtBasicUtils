@@ -4,7 +4,7 @@
 #include "qbuPropertyMap.h"
 #include <QDebug>
 #include "qbuDBColumnDefList.h"
-#include "smException.h"
+#include "qbuException.h"
 #include "qbuDatabaseFunctions.h"
 #include <iostream>
 
@@ -180,7 +180,7 @@ bool qbuSelectQuery::generateQuery()
 					.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
+				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
 #else
 				qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS

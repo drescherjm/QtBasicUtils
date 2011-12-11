@@ -25,32 +25,32 @@ PURPOSE.  See the above copyright notices for more information.
 *	\brief This class will serve the base of all exceptions thrown within the project
 *	\ingroup smBase
 */
-class smException : public std::exception
+class qbuException : public std::exception
 {
 public:
 	typedef std::exception Superclass;
 	/** Various types of constructors.  Note that these functions will be
 	* called when children are instantiated.  The default constructor and
-	* the copy constructor of smException never throw an exception. */
-	smException();
-	explicit smException(const char *file, unsigned int lineNumber=0,
+	* the copy constructor of qbuException never throw an exception. */
+	qbuException();
+	explicit qbuException(const char *file, unsigned int lineNumber=0,
 		const char *desc="None", const char *loc="Unknown");
-	explicit smException(const std::string& file, unsigned int lineNumber=0,
+	explicit qbuException(const std::string& file, unsigned int lineNumber=0,
 		const std::string& desc="None",
 		const std::string& loc="Unknown");
-	smException( const smException &orig );
+	qbuException( const qbuException &orig );
 
 	/** Virtual destructor needed for subclasses. Has to have empty throw(). */
-	virtual ~smException() throw();
+	virtual ~qbuException() throw();
 
 	/** Assignment operator. */
-	smException &operator= ( const smException &orig );
+	qbuException &operator= ( const qbuException &orig );
 
 	/** Equivalence operator. */
-	virtual bool operator==( const smException &orig );
+	virtual bool operator==( const qbuException &orig );
 
 	virtual const char *GetNameOfClass() const 
-	{return "smException";}
+	{return "qbuException";}
 
 	/** Print exception information.  This method can be overridden by
 	* specific exception subtypes.  The default is to print out the

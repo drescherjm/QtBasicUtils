@@ -2,7 +2,7 @@
 #define __SMSTRINGLIST_H__
 
 #include <QStringList>
-#include "smMacros.h"
+#include "qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@
 
 class qbuStringList : public QStringList
 {
-	SM_DECLARE_SUPERCLASS(QStringList);
+	QBU_DECLARE_SUPERCLASS(QStringList);
 public:
 	inline qbuStringList() { }
 	inline explicit qbuStringList(const QString &i) { append(i); }

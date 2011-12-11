@@ -1,4 +1,3 @@
-#include "qbuDBBasePCH.h"
 #include "qbuInfo.h"
 #include <QStringList>
 #include "qbuMacros.h"

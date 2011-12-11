@@ -1,6 +1,5 @@
-#ifndef __SMBASEMACROS_H__
-#define __SMBASEMACROS_H__
-
+#ifndef __QBUMACROS_H__
+#define __QBUMACROS_H__
 #pragma warning( error : 4706)
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -8,7 +7,7 @@
 /** 
  * 	Creates a public typedef for the base class as Superclass.
  */
-#define SM_DECLARE_SUPERCLASS(superclassName) \
+#define QBU_DECLARE_SUPERCLASS(superclassName) \
 public: \
 	typedef superclassName Superclass;
 
@@ -19,7 +18,7 @@ public: \
  *	This macro defies the default constructor and destructor for a class. 
  */
 
-#define SM_DECLARE_CONSTRUCTOR_DESTRUCTOR(thisClass) \
+#define QBU_DECLARE_CONSTRUCTOR_DESTRUCTOR(thisClass) \
 public: \
 	thisClass(); \
 	~thisClass();
@@ -29,7 +28,7 @@ public: \
 /**
  *	Declare standard copy constructor and assignment operators
  */
-#define SM_DECLARE_CPY_ASGN(className) \
+#define QBU_DECLARE_CPY_ASGN(className) \
 	className( const className & other ); \
 	className& operator=( const className & other ); 
 
@@ -39,7 +38,7 @@ public: \
  *	Declare standard copy constructor and assignment operators for this class and
  *  also base class assignment.
  */
-#define SM_DECLARE_CPY_ASGN_BASE_INCLUDED(className) \
+#define QBU_DECLARE_CPY_ASGN_BASE_INCLUDED(className) \
 	className( const className & other ); \
 	className& operator=( const className & other ); \
 	className( const Superclass & other ); \
@@ -51,7 +50,7 @@ public: \
 /**
 *	Declare private helper functions for copy constructor and assignment operator
 */
-#define SM_DECLARE_CPY_ASGN_HELPERS(className) \
+#define QBU_DECLARE_CPY_ASGN_HELPERS(className) \
 private: \
 	void copy(const className & other); \
 	void destroy(); 
@@ -61,7 +60,7 @@ private: \
 /**
  *	Implement the assignment operator in a base class
  */
-#define SM_IMPLEMENT_ASSIGNMENT_OPERATOR_BASE(className) \
+#define QBU_IMPLEMENT_ASSIGNMENT_OPERATOR_BASE(className) \
 	className& className::operator=( const className & other ) \
 { \
 	if ( this != &other ) { \
@@ -77,7 +76,7 @@ private: \
  *	Implement the assignment operator in a derived class
  */
 
-#define SM_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(className,baseClass) \
+#define QBU_IMPLEMENT_ASSIGNMENT_OPERATOR_DERIVED(className,baseClass) \
 	className& className::operator=( const className & other ) \
 { \
 	if ( this != &other ) { \
@@ -93,7 +92,7 @@ private: \
 /**
  *	Implement the standard copy constructor in a base class.
  */
-#define SM_IMPLEMENT_COPY_CONSTRUCTOR_BASE(className) \
+#define QBU_IMPLEMENT_COPY_CONSTRUCTOR_BASE(className) \
 	className::className( const className & other ) \
 { \
 	copy(other); \
@@ -104,7 +103,7 @@ private: \
 /**
 *	Implement the standard copy constructor in a derived class.
 */
-#define SM_IMPLEMENT_COPY_CONSTRUCTOR_DERIVED(className,baseClass) \
+#define QBU_IMPLEMENT_COPY_CONSTRUCTOR_DERIVED(className,baseClass) \
 	className::className( const className & other ) : baseClass(other) \
 { \
 	copy(other); \
@@ -112,7 +111,7 @@ private: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#define SM_IMPLEMENT_SET_PRIVATE(className,methodName,variableName, variableType) \
+#define QBU_IMPLEMENT_SET_PRIVATE(className,methodName,variableName, variableType) \
 	bool className::set##methodName( variableType variableName ) \
 	{ \
 		bool retVal = (m_pPrivate != NULL); \
@@ -124,7 +123,7 @@ private: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#define SM_IMPLEMENT_GET_PRIVATE(className,methodName,variableName, variableType) \
+#define QBU_IMPLEMENT_GET_PRIVATE(className,methodName,variableName, variableType) \
 	bool className::get##methodName( variableType & variableName ) \
 	{ \
 		bool retVal = (m_pPrivate != NULL); \
@@ -136,7 +135,7 @@ private: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#define SM_IMPLEMENT_GET_PRIVATE_CONST(className,methodName,variableName, variableType) \
+#define QBU_IMPLEMENT_GET_PRIVATE_CONST(className,methodName,variableName, variableType) \
 	bool className::get##methodName( variableType & variableName ) const \
 	{ \
 	bool retVal = (m_pPrivate != NULL); \
@@ -148,4 +147,4 @@ private: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMBASEMACROS_H__
+#endif //__QBUMACROS_H__

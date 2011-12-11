@@ -1,6 +1,6 @@
-#include "qbuDBBasePCH.h"
 #include "qbuCreateViewQuery.h"
-#include "smException.h"
+#include "qbuException.h"
+#include <QDebug>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +47,7 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 				.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
+			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS
