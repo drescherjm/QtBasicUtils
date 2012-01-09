@@ -177,6 +177,7 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 		retVal = m_mapProps.insert(strName,pProp);
 		if (retVal != m_mapProps.end()) {
 			Modify();
+			propertyInserted(pProp);
 		}
 	}
 	return retVal;
@@ -544,6 +545,13 @@ bool PropertyMap::EqualSubset( QStringList lstPropNames, const PropertyMap & oth
 		}
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void PropertyMap::propertyInserted( Property * pProp )
+{
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

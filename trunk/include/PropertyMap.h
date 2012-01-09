@@ -57,6 +57,10 @@ public:
 	void			Print(std::ostream & st);
 public:
 	virtual	void	addProperties(PropertyMap * other);	
+
+protected:
+	virtual void	propertyInserted(Property * pProp);
+
 protected:
 	Map				m_mapProps;
 	Qt::CaseSensitivity m_cs;
