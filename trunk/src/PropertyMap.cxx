@@ -481,11 +481,19 @@ bool PropertyMap::Save( QString strFile )
 
 void PropertyMap::Print( std::ostream & st, qbuITKIndent indent )
 {
-	QString str = toXML(true,indent);
 
+	QString strName = metaObject()->className();
+	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+		.arg(indent.getIndent())
+		.arg(strName)
+		.arg(toXML(false,indent));
+
+	st << qPrintable(strTemp) << std::endl;
+
+	/*
 	st << "Begin: " << metaObject()->className() << std::endl;
-	st << qPrintable(str) << std::endl;
-	st << "End: " << metaObject()->className() << std::endl;
+	st << qPrintable(toXML(true,indent));
+	st << "End: " << metaObject()->className() << std::endl << std::endl;*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
