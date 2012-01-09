@@ -8,6 +8,7 @@
 #include "UserPropPtr.h"
 #include "QUpdateTracker.h"
 #include <iosfwd>
+#include "qbuITKIndent.h"
 
 namespace QTUTILS {
 
@@ -37,12 +38,12 @@ public:
 	QVariant&			SetData( const UserPropPtr & ptr);
 	operator UserPropPtr() const;
 public:
-	QString		toXML();
+	QString		toXML(qbuITKIndent indent = qbuITKIndent());
 	bool		fromXML(QString strXML);
 	bool		fromXML(QDomElement & domElem);
 	bool		Load(QString strFile);
 	bool		Save(QString strFile);
-	void		Print(std::ostream & st);
+	void		Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 private:
 	void		copy( const Property & other );
 	void		destroy();

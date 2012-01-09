@@ -97,6 +97,7 @@ SET( ${PROJECT_NAME}_SRCS
 	./src/PropertyList.cxx
 	./src/PropXMLHelper.cxx
 	./src/QNamedCmdPart.cxx
+	./src/qbuITKIndent.cxx
 )
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
@@ -137,6 +138,7 @@ SET( ${PROJECT_NAME}_EXT_HDRS
 	./include/QUpdateTracker.h
 	./include/PropXMLHelper.h
 	./include/NonThreadSafeSingleton.h
+	./Include/qbuITKIndent.h
 )
 
 SET( ${PROJECT_NAME}_MOC_HDRS 

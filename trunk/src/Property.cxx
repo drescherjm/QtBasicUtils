@@ -63,7 +63,7 @@ const QVariant& Property::GetData() const
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-QString	Property::toXML()
+QString	Property::toXML(qbuITKIndent indent)
 {
 	QString retVal;
 	QVariant::Type ty = GetData().type();
@@ -71,7 +71,8 @@ QString	Property::toXML()
 	if (ty < QVariant::UserType) {
 		QString strName = objectName();
 		retVal = GetData().toString();
-		QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">%4</%1>\n")
+		QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">%5</%2>\n")
+			.arg(indent.getIndent())
 			.arg(strName)
 			.arg(ty)
 			.arg(GetData().typeName())
@@ -81,9 +82,10 @@ QString	Property::toXML()
 	else if (GetData().canConvert<PropertyMap>()) {
 		PropertyMap pc = GetData().value<PropertyMap>();
 		QString strName = objectName();
-		retVal = pc.toXML(false); // The PropertyMap is a root node
+		retVal = pc.toXML(false,indent); // The PropertyMap is a root node
 
-		QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">\n%4</%1>\n")
+		QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5%1</%2>\n")
+			.arg(indent.getIndent())
 			.arg(strName)
 			.arg(ty)
 			.arg(GetData().typeName())
@@ -94,10 +96,11 @@ QString	Property::toXML()
 	else  if (GetData().canConvert<UserPropPtr>()) {
 		UserPropPtr ptr = GetData().value<UserPropPtr>();
 		if (!ptr.isNull()) {
-			retVal = ptr.toXML(false);
+			retVal = ptr.toXML(false,indent);
 			QString strName = objectName();
 
-			QString strTemp = QString("<%1 tyID=\"%2\" tyName=\"%3\">\n%4</%1>\n")
+			QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5</%2>\n")
+				.arg(indent.getIndent())
 				.arg(strName)
 				.arg(ty)
 				.arg(GetData().typeName())
@@ -264,9 +267,9 @@ bool Property::Save( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void Property::Print( std::ostream & st )
+void Property::Print( std::ostream & st, qbuITKIndent indent )
 {
-	QString str = toXML();
+	QString str = toXML(indent);
 	st << qPrintable(str) << std::endl;
 }
 

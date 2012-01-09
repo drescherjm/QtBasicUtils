@@ -148,7 +148,7 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 // the first child. Set this to false if the PropertyList is not the root and is instead
 // embedded inside a Property.
 
-	QString PropertyList::toXML( bool bMakeRoot /*= true*/ )
+	QString PropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
 	{
 		QString name = objectName();
 
@@ -166,10 +166,12 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 				.arg(ty);
 		}
 
+		indent = indent.GetNextIndent();
+
 		iterator it = begin();
 
 		for (;it != end();++it) {
-			retVal += (*it)->toXML();
+			retVal += (*it)->toXML(indent);
 		}
 
 		if (bMakeRoot) {
@@ -335,9 +337,9 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	void PropertyList::Print( std::ostream & st )
+	void PropertyList::Print( std::ostream & st,qbuITKIndent indent )
 	{
-		QString str = toXML();
+		QString str = toXML(true,indent);
 		st << qPrintable(str) << std::endl;
 	}
 

@@ -190,7 +190,7 @@ PropertyMap::iterator PropertyMap::insert(Property* pProp)
 // the first child. Set this to false if the PropertyMap is not the root and is instead
 // embedded inside a Property.
 
-QString PropertyMap::toXML( bool bMakeRoot /*= true*/ )
+QString PropertyMap::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
 	QString name = objectName();
 
@@ -208,10 +208,12 @@ QString PropertyMap::toXML( bool bMakeRoot /*= true*/ )
 			.arg(ty);
 	}
 
+	indent = indent.GetNextIndent();
+
 	iterator it = begin();
 	
 	for (;it != end();++it) {
-		retVal += (*it)->toXML();
+		retVal += (*it)->toXML(indent);
 	}
 
 	if (bMakeRoot) {
@@ -477,9 +479,9 @@ bool PropertyMap::Save( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyMap::Print( std::ostream & st )
+void PropertyMap::Print( std::ostream & st, qbuITKIndent indent )
 {
-	QString str = toXML();
+	QString str = toXML(true,indent);
 
 	st << "Begin: " << metaObject()->className() << std::endl;
 	st << qPrintable(str) << std::endl;

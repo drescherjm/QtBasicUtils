@@ -43,7 +43,7 @@ public:
 	int				size() const;
 public:
 	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
-	QString			toXML(bool bMakeRoot = true);
+	QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
 	void			CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
@@ -54,7 +54,7 @@ public:
 
 	bool			Load(QString strFile);
 	bool			Save(QString strFile);
-	void			Print(std::ostream & st);
+	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 public:
 	virtual	void	addProperties(PropertyMap * other);	
 

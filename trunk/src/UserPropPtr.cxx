@@ -138,18 +138,20 @@ bool UserPropPtr::isNull() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString UserPropPtr::toXML( bool bMakeRoot /*= true*/ )
+QString UserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
 	QString retVal;
 	if (!isNull()) {
-		retVal = data()->toXML(bMakeRoot);
+		retVal = data()->toXML(bMakeRoot,indent);
 		if (!retVal.isEmpty()) {
-			QString strOpen = QString("<UserProp tyName=\"%1\">")
+			QString strOpen = QString("%1<UserProp tyName=\"%2\">")
+										.arg(indent.getIndent())
 										.arg(typeName());
-			
+
+
 			retVal.prepend(strOpen);
 
-			retVal.append("</UserProp>");
+			retVal.append(QString("%1</UserProp>").arg(indent.getIndent()));
 
 		}
 	}

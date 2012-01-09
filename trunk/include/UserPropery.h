@@ -8,6 +8,7 @@
 #include <QVariant>
 #include <QDomElement>
 #include <QSharedData>
+#include "qbuITKIndent.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +22,7 @@ public:
 	UserProperty(const UserProperty & other);
 	UserProperty& operator=(const UserProperty & other);
 public:
-	virtual QString		toXML(bool bMakeRoot = true)=0;
+	virtual QString		toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent())=0;
 	virtual bool		fromXML(QString strXML)=0;
 	virtual bool		fromXML(QDomElement & domElem)=0;
 	virtual bool		Load(QString strFile)=0;

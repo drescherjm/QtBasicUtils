@@ -38,12 +38,12 @@ namespace QTUTILS {
 		int				size() const;
 		bool			empty() const;
 	public:
-		QString			toXML(bool bMakeRoot = true);
+		QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
 		bool			fromXML(QString strXML);
 		bool			fromXML(QDomElement & domElem);
 		bool			Load(QString strFile);
 		bool			Save(QString strFile);
-		void			Print(std::ostream & st);
+		void			Print(std::ostream & st,qbuITKIndent indent = qbuITKIndent());
 	protected:
 		List			m_lstProps;
 	protected:

@@ -25,18 +25,18 @@ public:
 	UserPropPtr& operator=(const UserPropPtr & other);
 	UserPropPtr(SharedPtr & other);
 public:
-	bool						isNull() const;
-	QString					toXML(bool bMakeRoot = true);
-	bool						fromXML(QString strXML);
-	bool						fromXML(QDomElement & domElem);
+	bool					isNull() const;
+	QString					toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
+	bool					fromXML(QString strXML);
+	bool					fromXML(QDomElement & domElem);
 	UserProperty*			data();
 	SharedPtr				GetPtr();
-	const UserProperty*	data() const;
+	const UserProperty*		data() const;
 	QString					typeName() const; 
-	bool						willAutoDelete() const;
+	bool					willAutoDelete() const;
 private:
-	void						copy(const UserPropPtr & other);
-	void						destroy();
+	void					copy(const UserPropPtr & other);
+	void					destroy();
 protected:
 	SharedPtr			m_pProp;
 	UserProperty*		m_pPropRaw;
