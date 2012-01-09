@@ -142,17 +142,16 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
 	QString retVal;
 	if (!isNull()) {
+		indent = indent.GetNextIndent();
 		retVal = data()->toXML(bMakeRoot,indent);
 		if (!retVal.isEmpty()) {
-			QString strOpen = QString("%1<UserProp tyName=\"%2\">")
+			QString strTemp = QString("%1<UserProp tyName=\"%2\">\n%3%1</UserProp>\n")
 										.arg(indent.getIndent())
-										.arg(typeName());
+										.arg(typeName())
+										.arg(retVal);
 
 
-			retVal.prepend(strOpen);
-
-			retVal.append(QString("%1</UserProp>").arg(indent.getIndent()));
-
+			retVal = strTemp;
 		}
 	}
 	return retVal;

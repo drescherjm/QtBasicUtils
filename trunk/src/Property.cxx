@@ -99,7 +99,7 @@ QString	Property::toXML(qbuITKIndent indent)
 			retVal = ptr.toXML(false,indent);
 			QString strName = objectName();
 
-			QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5</%2>\n")
+			QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5%1</%2>\n")
 				.arg(indent.getIndent())
 				.arg(strName)
 				.arg(ty)
