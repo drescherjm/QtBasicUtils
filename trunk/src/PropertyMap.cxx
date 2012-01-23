@@ -357,6 +357,7 @@ int PropertyMap::RemoveProperties( QStringList lstProperties )
 			QString strName = pProp->objectName();
 			if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
 				it = m_mapProps.erase(it);
+				retVal++;
 			}
 		}
 	}
