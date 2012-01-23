@@ -57,6 +57,7 @@ public:
 	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 public:
 	virtual	void	addProperties(PropertyMap * other);	
+	virtual	int		RemoveProperties(QStringList lstProperties);
 
 protected:
 	virtual void	propertyInserted(Property * pProp);

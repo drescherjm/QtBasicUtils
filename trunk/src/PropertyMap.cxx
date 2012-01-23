@@ -6,6 +6,7 @@
 #include <QFile>
 #include <iostream>
 #include <QStringList>
+#include <QSet>
 
 namespace QTUTILS {
 
@@ -332,6 +333,32 @@ bool PropertyMap::RemoveProperty(QString strName)
 	if (retVal) {
 		delete *it;
 		m_mapProps.erase(it);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ *	\brief
+ *	This will remove all properties from the lstProperties.
+ *	\returns
+ *	The number of properties removed.
+ */
+
+int PropertyMap::RemoveProperties( QStringList lstProperties )
+{
+	int retVal = 0;
+	iterator it = begin();
+	for(; it != end();++it) {
+		Property* pProp = *it;
+		if (pProp != NULL) {
+			QString strName = pProp->objectName();
+			if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
+				it = m_mapProps.erase(it);
+			}
+		}
 	}
 	return retVal;
 }
