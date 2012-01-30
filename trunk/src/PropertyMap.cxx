@@ -7,6 +7,7 @@
 #include <iostream>
 #include <QStringList>
 #include <QSet>
+#include "ProperyMapXMLHelper.h"
 
 namespace QTUTILS {
 
