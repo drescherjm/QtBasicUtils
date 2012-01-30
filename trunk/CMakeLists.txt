@@ -96,6 +96,7 @@ SET( ${PROJECT_NAME}_SRCS
 	./src/UserPropPtr.cxx
 	./src/PropertyList.cxx
 	./src/PropXMLHelper.cxx
+	./src/ProperyMapXMLHelper.cxx
 	./src/QNamedCmdPart.cxx
 	./src/qbuITKIndent.cxx
 )
@@ -137,6 +138,7 @@ SET( ${PROJECT_NAME}_EXT_HDRS
 	./include/QCmdHelp.h
 	./include/QUpdateTracker.h
 	./include/PropXMLHelper.h
+	./include/ProperyMapXMLHelper.h
 	./include/NonThreadSafeSingleton.h
 	./Include/qbuITKIndent.h
 )

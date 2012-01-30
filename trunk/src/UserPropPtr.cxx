@@ -39,8 +39,7 @@ namespace QTUTILS {
 				QString strTypeName = e.attribute("tyName");
 
 				UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
-
-
+				
 				retVal = (pHlpr != NULL);
 			
 				if (retVal) {
@@ -62,6 +61,11 @@ namespace QTUTILS {
 							}
 						}
 					}
+				}
+				else
+				{
+					std::cerr << "Warning: Could not find a suitable xml helper for the following class: " << 
+						qPrintable(strTypeName) << std::endl;
 				}
 			}
 			

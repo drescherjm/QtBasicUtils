@@ -12,48 +12,6 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class ProperyMapXMLHelper : public UserPropXMLHelper
-{
-public:
-	ProperyMapXMLHelper(int nMetaTypeID);
-public:
-	virtual bool fromXML(Property* pProp,QDomElement & domElem);
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-ProperyMapXMLHelper::ProperyMapXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
-{
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
-{
-	bool retVal = (pProp != NULL);
-	if (retVal) {
-		PropertyMap pm;
-	
-		QDomNode n = docElem.firstChild();
-
-		retVal = !n.isNull();
-
-		if (retVal) {
-			QDomElement e = n.toElement();
-			retVal = !e.isNull();
-			if (retVal) {
-				pm.fromXML(e);
-				pProp->SetData(QVariant::fromValue<PropertyMap>(pm));
-				pProp->setObjectName(docElem.tagName());
-			}
-		}
-	}
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
 static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
 static ProperyMapXMLHelper hlpr(m_nMetaID);
 
