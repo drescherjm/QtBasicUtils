@@ -57,7 +57,13 @@ namespace QTUTILS {
 								pUserProp->fromXML(e);
 								pProp->SetData(UserPropPtr(pUserProp));
 
-								pProp->setObjectName(docElem.tagName());
+								QString strName = docElem.tagName();
+								pProp->setObjectName(strName);
+
+								if (pUserProp->objectName().isEmpty()) {
+									pUserProp->setObjectName(strName);
+								}
+								
 							}
 						}
 					}
