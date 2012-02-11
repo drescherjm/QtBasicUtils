@@ -31,6 +31,7 @@ public:
 
 	~qtutilsPrivate();
 
+
 public:
 	void	Initialize();
 	int		AddOpt(QString strName, QCmdOpt* pOpt = NULL);
@@ -51,6 +52,7 @@ public:
 	bool	wasSuccessful( int nRetCode ) const;
 	QString exportCommandString(QChar chCommand);
 	QString exportArgumentsAndOptionsString();
+	QString removeOuterQuotes(QString str);
 public:
 	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
 		QString strDescription, QString strExplanation, ValType nDefaultValue,
@@ -712,6 +714,22 @@ int QCmd::qtutilsPrivate::testOptionName( QString strName )
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::qtutilsPrivate::removeOuterQuotes( QString retVal )
+{
+	QString strTmp = retVal.trimmed();
+	if (strTmp.startsWith('\"') && strTmp.endsWith('\"')) {
+
+		// Remove the starting quote
+		retVal = strTmp.remove(0,1);
+
+		// Remove the ending quote
+		retVal.chop(1);
+	}
+	return retVal;
+}
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -962,14 +980,18 @@ int QCmd::GetOpt(QString strName, QChar & chValue)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmd::GetOpt(QString strName, QString & nValue)
+int QCmd::GetOpt(QString strName, QString & nValue,Flags fg)
 {
-	return m_pPrivate->GetOpt<QString,QCmdOptQString>(strName,nValue);
+	int retVal = m_pPrivate->GetOpt<QString,QCmdOptQString>(strName,nValue);
+	if (wasSuccessful(retVal) && fg.testFlag(REMOVE_OUTER_QUOTES)) {
+		nValue = m_pPrivate->removeOuterQuotes(nValue);
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmd::GetOpt(QString strName, QStringList & nValue)
+int QCmd::GetOpt(QString strName, QStringList & nValue,Flags fg)
 {
 	return m_pPrivate->GetOpt<QStringList,QCmdOptQStringList>(strName,nValue);
 }
@@ -1213,14 +1235,18 @@ int QCmd::GetArg(QString strName, QChar & chValue)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmd::GetArg(QString strName, QString & nValue)
+int QCmd::GetArg(QString strName, QString & nValue,Flags fg)
 {
-	return m_pPrivate->GetArg<QString,QCmdArgQString>(strName,nValue);
+	int retVal = m_pPrivate->GetArg<QString,QCmdArgQString>(strName,nValue);
+	if (wasSuccessful(retVal) && fg.testFlag(REMOVE_OUTER_QUOTES)) {
+		nValue = m_pPrivate->removeOuterQuotes(nValue);
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmd::GetArg(QString strName, QStringList & nValue)
+int QCmd::GetArg(QString strName, QStringList & nValue,Flags fg)
 {
 	return m_pPrivate->GetArg<QStringList,QCmdArgQStringList>(strName,nValue);
 }

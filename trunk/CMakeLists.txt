@@ -6,7 +6,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 #set_target_properties(ALL_BUILD PROPERTIES FOLDER PredefinedTargetsFolderName)
 
 set (${PROJECT_NAME}_VERSION_MAJOR 1)
-set (${PROJECT_NAME}_VERSION_MINOR 1)
+set (${PROJECT_NAME}_VERSION_MINOR 2)
 set (${PROJECT_NAME}_VERSION_PATCH 0)
 set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
@@ -103,7 +103,6 @@ SET( ${PROJECT_NAME}_SRCS
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
 	./include/${PROJECT_NAME}.h
-	./include/QCmd.h
 	./include/QCmdLine.h
 	./include/QCmdExtra.h
 	./include/QCmdParseError.h
@@ -144,6 +143,7 @@ SET( ${PROJECT_NAME}_EXT_HDRS
 )
 
 SET( ${PROJECT_NAME}_MOC_HDRS 
+	./include/QCmd.h
 	./include/Property.h
 	./include/PropertyMap.h
 	./include/UserPropery.h

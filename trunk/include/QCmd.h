@@ -23,8 +23,11 @@ typedef int (*CMDSTRVERIFY)( QString str, qint32 nStr );
 const float		NEG_FLOAT_MAX = -1.0f * FLT_MAX;
 const double	NEG_DOUBLE_MAX = -1.0 * DBL_MAX;
  
-class QCmd
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class QCmd : public QObject
 {
+	Q_OBJECT
 public:
 	QCmd(QString strName,QString strDescription, QString strExplanation=QString(),bool bIgnoreCase = true);
 	QCmd(const QCmd & other);
@@ -32,6 +35,13 @@ public:
 
 	virtual QCmd* Clone();
 	virtual QCmd* New();
+
+	enum Flag {
+		NO_FLAG=0,
+		REMOVE_OUTER_QUOTES=1,
+	};
+
+	Q_DECLARE_FLAGS(Flags,Flag);
 
 public:
 	virtual void Initialize();
@@ -111,8 +121,8 @@ public:
 	int GetOpt(QString strName, float & nValue);
 	int GetOpt(QString strName, double & nValue);
 	int	GetOpt(QString strName, QChar & chValue);
-	int GetOpt(QString strName, QString & nValue);
-	int	GetOpt(QString strName, QStringList & nValue);
+	int GetOpt(QString strName, QString & nValue,Flags fg=NO_FLAG);
+	int	GetOpt(QString strName, QStringList & nValue,Flags fg=NO_FLAG);
 	int	GetOpt(QString strName, QCmdLineFileList & nValue);
 
 	int SetOpt(QString strName, bool bValue);
@@ -137,8 +147,8 @@ public:
 	int GetArg(QString strName, float & nValue);
 	int GetArg(QString strName, double & nValue);
 	int	GetArg(QString strName, QChar & chValue);
-	int	GetArg(QString strName, QString & nValue);
-	int	GetArg(QString strName, QStringList & nValue);
+	int	GetArg(QString strName, QString & nValue,Flags fg=NO_FLAG);
+	int	GetArg(QString strName, QStringList & nValue,Flags fg=NO_FLAG);
 	int	GetArg(QString strName, QCmdLineFileList & nValue);
 
 	int SetArg(QString strName, bool bValue);
@@ -195,6 +205,10 @@ private:
 	void			copy(const QCmd & other);
 	void			destroy();
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(QCmd::Flags);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
