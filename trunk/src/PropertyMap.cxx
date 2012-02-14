@@ -337,6 +337,17 @@ void PropertyMap::addProperties(PropertyMap * pOther)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void PropertyMap::addProperties( const PropertyMap* other )
+{
+	PropertyMap::const_iterator it = other->begin();
+	if ( it != other->end()) {
+		Property prop = **it;
+		insert(prop);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 //This is just for debugging
 #if 0
 
