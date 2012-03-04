@@ -80,6 +80,14 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	QCmdLine::QCmdLine( QTextStream & args )
+	{
+		m_pPrivate = new qtutilsPrivate();	
+		ParseStream(args,m_pPrivate->m_strLstCmdLine);
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 	QCmdLine::~QCmdLine()
 	{
 		destroy();
@@ -399,56 +407,69 @@ namespace QTUTILS {
 		QFile sourceFile(strFileName);
 		if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
-			int nQuoteCount = 0;
+			
 
 			QTextStream in(&sourceFile);
 
-			//Attempt to handle quotes!
-			QString strQuoted;
-			
-			while (!in.atEnd()) {
-				QString str;
-				in >> str; // This gets upto the first whitespace
-				str.trimmed();
-
-				if (!str.isEmpty()) {
-					int nQuotes = str.count('\"');
-
-					nQuoteCount += nQuotes;
-
-					if ( (nQuoteCount % 2) == 1) {
-						if (!strQuoted.isEmpty()) {
-							strQuoted.append(' ');
-						}
-						strQuoted.append(str);
-						str.clear();
-					}
-					else
-						if (strQuoted.isEmpty()) {
-							strLstFile.push_back(str);
-						}
-						else
-						{
-							if (!str.isEmpty()) {
-								strQuoted.append(' ');
-								strQuoted.append(str);
-							}
-							strLstFile.push_back(strQuoted);
-							strQuoted.clear();
-						}
-						
-				}
-				
-			}
-			if (!strQuoted.isEmpty()) {
-				strLstFile.push_back(strQuoted);
-			}
+			retVal = ParseStream(in,strLstFile);
 		}
 		else
 			retVal = QCmdParseError::FILE_MUST_EXIST;
 
 		return retVal;
 	}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdLine::ParseStream( QTextStream & argStream,QStringList & strLstFile )
+{
+	int retVal = QCmdParseError::STATUS_OK;
+	int nQuoteCount = 0;
+	//Attempt to handle quotes!
+	QString strQuoted;
+
+	while (!argStream.atEnd()) {
+		QString str;
+		argStream >> str; // This gets upto the first whitespace
+		str.trimmed();
+
+		if (!str.isEmpty()) {
+			int nQuotes = str.count('\"');
+
+			nQuoteCount += nQuotes;
+
+			if ( (nQuoteCount % 2) == 1) {
+				if (!strQuoted.isEmpty()) {
+					strQuoted.append(' ');
+				}
+				strQuoted.append(str);
+				str.clear();
+			}
+			else
+				if (strQuoted.isEmpty()) {
+					strLstFile.push_back(str);
+				}
+				else
+				{
+					if (!str.isEmpty()) {
+						strQuoted.append(' ');
+						strQuoted.append(str);
+					}
+					strLstFile.push_back(strQuoted);
+					strQuoted.clear();
+				}
+
+		}
+
+	}
+	if (!strQuoted.isEmpty()) {
+		strLstFile.push_back(strQuoted);
+	}
+
+	return retVal;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

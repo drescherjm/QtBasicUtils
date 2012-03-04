@@ -5,6 +5,7 @@
 
 #include <QMap>
 #include <QList>
+#include <QTextStream>
 
 namespace QTUTILS {
 
@@ -21,6 +22,7 @@ namespace QTUTILS {
 		virtual ~QCmdLine();
 		QCmdLine(int argc, char* argv[]);
 		QCmdLine( QString strProgName, QStringList & strLst );
+		QCmdLine( QTextStream & args );
 	public:
 		int			Parse();
 		QString		GetSyntax();
@@ -36,6 +38,7 @@ namespace QTUTILS {
 
 	protected:
 		int			ParseFile(QString strFileName,QStringList & strLstFile);
+		int			ParseStream(QTextStream & args,QStringList & strLstFile);
 		int			PreProcess(QStringList & strList);
 		QCmd*		GetDefaultCmd();
 		
