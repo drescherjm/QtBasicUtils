@@ -106,6 +106,12 @@ namespace QTUTILS {
 	case USER_EXECUTION_ERROR:
 		strError = ("USER_EXECUTION_ERROR %1. An error occurred executing the command %2%3");
 		break;
+	case CALC_VALUE_TOO_SMALL:
+		strError = ("Calculated value lower than set minimum %1 %2%3");
+		break;
+	case CALC_VALUE_TOO_LARGE:
+		strError = ("Calculated value higher than set maximum %1 %2%3");
+		break;
 	default:
 		strError = ("ERROR: Unknown parse error. %1 %2 %3");
 		break;
