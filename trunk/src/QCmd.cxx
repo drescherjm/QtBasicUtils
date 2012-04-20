@@ -53,6 +53,8 @@ public:
 	QString exportCommandString(QChar chCommand);
 	QString exportArgumentsAndOptionsString();
 	QString removeOuterQuotes(QString str);
+
+	QStringList	splitOptionExName(QString str);
 public:
 	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
 		QString strDescription, QString strExplanation, ValType nDefaultValue,
@@ -565,7 +567,8 @@ int QCmd::qtutilsPrivate::IsOption(QString & str, QCmdOpt *& pOption)
 			}
 			else
 			{
-				QStringList strLst = str.mid(2).split("=");
+				QStringList strLst = qtutilsPrivate::splitOptionExName(str.mid(2));
+				//QStringList strLst = str.mid(2).split("=");
 				if (!strLst.isEmpty()) {
 					QString strName = strLst.front();
 					strLst.pop_front();
@@ -727,6 +730,55 @@ QString QCmd::qtutilsPrivate::removeOuterQuotes( QString retVal )
 		// Remove the ending quote
 		retVal.chop(1);
 	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QStringList QCmd::qtutilsPrivate::splitOptionExName( QString str )
+{
+	QStringList retVal;
+
+	int nNameBegin = 0;
+	int nNameEnd = str.length();
+	int nValueEnd = str.length();
+
+	// Ignore any beginning space
+	for(; nNameBegin < nValueEnd && QChar(str[nNameBegin]).isSpace();++nNameBegin);
+
+	// Get the name
+	for(nNameEnd = nNameBegin; nNameEnd < nValueEnd;++nNameEnd) {
+		QChar ch = str[nNameEnd];
+		if (!ch.isLetterOrNumber() && (ch != '_') ) {
+			break;
+		}
+	}
+
+	int nValueBegin = nNameEnd;
+	for(; nValueBegin < nValueEnd && QChar(str[nValueBegin]).isSpace();++nValueBegin);
+
+	if (nValueBegin == nValueEnd) {
+		// This is the case where an extended bool opt has an assumed +
+		// For example +UT  +EXTBOOLOPT --use_extended
+		// --use_extended is the same as writing --use_extended+ or --use_extended=+
+
+		retVal << str.mid(nNameBegin,nNameEnd - nNameBegin);
+	}
+	else
+	{
+		
+
+		// Parse out the value.
+		if ( (nValueBegin < nValueEnd ) && ( (str[nValueBegin] == '=') || 
+			(str[nValueBegin] == '-') || 
+			(str[nValueBegin] == '+'))) {
+				if (str[nValueBegin] == '=') {
+					nValueBegin++;
+				}
+				retVal << str.mid(nNameBegin,nNameEnd - nNameBegin) << str.mid(nValueBegin);
+		}
+	}
+	
 	return retVal;
 }
 
