@@ -62,11 +62,17 @@ void test_match_quotes(const QString& text, const QString& pattern)
 	qDebug() << "testing " << text << " against " << pattern;
 	QRegExp rx(pattern);
 	int pos = 0;
+
+	QStringList lst;
 	while ((pos = rx.indexIn(text, pos)) != -1) {
 		//qDebug() << rx.capturedTexts();
 		qDebug() << rx.cap(1);
+
+		lst << rx.cap(1);
 		pos += rx.matchedLength();
 	}
+
+	int x=1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -78,8 +84,31 @@ int main(int argc, char* argv[])
 	//test_match_quotes( "test \"a string\" \"string \\\" escaped\" 1 2", "((\")(?:\\\\?.)*?\\2)");
 
 	test_match_quotes(
-		"test \"a string\" \"string \\\" escaped\" 1 2",
-		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\"))");
+		"'john drescher' test \"a string\" \"string \\\" escaped\" 1 2",
+		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\"))|((?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+
+
+	test_match_quotes(
+		"'john drescher' test \"a string\" \"string \\\" escaped\" 1 2",
+		"((?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+
+
+	test_match_quotes(
+		"'john drescher' test \"a string\" \"string \\\" escaped\" 1 2",
+		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+	
+
+	test_match_quotes(
+		"'john drescher' test \"a string\" \"string 'harder' \\\" escaped\" 1 2",
+		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+
+	test_match_quotes(
+		"'john \"d\"rescher' test \"a string\" \"string 'harder' \\\" escaped\" 1 2",
+		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+
+	QString strMsg0 = "'john drescher' test \"a string\" \"string \\\" escaped\" 1 2";
+
+	QStringList lst = strMsg0.split(QRegExp("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))"));
 
 
 	int id = qRegisterMetaType<QTUTILS::PropertyMap>();
