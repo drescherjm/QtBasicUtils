@@ -7,6 +7,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDomNamedNodeMap>
+#include <QtCore/QCoreApplication>
+#include <QRegExp>
+#include <QStringList>
+#include <QDebug>
 
 using namespace QTUTILS;
 
@@ -51,8 +55,32 @@ bool test_exportXML(QTUTILS::Property & prop)
 	return false;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void test_match_quotes(const QString& text, const QString& pattern)
+{
+	qDebug() << "testing " << text << " against " << pattern;
+	QRegExp rx(pattern);
+	int pos = 0;
+	while ((pos = rx.indexIn(text, pos)) != -1) {
+		//qDebug() << rx.capturedTexts();
+		qDebug() << rx.cap(1);
+		pos += rx.matchedLength();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char* argv[])
 {
+
+	//test_match_quotes( "test \"a string\" \"string \\\" escaped\" 1 2", "([\"])(?:.)*([\"])");
+	//test_match_quotes( "test \"a string\" \"string \\\" escaped\" 1 2", "((\")(?:\\\\?.)*?\\2)");
+
+	test_match_quotes(
+		"test \"a string\" \"string \\\" escaped\" 1 2",
+		"((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\"))");
+
 
 	int id = qRegisterMetaType<QTUTILS::PropertyMap>();
 
