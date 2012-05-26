@@ -425,47 +425,65 @@ namespace QTUTILS {
 int QCmdLine::ParseStream( QTextStream & argStream,QStringList & strLstFile )
 {
 	int retVal = QCmdParseError::STATUS_OK;
-	int nQuoteCount = 0;
-	//Attempt to handle quotes!
-	QString strQuoted;
+// 	int nQuoteCount = 0;
+// 	//Attempt to handle quotes!
+// 	QString strQuoted;
+// 
+// 	while (!argStream.atEnd()) {
+// 		QString str;
+// 		argStream >> str; // This gets upto the first whitespace
+// 		str.trimmed();
+// 
+// 		if (!str.isEmpty()) {
+// 			int nQuotes = str.count('\"');
+// 
+// 			nQuoteCount += nQuotes;
+// 
+// 			if ( (nQuoteCount % 2) == 1) {
+// 				if (!strQuoted.isEmpty()) {
+// 					strQuoted.append(' ');
+// 				}
+// 				strQuoted.append(str);
+// 				str.clear();
+// 			}
+// 			else
+// 				if (strQuoted.isEmpty()) {
+// 					strLstFile.push_back(str);
+// 				}
+// 				else
+// 				{
+// 					if (!str.isEmpty()) {
+// 						strQuoted.append(' ');
+// 						strQuoted.append(str);
+// 					}
+// 					strLstFile.push_back(strQuoted);
+// 					strQuoted.clear();
+// 				}
+// 
+// 		}
+// 
+// 	}
+// 	if (!strQuoted.isEmpty()) {
+// 		strLstFile.push_back(strQuoted);
+// 	}
 
-	while (!argStream.atEnd()) {
-		QString str;
-		argStream >> str; // This gets upto the first whitespace
-		str.trimmed();
+	QString str = argStream.readAll();
+	if (!str.isEmpty()) {
+		QString pattern("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
 
-		if (!str.isEmpty()) {
-			int nQuotes = str.count('\"');
+		QRegExp rx(pattern);
+		int pos = 0;
 
-			nQuoteCount += nQuotes;
+		//QStringList lst;
+		while ((pos = rx.indexIn(str, pos)) != -1) {
+			//qDebug() << rx.capturedTexts();
+			//qDebug() << rx.cap(1);
 
-			if ( (nQuoteCount % 2) == 1) {
-				if (!strQuoted.isEmpty()) {
-					strQuoted.append(' ');
-				}
-				strQuoted.append(str);
-				str.clear();
-			}
-			else
-				if (strQuoted.isEmpty()) {
-					strLstFile.push_back(str);
-				}
-				else
-				{
-					if (!str.isEmpty()) {
-						strQuoted.append(' ');
-						strQuoted.append(str);
-					}
-					strLstFile.push_back(strQuoted);
-					strQuoted.clear();
-				}
-
+			strLstFile << rx.cap(1);
+			pos += rx.matchedLength();
 		}
+	}
 
-	}
-	if (!strQuoted.isEmpty()) {
-		strLstFile.push_back(strQuoted);
-	}
 
 	return retVal;
 }
