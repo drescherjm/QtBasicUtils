@@ -16,6 +16,7 @@
 #include "PropertyMap.h"
 #include "PropertyList.h"
 #include "testxmlimp.h"
+#include "testCommandLineInclude.h"
 
 using namespace QTUTILS;
 
@@ -706,6 +707,7 @@ int main(int argc, char* argv[])
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
 
 		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
+		QCmdTestCmdLineFileInclude	cmdTestCmdLineFileInclude("CMDLINEINCLUDE","This tests the @ include that is used in the command line.");
 
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
@@ -727,6 +729,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdStringOpt2);
 		myCmdLine.AddCmd(&cmdStringOpt5);
 		myCmdLine.AddCmd(&cmdTestInvalidOpt);
+		myCmdLine.AddCmd(&cmdTestCmdLineFileInclude);
 		myCmdLine.AddCmd(&myHelp);
 		
 		retVal = myCmdLine.Parse();

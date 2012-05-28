@@ -6,12 +6,14 @@ set(TEST_SRCS
 	./src/testxml.cxx
 	./src/testxmlimp.cxx
 	./src/testUserProps.cxx
+	./src/testCommandLineInclude.cxx
 )
 
 set(TEST_HDRS
 	./include/testxml.h
 	./include/testxmlimp.h
 	./include/testUserProps.h
+	./include/testCommandLineInclude.h
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})

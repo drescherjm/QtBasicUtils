@@ -407,8 +407,6 @@ namespace QTUTILS {
 		QFile sourceFile(strFileName);
 		if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
-			
-
 			QTextStream in(&sourceFile);
 
 			retVal = ParseStream(in,strLstFile);
