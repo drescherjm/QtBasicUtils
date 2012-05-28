@@ -417,6 +417,26 @@ namespace QTUTILS {
 		return retVal;
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QStringList handleQuotes(QStringList & lst)
+{
+	QStringList retVal;
+
+	while(!lst.isEmpty()) {
+		QString front = lst.first();
+		if (!front.contains(QRegExp("[\'\"]"))) {
+			retVal.push_back(front);
+			lst.pop_front();
+		}
+		else
+			break;
+	}
+
+
+
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -466,22 +486,25 @@ int QCmdLine::ParseStream( QTextStream & argStream,QStringList & strLstFile )
 // 	}
 
 	QString str = argStream.readAll();
-	if (!str.isEmpty()) {
-		QString pattern("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+// 	if (!str.isEmpty()) {
+// 		QString pattern("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))");
+// 
+// 		QRegExp rx(pattern);
+// 		int pos = 0;
+// 
+// 		//QStringList lst;
+// 		while ((pos = rx.indexIn(str, pos)) != -1) {
+// 			//qDebug() << rx.capturedTexts();
+// 			//qDebug() << rx.cap(1);
+// 
+// 			strLstFile << rx.cap(1);
+// 			pos += rx.matchedLength();
+// 		}
+// 	}
 
-		QRegExp rx(pattern);
-		int pos = 0;
-
-		//QStringList lst;
-		while ((pos = rx.indexIn(str, pos)) != -1) {
-			//qDebug() << rx.capturedTexts();
-			//qDebug() << rx.cap(1);
-
-			strLstFile << rx.cap(1);
-			pos += rx.matchedLength();
-		}
-	}
-
+	QStringList lst = str.split(QRegExp("\\s+"));
+	
+	strLstFile = handleQuotes(lst);
 
 	return retVal;
 }

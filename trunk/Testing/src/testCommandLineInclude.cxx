@@ -1,5 +1,8 @@
 #include "testCommandLineInclude.h"
 #include "QCmdParseError.h"
+#include "QCmdLine.h"
+#include <QFile>
+#include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,7 +34,7 @@ int QTUTILS::QCmdTestCmdLineFileInclude::runTest( int nTest )
 	case ALL_TESTS:
 		for(int i=1;i < NUM_TESTS;++i) {
 			retVal = runTest(i);
-			if (QCmdParseError::SUCCEEDED(retVal)) {
+			if (!QCmdParseError::SUCCEEDED(retVal)) {
 				break;
 			}
 		}
@@ -43,13 +46,41 @@ int QTUTILS::QCmdTestCmdLineFileInclude::runTest( int nTest )
 		retVal = QCmdParseError::NOT_IMPLEMENTED;
 		break;
 	}
+
+	if (!QCmdParseError::SUCCEEDED(retVal)) {
+		if (nTest > ALL_TESTS) {
+			std::cerr << "ERROR: QCmdTestCmdLineFileInclude test #" << nTest << " failed." << std::endl;
+		}
+		
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int QTUTILS::QCmdTestCmdLineFileInclude::runTest_DoubleQuotes_1()
 {
+	int retVal = writeTestFile("DoubleQuotes1.txt","+CMD1 --var1=\"John Drescher\" --var2=\"Kathy Drescher\"");
+	if (QCmdParseError::SUCCEEDED(retVal)) {
 
+	}
+	//QTUTILS::QCmdLine		myCmdLine("dbdev0",lst);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QTUTILS::QCmdTestCmdLineFileInclude::writeTestFile( QString strFileName, QString strMsg )
+{
+	QFile file(strFileName);
+	bool retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);
+	if (retVal) {
+		QTextStream stream(&file);
+		stream << strMsg;
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -3,6 +3,9 @@
 ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Test" --S1='John Drescher')
 ADD_TEST(StringOpts1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Check Mate" --S1="John Drescher")
 
+file(WRITE ${EXECUTABLE_OUTPUT_PATH}/testStringOpts2.txt "+STRINGOPT2 --S0=\"Check Mate\" --S1=\"John Drescher\"")
+ADD_TEST(StringOpts2		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT @${EXECUTABLE_OUTPUT_PATH}/testStringOpts2.txt )
+
 file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S9.0")
 
 ADD_TEST(InvalidOpt0 		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT +INVALIDCMDOPT --tests=BADADDOPT0 . )

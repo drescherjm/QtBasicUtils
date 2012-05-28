@@ -10,6 +10,7 @@ public:
 	QCmdTestCmdLineFileInclude(QString strName, QString strDescription);
 	virtual int Execute();
 private:
+	bool	writeTestFile(QString strFileName, QString strMsg);
 	int		runTest(int nTest);
 	int		runTest_DoubleQuotes_1();
 public:
