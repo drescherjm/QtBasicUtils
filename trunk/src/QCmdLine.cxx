@@ -456,8 +456,12 @@ QString handleStartingDoubleQuote(QString strFront, QStringList & lst)
 	QString retVal;
 	int nIndex = strFront.indexOf(QRegExp("[\'\"]"),1);
 
-	while ( (nIndex != 0) && (strFront[nIndex-1] == QChar('\\')) ) {
+	while ( (nIndex >= 0) && (strFront[nIndex-1] == QChar('\\')) ) {
 		nIndex = strFront.indexOf(QRegExp("[\'\"]"),nIndex);
+	}
+
+	if (nIndex > 0) {
+
 	}
 
 	return retVal;
@@ -501,6 +505,91 @@ QStringList handleQuotes(QStringList & lst)
 	}
 	
 	return retVal;
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QStringList handleQuotes(QString str)
+{
+	QRegExp rx2("[\\s\'\"]");
+	QStringList list;
+
+	int nSingle = 0;
+	int nDouble = 0;
+
+ 	int start = 0;
+ 	int extra = 0;
+ 	int end;
+ 	while ((end = rx2.indexIn(str, start + extra)) != -1) {
+		int matchedLen = rx2.matchedLength();
+		if (start != end) {
+			if (end > 0) {
+				if (str[end-1] == QChar('\\')) {
+					extra = end - start + 1;
+					continue;
+				}
+			}
+			
+			QString strMatch = str.mid(end,matchedLen);
+			if (strMatch.contains(" ")) {
+				if ((nDouble == 0) && (nSingle == 0)) {
+					list.append(str.mid(start, end - start));
+				}
+				else
+				{
+					extra = end - start + 1;
+					continue;
+				}
+				
+			}
+			else
+			if ((nDouble == 0) && (nSingle == 0)) {
+				if (strMatch.contains("\"")) {
+					nDouble++;
+				}
+				else
+				{
+					nSingle++;
+				}
+				extra = end - start + 1;
+				continue;
+			}
+			else
+			{
+				// We have hit a second quote.
+				if (nDouble == 1) {
+					if (strMatch.contains("\"")) {
+						nDouble=0;
+						list.append(str.mid(start, end + matchedLen - start));
+					}
+					else
+					{
+						// Ignore nested single quotes inside double quotes
+						extra = end - start + 1;
+						continue;
+					}
+				}
+				if (nSingle == 1) {
+					if (strMatch.contains("\'")) {
+						nSingle=0;
+						list.append(str.mid(start, end + matchedLen - start));
+					}
+					else
+					{
+						// Ignore nested double quotes inside single quotes
+						extra = end - start + 1;
+						continue;
+					}
+				}
+			}
+			 			
+			
+		}
+ 		start = end + matchedLen;
+ 		extra = (matchedLen == 0) ? 1 : 0;
+ 	}
+ 	if (start != str.size())
+ 		list.append(str.mid(start));
+	return list;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -568,9 +657,13 @@ int QCmdLine::ParseStream( QTextStream & argStream,QStringList & strLstFile )
 // 	}
 
 	// Split the string on any whitespace.
-	QStringList lst = str.split(QRegExp("\\s+"));
+	//QStringList lst = str.split(QRegExp("[\\s+[^\\\\][\'\"]]"));
 	
-	strLstFile = handleQuotes(lst);
+	//QStringList lst = str.split(QRegExp("[^\\\\][\\s+\'\"]"));
+	
+	//strLstFile = handleQuotes(lst);
+
+	strLstFile = handleQuotes(str);
 
 	return retVal;
 }
