@@ -533,7 +533,7 @@ QStringList handleQuotes(QString str)
 		if (start != end) {
 				
 			QString strMatch = str.mid(end,matchedLen);
-			if (strMatch.contains(" ")) {
+			if (strMatch.contains(QRegExp("\\s"))) {
 				if ((nDouble == 0) && (nSingle == 0)) {
 					list.append(str.mid(start, end - start));
 				}
@@ -591,7 +591,7 @@ QStringList handleQuotes(QString str)
 		{
 			// This means the match is at the beginning. 
 			QString strMatch = str.mid(end,matchedLen);
-			if (!strMatch.contains(" ")) {
+			if (!strMatch.contains(QRegExp("\\s"))) {
 				if ((nDouble == 0) && (nSingle == 0)) {
 					if (strMatch.contains("\"")) {
 						nDouble++;
