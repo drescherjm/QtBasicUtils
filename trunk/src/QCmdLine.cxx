@@ -441,50 +441,59 @@ QStringList moveToNextQuote(QStringList & lst)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString handleStartingSingleQuote(QString strFront, QStringList & lst)
+{
+	bool bDoubleQuote=false;
+	QString retVal;
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString handleStartingDoubleQuote(QString strFront, QStringList & lst)
+{
+	bool bSingleQuote=false;
+	QString retVal;
+	int nIndex = strFront.indexOf(QRegExp("[\'\"]"),1);
+
+	while ( (nIndex != 0) && (strFront[nIndex-1] == QChar('\\')) ) {
+		nIndex = strFront.indexOf(QRegExp("[\'\"]"),nIndex);
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QStringList handleQuotes(QStringList & lst)
 {
 	QStringList retVal = moveToNextQuote(lst);
 
 	if (!lst.isEmpty()) {
 		QString front = lst.first();
+		lst.pop_front();
 		if (lst.size() > 1) {
 
 			if (front.contains(QRegExp("[^\\\\][\'\"]"))) {
 				int nIndex = front.indexOf(QRegExp("[\'\"]"));
 
 				while ( (nIndex != 0) && (front[nIndex-1] == QChar('\\')) ) {
-					nIndex = front.indexOf(QRegExp("[\'\"]"));
+					nIndex = front.indexOf(QRegExp("[\'\"]"),nIndex);
 				}
 				if (nIndex >= 0) {
 					QChar ch = front[nIndex];
 					if (ch == QChar('\"')) {
-						int x=1;
+						front = front.left(nIndex) + handleStartingDoubleQuote(front.mid(nIndex),lst);
 					}
 					else
 					{
-						int x=0;
+						front = front.left(nIndex) + handleStartingSingleQuote(front.mid(nIndex),lst);
 					}
 				}
-				else
-				{
-					retVal.push_back(front);
-					lst.pop_front();
-				}
-
 			}
-			else
-			{
-				// Just put the last string into the list.
-				retVal.push_back(front);
-				lst.pop_front();
-			}			
 		}
-		else
-		{
-			// Just put the last string into the list.
-			retVal.push_back(front);
-			lst.pop_front();
-		}
+		
+		retVal.push_back(front);
 	}
 
 	if (!lst.isEmpty()) {
