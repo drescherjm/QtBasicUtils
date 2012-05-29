@@ -419,13 +419,16 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QStringList handleQuotes(QStringList & lst)
+QStringList moveToNextQuote(QStringList & lst)
 {
 	QStringList retVal;
 
 	while(!lst.isEmpty()) {
 		QString front = lst.first();
-		if (!front.contains(QRegExp("[\'\"]"))) {
+
+		// Match ' or " but not \' or \"
+		// QRegExp("[^\\][\'\"]")
+		if (!front.contains(QRegExp("[^\\\\][\'\"]"))) {
 			retVal.push_back(front);
 			lst.pop_front();
 		}
@@ -433,8 +436,61 @@ QStringList handleQuotes(QStringList & lst)
 			break;
 	}
 
+	return retVal;
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
+QStringList handleQuotes(QStringList & lst)
+{
+	QStringList retVal = moveToNextQuote(lst);
+
+	if (!lst.isEmpty()) {
+		QString front = lst.first();
+		if (lst.size() > 1) {
+
+			if (front.contains(QRegExp("[^\\\\][\'\"]"))) {
+				int nIndex = front.indexOf(QRegExp("[\'\"]"));
+
+				while ( (nIndex != 0) && (front[nIndex-1] == QChar('\\')) ) {
+					nIndex = front.indexOf(QRegExp("[\'\"]"));
+				}
+				if (nIndex >= 0) {
+					QChar ch = front[nIndex];
+					if (ch == QChar('\"')) {
+						int x=1;
+					}
+					else
+					{
+						int x=0;
+					}
+				}
+				else
+				{
+					retVal.push_back(front);
+					lst.pop_front();
+				}
+
+			}
+			else
+			{
+				// Just put the last string into the list.
+				retVal.push_back(front);
+				lst.pop_front();
+			}			
+		}
+		else
+		{
+			// Just put the last string into the list.
+			retVal.push_back(front);
+			lst.pop_front();
+		}
+	}
+
+	if (!lst.isEmpty()) {
+		retVal += handleQuotes(lst);
+	}
+	
 	return retVal;
 }
 
@@ -502,6 +558,7 @@ int QCmdLine::ParseStream( QTextStream & argStream,QStringList & strLstFile )
 // 		}
 // 	}
 
+	// Split the string on any whitespace.
 	QStringList lst = str.split(QRegExp("\\s+"));
 	
 	strLstFile = handleQuotes(lst);
