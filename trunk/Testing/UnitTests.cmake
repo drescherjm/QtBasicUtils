@@ -11,6 +11,14 @@ ADD_TEST(StringOpts2		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT @${EXECUTABLE_OUTP
 file(WRITE ${EXECUTABLE_OUTPUT_PATH}/testStringOpts3.txt "+STRINGOPT2 --S0=\"Check Mate\" --S1='John Drescher'")
 ADD_TEST(StringOpts3		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT @${EXECUTABLE_OUTPUT_PATH}/testStringOpts3.txt )
 
+
+file(WRITE ${EXECUTABLE_OUTPUT_PATH}/testSetVar0.txt "+SET --group=\"Application\" --name=\"Current Study\" \"100\"" )
+ADD_TEST(SetVariable0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT @${EXECUTABLE_OUTPUT_PATH}/testSetVar0.txt )
+
+file(WRITE ${EXECUTABLE_OUTPUT_PATH}/testSetVar1.txt "+SET --group=\"Application\" --name=\"Image Root\" \"J:/images/clean/Procesed Images/Breast/2011_MM_Study/Study100Set\"" )
+ADD_TEST(SetVariable1		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT @${EXECUTABLE_OUTPUT_PATH}/testSetVar1.txt )
+
+
 file(WRITE ${EXECUTABLE_OUTPUT_PATH}/test0.txt "+FLOATARGS 1.0 2.0 2.0 2.0 2.0 -S9.0")
 
 ADD_TEST(InvalidOpt0 		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT +INVALIDCMDOPT --tests=BADADDOPT0 . )

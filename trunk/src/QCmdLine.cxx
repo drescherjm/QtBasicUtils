@@ -520,15 +520,18 @@ QStringList handleQuotes(QString str)
  	int extra = 0;
  	int end;
  	while ((end = rx2.indexIn(str, start + extra)) != -1) {
+
+		// Just continue if the found item is escaped.
+		if (end > 0) {
+			if (str[end-1] == QChar('\\')) {
+				extra = end - start + 1;
+				continue;
+			}
+		}
+
 		int matchedLen = rx2.matchedLength();
 		if (start != end) {
-			if (end > 0) {
-				if (str[end-1] == QChar('\\')) {
-					extra = end - start + 1;
-					continue;
-				}
-			}
-			
+				
 			QString strMatch = str.mid(end,matchedLen);
 			if (strMatch.contains(" ")) {
 				if ((nDouble == 0) && (nSingle == 0)) {
@@ -542,16 +545,16 @@ QStringList handleQuotes(QString str)
 				
 			}
 			else
-			if ((nDouble == 0) && (nSingle == 0)) {
-				if (strMatch.contains("\"")) {
-					nDouble++;
-				}
-				else
-				{
-					nSingle++;
-				}
-				extra = end - start + 1;
-				continue;
+				if ((nDouble == 0) && (nSingle == 0)) {
+					if (strMatch.contains("\"")) {
+						nDouble++;
+					}
+					else
+					{
+						nSingle++;
+					}
+					extra = end - start + 1;
+					continue;
 			}
 			else
 			{
@@ -584,8 +587,26 @@ QStringList handleQuotes(QString str)
 			 			
 			
 		}
- 		start = end + matchedLen;
- 		extra = (matchedLen == 0) ? 1 : 0;
+		else
+		{
+			// This means the match is at the beginning. 
+			QString strMatch = str.mid(end,matchedLen);
+			if (!strMatch.contains(" ")) {
+				if ((nDouble == 0) && (nSingle == 0)) {
+					if (strMatch.contains("\"")) {
+						nDouble++;
+					}
+					else
+					{
+						nSingle++;
+					}
+					extra = end - start + 1;
+					continue;
+				}
+			}
+		}
+		start = end + matchedLen;
+		extra = (matchedLen == 0) ? 1 : 0;
  	}
  	if (start != str.size())
  		list.append(str.mid(start));

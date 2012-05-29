@@ -17,6 +17,7 @@
 #include "PropertyList.h"
 #include "testxmlimp.h"
 #include "testCommandLineInclude.h"
+#include "testSetVariable.h"
 
 using namespace QTUTILS;
 
@@ -706,6 +707,8 @@ int main(int argc, char* argv[])
 		QCmdStringOpt		cmdStringOpt2("STRINGOPT2","This command accepts 2 optional strings.",2);
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
 
+		CmdTestSetVar		cmdTestSETVariable("SET","This command tests command parsing of set commands.");
+
 		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
 		QCmdTestCmdLineFileInclude	cmdTestCmdLineFileInclude("CMDLINEINCLUDE","This tests the @ include that is used in the command line.");
 
@@ -730,6 +733,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdStringOpt5);
 		myCmdLine.AddCmd(&cmdTestInvalidOpt);
 		myCmdLine.AddCmd(&cmdTestCmdLineFileInclude);
+		myCmdLine.AddCmd(&cmdTestSETVariable);
 		myCmdLine.AddCmd(&myHelp);
 		
 		retVal = myCmdLine.Parse();
