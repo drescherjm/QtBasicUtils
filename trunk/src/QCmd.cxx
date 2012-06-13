@@ -403,28 +403,34 @@ QString QCmd::qtutilsPrivate::GetSyntax()
 
 	for(QOptList::iterator it=m_listOptions.begin(); it != m_listOptions.end();++it) {
 		pCmdOpt = *it;
-		retVal += ("[-");
-		if (!pCmdOpt->isExtendedOption()) {
-			retVal += pCmdOpt->GetShortSyntax();
+
+		if (!pCmdOpt->isHidden()) {
+			retVal += ("[-");
+			if (!pCmdOpt->isExtendedOption()) {
+				retVal += pCmdOpt->GetShortSyntax();
+			}
+			else
+			{
+				retVal += ("-");
+				retVal += pCmdOpt->GetShortSyntax();
+			}
+			retVal += ("] ");
 		}
-		else
-		{
-			retVal += ("-");
-			retVal += pCmdOpt->GetShortSyntax();
-		}
-		retVal += ("] ");
+		
 	}
 
 	for(QArgList::iterator it=m_listArguments.begin(); it != m_listArguments.end();++it) {
 		pCmdArg = *it;
-		if ( pCmdArg->isOptional() ) {
-			retVal += ("[");
-			retVal += pCmdArg->GetShortSyntax();
-			retVal += ("] ");
-		}
-		else
-		{
-			retVal += ("<") + pCmdArg->GetShortSyntax() + ("> ");
+		if (!pCmdArg->isHidden()) {
+			if ( pCmdArg->isOptional() ) {
+				retVal += ("[");
+				retVal += pCmdArg->GetShortSyntax();
+				retVal += ("] ");
+			}
+			else
+			{
+				retVal += ("<") + pCmdArg->GetShortSyntax() + ("> ");
+			}
 		}
 	}
 

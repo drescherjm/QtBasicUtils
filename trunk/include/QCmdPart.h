@@ -32,11 +32,14 @@ public:
 	QString			GetExplanation();
 	virtual int		ImportData( QString strValue )=0;
 	virtual void	Initialize();
+	void			MarkHidden(bool bHidden);
+	bool			isHidden();
 private:
 	void			copy( const QCmdPart & other );
 	void			destroy();
 protected:
 	bool			m_bValueSet;
+	bool			m_bHidden;
 	QString			m_strDescription;
 	QString			m_strExplanation;
 };

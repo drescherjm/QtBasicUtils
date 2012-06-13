@@ -6,7 +6,8 @@ namespace QTUTILS {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdPart::QCmdPart(QString strDescription, QString strExplanation) : 
-m_strDescription(strDescription), m_strExplanation(strExplanation)
+	m_strDescription(strDescription), m_strExplanation(strExplanation),
+	m_bHidden(false)
 {
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +50,7 @@ int QCmdPart::MarkSet()
 
 void QCmdPart::copy( const QCmdPart & other )
 {
+	m_bHidden = other.m_bHidden;
 	m_bValueSet = other.m_bValueSet;
 	m_strDescription = other.m_strDescription;
 	m_strExplanation = other.m_strExplanation;
@@ -69,6 +71,20 @@ QCmdPart& QCmdPart::operator=( const QCmdPart & other )
 void QCmdPart::destroy()
 {
 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void QCmdPart::MarkHidden( bool bHidden )
+{
+	m_bHidden = bHidden;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdPart::isHidden()
+{
+	return m_bHidden;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
