@@ -36,7 +36,7 @@ namespace QTUTILS {
 		strError = ("PARAM_ALLREADY_SET %1 %2%3");
 		break;
 	case OPTION_ALLREADY_ADDED:
-		strError = ("OPTION_ALLREADY_ADDED %1");
+		strError = ("OPTION_ALLREADY_ADDED %1 %2%3");
 		break;
 	case OPTION_NOT_FOUND:
 		if ( !str1.isEmpty() ) {

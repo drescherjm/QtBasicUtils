@@ -22,6 +22,7 @@ cmake_policy(SET CMP0015 NEW)
 option (BUILD_TESTING 				"Build Tests" ON)
 option (BUILD_EXPERIMENTAL 			"Build Experimental Code" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
+option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" ON)
 
 #########################################################################################
 
@@ -63,6 +64,8 @@ configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
 	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
 )
+
+conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 
 set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/include )
 set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
