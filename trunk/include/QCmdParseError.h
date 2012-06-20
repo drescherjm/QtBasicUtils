@@ -14,6 +14,10 @@
 #ifndef __QCMDPARSEERROR_H__
 #define __QCMDPARSEERROR_H__
 
+#ifdef SUCCEEDED
+#undef SUCCEEDED
+#endif //def SUCCEEDED
+
 namespace QTUTILS {
 
 class QCmdParseError 
