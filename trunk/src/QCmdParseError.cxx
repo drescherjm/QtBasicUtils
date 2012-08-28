@@ -40,11 +40,11 @@ namespace QTUTILS {
 		break;
 	case OPTION_NOT_FOUND:
 		if ( !str1.isEmpty() ) {
-			strError = ("ERROR: The option -%1 was not defined for the command %2.%3");
+			strError = ("OPTION_NOT_FOUND: The option -%1 was not defined for the command %2.%3");
 		}
 		else
 		{
-			strError = ("ERROR:  The option -%1 was not defined for this this command. %2%3");
+			strError = ("OPTION_NOT_FOUND:  The option -%1 was not defined for this this command. %2%3");
 		}
 
 		str2 = QString("\nNOTE: This is normally caused by a call to GetOpt() with something passed that is not defined as an option.");
@@ -53,16 +53,32 @@ namespace QTUTILS {
 		}
 		break;
 	case OPTION_WRONG_TYPE:
-		strError = ("OPTION_WRONG_TYPE %1 %2%3");
+		strError = ("OPTION_WRONG_TYPE. The option --%1 was declared in AddOpt then used in GetOpt with a different data type for the command +%2. %3");
+		if (str0.length() > 1) {
+			str0.prepend("-");
+		}
+		str2 = QString("\nNOTE: To fix this make sure the data type used in the GetOpt call matches the one in the AddOpt call for this option.");
 		break;
 	case ARGUMENT_ALLREADY_ADDED:
 		strError = ("ARGUMENT_ALLREADY_ADDED %1 %2%3");
 		break;
 	case ARGUMENT_NOT_FOUND:
-		strError = ("ARGUMENT_NOT_FOUND %1 %2%3");
+		if ( !str1.isEmpty() ) {
+			strError = ("ARGUMENT_NOT_FOUND: The argument %1 was not defined for the command %2.%3");
+		}
+		else
+		{
+			strError = ("ARGUMENT_NOT_FOUND:  The argument %1 was not defined for this this command. %2%3");
+		}
+
+		str2 = QString("\nNOTE: This is normally caused by a call to GetArg() with something passed that is not defined as an argument.");
 		break;
 	case ARGUMENT_WRONG_TYPE:
-		strError = ("ARGUMENT_WRONG_TYPE %1 %2%3");
+		strError = ("ARGUMENT_WRONG_TYPE. The argument %1 was declared in AddArg then used in GetArg with a different data type for the command +%2. %3");
+		if (str0.length() > 1) {
+			str0.prepend("-");
+		}
+		str2 = QString("\nNOTE: To fix this make sure the data type used in the GetArg call matches the one in the AddArg call for this argument.");
 		break;
 	case TOO_MANY_ARGUMENTS:
 		strError = ("TOO_MANY_ARGUMENTS %1%2 %3");
@@ -117,6 +133,7 @@ namespace QTUTILS {
 		break;
 		}
 		QString retVal = QString(strError).arg(str0).arg(str1).arg(str2);
+
 		return retVal;
 	}
 

@@ -18,6 +18,7 @@
 #include "testxmlimp.h"
 #include "testCommandLineInclude.h"
 #include "testSetVariable.h"
+#include "cmdTestFloatOpts.h"
 
 using namespace QTUTILS;
 
@@ -707,6 +708,8 @@ int main(int argc, char* argv[])
 		QCmdStringOpt		cmdStringOpt2("STRINGOPT2","This command accepts 2 optional strings.",2);
 		QCmdStringOpt		cmdStringOpt5("STRINGOPT5","This command accepts 5 optional strings.",5);
 
+		QCmdTestFloatOpts	cmdFloatOpts("FLOATOPTS","This command tests float arguments.");
+
 		CmdTestSetVar		cmdTestSETVariable("SET","This command tests command parsing of set commands.");
 
 		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
@@ -734,6 +737,9 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestInvalidOpt);
 		myCmdLine.AddCmd(&cmdTestCmdLineFileInclude);
 		myCmdLine.AddCmd(&cmdTestSETVariable);
+
+		myCmdLine.AddCmd(&cmdFloatOpts);
+
 		myCmdLine.AddCmd(&myHelp);
 		
 		retVal = myCmdLine.Parse();
