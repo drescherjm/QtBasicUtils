@@ -171,6 +171,7 @@ public:
 	virtual		QString	GetName();
 	virtual		QString	GetDescription();
 	virtual		QString	GetLongDescription();
+	virtual		bool	hasOpt(QString strName);
 
 public:
 	void		EndRequiredArguments();

@@ -37,6 +37,7 @@ public:
 	int		AddOpt(QString strName, QCmdOpt* pOpt = NULL);
 	int		testOptionName(QString strName);
 	int		FindOpt(QString strName, QCmdOpt *& option);
+	bool	hasOpt(QString strName);
 	QString GetOptString( QString strName );
 	int		AddArg(QString strName, QCmdArg* pArg = NULL);
 	int		FindArg(QString strName, QCmdArg *& pArg);
@@ -786,6 +787,15 @@ QStringList QCmd::qtutilsPrivate::splitOptionExName( QString str )
 	}
 	
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmd::qtutilsPrivate::hasOpt( QString strName )
+{
+	QCmdOpt* pOpt;
+
+	return (FindOpt(strName,pOpt) == QCmdParseError::STATUS_OK);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1741,6 +1751,13 @@ int QCmd::FindOpt( QString strName, QCmdOpt *& option )
 int QCmd::FindArg( QString strName, QCmdArg *& pArgument )
 {
 	return m_pPrivate->FindArg(strName,pArgument);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmd::hasOpt( QString strName )
+{
+	return m_pPrivate->hasOpt(strName);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
