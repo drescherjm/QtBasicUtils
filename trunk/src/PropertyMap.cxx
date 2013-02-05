@@ -8,6 +8,7 @@
 #include <QStringList>
 #include <QSet>
 #include "ProperyMapXMLHelper.h"
+#include <QXmlSimpleReader>
 
 namespace QTUTILS {
 
@@ -390,6 +391,11 @@ bool PropertyMap::fromXML( QString strXML )
 	bool retVal;
 
 	QDomDocument doc;
+	//QXmlInputSource source;
+	//source.setData(strXML);
+	//QXmlSimpleReader reader;
+	//doc.setContent(&source, &reader);
+		
 	doc.setContent(strXML);
 
 	QDomElement docElem = doc.documentElement();

@@ -70,7 +70,21 @@ QString	Property::toXML(qbuITKIndent indent)
 
 	if (ty < QVariant::UserType) {
 		QString strName = objectName();
-		retVal = GetData().toString();
+
+		switch(ty) {
+		case QVariant::Char:
+			{
+				QChar ch = GetData().toChar();
+				ushort nVal = ch.unicode();
+
+				//retVal = QString("&#%1").arg(nVal,3,10,QChar('0'));
+				retVal = QString("\"%1\"").arg(ch);
+			}
+			break;
+		default:
+			retVal = GetData().toString();
+		}
+		
 		QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">%5</%2>\n")
 			.arg(indent.getIndent())
 			.arg(strName)

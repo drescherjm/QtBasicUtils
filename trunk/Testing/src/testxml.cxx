@@ -313,6 +313,41 @@ static bool test7()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test8()
+{
+	QTUTILS::PropertyMap pc;
+	QTUTILS::Property prop;
+
+	prop.setObjectName("Age");
+	prop.SetData((int)37);
+	pc.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.SetData(QString("John M. Drescher"));
+	pc.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.SetData(QChar(' '));
+	pc.insert(prop);
+
+	QString str = pc.toXML();
+
+	QTUTILS::PropertyMap pc1;
+
+	bool retVal = pc1.fromXML(str);
+
+	QString str1 = pc1.toXML();
+
+	if (retVal) {
+		retVal = (str.compare(str1,Qt::CaseInsensitive) == 0);
+	}
+
+	return retVal;	
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -344,6 +379,9 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 7:
 		bVal = test7();
+		break;
+	case 8:
+		bVal = test8();
 		break;
 	default:
 		bVal = false;
