@@ -9,6 +9,7 @@
 #include <QSet>
 #include "ProperyMapXMLHelper.h"
 #include <QXmlSimpleReader>
+#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\corelib\io\qdebug.h"
 
 namespace QTUTILS {
 
@@ -383,6 +384,15 @@ static void printDomElem(QDomElement & e)
 }
 #endif //0
 
+QDebug operator<<(QDebug dbg, const QDomNode& node)
+{
+	QString s;
+	QTextStream str(&s, QIODevice::WriteOnly);
+	node.save(str, 2);
+	dbg << qPrintable(s);
+	return dbg;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -391,20 +401,25 @@ bool PropertyMap::fromXML( QString strXML )
 	bool retVal;
 
 	QDomDocument doc;
-	//QXmlInputSource source;
-	//source.setData(strXML);
-	//QXmlSimpleReader reader;
-	//doc.setContent(&source, &reader);
+// 	QXmlInputSource source;
+// 	source.setData(strXML);
+// 	QXmlSimpleReader reader;
+// 	doc.setContent(&source, &reader);
 		
 	doc.setContent(strXML);
 
 	QDomElement docElem = doc.documentElement();
+
+	qDebug() << docElem;
 
 	QDomNode n = docElem.firstChild();
 
 	retVal = !n.isNull();
 
 	if (retVal) {
+
+		qDebug() << n;
+
 		QDomElement e = n.toElement();
 		retVal = !e.isNull();
 		if (retVal) {

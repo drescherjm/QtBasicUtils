@@ -402,6 +402,9 @@ int  QCmdTestXMLExport::Execute()
 	case 8:
 		bVal = test8();
 		break;
+	case 9:
+		bVal = test9();
+		break;
 	default:
 		bVal = false;
 	}

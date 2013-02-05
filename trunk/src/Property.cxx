@@ -77,7 +77,7 @@ QString	Property::toXML(qbuITKIndent indent)
 				QChar ch = GetData().toChar();
 				ushort nVal = ch.unicode();
 
-				retVal = QString("&#%1").arg(nVal,3,10,QChar('0'));
+				retVal = QString("0x%1").arg(nVal,3,16,QChar('0'));
 				//retVal = QString("\'%1\'").arg(ch);
 			}
 			break;
@@ -163,7 +163,16 @@ bool Property::fromXML(QDomElement & docElem)
 					// This case fails so we do the conversion manually
 					case QVariant::Char:
 						if (!strText.isEmpty()) {
-							m_vt = QChar(strText[0]);
+							if (strText.startsWith("0x",Qt::CaseInsensitive)) {
+								strText.remove("0x",Qt::CaseInsensitive);
+								m_vt = QChar(strText.toInt(&retVal,16));
+							}
+							else
+							{
+								m_vt = QChar(strText.toInt(&retVal,10));
+							}
+							
+							//m_vt = QChar(strText[0]);
 						}
 						else
 							m_vt =QChar();
