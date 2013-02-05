@@ -6,6 +6,8 @@
 #include "PropertyMap.h"
 #include <iostream>
 #include <QDate>
+#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\xml\sax\qxml.h"
+#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\corelib\io\qdebug.h"
 
 namespace QTUTILS {
 
@@ -345,6 +347,23 @@ static bool test8()
 	return retVal;	
 }
 
+static bool test9() 
+{
+	QString xmlString("<original>      </original>");
+	QDomDocument doc;
+	doc.setContent(xmlString);
+	QDomElement docElem = doc.documentElement();
+	qDebug() << "Without QXmlSimpleReader \t- element contains" <<docElem.text() << "\tlength="<< docElem.text().length();
+	doc.clear();
+	QXmlInputSource source;
+	source.setData(xmlString);
+	QXmlSimpleReader reader;
+	doc.setContent(&source, &reader);
+	docElem = doc.documentElement();
+	qDebug() << "With QXmlSimpleReader \t- element contains" <<docElem.text() << "\tlength="<< docElem.text().length();
+
+	return false;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

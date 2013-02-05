@@ -77,8 +77,8 @@ QString	Property::toXML(qbuITKIndent indent)
 				QChar ch = GetData().toChar();
 				ushort nVal = ch.unicode();
 
-				//retVal = QString("&#%1").arg(nVal,3,10,QChar('0'));
-				retVal = QString("\"%1\"").arg(ch);
+				retVal = QString("&#%1").arg(nVal,3,10,QChar('0'));
+				//retVal = QString("\'%1\'").arg(ch);
 			}
 			break;
 		default:
