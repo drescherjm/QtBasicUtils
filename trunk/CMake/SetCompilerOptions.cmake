@@ -1,5 +1,6 @@
 IF(MSVC)
-	SET(CMAKE_CXX_FLAGS "/MP /WL /GR /EHa /Zm1000" ) 
+	#SET(CMAKE_CXX_FLAGS "/MP /WL /GR /EHa /Zm1000" ) 
+	SET(CMAKE_CXX_FLAGS "/MP /WL /GR /EHa" ) 
   	
 	IF(CMAKE_SIZEOF_VOID_P MATCHES 4)
 	# Detect 64 bit portability problems.
