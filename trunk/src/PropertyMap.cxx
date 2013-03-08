@@ -10,7 +10,6 @@
 #include "ProperyMapXMLHelper.h"
 #include <QXmlSimpleReader>
 #include "qdebug.h"
-//#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\corelib\io\qdebug.h"
 
 namespace QTUTILS {
 

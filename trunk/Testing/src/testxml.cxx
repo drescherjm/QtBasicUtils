@@ -6,8 +6,8 @@
 #include "PropertyMap.h"
 #include <iostream>
 #include <QDate>
-#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\xml\sax\qxml.h"
-#include "..\..\..\QMakeBased\Libraries\qt-everywhere-opensource-src-4.8.4\src\corelib\io\qdebug.h"
+#include "qxml.h"
+#include "qdebug.h"
 
 namespace QTUTILS {
 
