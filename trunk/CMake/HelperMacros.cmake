@@ -100,3 +100,46 @@ macro( conditional_define VariableName DefineName)
 		
 	endif(${VariableName})
 endmacro( conditional_define )
+
+#########################################################################################
+
+macro( conditional_not_define VariableName DefineName)
+	if (NOT ${VariableName})
+	
+		message( STATUS "add_definitions(-D${DefineName})" )
+		add_definitions(-D${DefineName})
+		
+	endif(NOT ${VariableName})
+endmacro( conditional_not_define )
+
+#########################################################################################
+
+function( define_from_environment VariableName PackageName)
+	if (NOT DEFINED ${VariableName})
+		message( STATUS "${VariableName}=$ENV{${VariableName}}" )
+		if (NOT "$ENV{${VariableName}}" STREQUAL "")
+			set(${VariableName} $ENV{${VariableName}} CACHE PATH "Set the path for ${PackageName}" FORCE)
+		endif (NOT "$ENV{${VariableName}}" STREQUAL "")
+	endif(NOT DEFINED ${VariableName})
+endfunction( define_from_environment)
+
+#########################################################################################
+
+macro( myproject ProjectName )
+	set( LOCAL_PROJECT_NAME ${ProjectName})
+	set( LOCAL_PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+	set( LOCAL_PROJECT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
+endmacro( myproject )
+
+#########################################################################################
+
+macro(create_string_from_list my_str)
+ foreach(VALUE ${ARGN})
+  if ("${VALUE}" STREQUAL "${ARGV1}")
+   set(result "${VALUE}")
+  else()
+   set(result "${result} ${VALUE}")
+  endif()
+ endforeach(VALUE)
+ set(${my_str} ${result})
+endmacro(create_string_from_list) 
