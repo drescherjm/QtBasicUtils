@@ -11,6 +11,13 @@ macro( RESET_CONFIGURATION_TYPES )
 	"Please select the configurations to use with this project or set the CMAKE_DEFAULT_CONFIGURATIONS envronment variable to your selection." FORCE)
 endmacro( RESET_CONFIGURATION_TYPES )
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to 'Debug' as none was specified.")
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+    #Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 if (NOT CMAKE_BUILD_TYPE) 
 	if( NOT CMAKE_DEFAULT_CONFIGURATIONS AND NOT "$ENV{CMAKE_DEFAULT_CONFIGURATIONS}" STREQUAL "" )
 		SET (PROJECT_CONFIGURATION_TYPES "$ENV{CMAKE_DEFAULT_CONFIGURATIONS}" )
