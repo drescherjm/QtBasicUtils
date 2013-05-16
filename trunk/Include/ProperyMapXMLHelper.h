@@ -22,4 +22,4 @@ public:
 
 }; // namespace QTUTILS
 
-#endif __PROPERYMAPXMLHELPER_H__
+#endif // def __PROPERYMAPXMLHELPER_H__
