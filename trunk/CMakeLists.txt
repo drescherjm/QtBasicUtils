@@ -10,7 +10,7 @@ set (${PROJECT_NAME}_VERSION_MINOR 2)
 set (${PROJECT_NAME}_VERSION_PATCH 0)
 set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
-include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
 #########################################################################################
 
@@ -26,25 +26,25 @@ option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" 
 
 #########################################################################################
 
-include(${PROJECT_SOURCE_DIR}/CMake/GetRuntime.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SiteConfig.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/GetCompilerVersion.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/HelperMacros.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/MSVC64BitPortability.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/DisableBufferSecurityCheck.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/SupportRunJobs.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GetRuntime.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SiteConfig.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GetCompilerVersion.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/HelperMacros.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/MSVC64BitPortability.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/DisableBufferSecurityCheck.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/SupportRunJobs.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 
 #########################################################################################
 
@@ -58,7 +58,7 @@ INCLUDE( ${QT_USE_FILE} )
 # The following line will add support to copy the Qt dlls to the Debug and Release folders 
 # so that you can debug the application without the user having to deal with .dll path 
 # settings inside visual studio. 
-include(${PROJECT_SOURCE_DIR}/CMake/GetQtRuntime.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/GetQtRuntime.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
@@ -67,7 +67,7 @@ configure_file (
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 
-set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/include )
+set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
 set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
 set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
 set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
@@ -105,53 +105,53 @@ SET( ${PROJECT_NAME}_SRCS
 )
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
-	./include/${PROJECT_NAME}.h
-	./include/QCmdLine.h
-	./include/QCmdExtra.h
-	./include/QCmdParseError.h
-	./include/QCmdHelpException.h
-	./include/QCmdParseException.h
-	./include/QCmdLineFileList.h
-	./include/QCmdPart.h
-	./include/QNamedCmdPart.h
-	./include/QCmdArg.h
-	./include/QCmdOpt.h
-	./include/QCmdOptBasicBase.h
-	./include/QCmdOptBasicBase.txx
-	./include/QCmdOptBasicBaseMM.h
-	./include/QCmdOptBasicBaseMM.txx
-	./include/QCmdOptBasic.h
-	./include/QCmdOptBasic.txx
-	./include/QCmdOptBool.h
-	./include/QCmdOptQChar.h
-	./include/QCmdOptQString.h
-	./include/QCmdOptQStringList.h
-	./include/QCmdArgBool.h
-	./include/QCmdArgBasic.h
-	./include/QCmdArgBasic.txx
-	./include/QCmdArgBasicBase.h
-	./include/QCmdArgBasicBase.txx
-	./include/QCmdArgBasicBaseMM.h
-	./include/QCmdArgBasicBaseMM.txx
-	./include/QCmdArgQChar.h
-	./include/QCmdArgQString.h
-	./include/QCmdArgQStringList.h
-	./include/QCmdArgFileList.h
-	./include/QCmdHelp.h
-	./include/QUpdateTracker.h
-	./include/PropXMLHelper.h
-	./include/ProperyMapXMLHelper.h
-	./include/NonThreadSafeSingleton.h
+	./Include/${PROJECT_NAME}.h
+	./Include/QCmdLine.h
+	./Include/QCmdExtra.h
+	./Include/QCmdParseError.h
+	./Include/QCmdHelpException.h
+	./Include/QCmdParseException.h
+	./Include/QCmdLineFileList.h
+	./Include/QCmdPart.h
+	./Include/QNamedCmdPart.h
+	./Include/QCmdArg.h
+	./Include/QCmdOpt.h
+	./Include/QCmdOptBasicBase.h
+	./Include/QCmdOptBasicBase.txx
+	./Include/QCmdOptBasicBaseMM.h
+	./Include/QCmdOptBasicBaseMM.txx
+	./Include/QCmdOptBasic.h
+	./Include/QCmdOptBasic.txx
+	./Include/QCmdOptBool.h
+	./Include/QCmdOptQChar.h
+	./Include/QCmdOptQString.h
+	./Include/QCmdOptQStringList.h
+	./Include/QCmdArgBool.h
+	./Include/QCmdArgBasic.h
+	./Include/QCmdArgBasic.txx
+	./Include/QCmdArgBasicBase.h
+	./Include/QCmdArgBasicBase.txx
+	./Include/QCmdArgBasicBaseMM.h
+	./Include/QCmdArgBasicBaseMM.txx
+	./Include/QCmdArgQChar.h
+	./Include/QCmdArgQString.h
+	./Include/QCmdArgQStringList.h
+	./Include/QCmdArgFileList.h
+	./Include/QCmdHelp.h
+	./Include/QUpdateTracker.h
+	./Include/PropXMLHelper.h
+	./Include/ProperyMapXMLHelper.h
+	./Include/NonThreadSafeSingleton.h
 	./Include/qbuITKIndent.h
 )
 
 SET( ${PROJECT_NAME}_MOC_HDRS 
-	./include/QCmd.h
-	./include/Property.h
-	./include/PropertyMap.h
-	./include/UserPropery.h
-	./include/UserPropPtr.h
-	./include/PropertyList.h
+	./Include/QCmd.h
+	./Include/Property.h
+	./Include/PropertyMap.h
+	./Include/UserPropery.h
+	./Include/UserPropPtr.h
+	./Include/PropertyList.h
 )
 
 SET( ${PROJECT_NAME}_INT_HDRS
@@ -163,7 +163,7 @@ QT4_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
 
 IF(BUILD_TESTING)
 ENABLE_TESTING()
-#include(Testing/UnitTests.cmake)
+#Include(Testing/UnitTests.cmake)
 add_subdirectory(Testing)
 ENDIF(BUILD_TESTING)
 
@@ -181,7 +181,7 @@ CONFIGURE_FILE(
 ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include )
+include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/Include )
 
 #########################################################################################
 
@@ -193,7 +193,7 @@ add_library(${PROJECT_NAME}
 	${${PROJECT_NAME}_INT_HDRS} 
 )
 
-set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include )
+set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
 export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
 
 configure_file (
@@ -215,7 +215,7 @@ install (FILES
 )
 
 install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${${PROJECT_NAME}_EXT_HDRS} ${${PROJECT_NAME}_MOC_HDRS} DESTINATION include)
+install (FILES ${${PROJECT_NAME}_EXT_HDRS} ${${PROJECT_NAME}_MOC_HDRS} DESTINATION Include)
 
 #########################################################################################
 
