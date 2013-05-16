@@ -4,7 +4,7 @@ FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )
 
-include_directories(include ../include)
+include_directories(Include ../Include)
 
 link_directories(../bin)
 
@@ -15,8 +15,8 @@ SET( EXPERIMENTAL_SRCS
 )
 
 SET( EXPERIMENTAL_HDRS 
-	./include/xrvariant.h
-	./include/xrbase64.h
+	./Include/xrvariant.h
+	./Include/xrbase64.h
 	
 )
 

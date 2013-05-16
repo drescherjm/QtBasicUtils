@@ -1,5 +1,5 @@
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/include ./include)
+include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/Include ./Include)
 
 set(TEST_SRCS 
 	./src/basic.cxx 
@@ -12,11 +12,11 @@ set(TEST_SRCS
 )
 
 set(TEST_HDRS
-	./include/testxml.h
-	./include/testxmlimp.h
-	./include/testUserProps.h
-	./include/testCommandLineInclude.h
-	./include/testSetVariable.h
+	./Include/testxml.h
+	./Include/testxmlimp.h
+	./Include/testUserProps.h
+	./Include/testCommandLineInclude.h
+	./Include/testSetVariable.h
 	./Include/cmdTestFloatOpts.h
 )
 
@@ -24,4 +24,4 @@ add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
 
 add_dependencies(BasicTest QtBasicUtils)
 
-include(UnitTests.cmake)
+Include(UnitTests.cmake)
