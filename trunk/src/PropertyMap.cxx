@@ -509,10 +509,21 @@ void PropertyMap::Print( std::ostream & st, qbuITKIndent indent )
 
 	st << qPrintable(strTemp) << std::endl;
 
-	/*
-	st << "Begin: " << metaObject()->className() << std::endl;
-	st << qPrintable(toXML(true,indent));
-	st << "End: " << metaObject()->className() << std::endl << std::endl;*/
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void PropertyMap::Print( QTextStream & st, qbuITKIndent indent )
+{
+
+	QString strName = metaObject()->className();
+	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+		.arg(indent.getIndent())
+		.arg(strName)
+		.arg(toXML(false,indent));
+
+	st << strTemp << endl;
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

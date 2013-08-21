@@ -298,6 +298,14 @@ void Property::Print( std::ostream & st, qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void Property::Print( QTextStream & st, qbuITKIndent indent )
+{
+	QString str = toXML(indent);
+	st << str << endl;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool Property::operator==( const Property & other ) const
 {
 	return m_vt == other.m_vt;

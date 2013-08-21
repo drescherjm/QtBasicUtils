@@ -9,6 +9,7 @@
 #include "QUpdateTracker.h"
 #include <iosfwd>
 #include "qbuITKIndent.h"
+#include <QTextStream>
 
 namespace QTUTILS {
 
@@ -44,6 +45,8 @@ public:
 	bool		Load(QString strFile);
 	bool		Save(QString strFile);
 	void		Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
+	void		Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
+
 private:
 	void		copy( const Property & other );
 	void		destroy();

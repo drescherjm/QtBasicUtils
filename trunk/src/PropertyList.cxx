@@ -345,6 +345,14 @@ static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+	void PropertyList::Print( QTextStream & st, qbuITKIndent indent )
+	{
+		QString str = toXML(true,indent);
+		st << str << endl;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 	
 	bool PropertyList::operator==( const PropertyList & other ) const
 	{

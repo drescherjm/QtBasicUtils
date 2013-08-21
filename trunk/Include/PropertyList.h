@@ -44,6 +44,7 @@ namespace QTUTILS {
 		bool			Load(QString strFile);
 		bool			Save(QString strFile);
 		void			Print(std::ostream & st,qbuITKIndent indent = qbuITKIndent());
+		void			Print(QTextStream & st,qbuITKIndent indent = qbuITKIndent());
 	protected:
 		List			m_lstProps;
 	protected:
