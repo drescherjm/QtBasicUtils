@@ -47,6 +47,7 @@ public:
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
 	void			CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
+	void			MoveProperty(QString strOldName, PropertyMap & other, QString strNewName="");
 	bool			EqualSubset(QStringList lstPropNames, const PropertyMap & other);
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);

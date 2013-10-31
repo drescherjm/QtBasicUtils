@@ -255,6 +255,33 @@ void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, Q
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *	\brief
+ *	 This member function moves a property from other to this object.
+ */
+
+void PropertyMap::MoveProperty( QString strOldName, PropertyMap & other, QString strNewName/*=""*/ )
+{
+	if (strNewName.isEmpty()) {
+		strNewName = strOldName;
+	}
+
+	PropertyMap::iterator it = other.find(strOldName);
+	if ( it != other.end()) {
+		Property prop = **it;
+
+		if (!strNewName.isEmpty()) {
+			prop.setObjectName(strNewName);
+		}
+
+		insert(prop);
+
+		other.m_mapProps.erase(it);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool PropertyMap::RenameProperty(QString strOldName,QString strNewName)
 {
 	bool retVal = ((!strOldName.isEmpty()) && (!strNewName.isEmpty()));
