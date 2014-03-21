@@ -75,84 +75,17 @@ set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
 set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
 SET( ${PROJECT_NAME}_SRCS
-	./src/QCmd.cxx
-	./src/QCmdLine.cxx
-	./src/QCmdPart.cxx
-	./src/QCmdOpt.cxx
-	./src/QCmdHelpException.cxx
-	./src/QCmdParseException.cxx
-	./src/QCmdParseError.cxx
-	./src/QCmdOptBool.cxx
-	./src/QCmdOptQChar.cxx
-	./src/QCmdOptQString.cxx
-	./src/QCmdOptQStringList.cxx
-	./src/QCmdArg.cxx
-	./src/QCmdArgBool.cxx
-	./src/QCmdArgQChar.cxx
-	./src/QCmdArgQString.cxx
-	./src/QCmdArgQStringList.cxx
-	./src/QCmdArgFileList.cxx
-	./src/QCmdLineFileList.cxx
-	./src/QCmdHelp.cxx
-	./src/Property.cxx
-	./src/PropertyMap.cxx
-	./src/UserProperty.cxx
-	./src/UserPropPtr.cxx
-	./src/PropertyList.cxx
-	./src/PropXMLHelper.cxx
-	./src/ProperyMapXMLHelper.cxx
-	./src/QNamedCmdPart.cxx
-	./src/qbuITKIndent.cxx
+
 )
 
 SET( ${PROJECT_NAME}_EXT_HDRS 
 	./Include/${PROJECT_NAME}.h
-	./Include/QCmdLine.h
-	./Include/QCmdExtra.h
-	./Include/QCmdParseError.h
-	./Include/QCmdHelpException.h
-	./Include/QCmdParseException.h
-	./Include/QCmdLineFileList.h
-	./Include/QCmdPart.h
-	./Include/QNamedCmdPart.h
-	./Include/QCmdArg.h
-	./Include/QCmdOpt.h
-	./Include/QCmdOptBasicBase.h
-	./Include/QCmdOptBasicBase.txx
-	./Include/QCmdOptBasicBaseMM.h
-	./Include/QCmdOptBasicBaseMM.txx
-	./Include/QCmdOptBasic.h
-	./Include/QCmdOptBasic.txx
-	./Include/QCmdOptBool.h
-	./Include/QCmdOptQChar.h
-	./Include/QCmdOptQString.h
-	./Include/QCmdOptQStringList.h
-	./Include/QCmdArgBool.h
-	./Include/QCmdArgBasic.h
-	./Include/QCmdArgBasic.txx
-	./Include/QCmdArgBasicBase.h
-	./Include/QCmdArgBasicBase.txx
-	./Include/QCmdArgBasicBaseMM.h
-	./Include/QCmdArgBasicBaseMM.txx
-	./Include/QCmdArgQChar.h
-	./Include/QCmdArgQString.h
-	./Include/QCmdArgQStringList.h
-	./Include/QCmdArgFileList.h
-	./Include/QCmdHelp.h
-	./Include/QUpdateTracker.h
-	./Include/PropXMLHelper.h
-	./Include/ProperyMapXMLHelper.h
-	./Include/NonThreadSafeSingleton.h
-	./Include/qbuITKIndent.h
+
 )
 
 SET( ${PROJECT_NAME}_MOC_HDRS 
-	./Include/QCmd.h
-	./Include/Property.h
-	./Include/PropertyMap.h
-	./Include/UserPropery.h
-	./Include/UserPropPtr.h
-	./Include/PropertyList.h
+	
+
 )
 
 SET( ${PROJECT_NAME}_INT_HDRS
