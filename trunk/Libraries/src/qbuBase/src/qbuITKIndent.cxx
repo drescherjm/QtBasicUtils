@@ -12,7 +12,7 @@
 
 =========================================================================*/
 
-#include "qbuITKIndent.h"
+#include "qbuBase/qbuITKIndent.h"
 
 #define ITK_STD_INDENT 2
 #define ITK_NUMBER_OF_BLANKS 40

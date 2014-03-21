@@ -1,13 +1,11 @@
 #include "qbuCmdLine/QCmdParseException.h"
 
-namespace QTUTILS {
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	QString QCmdParseError::GetErrorString(quint32 nErrorCode, QString str0, QString str1,QString str2)
-	{
-		QString strError;
-		switch( nErrorCode ) {
+QString QCmdParseError::GetErrorString(quint32 nErrorCode, QString str0, QString str1,QString str2)
+{
+	QString strError;
+	switch( nErrorCode ) {
 	case STATUS_OK:
 		strError = ("No Error. %1%2%3");
 		break;
@@ -131,26 +129,24 @@ namespace QTUTILS {
 	default:
 		strError = ("ERROR: Unknown parse error. %1 %2 %3");
 		break;
-		}
-		QString retVal = QString(strError).arg(str0).arg(str1).arg(str2);
-
-		return retVal;
 	}
+	QString retVal = QString(strError).arg(str0).arg(str1).arg(str2);
+
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	bool QCmdParseError::SUCCEEDED( quint32 nErrorCode )
-	{
-		return nErrorCode == STATUS_OK;
-	}
+bool QCmdParseError::Succeeded( quint32 nErrorCode )
+{
+	return nErrorCode == STATUS_OK;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	bool QCmdParseError::Succeeded( quint32 nErrorCode )
-	{
-		return SUCCEEDED(nErrorCode);
-	}
+bool QCmdParseError::Succeeded( quint32 nErrorCode )
+{
+	return Succeeded(nErrorCode);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; //namespace QTUTILS

@@ -27,7 +27,7 @@ int QCmdTestFloatOpts::Execute()
 	quint16 nTest = 0;
 	int retVal = GetOpt("test",nTest);
 
-	if (QCmdParseError::SUCCEEDED(retVal)) {
+	if (QCmdParseError::Succeeded(retVal)) {
 		retVal = runTest(nTest);
 	}
 
@@ -39,12 +39,12 @@ int QCmdTestFloatOpts::Execute()
 int QCmdTestFloatOpts::runTest( int nTest )
 {
 	int retVal = (nTest < NUM_TESTS) ? QCmdParseError::STATUS_OK : QCmdParseError::PARAM_INVALID_DATA;
-	if (QCmdParseError::SUCCEEDED(retVal)) {
+	if (QCmdParseError::Succeeded(retVal)) {
 		switch(nTest) {
 		case AllTests:
 			for(int i=1; i < NUM_TESTS;++i) {
 				int nCode = runTest(i);
-				if ( !QCmdParseError::SUCCEEDED(nCode) ) {
+				if ( !QCmdParseError::Succeeded(nCode) ) {
 					retVal = nCode;
 				}
 

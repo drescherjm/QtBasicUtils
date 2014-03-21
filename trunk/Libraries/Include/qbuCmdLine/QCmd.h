@@ -1,16 +1,19 @@
+#pragma once
+
 #ifndef __QCMD_H__
 #define __QCMD_H__
-//
 
 #include <float.h>
 #include <QString>
 #include <QMap>
 #include "qbuCmdLine/QCmdLineFileList.h"
 #include <limits>
-#include "qbuCmdLine/QCmdArg.h"
-#include "qbuCmdLine/QCmdOpt.h"
+//#include "qbuCmdLine/QCmdArg.h"
+//#include "qbuCmdLine/QCmdOpt.h"
 
-namespace QTUTILS {
+class QCmdArg;
+class QCmdOpt;
+class QCmdLineFileList;
 
 typedef QList<QCmdArg*> QArgList;
 typedef QList<QCmdOpt*> QOptList;
@@ -213,6 +216,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QCmd::Flags);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-}; // namespace QTUTILS
-
-#endif //__QCMD_H__
+#endif // __QCMD_H__

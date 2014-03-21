@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __USERPROPERY_H__
 #define __USERPROPERY_H__
 
@@ -12,7 +14,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-namespace QTUTILS {
 
 class UserProperty : public QObject , public QUpdateTracker, public QSharedData
 {
@@ -30,9 +31,11 @@ public:
 private:
 };
 
-}; //namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////
 
 //Q_DECLARE_METATYPE(UserProperty);
 Q_DECLARE_METATYPE(UserProperty*);
 
-#endif //__USERPROPERY_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // __USERPROPERY_H__

@@ -1,15 +1,14 @@
+#pragma once
+
 #ifndef __USERPROPPTR_H__
 #define __USERPROPPTR_H__
 
 #include "UserPropery.h"
 #include <QObject>
 #include <QVariant>
-#include <QDomElement>
 #include <QExplicitlySharedDataPointer>
 
-namespace QTUTILS {
-
-
+class QDomElement;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +41,10 @@ protected:
 	UserProperty*		m_pPropRaw;
 };
 
-}; //namespace QTUTILS
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 Q_DECLARE_METATYPE(UserPropPtr)
 
-#endif //__USERPROPPTR_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // __USERPROPPTR_H__

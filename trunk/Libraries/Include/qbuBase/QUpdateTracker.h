@@ -1,7 +1,9 @@
+#pragma once
+
 #ifndef __QUPDATETRACKER_H__
 #define __QUPDATETRACKER_H__
 
-namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QUpdateTracker
 {
@@ -49,6 +51,4 @@ inline bool QUpdateTracker::ForceUnmodified()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-}; //namespace QTUTILS
-
-#endif //__QUPDATETRACKER_H__
+#endif // __QUPDATETRACKER_H__

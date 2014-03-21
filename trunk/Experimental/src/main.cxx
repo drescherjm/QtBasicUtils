@@ -12,9 +12,6 @@
 #include <QStringList>
 #include <QDebug>
 
-using namespace QTUTILS;
-
-
 void printDomElem(QDomElement & e)
 {
 	std::cout << "Parse Begin" << std::endl;

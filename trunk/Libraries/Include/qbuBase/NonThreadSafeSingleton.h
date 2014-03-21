@@ -1,7 +1,7 @@
+#pragma once
+
 #ifndef __NONTHREADSAFESINGLETON_H__
 #define __NONTHREADSAFESINGLETON_H__
-
-namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //	
@@ -22,6 +22,7 @@ public:
 	}
 };
 
-}; //namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__NONTHREADSAFESINGLETON_H__
+#endif // __NONTHREADSAFESINGLETON_H__
+

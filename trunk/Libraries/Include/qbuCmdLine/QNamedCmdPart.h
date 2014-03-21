@@ -1,9 +1,9 @@
+#pragma once
+
 #ifndef __QNAMEDCMDPART_H__
 #define __QNAMEDCMDPART_H__
 
 #include "qbuCmdLine/QCmdPart.h"
-
-namespace  QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +36,4 @@ inline QString QNamedCmdPart::GetName()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-}; // namespace QTUTILS
-
-#endif //__QNAMEDCMDPART_H__
+#endif // __QNAMEDCMDPART_H__

@@ -20,8 +20,6 @@
 #include "testSetVariable.h"
 #include "cmdTestFloatOpts.h"
 
-using namespace QTUTILS;
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdTestPropertyMapSimple : public QCmd
@@ -775,7 +773,7 @@ int main(int argc, char* argv[])
 
 				}
 				if (retVal == QCmdParseError::STATUS_OK) {
-					std::cout << "SUCCEEDED" << std::endl;
+					std::cout << "Succeeded" << std::endl;
 				}
 				else{
 					std::cout << "FAILED" << std::endl;
