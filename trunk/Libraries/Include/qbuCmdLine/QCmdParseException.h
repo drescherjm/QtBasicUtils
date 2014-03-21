@@ -15,7 +15,7 @@
 
 #include "qbuCmdLine/QCmdParseError.h"
 
-namespace QTUTILS {
+
 
 class QCmdParseException 
 {
@@ -49,4 +49,4 @@ inline QString QCmdParseException::GetErrorString()
 	return m_strError;
 }
 
-}; //namespace QTUTILS
+

@@ -4,8 +4,6 @@
 #include "qbuCmdLine/QCmd.h"
 #include "qbuCmdLine/QCmdParseError.h"
 
-using namespace QTUTILS;
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdTestFloatOpts::QCmdTestFloatOpts(QString strName, QString strDescription) :

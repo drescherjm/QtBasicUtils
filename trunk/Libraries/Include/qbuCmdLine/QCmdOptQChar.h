@@ -3,7 +3,7 @@
 
 #include "qbuCmdLine/QCmdOptBasicBaseMM.h"
 
-namespace QTUTILS {
+
 	
 	class QCmdOptQChar : public QCmdOptBasicBaseMM<QChar>  
 	{
@@ -25,6 +25,6 @@ namespace QTUTILS {
 		void			destroy();
 	};
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDOPTQCHAR_H__

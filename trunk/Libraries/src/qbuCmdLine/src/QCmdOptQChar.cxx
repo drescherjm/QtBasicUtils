@@ -2,7 +2,8 @@
 #include "qbuCmdLine/QCmdParseError.h"
 #include <stdio.h>
 
-namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QCmdOptQChar::QCmdOptQChar(QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase, 
 	QChar chDefaultValue, QChar chMinVal, QChar chMaxVal): 
 QCmdOptBasicBaseMM<QChar>( strName, strDescription,strExplanation,
@@ -26,7 +27,7 @@ int QCmdOptQChar::ImportData( QString strValue )
 	int retVal = MarkSet();
 	if ( retVal == 0 ) {
 		QString strTemp = strValue.trimmed();
-	
+
 		if ( strTemp.isEmpty() ) {
 			retVal = QCmdParseError::PARAM_MISSING_DATA;
 		}
@@ -92,18 +93,21 @@ QString QCmdOptQChar::exportCommandString()
 	}
 	return retVal;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmdOptQChar::copy( const QCmdOptQChar & other )
 {
 	m_bIgnoreCase = other.m_bIgnoreCase;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmdOptQChar::destroy()
 {
 
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdOptQChar& QCmdOptQChar::operator=( const QCmdOptQChar & other )
@@ -117,6 +121,7 @@ QCmdOptQChar& QCmdOptQChar::operator=( const QCmdOptQChar & other )
 
 	return (*this);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdOptQChar* QCmdOptQChar::Clone()
@@ -125,5 +130,3 @@ QCmdOptQChar* QCmdOptQChar::Clone()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

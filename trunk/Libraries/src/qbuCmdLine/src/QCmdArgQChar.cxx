@@ -3,7 +3,7 @@
 #include "qbuCmdLine/QCmdParseError.h"
 #include <stdio.h>
 
-namespace QTUTILS {
+
 QCmdArgQChar::QCmdArgQChar(QString str, QString strDescription, QString strExplanation, 
 	bool bIgnoreCase, QChar chDefaultValue, QChar chMinVal, QChar chMaxVal): 
 QCmdArgBasicBaseMM<QChar>( str, strDescription,strExplanation,
@@ -128,5 +128,3 @@ void QCmdArgQChar::destroy()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

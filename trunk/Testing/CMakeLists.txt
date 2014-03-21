@@ -1,4 +1,3 @@
-LINK_LIBRARIES(BasicTest ${${PROJECT_NAME}_LIBRARIES} ${QT_LIBRARIES})
 
 include_directories( 
 	${PROJECT_BINARY_DIR} 
@@ -28,7 +27,8 @@ set(TEST_HDRS
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
+target_link_libraries(BasicTest ${${PROJECT_NAME}_LIBRARIES} ${QT_LIBRARIES})
 
-#add_dependencies(BasicTest ${${PROJECT_NAME}_LIBRARIES})
+add_dependencies(BasicTest ${${PROJECT_NAME}_LIBRARIES})
 
 Include(UnitTests.cmake)

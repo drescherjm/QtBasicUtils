@@ -95,6 +95,10 @@ SET( ${PROJECT_NAME}_INT_HDRS
 # and finally this will run moc:
 QT4_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
 
+#########################################################################################
+
+add_subdirectory(Libraries)
+
 IF(BUILD_TESTING)
 ENABLE_TESTING()
 #Include(Testing/UnitTests.cmake)
@@ -105,7 +109,7 @@ IF(BUILD_EXPERIMENTAL)
 add_subdirectory(Experimental)
 ENDIF(BUILD_EXPERIMENTAL)
 
-add_subdirectory(Libraries)
+#########################################################################################
 
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"

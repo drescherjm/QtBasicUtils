@@ -1,6 +1,6 @@
 #include "qbuCmdLine/QCmdArg.h"
 
-namespace QTUTILS {
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,4 +60,4 @@ void QCmdArg::destroy()
 
 }
 
-}; //namespace QTUTILS
+

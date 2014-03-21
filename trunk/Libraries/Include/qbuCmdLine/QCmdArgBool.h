@@ -14,7 +14,7 @@
 
 #include "qbuCmdLine/QCmdArgBasicBase.h"
 
-namespace QTUTILS {
+
 
 class QCmdArgBool : public QCmdArgBasicBase<bool>
 {
@@ -33,4 +33,4 @@ private:
 	void			destroy();
 };
 
-}; //namespace QTUTILS
+

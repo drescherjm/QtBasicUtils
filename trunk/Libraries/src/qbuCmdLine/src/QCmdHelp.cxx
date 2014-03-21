@@ -2,7 +2,7 @@
 #include "qbuCmdLine/QCmdHelpException.h"
 #include "qbuCmdLine/QCmdParseError.h"
 
-namespace QTUTILS {
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,4 +31,4 @@ namespace QTUTILS {
 		return m_pCmdLine;
 	}
 
-}; //namespace QTUTILS
+

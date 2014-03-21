@@ -5,7 +5,7 @@
 #include "qbuCmdLine/QCmdLineFileList.h"
 #include "qbuCmdLine/QCmd.h"
 
-namespace QTUTILS {
+
 
 class QCmdArgFileList : public QCmdArgBasicBase<QCmdLineFileList>
 {
@@ -30,6 +30,6 @@ private:
 	void			destroy();
 };
 
-}; //namespace QTUTILS
+
 
 #endif //ndef __QCMDARGFILELIST_H__

@@ -1,12 +1,12 @@
 #include "qbuBase/Property.h"
 #include "qbuBase/PropertyMap.h"
-#include "PropXMLHelper.h"
+#include "qbuBase/PropXMLHelper.h"
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
 #include <QDomDocument>
 
-namespace QTUTILS {
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -312,5 +312,3 @@ bool Property::operator==( const Property & other ) const
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

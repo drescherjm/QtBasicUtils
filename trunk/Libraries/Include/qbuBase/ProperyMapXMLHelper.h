@@ -1,11 +1,10 @@
+#pragma once
+
 #ifndef __PROPERYMAPXMLHELPER_H__
 #define __PROPERYMAPXMLHELPER_H__
 
 #include "PropXMLHelper.h"
 #include "qbuBase/Property.h"
-#include <QDomElement>
-
-namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,7 +18,5 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#endif // __PROPERYMAPXMLHELPER_H__
 
-}; // namespace QTUTILS
-
-#endif // def __PROPERYMAPXMLHELPER_H__

@@ -8,3 +8,5 @@ add_subdirectory(qbuCmdLine)
 if(QBU_BUILD_DATABASE)
 	add_subdirectory(qbuDataBase)
 endif(QBU_BUILD_DATABASE)
+
+set (${PROJECT_NAME}_LIBRARIES ${${PROJECT_NAME}_LIBRARIES} PARENT_SCOPE)

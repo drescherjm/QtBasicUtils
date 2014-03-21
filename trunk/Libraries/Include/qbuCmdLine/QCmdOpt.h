@@ -15,7 +15,7 @@
 
 #include "QNamedCmdPart.h"
 
-namespace QTUTILS {
+
 
 class QCmdOpt : public QNamedCmdPart  
 {
@@ -35,6 +35,6 @@ private:
 	void			destroy();
 };
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDOPT_H__

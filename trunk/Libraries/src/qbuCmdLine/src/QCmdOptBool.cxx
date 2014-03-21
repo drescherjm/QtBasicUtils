@@ -1,8 +1,6 @@
 #include "qbuCmdLine/QCmdOptBool.h"
 #include "qbuCmdLine/QCmdParseError.h"
 
-namespace QTUTILS {
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdOptBool::QCmdOptBool(QString strName, QString strDescription, QString strExplanation, bool bDefaultValue) : 
@@ -155,4 +153,4 @@ QString QCmdOptBool::exportOptionName()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-}; //namespace QTUTILS
+

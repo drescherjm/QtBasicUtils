@@ -14,7 +14,7 @@
 
 #include <QStringList>
 
-namespace QTUTILS {
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,6 +82,6 @@ inline void QCmdLineFileList::destroy()
 	m_strDefaultPath.clear();
 }
 
-}; //namespace QTUTILS
+
 
 #endif //ndef __QCMDLINEFILELIST_H__

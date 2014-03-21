@@ -4,7 +4,7 @@
 #include "qbuCmdLine/QCmdArgBasicBase.h"
 #include "qbuCmdLine/QCmd.h"
 
-namespace QTUTILS {
+
 
 	class QCmdArgQString : public QCmdArgBasicBase<QString>  
 	{
@@ -26,6 +26,6 @@ namespace QTUTILS {
 		void			destroy();
 	};
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDARGQSTRING_H__

@@ -4,7 +4,11 @@ FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )
 
-include_directories(Include ../Include)
+include_directories(
+	Include 
+	../Include
+	${${PROJECT_NAME}_INCLUDE_DIRS}
+)
 
 link_directories(../bin)
 
@@ -33,4 +37,4 @@ add_executable(experimental ${EXPERIMENTAL_SRCS}
 	${EXPERIMENTAL_MOC_HDRS}
 )
 
-target_link_libraries(experimental  ${QT_LIBRARIES} QtBasicUtils )
+target_link_libraries(experimental  ${QT_LIBRARIES} ${${PROJECT_NAME}_LIBRARIES} )

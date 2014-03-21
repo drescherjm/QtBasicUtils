@@ -1,9 +1,11 @@
+#pragma once
+
 #ifndef __QCMDOPTBASIC_H__
 #define __QCMDOPTBASIC_H__
 
 #include "qbuCmdLine/QCmdOptBasicBaseMM.h"
 
-namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]> class QCmdOptBasic : public QCmdOptBasicBaseMM<TYPE>  
 {
@@ -14,7 +16,7 @@ public:
 
 	QCmdOptBasic(const QCmdOptBasic<TYPE, fmt> & other);
 	QCmdOptBasic<TYPE, fmt>& operator=(const QCmdOptBasic<TYPE, fmt> & other);
-	
+
 	virtual QCmdOptBasic<TYPE, fmt>* Clone();
 public:
 	virtual QString GetSyntax();
@@ -50,6 +52,6 @@ typedef QCmdOptBasic<float,formatspec::FLTFMT>		QCmdOpt_float;
 typedef QCmdOptBasic<double,formatspec::DBLFMT>		QCmdOpt_double;
 typedef QCmdOptBasic<short,formatspec::SHORTFMT>	QCmdOpt_short;
 
-};//namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDOPTBASIC_H__
+#endif // __QCMDOPTBASIC_H__

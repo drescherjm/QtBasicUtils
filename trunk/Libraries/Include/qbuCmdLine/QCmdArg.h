@@ -15,7 +15,7 @@
 
 #include "QNamedCmdPart.h"
 
-namespace QTUTILS {
+
 
 class QCmdArg : public QNamedCmdPart  
 {
@@ -47,6 +47,6 @@ inline bool QCmdArg::isOptional()
 	return m_bOptional;
 }
 
-}; //namespace QTUTILS
+
 
 #endif //def __QCMDARG_H__

@@ -4,7 +4,7 @@
 #include "qbuCmdLine/QCmdOptBasicBase.h"
 #include "qbuCmdLine/QCmd.h"
 
-namespace QTUTILS {
+
 
 	class QCmdOptQString : public QCmdOptBasicBase<QString>  
 	{
@@ -27,6 +27,6 @@ namespace QTUTILS {
 		void			destroy();
 	};
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDOPTQSTRING_H__

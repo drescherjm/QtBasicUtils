@@ -5,7 +5,7 @@
 #include "qbuCmdLine/QCmd.h"
 #include <QStringList>
 
-namespace QTUTILS {
+
 
 	class QCmdOptQStringList : public QCmdOptBasicBase<QStringList>  
 	{
@@ -32,6 +32,6 @@ namespace QTUTILS {
 		void			destroy();
 	};
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDOPTQSTRINGLIST_H__

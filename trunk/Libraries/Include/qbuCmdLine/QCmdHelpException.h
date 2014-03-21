@@ -12,7 +12,7 @@
 
 #include <QString>
 
-namespace QTUTILS {
+
 
 class QCmdHelpException 
 {
@@ -36,4 +36,4 @@ inline QString QCmdHelpException::GetMessageString()
 	return m_strMessage;
 }
 
-}; //namespace QTUTILS
+

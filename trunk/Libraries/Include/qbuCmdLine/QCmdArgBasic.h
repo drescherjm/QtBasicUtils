@@ -1,10 +1,12 @@
+#pragma once
+
 #ifndef __QCMDARGBASIC_H__
 #define __QCMDARGBASIC_H__
 
 #include "qbuCmdLine/QCmdArgBasicBaseMM.h"
 #include "qbuCmdLine/QCmdExtra.h"
 
-namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]> class QCmdArgBasic : public QCmdArgBasicBaseMM<TYPE>  
 {
@@ -40,6 +42,6 @@ typedef QCmdArgBasic<float,formatspec::FLTFMT>		QCmdArg_float;
 typedef QCmdArgBasic<double,formatspec::DBLFMT>		QCmdArg_double;
 typedef QCmdArgBasic<short,formatspec::SHORTFMT>	QCmdArg_short;
 
-};//namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDARGBASIC_H__
+#endif // __QCMDARGBASIC_H__

@@ -1,5 +1,5 @@
 #include "qbuBase/PropertyMap.h"
-#include "PropXMLHelper.h"
+#include "qbuBase/PropXMLHelper.h"
 
 #include <QDomDocument>
 #include <QTextStream>
@@ -7,11 +7,9 @@
 #include <iostream>
 #include <QStringList>
 #include <QSet>
-#include "ProperyMapXMLHelper.h"
+#include "qbuBase/ProperyMapXMLHelper.h"
 #include <QXmlSimpleReader>
-#include "qdebug.h"
-
-namespace QTUTILS {
+#include <QDebug>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -622,5 +620,3 @@ void PropertyMap::propertyInserted( Property * pProp )
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

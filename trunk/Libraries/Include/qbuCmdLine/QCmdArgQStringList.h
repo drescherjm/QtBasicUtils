@@ -6,7 +6,7 @@
 
 #include <QStringList>
 
-namespace QTUTILS {
+
 
 	class QCmdArgQStringList : public QCmdArgBasicBase<QStringList>  
 	{
@@ -33,6 +33,6 @@ namespace QTUTILS {
 		void			destroy();
 	};
 
-}; //namespace QTUTILS
+
 
 #endif //__QCMDARGQSTRINGLIST_H__
