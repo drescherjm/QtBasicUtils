@@ -10,8 +10,6 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-link_directories(../bin)
-
 SET( EXPERIMENTAL_SRCS
 	./src/xrvariant.cpp
 	./src/xrbase64.cpp

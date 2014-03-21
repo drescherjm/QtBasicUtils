@@ -14,11 +14,6 @@ Include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
 #########################################################################################
 
-#Do not complain about relative link paths.
-cmake_policy(SET CMP0015 NEW)
-
-#########################################################################################
-
 option (BUILD_TESTING 				"Build Tests" ON)
 option (BUILD_EXPERIMENTAL 			"Build Experimental Code" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
@@ -69,10 +64,10 @@ configure_file (
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 
-set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
-set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
-set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
-set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
+#set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
+#set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
+#set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
+#set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
 SET( ${PROJECT_NAME}_SRCS
 
@@ -100,13 +95,12 @@ QT4_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
 add_subdirectory(Libraries)
 
 IF(BUILD_TESTING)
-ENABLE_TESTING()
-#Include(Testing/UnitTests.cmake)
-add_subdirectory(Testing)
+	ENABLE_TESTING()
+	add_subdirectory(Testing)
 ENDIF(BUILD_TESTING)
 
 IF(BUILD_EXPERIMENTAL)
-add_subdirectory(Experimental)
+	add_subdirectory(Experimental)
 ENDIF(BUILD_EXPERIMENTAL)
 
 #########################################################################################
@@ -119,7 +113,7 @@ CONFIGURE_FILE(
 ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
-set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
+#set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
 export( TARGETS ${${PROJECT_NAME}_LIBRARIES} FILE ${PROJECT_NAME}Exported.cmake)
 
 configure_file (
