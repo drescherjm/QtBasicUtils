@@ -120,7 +120,7 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
-#export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
+export( TARGETS ${${PROJECT_NAME}_LIBRARIES} FILE ${PROJECT_NAME}Exported.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
