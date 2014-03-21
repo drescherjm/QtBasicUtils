@@ -1,4 +1,4 @@
-#include "qbuQuery.h"
+#include "qbuDataBase/qbuQuery.h"
 
 class qbuDatabase;
 

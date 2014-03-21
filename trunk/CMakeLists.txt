@@ -51,6 +51,8 @@ Include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
 
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Libraries/Include)
+
 FIND_PACKAGE( Qt4 REQUIRED )
 set(QT_USE_QTXML true)
 INCLUDE( ${QT_USE_FILE} )

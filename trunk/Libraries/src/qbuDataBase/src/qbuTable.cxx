@@ -1,15 +1,15 @@
-#include "qbuTable.h"
-#include "qbuDatabase.h"
-#include "qbuPropertyMap.h"
+#include "qbuDataBase/qbuTable.h"
+#include "qbuDataBase/qbuDatabase.h"
+#include "qbuDataBase/qbuPropertyMap.h"
 #include <QStringList>
 #include <QSqlQuery>
-#include "qbuException.h"
+#include "qbuDataBase/qbuException.h"
 #include <iostream>
-#include "qbuTableSchema.h"
-#include "qbuStringList.h"
+#include "qbuDataBase/qbuTableSchema.h"
+#include "qbuDataBase/qbuStringList.h"
 #include "..\qbuDatabase\qbuDatabasePCH.h"
 #include "smLog.h"
-#include "qbuSelectQuery.h"
+#include "qbuDataBase/qbuSelectQuery.h"
 #include "Property.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////

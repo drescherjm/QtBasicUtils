@@ -1,6 +1,6 @@
-#include "qbuDBSavePoint.h"
-#include "qbuDatabase.h"
-#include "qbuQuery.h"
+#include "qbuDataBase/qbuDBSavePoint.h"
+#include "qbuDataBase/qbuDatabase.h"
+#include "qbuDataBase/qbuQuery.h"
 #include <QUuid>
 //#include "smLog.h"
 

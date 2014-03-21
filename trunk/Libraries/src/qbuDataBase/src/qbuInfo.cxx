@@ -1,6 +1,6 @@
-#include "qbuInfo.h"
+#include "qbuDataBase/qbuInfo.h"
 #include <QStringList>
-#include "qbuMacros.h"
+#include "qbuDataBase/qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

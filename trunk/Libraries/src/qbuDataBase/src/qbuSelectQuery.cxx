@@ -1,11 +1,11 @@
-#include "qbuSelectQuery.h"
+#include "qbuDataBase/qbuSelectQuery.h"
 #include <QStringList>
 #include "Property.h"
-#include "qbuPropertyMap.h"
+#include "qbuDataBase/qbuPropertyMap.h"
 #include <QDebug>
-#include "qbuDBColumnDefList.h"
-#include "qbuException.h"
-#include "qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDBColumnDefList.h"
+#include "qbuDataBase/qbuException.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 #include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////

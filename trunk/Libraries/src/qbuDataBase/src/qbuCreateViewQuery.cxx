@@ -1,5 +1,5 @@
-#include "qbuCreateViewQuery.h"
-#include "qbuException.h"
+#include "qbuDataBase/qbuCreateViewQuery.h"
+#include "qbuDataBase/qbuException.h"
 #include <QDebug>
 
 /////////////////////////////////////////////////////////////////////////////////////////
