@@ -1,8 +1,8 @@
 #ifndef __QCMDARGBASIC_H__
 #define __QCMDARGBASIC_H__
 
-#include "QCmdArgBasicBaseMM.h"
-#include "QCmdExtra.h"
+#include "qbuCmdLine/QCmdArgBasicBaseMM.h"
+#include "qbuCmdLine/QCmdExtra.h"
 
 namespace QTUTILS {
 
@@ -28,7 +28,7 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QCmdArgBasic.txx"
+#include "qbuCmdLine/QCmdArgBasic.txx"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

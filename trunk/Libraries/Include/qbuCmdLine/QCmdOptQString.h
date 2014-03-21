@@ -1,8 +1,8 @@
 #ifndef __QCMDOPTQSTRING_H__
 #define __QCMDOPTQSTRING_H__
 
-#include "QCmdOptBasicBase.h"
-#include "QCmd.h"
+#include "qbuCmdLine/QCmdOptBasicBase.h"
+#include "qbuCmdLine/QCmd.h"
 
 namespace QTUTILS {
 

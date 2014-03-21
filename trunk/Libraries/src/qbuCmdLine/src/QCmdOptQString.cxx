@@ -1,6 +1,6 @@
-#include "QCmdOptQString.h"
-#include "QCmdParseError.h"
-#include "QCmdOptBasicBase.h"
+#include "qbuCmdLine/QCmdOptQString.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdOptBasicBase.h"
 
 namespace QTUTILS {
 

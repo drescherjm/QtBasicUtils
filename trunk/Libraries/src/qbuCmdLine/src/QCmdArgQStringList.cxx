@@ -1,6 +1,6 @@
-#include "QCmdArgQStringList.h"
-#include "QCmdParseError.h"
-#include "QCmdArgBasicBase.h"
+#include "qbuCmdLine/QCmdArgQStringList.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdArgBasicBase.h"
 
 namespace QTUTILS {
 

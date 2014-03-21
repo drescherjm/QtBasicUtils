@@ -1,8 +1,8 @@
-#include "Property.h"
-#include "QCmdParseError.h"
-#include "QCmdParseException.h"
-#include "QCmdHelpException.h"
-#include "PropertyMap.h"
+#include "qbuBase/Property.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseException.h"
+#include "qbuCmdLine/QCmdHelpException.h"
+#include "qbuBase/PropertyMap.h"
 #include <iostream>
 #include <QDate>
 #include "testxmlimp.h"

@@ -1,12 +1,12 @@
 #include "testCommandLineInclude.h"
-#include "QCmdParseError.h"
-#include "QCmdLine.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdLine.h"
 #include <QFile>
 #include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QCmdTestCmdLineFileInclude::QCmdTestCmdLineFileInclude( QString strName, QString strDescription ) : 
+QCmdTestCmdLineFileInclude::QCmdTestCmdLineFileInclude( QString strName, QString strDescription ) : 
 	QCmd(strName,strDescription)
 {
 	int nTest =0;
@@ -15,7 +15,7 @@ QTUTILS::QCmdTestCmdLineFileInclude::QCmdTestCmdLineFileInclude( QString strName
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QTUTILS::QCmdTestCmdLineFileInclude::Execute()
+int QCmdTestCmdLineFileInclude::Execute()
 {
 	int nTest;
 	int retVal = GetOpt("test",nTest);
@@ -27,7 +27,7 @@ int QTUTILS::QCmdTestCmdLineFileInclude::Execute()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QTUTILS::QCmdTestCmdLineFileInclude::runTest( int nTest )
+int QCmdTestCmdLineFileInclude::runTest( int nTest )
 {
 	int retVal = QCmdParseError::STATUS_OK;
 	switch(nTest) {
@@ -58,20 +58,20 @@ int QTUTILS::QCmdTestCmdLineFileInclude::runTest( int nTest )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QTUTILS::QCmdTestCmdLineFileInclude::runTest_DoubleQuotes_1()
+int QCmdTestCmdLineFileInclude::runTest_DoubleQuotes_1()
 {
 	int retVal = writeTestFile("DoubleQuotes1.txt","+CMD1 --var1=\"John Drescher\" --var2=\"Kathy Drescher\"");
 	if (QCmdParseError::SUCCEEDED(retVal)) {
 
 	}
-	//QTUTILS::QCmdLine		myCmdLine("dbdev0",lst);
+	//QCmdLine		myCmdLine("dbdev0",lst);
 
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool QTUTILS::QCmdTestCmdLineFileInclude::writeTestFile( QString strFileName, QString strMsg )
+bool QCmdTestCmdLineFileInclude::writeTestFile( QString strFileName, QString strMsg )
 {
 	QFile file(strFileName);
 	bool retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);

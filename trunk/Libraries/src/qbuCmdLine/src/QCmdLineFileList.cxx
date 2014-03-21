@@ -1,4 +1,4 @@
-#include "QCmdLineFileList.h"
+#include "qbuCmdLine/QCmdLineFileList.h"
 
 namespace QTUTILS {
 

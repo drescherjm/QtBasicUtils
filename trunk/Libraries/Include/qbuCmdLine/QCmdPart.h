@@ -10,12 +10,14 @@
 //
 //
 
+#pragma once
+
 #ifndef __QCMDPART_H__
 #define __QCMDPART_H__
 
 #include <QString>
 
-namespace QTUTILS {
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdPart 
 {
@@ -58,6 +60,6 @@ inline QString QCmdPart::GetExplanation()
 	return m_strExplanation;
 }
 
-}; //namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__QCMDPART_H__
+#endif // __QCMDPART_H__

@@ -1,11 +1,11 @@
+#pragma once
+
 #ifndef __PROPERTYMAP_H__
 #define __PROPERTYMAP_H__
 
-#include "Property.h"
-#include "UserPropery.h"
+#include "qbuBase/Property.h"
+#include "qbuBase/UserPropery.h"
 #include <QMap>
-
-namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,7 +100,9 @@ inline bool PropertyMap::empty() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(QTUTILS::PropertyMap)
-Q_DECLARE_METATYPE(QTUTILS::PropertyMap*)
+Q_DECLARE_METATYPE(PropertyMap)
+Q_DECLARE_METATYPE(PropertyMap*)
 
-#endif //__PROPERTYMAP_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // __PROPERTYMAP_H__

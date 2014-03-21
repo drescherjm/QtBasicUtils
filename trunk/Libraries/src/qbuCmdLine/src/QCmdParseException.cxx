@@ -1,4 +1,4 @@
-#include "QCmdParseException.h"
+#include "qbuCmdLine/QCmdParseException.h"
 #include <assert.h>
 
 namespace QTUTILS {

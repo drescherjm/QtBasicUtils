@@ -1,4 +1,4 @@
-#include "QCmdHelpException.h"
+#include "qbuCmdLine/QCmdHelpException.h"
 
 namespace QTUTILS {
 

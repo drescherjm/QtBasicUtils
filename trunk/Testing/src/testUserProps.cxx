@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #include "testUserProps.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseError.h"
 
-#include "Property.h"
-#include "QCmdParseError.h"
-#include "QCmdParseException.h"
-#include "QCmdHelpException.h"
-#include "PropertyMap.h"
-#include "PropertyList.h"
+#include "qbuBase/Property.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseException.h"
+#include "qbuCmdLine/QCmdHelpException.h"
+#include "qbuBase/PropertyMap.h"
+#include "qbuBase/PropertyList.h"
 #include <iostream>
 #include <QDate>
 
@@ -466,7 +466,7 @@ static bool test9()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QTUTILS::QCmdTestUserProps::Execute()
+int QCmdTestUserProps::Execute()
 {
 	int nTest;
 

@@ -1,12 +1,12 @@
 #include "testSetVariable.h"
-#include "QCmdParseError.h"
-#include "QCmdLine.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdLine.h"
 #include <QFile>
 #include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::CmdTestSetVar::CmdTestSetVar( QString strName, QString strDescription ) : 
+CmdTestSetVar::CmdTestSetVar( QString strName, QString strDescription ) : 
 	QCmd(strName,strDescription)
 {
 	QString str;
@@ -18,7 +18,7 @@ QTUTILS::CmdTestSetVar::CmdTestSetVar( QString strName, QString strDescription )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QTUTILS::CmdTestSetVar::Execute()
+int CmdTestSetVar::Execute()
 {
 	QString strName;
 

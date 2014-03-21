@@ -1,4 +1,4 @@
-#include "QCmdOpt.h"
+#include "qbuCmdLine/QCmdOpt.h"
 
 namespace QTUTILS {
 

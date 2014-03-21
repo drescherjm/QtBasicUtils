@@ -1,9 +1,9 @@
 #include "testxml.h"
-#include "Property.h"
-#include "QCmdParseError.h"
-#include "QCmdParseException.h"
-#include "QCmdHelpException.h"
-#include "PropertyMap.h"
+#include "qbuBase/Property.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseException.h"
+#include "qbuCmdLine/QCmdHelpException.h"
+#include "qbuBase/PropertyMap.h"
 #include <iostream>
 #include <QDate>
 #include "qxml.h"
@@ -22,12 +22,12 @@ QCmdTestXMLExport::QCmdTestXMLExport(QString strName, QString strDescription) :
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test_exportXML(QTUTILS::Property & prop) 
+bool test_exportXML(Property & prop) 
 {
 	std::cout << "BEGIN: Testing test_exportXML" << std::endl;
 
 	QString strXML = prop.toXML();
-	QTUTILS::Property prop1;
+	Property prop1;
 	prop1.fromXML(strXML);
 	QString strXML1 = prop1.toXML();
 
@@ -44,7 +44,7 @@ bool test_exportXML(QTUTILS::Property & prop)
 static bool test0()
 {
 
-	QTUTILS::Property prop;
+	Property prop;
 
 	prop.setObjectName("Name");
 	prop.SetData(QString("John M. Drescher"));
@@ -57,7 +57,7 @@ static bool test0()
 static bool test1()
 {
 
-	QTUTILS::Property prop;
+	Property prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -70,7 +70,7 @@ static bool test1()
 static bool test2()
 {
 
-	QTUTILS::Property prop;
+	Property prop;
 
 	prop.setObjectName("Sex");
 	prop.SetData(QChar('M'));
@@ -82,8 +82,8 @@ static bool test2()
 
 static bool test3()
 {
-	QTUTILS::PropertyMap pc;
-	QTUTILS::Property prop;
+	PropertyMap pc;
+	Property prop;
 	
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -99,7 +99,7 @@ static bool test3()
 
 	QString str = pc.toXML();
 
-	QTUTILS::PropertyMap pc1;
+	PropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 
@@ -117,8 +117,8 @@ static bool test3()
 static bool test4()
 {
 
-	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
-	QTUTILS::Property prop;
+	PropertyMap pmPeople,pmJohn, pmKathy;
+	Property prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -162,7 +162,7 @@ static bool test4()
 
 	QString str = pmPeople.toXML();
 
-	QTUTILS::PropertyMap pc1;
+	PropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 
@@ -181,8 +181,8 @@ static bool test4()
 static bool test5()
 {
 
-	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
-	QTUTILS::Property prop;
+	PropertyMap pmPeople,pmJohn, pmKathy;
+	Property prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -239,7 +239,7 @@ static bool test5()
 	QString str = pmPeople.toXML();
 	bool retVal = pmPeople.Save("People.xml");
 	if (retVal) {
-		QTUTILS::PropertyMap pc1;
+		PropertyMap pc1;
 
 		retVal = pc1.Load("People.xml");
 
@@ -259,8 +259,8 @@ static bool test6()
 {
 	//This tests the update tracking of PropertyMap
 
-	QTUTILS::PropertyMap pmPeople,pmJohn, pmKathy;
-	QTUTILS::Property prop;
+	PropertyMap pmPeople,pmJohn, pmKathy;
+	Property prop;
 
 	bool retVal = !pmJohn.HasChanged();
 
@@ -317,8 +317,8 @@ static bool test7()
 
 static bool test8()
 {
-	QTUTILS::PropertyMap pc;
-	QTUTILS::Property prop;
+	PropertyMap pc;
+	Property prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -334,7 +334,7 @@ static bool test8()
 
 	QString str = pc.toXML();
 
-	QTUTILS::PropertyMap pc1;
+	PropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 

@@ -1,8 +1,8 @@
 #ifndef __QCMDARGQSTRINGLIST_H__
 #define __QCMDARGQSTRINGLIST_H__
 
-#include "QCmdArgBasicBase.h"
-#include "QCmd.h"
+#include "qbuCmdLine/QCmdArgBasicBase.h"
+#include "qbuCmdLine/QCmd.h"
 
 #include <QStringList>
 

@@ -1,5 +1,5 @@
-#include "Property.h"
-#include "PropertyMap.h"
+#include "qbuBase/Property.h"
+#include "qbuBase/PropertyMap.h"
 #include "PropXMLHelper.h"
 #include <QFile>
 #include <QTextStream>

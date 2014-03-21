@@ -1,8 +1,5 @@
-#include "ProperyMapXMLHelper.h"
-#include "PropertyMap.h"
-
-namespace QTUTILS {
-
+#include "qbuBase/ProperyMapXMLHelper.h"
+#include "qbuBase/PropertyMap.h"
 /////////////////////////////////////////////////////////////////////////////////////////
 
 ProperyMapXMLHelper::ProperyMapXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
@@ -36,5 +33,3 @@ bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; //namespace QTUTILS

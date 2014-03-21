@@ -1,5 +1,5 @@
-#include "QCmdArgBool.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdArgBool.h"
+#include "qbuCmdLine/QCmdParseError.h"
 
 namespace QTUTILS {
 

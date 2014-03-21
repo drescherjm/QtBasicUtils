@@ -5,10 +5,10 @@
 #include <float.h>
 #include <QString>
 #include <QMap>
-#include "QCmdLineFileList.h"
+#include "qbuCmdLine/QCmdLineFileList.h"
 #include <limits>
-#include "QCmdArg.h"
-#include "QCmdOpt.h"
+#include "qbuCmdLine/QCmdArg.h"
+#include "qbuCmdLine/QCmdOpt.h"
 
 namespace QTUTILS {
 

@@ -1,7 +1,7 @@
 #ifndef __QCMDOPTBASIC_H__
 #define __QCMDOPTBASIC_H__
 
-#include "QCmdOptBasicBaseMM.h"
+#include "qbuCmdLine/QCmdOptBasicBaseMM.h"
 
 namespace QTUTILS {
 
@@ -27,7 +27,7 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QCmdOptBasic.txx"
+#include "qbuCmdLine/QCmdOptBasic.txx"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1,4 +1,4 @@
-#include "PropertyMap.h"
+#include "qbuBase/PropertyMap.h"
 #include "qbuMacros.h"
 
 
@@ -7,9 +7,9 @@
 *	\ingroup smBase
 */
 
-class qbuPropertyMap : public QTUTILS::PropertyMap
+class qbuPropertyMap : public PropertyMap
 {
-	QBU_DECLARE_SUPERCLASS(QTUTILS::PropertyMap);
+	QBU_DECLARE_SUPERCLASS(PropertyMap);
 public:
 	bool	operator==(const qbuPropertyMap & other) const;
 public:
@@ -30,7 +30,7 @@ bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
 	const_iterator it = find(strFieldName);
 	retVal = (it != end());
 	if (retVal) {
-		QTUTILS::Property* pProp =*it;
+		Property* pProp =*it;
 		QVariant vt = (*it)->GetData();
 		retVal = vt.canConvert<DataType>();
 		nOutVal = vt.value<DataType>();
@@ -44,7 +44,7 @@ template<typename DataType>
 bool qbuPropertyMap::setField( QString strFieldName, DataType nInVal )
 {
 	bool retVal;
-	QTUTILS::Property prop;
+	Property prop;
 	prop.setObjectName(strFieldName);
 	prop.SetData(nInVal);
 	retVal = (insert(prop) != end());

@@ -1,11 +1,11 @@
 #ifndef __CMDTESTFLOATOPTS_H__
 #define __CMDTESTFLOATOPTS_H__
 
-#include "QCmd.h"
+#include "qbuCmdLine/QCmd.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class QCmdTestFloatOpts : public QTUTILS::QCmd
+class QCmdTestFloatOpts : public QCmd
 {
 public:
 	QCmdTestFloatOpts(QString strName, QString strDescription);

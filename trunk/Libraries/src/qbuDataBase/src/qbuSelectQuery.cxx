@@ -1,6 +1,6 @@
 #include "qbuDataBase/qbuSelectQuery.h"
 #include <QStringList>
-#include "Property.h"
+#include "qbuBase/Property.h"
 #include "qbuDataBase/qbuPropertyMap.h"
 #include <QDebug>
 #include "qbuDataBase/qbuDBColumnDefList.h"
@@ -219,7 +219,7 @@ bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 			int nField=0;
 			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
 				if (!isNull(nField)) {
-					QTUTILS::Property prop;
+					Property prop;
 					prop.setObjectName(col.getNameOrAlias());
 					prop.SetData(value(nField));
 
@@ -440,7 +440,7 @@ bool qbuSelectQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString 
 	if (retVal) {
 		qbuPropertyMap::iterator it = pProps->find(strField);
 		if (it != pProps->end()) {
-			QTUTILS::Property* pProp = *it;
+			Property* pProp = *it;
 			const QVariant& vt =pProp->GetData();
 			retVal = vt.canConvert(QVariant::String);
 			if (retVal) {

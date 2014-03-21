@@ -1,7 +1,7 @@
 #ifndef __QCMDOPTQCHAR_H__
 #define __QCMDOPTQCHAR_H__
 
-#include "QCmdOptBasicBaseMM.h"
+#include "qbuCmdLine/QCmdOptBasicBaseMM.h"
 
 namespace QTUTILS {
 	

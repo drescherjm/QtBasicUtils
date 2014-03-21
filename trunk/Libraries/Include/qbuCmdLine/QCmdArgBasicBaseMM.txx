@@ -16,7 +16,7 @@ QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM(QString strName, QString strDescrip
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdArgBasicBaseMM<TYPE>::destroy()
+void QCmdArgBasicBaseMM<TYPE>::destroy()
 {
 
 }
@@ -24,7 +24,7 @@ void QTUTILS::QCmdArgBasicBaseMM<TYPE>::destroy()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdArgBasicBaseMM<TYPE>::copy( const QCmdArgBasicBaseMM<TYPE> & other )
+void QCmdArgBasicBaseMM<TYPE>::copy( const QCmdArgBasicBaseMM<TYPE> & other )
 {
 	m_nMaxValue = other.m_nMaxValue;
 	m_nMinValue = other.m_nMinValue;
@@ -33,7 +33,7 @@ void QTUTILS::QCmdArgBasicBaseMM<TYPE>::copy( const QCmdArgBasicBaseMM<TYPE> & o
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QCmdArgBasicBaseMM<TYPE>& QTUTILS::QCmdArgBasicBaseMM<TYPE>::operator=( const QCmdArgBasicBaseMM<TYPE> & other )
+QCmdArgBasicBaseMM<TYPE>& QCmdArgBasicBaseMM<TYPE>::operator=( const QCmdArgBasicBaseMM<TYPE> & other )
 {
 	SuperClass::operator =(other);
 
@@ -47,7 +47,7 @@ QCmdArgBasicBaseMM<TYPE>& QTUTILS::QCmdArgBasicBaseMM<TYPE>::operator=( const QC
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QTUTILS::QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM( const QCmdArgBasicBaseMM<TYPE> & other ) : SuperClass(other)
+QCmdArgBasicBaseMM<TYPE>::QCmdArgBasicBaseMM( const QCmdArgBasicBaseMM<TYPE> & other ) : SuperClass(other)
 {
 	copy(other);
 }

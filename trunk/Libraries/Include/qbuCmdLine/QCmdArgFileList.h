@@ -1,9 +1,9 @@
 #ifndef __QCMDARGFILELIST_H__
 #define __QCMDARGFILELIST_H__
 
-#include "QCmdArgBasicBase.h"
-#include "QCmdLineFileList.h"
-#include "QCmd.h"
+#include "qbuCmdLine/QCmdArgBasicBase.h"
+#include "qbuCmdLine/QCmdLineFileList.h"
+#include "qbuCmdLine/QCmd.h"
 
 namespace QTUTILS {
 

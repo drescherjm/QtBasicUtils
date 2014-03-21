@@ -1,25 +1,23 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QCmd.h"
-#include "QCmdArg.h"
-#include "QCmdOpt.h"
-#include "QCmdParseError.h"
-#include "QCmdOptBool.h"
-#include "QCmdParseException.h"
-#include "QCmdOptBasic.h"
-#include "QCmdOptQChar.h"
-#include "QCmdOptQString.h"
-#include "QCmdOptQStringList.h"
+#include "qbuCmdLine/QCmd.h"
+#include "qbuCmdLine/QCmdArg.h"
+#include "qbuCmdLine/QCmdOpt.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdOptBool.h"
+#include "qbuCmdLine/QCmdParseException.h"
+#include "qbuCmdLine/QCmdOptBasic.h"
+#include "qbuCmdLine/QCmdOptQChar.h"
+#include "qbuCmdLine/QCmdOptQString.h"
+#include "qbuCmdLine/QCmdOptQStringList.h"
 
-#include "QCmdArgBool.h"
-#include "QCmdArgBasic.h"
-#include "QCmdArgQChar.h"
-#include "QCmdArgQString.h"
-#include "QCmdArgQStringList.h"
-#include "QCmdArgFileList.h"
-#include "QCmdHelpException.h"
-
-namespace QTUTILS {
+#include "qbuCmdLine/QCmdArgBool.h"
+#include "qbuCmdLine/QCmdArgBasic.h"
+#include "qbuCmdLine/QCmdArgQChar.h"
+#include "qbuCmdLine/QCmdArgQString.h"
+#include "qbuCmdLine/QCmdArgQStringList.h"
+#include "qbuCmdLine/QCmdArgFileList.h"
+#include "qbuCmdLine/QCmdHelpException.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1653,7 +1651,7 @@ QOptList QCmd::getOptions(bool bDuplicate) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QArgList QCmd::getArguments(bool bDuplicate) const
+QArgList QCmd::getArguments(bool bDuplicate) const
 {
 	QArgList retVal;
 	if (!bDuplicate) {
@@ -1761,5 +1759,3 @@ bool QCmd::hasOpt( QString strName )
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; //namespace QTUTILS

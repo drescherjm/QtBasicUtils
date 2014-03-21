@@ -1,10 +1,11 @@
-LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
+LINK_LIBRARIES(BasicTest ${${PROJECT_NAME}_LIBRARIES} ${QT_LIBRARIES})
 
 include_directories( 
 	${PROJECT_BINARY_DIR} 
 	${PROJECT_BINARY_DIR}/.. 
 	${PROJECT_SOURCE_DIR}/Include 
 	./Include
+	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
 set(TEST_SRCS 
@@ -28,6 +29,6 @@ set(TEST_HDRS
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
 
-add_dependencies(BasicTest QtBasicUtils)
+#add_dependencies(BasicTest ${${PROJECT_NAME}_LIBRARIES})
 
 Include(UnitTests.cmake)

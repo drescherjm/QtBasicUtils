@@ -1,5 +1,5 @@
-#include "QCmdOptQChar.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdOptQChar.h"
+#include "qbuCmdLine/QCmdParseError.h"
 #include <stdio.h>
 
 namespace QTUTILS {

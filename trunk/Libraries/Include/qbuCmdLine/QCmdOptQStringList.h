@@ -1,8 +1,8 @@
 #ifndef __QCMDOPTQSTRINGLIST_H__
 #define __QCMDOPTQSTRINGLIST_H__
 
-#include "QCmdOptBasicBase.h"
-#include "QCmd.h"
+#include "qbuCmdLine/QCmdOptBasicBase.h"
+#include "qbuCmdLine/QCmd.h"
 #include <QStringList>
 
 namespace QTUTILS {

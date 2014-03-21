@@ -1,8 +1,8 @@
 #include "cmdTestFloatOpts.h"
 #include <QString>
 #include <iostream>
-#include "QCmd.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmd.h"
+#include "qbuCmdLine/QCmdParseError.h"
 
 using namespace QTUTILS;
 
@@ -48,7 +48,7 @@ int QCmdTestFloatOpts::runTest( int nTest )
 					retVal = nCode;
 				}
 
-				std::cerr << "QCmdTestFloatOpts::runTest failed at test " << i << std::endl;
+				std::cerr << "qbuCmdLine/QCmdTestFloatOpts::runTest failed at test " << i << std::endl;
 
 			}
 			break;

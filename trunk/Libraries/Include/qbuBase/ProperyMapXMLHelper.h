@@ -2,7 +2,7 @@
 #define __PROPERYMAPXMLHELPER_H__
 
 #include "PropXMLHelper.h"
-#include "Property.h"
+#include "qbuBase/Property.h"
 #include <QDomElement>
 
 namespace QTUTILS {

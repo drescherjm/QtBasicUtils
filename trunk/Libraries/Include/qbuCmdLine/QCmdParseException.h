@@ -13,7 +13,7 @@
 #include <QString>
 #include <QStringList>
 
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseError.h"
 
 namespace QTUTILS {
 

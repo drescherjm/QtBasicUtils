@@ -1,7 +1,7 @@
 #ifndef __TESTXMLIMP_H__
 #define __TESTXMLIMP_H__
 
-#include "QCmd.h"
+#include "qbuCmdLine/QCmd.h"
 
 namespace QTUTILS {
 

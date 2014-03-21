@@ -14,7 +14,7 @@
 
 namespace QTUTILS {
 
-class UserProperty : public QObject , public QTUTILS::QUpdateTracker, public QSharedData
+class UserProperty : public QObject , public QUpdateTracker, public QSharedData
 {
 	Q_OBJECT
 public:
@@ -32,7 +32,7 @@ private:
 
 }; //namespace QTUTILS
 
-//Q_DECLARE_METATYPE(QTUTILS::UserProperty);
-Q_DECLARE_METATYPE(QTUTILS::UserProperty*);
+//Q_DECLARE_METATYPE(UserProperty);
+Q_DECLARE_METATYPE(UserProperty*);
 
 #endif //__USERPROPERY_H__

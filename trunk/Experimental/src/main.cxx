@@ -1,7 +1,7 @@
 #include "xrvariant.h"
-#include "Property.h"
-#include "PropertyMap.h"
-#include "PropertyList.h"
+#include "qbuBase/Property.h"
+#include "qbuBase/PropertyMap.h"
+#include "qbuBase/PropertyList.h"
 
 #include <iostream>
 #include <QFile>
@@ -38,12 +38,12 @@ void printDomElem(QDomElement & e)
 	std::cout << "Parse End." << std::endl << std::endl;
 }
 
-bool test_exportXML(QTUTILS::Property & prop) 
+bool test_exportXML(Property & prop) 
 {
 	std::cout << "BEGIN: Testing test_exportXML" << std::endl;
 
 	QString strXML = prop.toXML();
-	QTUTILS::Property prop1;
+	Property prop1;
 	prop1.fromXML(strXML);
 
 	std::cout << "Prop= " <<  strXML.toStdString() << std::endl;
@@ -111,11 +111,11 @@ int main(int argc, char* argv[])
 	QStringList lst = strMsg0.split(QRegExp("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))"));
 
 
-	int id = qRegisterMetaType<QTUTILS::PropertyMap>();
+	int id = qRegisterMetaType<PropertyMap>();
 
-	int id1 = QMetaType::type("QTUTILS::PropertyMap");
+	int id1 = QMetaType::type("PropertyMap");
 
-	//int id2 = QTUTILS::PropertyMap::m_nMetaID;
+	//int id2 = PropertyMap::m_nMetaID;
 
 
 	{
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
 		domDoc.save(stream,4);
 	}
 
-	QTUTILS::Property prop;
+	Property prop;
 
 	prop.setObjectName("Name");
 	prop.SetData(QString("John M. Drescher"));
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
 
 	test_exportXML(prop);
 
-	QTUTILS::PropertyMap pc;
+	PropertyMap pc;
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
@@ -205,8 +205,8 @@ int main(int argc, char* argv[])
 	int nUserType= prop.GetData().userType();
 	QString str = QMetaType::typeName(nUserType);
 
-	QTUTILS::Property pc2;
-	pc2.SetData(UserPropPtr(new QTUTILS::PropertyMap(pc)));
+	Property pc2;
+	pc2.SetData(UserPropPtr(new PropertyMap(pc)));
 
 	str = pc2.toXML();
 
@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
 		str = ptr.toXML();
 		UserPropPtr ptr1 = pc2;
 		QString str_1 = ptr1.toXML();
-		QTUTILS::PropertyMap* pPM1 = dynamic_cast<QTUTILS::PropertyMap*>(ptr1.data());
+		PropertyMap* pPM1 = dynamic_cast<PropertyMap*>(ptr1.data());
 		if (pPM1) {
 			prop.SetData(QDate(1972,1,10));
 			prop.setObjectName("DOB");
@@ -227,10 +227,10 @@ int main(int argc, char* argv[])
 	nUserType= pc2.GetData().userType();
 	str = QMetaType::typeName(nUserType);
 
-	QTUTILS::UserProperty* pProp2 = pc2.GetData().value<UserProperty*>();
-	QTUTILS::PropertyMap* pProp3 = pc2.GetData().value<PropertyMap*>();
+	UserProperty* pProp2 = pc2.GetData().value<UserProperty*>();
+	PropertyMap* pProp3 = pc2.GetData().value<PropertyMap*>();
 
-	QTUTILS::PropertyMap pc1;
+	PropertyMap pc1;
 
 	pc1.insert(prop);
 
@@ -252,7 +252,7 @@ int main(int argc, char* argv[])
 	std::cout << prop.GetData().typeName() << std::endl;
 
 	{
-		QTUTILS::PropertyMap::iterator it = pc1.begin();
+		PropertyMap::iterator it = pc1.begin();
 
 		for(;it != pc1.end(); ++it) {
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";

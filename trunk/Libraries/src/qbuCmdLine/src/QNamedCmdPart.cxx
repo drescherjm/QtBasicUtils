@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QNamedCmdPart.h"
+#include "qbuCmdLine//QNamedCmdPart.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QNamedCmdPart::QNamedCmdPart( QString strName,QString strDescription, QString strExplanation ) :
+QNamedCmdPart::QNamedCmdPart( QString strName,QString strDescription, QString strExplanation ) :
 	m_strName(strName),QCmdPart(strDescription,strExplanation)
 {
 
@@ -12,33 +12,35 @@ QTUTILS::QNamedCmdPart::QNamedCmdPart( QString strName,QString strDescription, Q
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QNamedCmdPart::QNamedCmdPart( const QNamedCmdPart & other ) : QCmdPart(other)
+QNamedCmdPart::QNamedCmdPart( const QNamedCmdPart & other ) : QCmdPart(other)
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QTUTILS::QNamedCmdPart::getValueDescription()
+QString QNamedCmdPart::getValueDescription()
 {
 	return QString("<Value>");
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void QTUTILS::QNamedCmdPart::copy( const QNamedCmdPart & other )
+void QNamedCmdPart::copy( const QNamedCmdPart & other )
 {
 	m_strName = other.m_strName;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void QTUTILS::QNamedCmdPart::destroy()
+void QNamedCmdPart::destroy()
 {
 
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QTUTILS::QNamedCmdPart& QTUTILS::QNamedCmdPart::operator=( const QNamedCmdPart & other )
+QNamedCmdPart& QNamedCmdPart::operator=( const QNamedCmdPart & other )
 {
 	
 	QCmdPart::operator =(other);

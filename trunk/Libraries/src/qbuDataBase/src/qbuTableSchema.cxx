@@ -27,7 +27,7 @@ bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 			int nField=0;
 			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
 				if (!isNull(nField)) {
-					QTUTILS::Property prop;
+					Property prop;
 					prop.setObjectName(col.getNameOrAlias());
 					prop.SetData(value(nField));
 

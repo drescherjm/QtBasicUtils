@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "QCmd.h"
-#include "QCmdHelp.h"
-#include "QCmdLine.h"
-#include "QCmdParseError.h"
-#include "QCmdParseException.h"
-#include "QCmdHelpException.h"
+#include "qbuCmdLine/QCmd.h"
+#include "qbuCmdLine/QCmdHelp.h"
+#include "qbuCmdLine/QCmdLine.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseException.h"
+#include "qbuCmdLine/QCmdHelpException.h"
 #include "testxml.h"
 #include "testUserProps.h"
 #include <QMessageBox>
@@ -13,8 +13,8 @@
 #include <QTimer>
 
 #include <math.h>
-#include "PropertyMap.h"
-#include "PropertyList.h"
+#include "qbuBase/PropertyMap.h"
+#include "qbuBase/PropertyList.h"
 #include "testxmlimp.h"
 #include "testCommandLineInclude.h"
 #include "testSetVariable.h"

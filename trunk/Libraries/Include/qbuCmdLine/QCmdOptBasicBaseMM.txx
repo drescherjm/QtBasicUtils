@@ -15,7 +15,7 @@ m_nMaxValue(nMaxValue)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QTUTILS::QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM( const QCmdOptBasicBaseMM<TYPE> & other ) : QCmdOptBasicBase<TYPE>(other)
+QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM( const QCmdOptBasicBaseMM<TYPE> & other ) : QCmdOptBasicBase<TYPE>(other)
 {
 	copy(other);
 }
@@ -23,9 +23,9 @@ QTUTILS::QCmdOptBasicBaseMM<TYPE>::QCmdOptBasicBaseMM( const QCmdOptBasicBaseMM<
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QCmdOptBasicBaseMM<TYPE>& QTUTILS::QCmdOptBasicBaseMM<TYPE>::operator=( const QCmdOptBasicBaseMM<TYPE> & other )
+QCmdOptBasicBaseMM<TYPE>& QCmdOptBasicBaseMM<TYPE>::operator=( const QCmdOptBasicBaseMM<TYPE> & other )
 {
-	QTUTILS::QCmdOptBasicBase<TYPE>::operator =(other);
+	QCmdOptBasicBase<TYPE>::operator =(other);
 
 	if ( &other != this ) {
 		destroy();
@@ -37,7 +37,7 @@ QCmdOptBasicBaseMM<TYPE>& QTUTILS::QCmdOptBasicBaseMM<TYPE>::operator=( const QC
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdOptBasicBaseMM<TYPE>::destroy()
+void QCmdOptBasicBaseMM<TYPE>::destroy()
 {
 
 }
@@ -45,7 +45,7 @@ void QTUTILS::QCmdOptBasicBaseMM<TYPE>::destroy()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdOptBasicBaseMM<TYPE>::copy( const QCmdOptBasicBaseMM & other )
+void QCmdOptBasicBaseMM<TYPE>::copy( const QCmdOptBasicBaseMM & other )
 {
 	m_nMaxValue = other.m_nMaxValue;
 	m_nMinValue = other.m_nMinValue;

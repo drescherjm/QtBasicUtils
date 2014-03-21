@@ -1,7 +1,7 @@
 #ifndef __QCMDLINE_H__
 #define __QCMDLINE_H__
 
-#include "QCmd.h"
+#include "qbuCmdLine/QCmd.h"
 
 #include <QMap>
 #include <QList>

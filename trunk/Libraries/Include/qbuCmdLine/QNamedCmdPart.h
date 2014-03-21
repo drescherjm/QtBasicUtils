@@ -1,7 +1,7 @@
 #ifndef __QNAMEDCMDPART_H__
 #define __QNAMEDCMDPART_H__
 
-#include "QCmdPart.h"
+#include "qbuCmdLine/QCmdPart.h"
 
 namespace  QTUTILS {
 

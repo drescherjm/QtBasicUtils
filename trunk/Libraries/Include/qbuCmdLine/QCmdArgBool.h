@@ -12,7 +12,7 @@
 
 #include <QString>
 
-#include "QCmdArgBasicBase.h"
+#include "qbuCmdLine/QCmdArgBasicBase.h"
 
 namespace QTUTILS {
 

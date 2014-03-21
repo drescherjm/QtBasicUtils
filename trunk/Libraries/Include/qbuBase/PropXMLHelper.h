@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __PROPXMLHELPER_H__
 #define __PROPXMLHELPER_H__
 
@@ -5,9 +7,7 @@
 #include <QMutex>
 #include <QDomElement>
 
-#include "NonThreadSafeSingleton.h"
-
-namespace QTUTILS {
+#include "qbuBase/NonThreadSafeSingleton.h"
 
 class Property;
 class UserProperty;
@@ -82,6 +82,4 @@ UserProperty* UserPropPtrHelper<T>::construct()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-};// namespace QTUTILS
-
-#endif //__PROPXMLHELPER_H__
+#endif // __PROPXMLHELPER_H__

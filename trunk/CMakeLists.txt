@@ -115,18 +115,6 @@ CONFIGURE_FILE(
 ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/Include )
-
-#########################################################################################
-
-#add_library(${PROJECT_NAME} 
-#	${${PROJECT_NAME}_SRCS} 
-#	${${PROJECT_NAME}_EXT_HDRS} 
-#	${${PROJECT_NAME}_MOC_HDRS} 
-#	${${PROJECT_NAME}_MOC_SRCS} 
-#	${${PROJECT_NAME}_INT_HDRS} 
-#)
-
 set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
 #export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
 
@@ -148,11 +136,7 @@ install (FILES
 	DESTINATION lib
 )
 
-#install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-#install (FILES ${${PROJECT_NAME}_EXT_HDRS} ${${PROJECT_NAME}_MOC_HDRS} DESTINATION Include)
-
 #########################################################################################
-
 
 IF(BUILD_DOCUMENTATION)
 

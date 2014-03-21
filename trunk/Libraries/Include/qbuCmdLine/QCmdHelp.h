@@ -1,8 +1,8 @@
 #ifndef __QCMDHELP_H__
 #define __QCMDHELP_H__
 
-#include "QCmd.h"
-#include "QCmdLine.h"
+#include "qbuCmdLine/QCmd.h"
+#include "qbuCmdLine/QCmdLine.h"
 
 namespace QTUTILS {
 

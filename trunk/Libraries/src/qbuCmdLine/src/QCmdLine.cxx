@@ -1,12 +1,11 @@
-#include "QCmdLine.h"
-#include "QCmdHelp.h"
-#include "QCmdParseError.h"
-#include "QCmdParseException.h"
+#include "qbuCmdLine/QCmdLine.h"
+#include "qbuCmdLine/QCmdHelp.h"
+#include "qbuCmdLine/QCmdParseError.h"
+#include "qbuCmdLine/QCmdParseException.h"
 #include <QFile>
 #include <QTextStream>
 #include <iostream>
 
-namespace QTUTILS {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	class QCmdLine::qtutilsPrivate
@@ -710,4 +709,4 @@ void QCmdLine::setAvailableCommands( QCmdList & lstCommands )
 	}
 }
 
-}; //namespace QTUTILS
+/////////////////////////////////////////////////////////////////////////////////////////

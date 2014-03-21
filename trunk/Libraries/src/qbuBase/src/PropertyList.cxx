@@ -1,4 +1,4 @@
-#include "PropertyList.h"
+#include "qbuBase/PropertyList.h"
 #include "PropXMLHelper.h"
 
 #include <QDomDocument>
@@ -13,7 +13,7 @@ namespace QTUTILS {
 // knows about. This registers PropertyList with PropXMLHelper which will call 
 // hlpr->construct() to do the actual object construction.
 
-int PropertyList::m_nMetaID = qRegisterMetaType<QTUTILS::PropertyList*>();
+int PropertyList::m_nMetaID = qRegisterMetaType<PropertyList*>();
 static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////

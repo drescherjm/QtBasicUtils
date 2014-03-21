@@ -1,91 +1,88 @@
-#include "UserPropPtr.h"
-#include "UserPropery.h"
-#include "PropXMLHelper.h"
-#include "Property.h"
+#include "qbuBase/UserPropPtr.h"
+#include "qbuBase/UserPropery.h"
+#include "qbuBase/PropXMLHelper.h"
+#include "qbuBase/Property.h"
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-namespace QTUTILS {
+class UserPropPtrXMLHelper : public UserPropXMLHelper
+{
+public:
+	UserPropPtrXMLHelper(int nMetaTypeID);
+public:
+	virtual bool fromXML(Property* pProp,QDomElement & domElem);
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	class UserPropPtrXMLHelper : public UserPropXMLHelper
-	{
-	public:
-		UserPropPtrXMLHelper(int nMetaTypeID);
-	public:
-		virtual bool fromXML(Property* pProp,QDomElement & domElem);
-	};
+UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
+{
+
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
-	{
-		
-	}
+bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+{
+	bool retVal = (pProp != NULL);
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-	bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
-	{
-		bool retVal = (pProp != NULL);
-	
-		QDomNode n =docElem.firstChild();
-		retVal = !n.isNull();
+	QDomNode n =docElem.firstChild();
+	retVal = !n.isNull();
+	if (retVal) {
+		QDomElement e = n.toElement();
+		retVal = !e.isNull();
 		if (retVal) {
-			QDomElement e = n.toElement();
-			retVal = !e.isNull();
+			QString strTypeName = e.attribute("tyName");
+
+			UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
+
+			retVal = (pHlpr != NULL);
+
 			if (retVal) {
-				QString strTypeName = e.attribute("tyName");
-
-				UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
-				
-				retVal = (pHlpr != NULL);
-			
+				UserProperty* pUserProp = pHlpr->construct();
+				retVal = (pUserProp != NULL);
 				if (retVal) {
-					UserProperty* pUserProp = pHlpr->construct();
-					retVal = (pUserProp != NULL);
+					QDomNode n = e.firstChild();
+
+					retVal = !n.isNull();
+
 					if (retVal) {
-						QDomNode n = e.firstChild();
-
-						retVal = !n.isNull();
-
+						QDomElement e = n.toElement();
+						retVal = !e.isNull();
 						if (retVal) {
-							QDomElement e = n.toElement();
-							retVal = !e.isNull();
-							if (retVal) {
-								pUserProp->fromXML(e);
-								pProp->SetData(UserPropPtr(pUserProp));
+							pUserProp->fromXML(e);
+							pProp->SetData(UserPropPtr(pUserProp));
 
-								QString strName = docElem.tagName();
-								pProp->setObjectName(strName);
+							QString strName = docElem.tagName();
+							pProp->setObjectName(strName);
 
-								if (pUserProp->objectName().isEmpty()) {
-									pUserProp->setObjectName(strName);
-								}
-								
+							if (pUserProp->objectName().isEmpty()) {
+								pUserProp->setObjectName(strName);
 							}
+
 						}
 					}
 				}
-				else
-				{
-					std::cerr << "Warning: Could not find a suitable xml helper for the following class: " << 
-						qPrintable(strTypeName) << std::endl;
-				}
 			}
-			
+			else
+			{
+				std::cerr << "Warning: Could not find a suitable xml helper for the following class: " << 
+					qPrintable(strTypeName) << std::endl;
+			}
 		}
 
-
-		return retVal;
 	}
+
+
+	return retVal;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	static int m_nMetaID = qRegisterMetaType<QTUTILS::UserPropPtr>();
+static int m_nMetaID = qRegisterMetaType<UserPropPtr>();
 
-	UserPropPtrXMLHelper hlpr(m_nMetaID);
+UserPropPtrXMLHelper hlpr(m_nMetaID);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -156,9 +153,9 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 		retVal = data()->toXML(bMakeRoot,indent);
 		if (!retVal.isEmpty()) {
 			QString strTemp = QString("%1<UserProp tyName=\"%2\">\n%3%1</UserProp>\n")
-										.arg(indent.getIndent())
-										.arg(typeName())
-										.arg(retVal);
+				.arg(indent.getIndent())
+				.arg(typeName())
+				.arg(retVal);
 
 
 			retVal = strTemp;
@@ -242,5 +239,3 @@ UserPropPtr::SharedPtr UserPropPtr::GetPtr()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

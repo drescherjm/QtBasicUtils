@@ -1,6 +1,6 @@
-#include "QCmdArgQChar.h"
-#include "QCmdArgBasicBaseMM.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdArgQChar.h"
+#include "qbuCmdLine/QCmdArgBasicBaseMM.h"
+#include "qbuCmdLine/QCmdParseError.h"
 #include <stdio.h>
 
 namespace QTUTILS {

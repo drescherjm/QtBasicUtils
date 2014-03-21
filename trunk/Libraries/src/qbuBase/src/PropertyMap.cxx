@@ -1,4 +1,4 @@
-#include "PropertyMap.h"
+#include "qbuBase/PropertyMap.h"
 #include "PropXMLHelper.h"
 
 #include <QDomDocument>
@@ -15,10 +15,10 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static int m_nMetaID = qRegisterMetaType<QTUTILS::PropertyMap>();
+static int m_nMetaID = qRegisterMetaType<PropertyMap>();
 static ProperyMapXMLHelper hlpr(m_nMetaID);
 
-static int m_nMetaIDPtr = qRegisterMetaType<QTUTILS::PropertyMap*>();
+static int m_nMetaIDPtr = qRegisterMetaType<PropertyMap*>();
 UserPropPtrHelper<PropertyMap> ptrHlpr(m_nMetaIDPtr);
 
 /////////////////////////////////////////////////////////////////////////////////////////

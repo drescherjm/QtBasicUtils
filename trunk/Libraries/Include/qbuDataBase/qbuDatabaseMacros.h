@@ -6,7 +6,7 @@
 #define IMPLEMENT_SA_SET(className,variableName, variableType, strColumName) \
 	bool className::set##variableName( variableType _value ) \
 	{ \
-		QTUTILS::Property prop; \
+		Property prop; \
 		prop.setObjectName(strColumName); \
 		prop.SetData(_value); \
 		\

@@ -82,7 +82,7 @@ QString QCmdOptBasic<TYPE, fmt>::exportCommandString()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-void QTUTILS::QCmdOptBasic<TYPE, fmt>::destroy()
+void QCmdOptBasic<TYPE, fmt>::destroy()
 {
 
 }
@@ -90,7 +90,7 @@ void QTUTILS::QCmdOptBasic<TYPE, fmt>::destroy()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-void QTUTILS::QCmdOptBasic<TYPE, fmt>::copy( const QCmdOptBasic<TYPE, fmt> & other )
+void QCmdOptBasic<TYPE, fmt>::copy( const QCmdOptBasic<TYPE, fmt> & other )
 {
 	
 }
@@ -98,7 +98,7 @@ void QTUTILS::QCmdOptBasic<TYPE, fmt>::copy( const QCmdOptBasic<TYPE, fmt> & oth
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-QCmdOptBasic<TYPE, fmt>& QTUTILS::QCmdOptBasic<TYPE, fmt>::operator=( const QCmdOptBasic<TYPE, fmt> & other )
+QCmdOptBasic<TYPE, fmt>& QCmdOptBasic<TYPE, fmt>::operator=( const QCmdOptBasic<TYPE, fmt> & other )
 {
 	SuperClass::operator =(other);
 
@@ -112,7 +112,7 @@ QCmdOptBasic<TYPE, fmt>& QTUTILS::QCmdOptBasic<TYPE, fmt>::operator=( const QCmd
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>
-QTUTILS::QCmdOptBasic<TYPE, fmt>::QCmdOptBasic( const QCmdOptBasic<TYPE, fmt> & other ) : SuperClass(other)
+QCmdOptBasic<TYPE, fmt>::QCmdOptBasic( const QCmdOptBasic<TYPE, fmt> & other ) : SuperClass(other)
 {
 	copy(other);
 }

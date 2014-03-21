@@ -1,6 +1,6 @@
 #include "qbuDataBase/qbuCreateTableQuery.h"
 #include <QStringList>
-#include "Property.h"
+#include "qbuBase/Property.h"
 #include "qbuPropertyMap.h"
 #include <QList>
 #include "qbuDatabaseFunctions.h"

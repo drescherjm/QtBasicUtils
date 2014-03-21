@@ -1,7 +1,7 @@
 #ifndef __QCMDARGQCHAR_H__
 #define __QCMDARGQCHAR_H__
 
-#include "QCmdArgBasicBaseMM.h"
+#include "qbuCmdLine/QCmdArgBasicBaseMM.h"
 
 namespace QTUTILS {
 	

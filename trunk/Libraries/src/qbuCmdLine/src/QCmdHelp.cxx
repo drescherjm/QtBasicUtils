@@ -1,6 +1,6 @@
-#include "QCmdHelp.h"
-#include "QCmdHelpException.h"
-#include "QCmdParseError.h"
+#include "qbuCmdLine/QCmdHelp.h"
+#include "qbuCmdLine/QCmdHelpException.h"
+#include "qbuCmdLine/QCmdParseError.h"
 
 namespace QTUTILS {
 

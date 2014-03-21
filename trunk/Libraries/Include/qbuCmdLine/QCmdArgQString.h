@@ -1,8 +1,8 @@
 #ifndef __QCMDARGQSTRING_H__
 #define __QCMDARGQSTRING_H__
 
-#include "QCmdArgBasicBase.h"
-#include "QCmd.h"
+#include "qbuCmdLine/QCmdArgBasicBase.h"
+#include "qbuCmdLine/QCmd.h"
 
 namespace QTUTILS {
 

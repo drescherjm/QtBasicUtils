@@ -13,7 +13,7 @@
 #include <QChar>
 #include <QString>
 
-#include "QCmdOptBasicBase.h"
+#include "qbuCmdLine/QCmdOptBasicBase.h"
 
 namespace QTUTILS {
 

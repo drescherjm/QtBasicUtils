@@ -51,7 +51,7 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
-			QTUTILS::Property* pProp = *it;
+			Property* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
 				lst.push_back(strName);
@@ -83,7 +83,7 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 			prepare(strInsert);
 			for(it = pData->begin() ;it != pData->end();++it) {
-				QTUTILS::Property* pProp = *it;
+				Property* pProp = *it;
 				QString strName = pProp->objectName();
 				if (pTable->isValidField(strName)) {
 					strName.prepend(":");
@@ -180,7 +180,7 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 
 		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
-			QTUTILS::Property* pProp = *it;
+			Property* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
 				lst.push_back(strName);
@@ -197,7 +197,7 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 			strInsert += "VALUES ( ";
 			bool bFirst = true;
 			for(it = pData->begin() ;it != pData->end();++it) {
-				QTUTILS::Property* pProp = *it;
+				Property* pProp = *it;
 				QString strName = pProp->objectName();
 				if (pTable->isValidField(strName)) {
 					if (!bFirst) {

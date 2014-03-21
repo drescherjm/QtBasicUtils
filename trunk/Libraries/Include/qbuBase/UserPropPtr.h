@@ -46,6 +46,6 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(QTUTILS::UserPropPtr)
+Q_DECLARE_METATYPE(UserPropPtr)
 
 #endif //__USERPROPPTR_H__

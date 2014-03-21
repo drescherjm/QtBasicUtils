@@ -14,7 +14,7 @@ m_nDefaultValue(nDefaultValue)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QTUTILS::QCmdOptBasicBase<TYPE>::QCmdOptBasicBase( const QTUTILS::QCmdOptBasicBase<TYPE> & other ) : QTUTILS::QCmdOpt(other)
+QCmdOptBasicBase<TYPE>::QCmdOptBasicBase( const QCmdOptBasicBase<TYPE> & other ) : QCmdOpt(other)
 {
 	copy(other);
 }
@@ -22,9 +22,9 @@ QTUTILS::QCmdOptBasicBase<TYPE>::QCmdOptBasicBase( const QTUTILS::QCmdOptBasicBa
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-QTUTILS::QCmdOptBasicBase<TYPE>& QTUTILS::QCmdOptBasicBase<TYPE>::operator=( const QTUTILS::QCmdOptBasicBase<TYPE> & other )
+QCmdOptBasicBase<TYPE>& QCmdOptBasicBase<TYPE>::operator=( const QCmdOptBasicBase<TYPE> & other )
 {
-	QTUTILS::QCmdOpt::operator =(other);
+	QCmdOpt::operator =(other);
 
 	if ( &other != this ) {
 		destroy();
@@ -61,7 +61,7 @@ void QCmdOptBasicBase<TYPE>::SetValue(TYPE nVal)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-bool QTUTILS::QCmdOptBasicBase<TYPE>::isDefaultValue()
+bool QCmdOptBasicBase<TYPE>::isDefaultValue()
 {
 	return (m_nValue == m_nDefaultValue);
 }
@@ -69,7 +69,7 @@ bool QTUTILS::QCmdOptBasicBase<TYPE>::isDefaultValue()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdOptBasicBase<TYPE>::copy( const QCmdOptBasicBase & other )
+void QCmdOptBasicBase<TYPE>::copy( const QCmdOptBasicBase & other )
 {
 	m_nDefaultValue = other.m_nDefaultValue;
 	m_nValue = other.m_nValue;
@@ -78,7 +78,7 @@ void QTUTILS::QCmdOptBasicBase<TYPE>::copy( const QCmdOptBasicBase & other )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-void QTUTILS::QCmdOptBasicBase<TYPE>::destroy()
+void QCmdOptBasicBase<TYPE>::destroy()
 {
 
 }

@@ -1,55 +1,51 @@
-#include "PropXMLHelper.h"
+#include "qbuBase/PropXMLHelper.h"
 #include <QMetaType>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-namespace QTUTILS {
+UserPropXMLHelper::UserPropXMLHelper(const char* strName) : m_strClasName(strName)
+{
+	Initialize();
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	UserPropXMLHelper::UserPropXMLHelper(const char* strName) : m_strClasName(strName)
-	{
-		Initialize();
-	}
+UserPropXMLHelper::UserPropXMLHelper( int nMetaTypeId )
+{
+	m_strClasName = QMetaType::typeName(nMetaTypeId);
+	Initialize();
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	UserPropXMLHelper::UserPropXMLHelper( int nMetaTypeId )
-	{
-		m_strClasName = QMetaType::typeName(nMetaTypeId);
-		Initialize();
-	}
+const char* UserPropXMLHelper::GetClassName() const
+{
+	return m_strClasName;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	const char* UserPropXMLHelper::GetClassName() const
-	{
-		return m_strClasName;
-	}
+UserProperty* UserPropXMLHelper::construct()
+{
+	return NULL;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	UserProperty* UserPropXMLHelper::construct()
-	{
-		return NULL;
-	}
+bool UserPropXMLHelper::fromXML(Property* pProp,QDomElement & domElem)
+{
+	return false;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	bool UserPropXMLHelper::fromXML(Property* pProp,QDomElement & domElem)
-	{
-		return false;
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-	void UserPropXMLHelper::Initialize()
-	{
-		PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
-		if (pPropXMLHelper != NULL) {
-			pPropXMLHelper->addHelper(this);
-		}	
-	}
+void UserPropXMLHelper::Initialize()
+{
+	PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+	if (pPropXMLHelper != NULL) {
+		pPropXMLHelper->addHelper(this);
+	}	
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,5 +87,3 @@ bool PropXMLHelper::addHelper(UserPropXMLHelper* pHlpr)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-}; // namespace QTUTILS

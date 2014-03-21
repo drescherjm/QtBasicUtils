@@ -3,7 +3,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "Property.h"
+#include "qbuBase/Property.h"
 #include "UserPropery.h"
 #include <QList>
 
@@ -77,7 +77,7 @@ namespace QTUTILS {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-//Q_DECLARE_METATYPE(QTUTILS::PropertyList)
-Q_DECLARE_METATYPE(QTUTILS::PropertyList*)
+//Q_DECLARE_METATYPE(PropertyList)
+Q_DECLARE_METATYPE(PropertyList*)
 
 #endif //__PROPERTYLIST_H__

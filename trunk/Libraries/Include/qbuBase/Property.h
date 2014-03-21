@@ -23,7 +23,7 @@ namespace QTUTILS {
  *  \sa PropertyMap, PropertyList
  */
 
-class Property : public QObject, public QTUTILS::QUpdateTracker
+class Property : public QObject, public QUpdateTracker
 {
 	Q_OBJECT
 public:
@@ -58,6 +58,6 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(QTUTILS::Property);
+Q_DECLARE_METATYPE(Property);
 
 #endif //__PROPERTY_H__

@@ -10,7 +10,7 @@
 #include "..\qbuDatabase\qbuDatabasePCH.h"
 #include "smLog.h"
 #include "qbuDataBase/qbuSelectQuery.h"
-#include "Property.h"
+#include "qbuBase/Property.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

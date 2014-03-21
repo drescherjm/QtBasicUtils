@@ -1,7 +1,7 @@
 #ifndef __QCMDARGBASICBASE_H__
 #define __QCMDARGBASICBASE_H__
 
-#include "QCmdArg.h"
+#include "qbuCmdLine/QCmdArg.h"
 
 namespace QTUTILS {
 
@@ -23,7 +23,7 @@ namespace QTUTILS {
 	
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QCmdArgBasicBase.txx"
+#include "qbuCmdLine/QCmdArgBasicBase.txx"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
