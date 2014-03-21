@@ -75,7 +75,6 @@ set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
 set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
 SET( ${PROJECT_NAME}_SRCS
-	./src/main.cxx
 	./src/QCmd.cxx
 	./src/QCmdLine.cxx
 	./src/QCmdPart.cxx
