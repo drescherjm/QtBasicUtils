@@ -1,5 +1,7 @@
-#ifndef __SMSTRINGLIST_H__
-#define __SMSTRINGLIST_H__
+#pragma once
+
+#ifndef __QBUSTRINGLIST_H__
+#define __QBUSTRINGLIST_H__
 
 #include <QStringList>
 #include "qbuMacros.h"
@@ -30,4 +32,5 @@ public:
 	QString toDelimitedString(QString delimiter=",");
 };
 
-#endif //__SMSTRINGLIST_H__
+#endif // __QBUSTRINGLIST_H__
+
