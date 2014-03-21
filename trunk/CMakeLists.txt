@@ -119,16 +119,16 @@ include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SO
 
 #########################################################################################
 
-add_library(${PROJECT_NAME} 
-	${${PROJECT_NAME}_SRCS} 
-	${${PROJECT_NAME}_EXT_HDRS} 
-	${${PROJECT_NAME}_MOC_HDRS} 
-	${${PROJECT_NAME}_MOC_SRCS} 
-	${${PROJECT_NAME}_INT_HDRS} 
-)
+#add_library(${PROJECT_NAME} 
+#	${${PROJECT_NAME}_SRCS} 
+#	${${PROJECT_NAME}_EXT_HDRS} 
+#	${${PROJECT_NAME}_MOC_HDRS} 
+#	${${PROJECT_NAME}_MOC_SRCS} 
+#	${${PROJECT_NAME}_INT_HDRS} 
+#)
 
 set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
-export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
+#export( TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Exported.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
@@ -148,8 +148,8 @@ install (FILES
 	DESTINATION lib
 )
 
-install (TARGETS ${PROJECT_NAME} DESTINATION lib)
-install (FILES ${${PROJECT_NAME}_EXT_HDRS} ${${PROJECT_NAME}_MOC_HDRS} DESTINATION Include)
+#install (TARGETS ${PROJECT_NAME} DESTINATION lib)
+#install (FILES ${${PROJECT_NAME}_EXT_HDRS} ${${PROJECT_NAME}_MOC_HDRS} DESTINATION Include)
 
 #########################################################################################
 

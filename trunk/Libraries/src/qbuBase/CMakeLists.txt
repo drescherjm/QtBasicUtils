@@ -21,7 +21,6 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/PropertyList.cxx
 	./src/PropXMLHelper.cxx
 	./src/ProperyMapXMLHelper.cxx
-	./src/QNamedCmdPart.cxx
 	./src/qbuITKIndent.cxx
 )
 

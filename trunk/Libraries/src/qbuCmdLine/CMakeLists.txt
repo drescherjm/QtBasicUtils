@@ -33,6 +33,7 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/QCmdArgFileList.cxx
 	./src/QCmdLineFileList.cxx
 	./src/QCmdHelp.cxx
+	./src/QNamedCmdPart.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 

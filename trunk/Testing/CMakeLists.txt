@@ -1,5 +1,11 @@
 LINK_LIBRARIES(BasicTest QtBasicUtils ${QT_LIBRARIES})
-include_directories( ${PROJECT_BINARY_DIR} ${PROJECT_BINARY_DIR}/.. ${PROJECT_SOURCE_DIR}/Include ./Include)
+
+include_directories( 
+	${PROJECT_BINARY_DIR} 
+	${PROJECT_BINARY_DIR}/.. 
+	${PROJECT_SOURCE_DIR}/Include 
+	./Include
+)
 
 set(TEST_SRCS 
 	./src/basic.cxx 
