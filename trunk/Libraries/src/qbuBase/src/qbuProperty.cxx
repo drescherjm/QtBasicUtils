@@ -93,8 +93,8 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 			.arg(retVal);
 		retVal = strTemp;
 	}
-	else if (GetData().canConvert<PropertyMap>()) {
-		PropertyMap pc = GetData().value<PropertyMap>();
+	else if (GetData().canConvert<qbuPropertyMap>()) {
+		qbuPropertyMap pc = GetData().value<qbuPropertyMap>();
 		QString strName = objectName();
 		retVal = pc.toXML(false,indent); // The PropertyMap is a root node
 

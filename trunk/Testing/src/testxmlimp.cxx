@@ -23,7 +23,7 @@ QCmdTestXMLImport::QCmdTestXMLImport(QString strName, QString strDescription) :
 static bool test0()
 {
 	QString testXML("<xml ty=\"127\"><RMTPatientID>HB016603</RMTPatientID></xml>");
-	PropertyMap map;
+	qbuPropertyMap map;
 	bool retVal = map.fromXML(testXML);
 	if (retVal) {
 		retVal = (map.size() == 1);

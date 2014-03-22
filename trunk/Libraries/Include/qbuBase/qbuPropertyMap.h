@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __PROPERTYMAP_H__
-#define __PROPERTYMAP_H__
+#ifndef __QBUPROPERTYMAP_H__
+#define __QBUPROPERTYMAP_H__
 
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuUserPropery.h"
@@ -16,15 +16,15 @@
  * \sa Property, PropertyList
  */
 
-class PropertyMap : public qbuUserProperty
+class qbuPropertyMap : public qbuUserProperty
 {
 	Q_OBJECT
 public:
-	PropertyMap();
-	virtual ~PropertyMap();
-	PropertyMap(const PropertyMap & other);
-	PropertyMap& operator=(const PropertyMap & other);
-	bool operator==(const PropertyMap & other) const;
+	qbuPropertyMap();
+	virtual ~qbuPropertyMap();
+	qbuPropertyMap(const qbuPropertyMap & other);
+	qbuPropertyMap& operator=(const qbuPropertyMap & other);
+	bool operator==(const qbuPropertyMap & other) const;
 public:
 	typedef QMap<QString,qbuProperty*> Map;
 	typedef Map::iterator iterator;
@@ -46,9 +46,9 @@ public:
 	QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
-	void			CopyProperty(QString strOldName, const PropertyMap & other, QString strNewName="");
-	void			MoveProperty(QString strOldName, PropertyMap & other, QString strNewName="");
-	bool			EqualSubset(QStringList lstPropNames, const PropertyMap & other);
+	void			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="");
+	void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");
+	bool			EqualSubset(QStringList lstPropNames, const qbuPropertyMap & other);
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);
 	
@@ -58,8 +58,8 @@ public:
 	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
 public:
-	virtual	void	addProperties(PropertyMap * other);	
-	virtual void	addProperties(const PropertyMap* other);
+	virtual	void	addProperties(qbuPropertyMap * other);	
+	virtual void	addProperties(const qbuPropertyMap* other);
 	virtual	int		RemoveProperties(QStringList lstProperties);
 
 protected:
@@ -71,7 +71,7 @@ protected:
 protected:
 	QString			CleanUpName(QString strName) const;
 private:
-	void			copy( const PropertyMap & other );
+	void			copy( const qbuPropertyMap & other );
 	void			destroy();
 };
 
@@ -82,23 +82,23 @@ private:
  *	This member function removes all items from the PropertyMap.
  */
 
-inline void PropertyMap::clear()
+inline void qbuPropertyMap::clear()
 {
 	destroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-inline bool PropertyMap::empty() const
+inline bool qbuPropertyMap::empty() const
 {
 	return m_mapProps.empty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(PropertyMap)
-Q_DECLARE_METATYPE(PropertyMap*)
+Q_DECLARE_METATYPE(qbuPropertyMap)
+Q_DECLARE_METATYPE(qbuPropertyMap*)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __PROPERTYMAP_H__
+#endif // __QBUPROPERTYMAP_H__

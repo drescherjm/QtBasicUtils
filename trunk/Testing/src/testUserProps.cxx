@@ -26,7 +26,7 @@ QCmdTestUserProps::QCmdTestUserProps(QString strName, QString strDescription) :
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
-static bool add_John(PropertyMap* pPM)
+static bool add_John(qbuPropertyMap* pPM)
 {
 	bool retVal = (pPM != NULL);
 
@@ -95,7 +95,7 @@ static bool add_John(qbuPropertyList* pPL)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static bool add_Kathy(PropertyMap* pPM)
+static bool add_Kathy(qbuPropertyMap* pPM)
 {
 	bool retVal = (pPM != NULL);
 
@@ -167,7 +167,7 @@ static bool add_Kathy(qbuPropertyList* pPL)
 static bool test0()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 	
 	if (retVal) {
@@ -177,7 +177,7 @@ static bool test0()
 		if (retVal) {
 			QString strXML0 = pPM->toXML();
 
-			PropertyMap pm1;
+			qbuPropertyMap pm1;
 			retVal = add_John(&pm1);
 			if (retVal) {
 				QString strXML1 = pm1.toXML();
@@ -195,17 +195,17 @@ static bool test0()
 static bool test1()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 
 	if (retVal) {
 		qbuUserPropPtr ptr(pPM);
-		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyMap*>(ptr.data()));
 
 		if (retVal) {
 			QString strXML0 = pPM->toXML();
 
-			PropertyMap pm1;
+			qbuPropertyMap pm1;
 			retVal = add_John(&pm1);
 			if (retVal) {
 				QString strXML1 = pm1.toXML();
@@ -223,20 +223,20 @@ static bool test1()
 static bool test2()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 
 	if (retVal) {
 		qbuProperty	prop;
 		qbuUserPropPtr ptr(pPM);
-		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 
 		if (retVal) {
 
 			QString strXML0 = pPM->toXML();
 
-			PropertyMap pm1;
+			qbuPropertyMap pm1;
 			retVal = add_John(&pm1);
 			if (retVal) {
 				QString strXML1 = pm1.toXML();
@@ -254,13 +254,13 @@ static bool test2()
 static bool test3()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 
 	if (retVal) {
 		qbuProperty	prop;
 		qbuUserPropPtr ptr(pPM);
-		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
 
@@ -270,7 +270,7 @@ static bool test3()
 
 			QString strXML0 = ptr1.toXML();
 
-			PropertyMap pm1;
+			qbuPropertyMap pm1;
 			retVal = add_John(&pm1);
 			if (retVal) {
 				QString strXML1 = pm1.toXML();
@@ -288,13 +288,13 @@ static bool test3()
 static bool test4()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 
 	if (retVal) {
 		qbuProperty	prop;
 		qbuUserPropPtr ptr(pPM);
-		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
 
@@ -302,7 +302,7 @@ static bool test4()
 
 			QString strXML0 = prop.toXML();
 
-			PropertyMap pm1;
+			qbuPropertyMap pm1;
 			retVal = add_John(&pm1);
 			if (retVal) {
 				QString strXML1 = pm1.toXML();
@@ -320,13 +320,13 @@ static bool test4()
 static bool test5()
 {
 	bool retVal;
-	PropertyMap* pPM = new PropertyMap;
+	qbuPropertyMap* pPM = new qbuPropertyMap;
 	retVal = (pPM != NULL);
 
 	if (retVal) {
 		qbuProperty	prop;
 		qbuUserPropPtr ptr(pPM);
-		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
 
@@ -431,16 +431,16 @@ static bool test7()
 static bool test8()
 {
 	// These are to test the assignment operator.
-	PropertyMap map1;
+	qbuPropertyMap map1;
 	add_John(&map1);
 
-	PropertyMap map2;
+	qbuPropertyMap map2;
 	add_Kathy(&map2);
 
 	map1 = map2;
-	PropertyMap map3 = map2;
+	qbuPropertyMap map3 = map2;
 
-	PropertyMap map4(map1);
+	qbuPropertyMap map4(map1);
 
 	return true;
 }

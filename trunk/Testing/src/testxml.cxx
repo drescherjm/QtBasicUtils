@@ -82,7 +82,7 @@ static bool test2()
 
 static bool test3()
 {
-	PropertyMap pc;
+	qbuPropertyMap pc;
 	qbuProperty prop;
 	
 	prop.setObjectName("Age");
@@ -99,7 +99,7 @@ static bool test3()
 
 	QString str = pc.toXML();
 
-	PropertyMap pc1;
+	qbuPropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 
@@ -117,7 +117,7 @@ static bool test3()
 static bool test4()
 {
 
-	PropertyMap pmPeople,pmJohn, pmKathy;
+	qbuPropertyMap pmPeople,pmJohn, pmKathy;
 	qbuProperty prop;
 
 	prop.setObjectName("Age");
@@ -162,7 +162,7 @@ static bool test4()
 
 	QString str = pmPeople.toXML();
 
-	PropertyMap pc1;
+	qbuPropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 
@@ -181,7 +181,7 @@ static bool test4()
 static bool test5()
 {
 
-	PropertyMap pmPeople,pmJohn, pmKathy;
+	qbuPropertyMap pmPeople,pmJohn, pmKathy;
 	qbuProperty prop;
 
 	prop.setObjectName("Age");
@@ -239,7 +239,7 @@ static bool test5()
 	QString str = pmPeople.toXML();
 	bool retVal = pmPeople.Save("People.xml");
 	if (retVal) {
-		PropertyMap pc1;
+		qbuPropertyMap pc1;
 
 		retVal = pc1.Load("People.xml");
 
@@ -259,7 +259,7 @@ static bool test6()
 {
 	//This tests the update tracking of PropertyMap
 
-	PropertyMap pmPeople,pmJohn, pmKathy;
+	qbuPropertyMap pmPeople,pmJohn, pmKathy;
 	qbuProperty prop;
 
 	bool retVal = !pmJohn.HasChanged();
@@ -305,7 +305,7 @@ static bool test6()
 static bool test7()
 {
 	QString testXML("<xml ty=\"127\"><RMTPatientID>HB016603</RMTPatientID></xml>");
-	PropertyMap map;
+	qbuPropertyMap map;
 	bool retVal = map.fromXML(testXML);
 	if (retVal) {
 
@@ -317,7 +317,7 @@ static bool test7()
 
 static bool test8()
 {
-	PropertyMap pc;
+	qbuPropertyMap pc;
 	qbuProperty prop;
 
 	prop.setObjectName("Age");
@@ -334,7 +334,7 @@ static bool test8()
 
 	QString str = pc.toXML();
 
-	PropertyMap pc1;
+	qbuPropertyMap pc1;
 
 	bool retVal = pc1.fromXML(str);
 

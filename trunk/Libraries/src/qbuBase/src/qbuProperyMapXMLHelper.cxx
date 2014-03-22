@@ -13,7 +13,7 @@ bool qbuProperyMapXMLHelper::fromXML(qbuProperty* pProp,QDomElement & docElem)
 {
 	bool retVal = (pProp != NULL);
 	if (retVal) {
-		PropertyMap pm;
+		qbuPropertyMap pm;
 	
 		QDomNode n = docElem.firstChild();
 
@@ -24,7 +24,7 @@ bool qbuProperyMapXMLHelper::fromXML(qbuProperty* pProp,QDomElement & docElem)
 			retVal = !e.isNull();
 			if (retVal) {
 				pm.fromXML(e);
-				pProp->SetData(QVariant::fromValue<PropertyMap>(pm));
+				pProp->SetData(QVariant::fromValue<qbuPropertyMap>(pm));
 				pProp->setObjectName(docElem.tagName());
 			}
 		}

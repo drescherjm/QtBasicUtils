@@ -65,8 +65,8 @@ int QCmdTestPropertyMapSimple::Execute()
 
 int QCmdTestPropertyMapSimple::testConstIterator()
 {
-	PropertyMap map;
-	PropertyMap::const_iterator it = map.find("Test");
+	qbuPropertyMap map;
+	qbuPropertyMap::const_iterator it = map.find("Test");
 
 	int retVal = (it == map.end()) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 
@@ -77,8 +77,8 @@ int QCmdTestPropertyMapSimple::testConstIterator()
 
 int QCmdTestPropertyMapSimple::testIterator()
 {
-	PropertyMap map;
-	PropertyMap::iterator it = map.find("Test");
+	qbuPropertyMap map;
+	qbuPropertyMap::iterator it = map.find("Test");
 
 	int retVal = (it == map.end()) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
 

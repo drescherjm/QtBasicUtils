@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 	QStringList lst = strMsg0.split(QRegExp("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))"));
 
 
-	int id = qRegisterMetaType<PropertyMap>();
+	int id = qRegisterMetaType<qbuPropertyMap>();
 
 	int id1 = QMetaType::type("PropertyMap");
 
@@ -116,9 +116,9 @@ int main(int argc, char* argv[])
 
 
 	{
-		PropertyMap map;
+		qbuPropertyMap map;
 
-		PropertyMap::const_iterator it = map.find("John");
+		qbuPropertyMap::const_iterator it = map.find("John");
 		if (it != map.end()) {
 			std::cerr << "Something bad happened" << std::endl;
 		}
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
 
 	test_exportXML(prop);
 
-	PropertyMap pc;
+	qbuPropertyMap pc;
 	pc.insert(prop);
 
 	prop.setObjectName("Age");
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
 	pc.insert(prop);
 
 	QString strSearch("age");
-	PropertyMap::iterator itFind = pc.find(strSearch);
+	qbuPropertyMap::iterator itFind = pc.find(strSearch);
 	if ( itFind != pc.end()) {
 		std::cout << "Found " << strSearch.toStdString() << std::endl;
 		std::cout << (*itFind)->toXML().toStdString() << std::endl;
@@ -203,7 +203,7 @@ int main(int argc, char* argv[])
 	QString str = QMetaType::typeName(nUserType);
 
 	qbuProperty pc2;
-	pc2.SetData(qbuUserPropPtr(new PropertyMap(pc)));
+	pc2.SetData(qbuUserPropPtr(new qbuPropertyMap(pc)));
 
 	str = pc2.toXML();
 
@@ -212,7 +212,7 @@ int main(int argc, char* argv[])
 		str = ptr.toXML();
 		qbuUserPropPtr ptr1 = pc2;
 		QString str_1 = ptr1.toXML();
-		PropertyMap* pPM1 = dynamic_cast<PropertyMap*>(ptr1.data());
+		qbuPropertyMap* pPM1 = dynamic_cast<qbuPropertyMap*>(ptr1.data());
 		if (pPM1) {
 			prop.SetData(QDate(1972,1,10));
 			prop.setObjectName("DOB");
@@ -225,9 +225,9 @@ int main(int argc, char* argv[])
 	str = QMetaType::typeName(nUserType);
 
 	qbuUserProperty* pProp2 = pc2.GetData().value<qbuUserProperty*>();
-	PropertyMap* pProp3 = pc2.GetData().value<PropertyMap*>();
+	qbuPropertyMap* pProp3 = pc2.GetData().value<qbuPropertyMap*>();
 
-	PropertyMap pc1;
+	qbuPropertyMap pc1;
 
 	pc1.insert(prop);
 
@@ -239,7 +239,7 @@ int main(int argc, char* argv[])
 
 	std::cout << strXML.toStdString() << std::endl << std::endl;
 
-	PropertyMap pm;
+	qbuPropertyMap pm;
 	pm.fromXML(strXML);
 
 	QString strXML2 = pm.toXML();
@@ -249,7 +249,7 @@ int main(int argc, char* argv[])
 	std::cout << prop.GetData().typeName() << std::endl;
 
 	{
-		PropertyMap::iterator it = pc1.begin();
+		qbuPropertyMap::iterator it = pc1.begin();
 
 		for(;it != pc1.end(); ++it) {
 			std::cout << "Name= " << (*it)->objectName().toStdString() << " Type= ";
