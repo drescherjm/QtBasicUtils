@@ -1,29 +1,29 @@
-#include "qbuBase/UserPropPtr.h"
-#include "qbuBase/UserPropery.h"
-#include "qbuBase/PropXMLHelper.h"
-#include "qbuBase/Property.h"
+#include "qbuBase/qbuUserPropPtr.h"
+#include "qbuBase/qbuUserPropery.h"
+#include "qbuBase/qbuPropXMLHelper.h"
+#include "qbuBase/qbuProperty.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class UserPropPtrXMLHelper : public UserPropXMLHelper
+class UserPropPtrXMLHelper : public qbuUserPropXMLHelper
 {
 public:
 	UserPropPtrXMLHelper(int nMetaTypeID);
 public:
-	virtual bool fromXML(Property* pProp,QDomElement & domElem);
+	virtual bool fromXML(qbuProperty* pProp,QDomElement & domElem);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
+UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : qbuUserPropXMLHelper(nMetaTypeID)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+bool UserPropPtrXMLHelper::fromXML(qbuProperty* pProp,QDomElement & docElem)
 {
 	bool retVal = (pProp != NULL);
 
@@ -35,12 +35,12 @@ bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 		if (retVal) {
 			QString strTypeName = e.attribute("tyName");
 
-			UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
+			qbuUserPropXMLHelper* pHlpr = qbuPropXMLHelper::instance()->GetXMLHelper(strTypeName);
 
 			retVal = (pHlpr != NULL);
 
 			if (retVal) {
-				UserProperty* pUserProp = pHlpr->construct();
+				qbuUserProperty* pUserProp = pHlpr->construct();
 				retVal = (pUserProp != NULL);
 				if (retVal) {
 					QDomNode n = e.firstChild();
@@ -52,7 +52,7 @@ bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 						retVal = !e.isNull();
 						if (retVal) {
 							pUserProp->fromXML(e);
-							pProp->SetData(UserPropPtr(pUserProp));
+							pProp->SetData(qbuUserPropPtr(pUserProp));
 
 							QString strName = docElem.tagName();
 							pProp->setObjectName(strName);
@@ -80,21 +80,21 @@ bool UserPropPtrXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static int m_nMetaID = qRegisterMetaType<UserPropPtr>();
+static int m_nMetaID = qRegisterMetaType<qbuUserPropPtr>();
 
 UserPropPtrXMLHelper hlpr(m_nMetaID);
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr() : m_pPropRaw(NULL)
+qbuUserPropPtr::qbuUserPropPtr() : m_pPropRaw(NULL)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr(UserProperty* pProp, bool bSmart) 
+qbuUserPropPtr::qbuUserPropPtr(qbuUserProperty* pProp, bool bSmart) 
 {
 	if (bSmart) {
 		m_pProp = pProp;
@@ -109,21 +109,21 @@ UserPropPtr::UserPropPtr(UserProperty* pProp, bool bSmart)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr( const UserPropPtr & other ) 
+qbuUserPropPtr::qbuUserPropPtr( const qbuUserPropPtr & other ) 
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::UserPropPtr(SharedPtr & other)
+qbuUserPropPtr::qbuUserPropPtr(SharedPtr & other)
 {
 	m_pProp = other;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void UserPropPtr::copy( const UserPropPtr & other )
+void qbuUserPropPtr::copy( const qbuUserPropPtr & other )
 {
 	m_pProp = other.m_pProp;
 	m_pPropRaw = other.m_pPropRaw;
@@ -131,21 +131,21 @@ void UserPropPtr::copy( const UserPropPtr & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void UserPropPtr::destroy()
+void qbuUserPropPtr::destroy()
 {
 	// The shared pointer should handle this.
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::isNull() const
+bool qbuUserPropPtr::isNull() const
 {
 	return (!m_pProp && (m_pPropRaw == NULL));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString UserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
+QString qbuUserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
 	QString retVal;
 	if (!isNull()) {
@@ -166,28 +166,28 @@ QString UserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserProperty* UserPropPtr::data() 
+qbuUserProperty* qbuUserPropPtr::data() 
 {
 	return willAutoDelete() ? m_pProp.data() : m_pPropRaw;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const UserProperty* UserPropPtr::data() const
+const qbuUserProperty* qbuUserPropPtr::data() const
 {
 	return willAutoDelete() ? m_pProp.data() : m_pPropRaw;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::willAutoDelete() const
+bool qbuUserPropPtr::willAutoDelete() const
 {
 	return (m_pPropRaw == NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString UserPropPtr::typeName() const
+QString qbuUserPropPtr::typeName() const
 {
 	QString retVal = data()->metaObject()->className();
 	if (!retVal.isEmpty()) {
@@ -198,7 +198,7 @@ QString UserPropPtr::typeName() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::fromXML( QString strXML )
+bool qbuUserPropPtr::fromXML( QString strXML )
 {
 	bool retVal;
 
@@ -226,14 +226,14 @@ bool UserPropPtr::fromXML( QString strXML )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropPtr::fromXML( QDomElement & docElem )
+bool qbuUserPropPtr::fromXML( QDomElement & docElem )
 {
 	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtr::SharedPtr UserPropPtr::GetPtr()
+qbuUserPropPtr::SharedPtr qbuUserPropPtr::GetPtr()
 {
 	return m_pProp;
 }

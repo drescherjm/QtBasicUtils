@@ -1,9 +1,9 @@
 #include "testxml.h"
-#include "qbuBase/Property.h"
+#include "qbuBase/qbuProperty.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdParseException.h"
 #include "qbuCmdLine/QCmdHelpException.h"
-#include "qbuBase/PropertyMap.h"
+#include "qbuBase/qbuPropertyMap.h"
 #include <iostream>
 #include <QDate>
 #include "qxml.h"
@@ -22,12 +22,12 @@ QCmdTestXMLExport::QCmdTestXMLExport(QString strName, QString strDescription) :
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool test_exportXML(Property & prop) 
+bool test_exportXML(qbuProperty & prop) 
 {
 	std::cout << "BEGIN: Testing test_exportXML" << std::endl;
 
 	QString strXML = prop.toXML();
-	Property prop1;
+	qbuProperty prop1;
 	prop1.fromXML(strXML);
 	QString strXML1 = prop1.toXML();
 
@@ -44,7 +44,7 @@ bool test_exportXML(Property & prop)
 static bool test0()
 {
 
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Name");
 	prop.SetData(QString("John M. Drescher"));
@@ -57,7 +57,7 @@ static bool test0()
 static bool test1()
 {
 
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -70,7 +70,7 @@ static bool test1()
 static bool test2()
 {
 
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Sex");
 	prop.SetData(QChar('M'));
@@ -83,7 +83,7 @@ static bool test2()
 static bool test3()
 {
 	PropertyMap pc;
-	Property prop;
+	qbuProperty prop;
 	
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -118,7 +118,7 @@ static bool test4()
 {
 
 	PropertyMap pmPeople,pmJohn, pmKathy;
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -182,7 +182,7 @@ static bool test5()
 {
 
 	PropertyMap pmPeople,pmJohn, pmKathy;
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);
@@ -260,7 +260,7 @@ static bool test6()
 	//This tests the update tracking of PropertyMap
 
 	PropertyMap pmPeople,pmJohn, pmKathy;
-	Property prop;
+	qbuProperty prop;
 
 	bool retVal = !pmJohn.HasChanged();
 
@@ -318,7 +318,7 @@ static bool test7()
 static bool test8()
 {
 	PropertyMap pc;
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Age");
 	prop.SetData((int)37);

@@ -14,30 +14,30 @@ set (${LOCAL_PROJECT_NAME}_TREE_RELEASE_LIB ${LOCAL_PROJECT_NAME} )
 set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
 SET( ${LOCAL_PROJECT_NAME}_SRCS
-	./src/Property.cxx
-	./src/PropertyMap.cxx
-	./src/UserProperty.cxx
-	./src/UserPropPtr.cxx
-	./src/PropertyList.cxx
-	./src/PropXMLHelper.cxx
-	./src/ProperyMapXMLHelper.cxx
+	./src/qbuProperty.cxx
+	./src/qbuPropertyMap.cxx
+	./src/qbuUserProperty.cxx
+	./src/qbuUserPropPtr.cxx
+	./src/qbuPropertyList.cxx
+	./src/qbuPropXMLHelper.cxx
+	./src/qbuProperyMapXMLHelper.cxx
 	./src/qbuITKIndent.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/QUpdateTracker.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/PropXMLHelper.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/ProperyMapXMLHelper.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/NonThreadSafeSingleton.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateTracker.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropXMLHelper.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuProperyMapXMLHelper.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuNonThreadSafeSingleton.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuITKIndent.h
 )
 
 SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/Property.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/PropertyMap.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/UserPropery.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/UserPropPtr.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/PropertyList.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuProperty.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyMap.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUserPropery.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUserPropPtr.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyList.h
 )
 
 # some .ui files

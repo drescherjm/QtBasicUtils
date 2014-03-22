@@ -1,19 +1,19 @@
-#include "qbuBase/UserPropery.h"
+#include "qbuBase/qbuUserPropery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static int m_nMetaID = qRegisterMetaType<UserProperty*>();
+static int m_nMetaID = qRegisterMetaType<qbuUserProperty*>();
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserProperty::UserProperty()
+qbuUserProperty::qbuUserProperty()
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserProperty::UserProperty(const UserProperty & other)
+qbuUserProperty::qbuUserProperty(const qbuUserProperty & other)
 {
 
 }

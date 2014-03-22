@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef __NONTHREADSAFESINGLETON_H__
-#define __NONTHREADSAFESINGLETON_H__
+#ifndef __QBUNONTHREADSAFESINGLETON_H__
+#define __QBUNONTHREADSAFESINGLETON_H__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //	
-// Note this Singelton is perfectly safe to use as long as we can insure that only 1 
+// Note this Singleton is perfectly safe to use as long as we can insure that only 1 
 // thread calls instance() the first time. The simplest way to do this call instance() 
 // before additional application threads are created.
 //
@@ -24,5 +24,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __NONTHREADSAFESINGLETON_H__
-
+#endif // __QBUNONTHREADSAFESINGLETON_H__

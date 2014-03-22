@@ -1,5 +1,5 @@
-#include "qbuBase/PropertyList.h"
-#include "qbuBase/PropXMLHelper.h"
+#include "qbuBase/qbuPropertyList.h"
+#include "qbuBase/qbuPropXMLHelper.h"
 
 #include <QDomDocument>
 #include <QTextStream>
@@ -11,32 +11,32 @@
 // knows about. This registers PropertyList with PropXMLHelper which will call 
 // hlpr->construct() to do the actual object construction.
 
-int PropertyList::m_nMetaID = qRegisterMetaType<PropertyList*>();
-static UserPropPtrHelper<PropertyList> hlpr(PropertyList::m_nMetaID);
+int qbuPropertyList::m_nMetaID = qRegisterMetaType<qbuPropertyList*>();
+static qbuUserPropPtrHelper<qbuPropertyList> hlpr(qbuPropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::PropertyList() 
+qbuPropertyList::qbuPropertyList() 
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::~PropertyList()
+qbuPropertyList::~qbuPropertyList()
 {
 	destroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::PropertyList(const PropertyList & other)
+qbuPropertyList::qbuPropertyList(const qbuPropertyList & other)
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList& PropertyList::operator =(const PropertyList & other)
+qbuPropertyList& qbuPropertyList::operator =(const qbuPropertyList & other)
 {
 	if ( &other != this ) {
 		destroy();
@@ -47,7 +47,7 @@ PropertyList& PropertyList::operator =(const PropertyList & other)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::copy(const PropertyList & other)
+void qbuPropertyList::copy(const qbuPropertyList & other)
 {
 	setObjectName(other.objectName());
 
@@ -61,7 +61,7 @@ void PropertyList::copy(const PropertyList & other)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::destroy()
+void qbuPropertyList::destroy()
 {
 	iterator it= begin();
 	for(; it != end();++it) {
@@ -72,43 +72,43 @@ void PropertyList::destroy()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::iterator PropertyList::begin()
+qbuPropertyList::iterator qbuPropertyList::begin()
 {
-	PropertyList::iterator retVal = m_lstProps.begin();
+	qbuPropertyList::iterator retVal = m_lstProps.begin();
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::iterator PropertyList::end()
+qbuPropertyList::iterator qbuPropertyList::end()
 {
 	return m_lstProps.end();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::const_iterator PropertyList::begin() const
+qbuPropertyList::const_iterator qbuPropertyList::begin() const
 {
 	return m_lstProps.begin();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyList::const_iterator PropertyList::end() const
+qbuPropertyList::const_iterator qbuPropertyList::end() const
 {
 	return m_lstProps.end();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::push_back(Property & prop)
+void qbuPropertyList::push_back(qbuProperty & prop)
 {
-	return push_back(new Property(prop));
+	return push_back(new qbuProperty(prop));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::push_back(Property* pProp)
+void qbuPropertyList::push_back(qbuProperty* pProp)
 {
 	if (pProp != NULL) {
 		QString strName = CleanUpName(pProp->objectName());
@@ -121,14 +121,14 @@ void PropertyList::push_back(Property* pProp)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::push_front(Property & prop)
+void qbuPropertyList::push_front(qbuProperty & prop)
 {
-	return push_front(new Property(prop));
+	return push_front(new qbuProperty(prop));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::push_front(Property* pProp)
+void qbuPropertyList::push_front(qbuProperty* pProp)
 {
 	if (pProp != NULL) {
 		QString strName = CleanUpName(pProp->objectName());
@@ -146,7 +146,7 @@ void PropertyList::push_front(Property* pProp)
 // the first child. Set this to false if the PropertyList is not the root and is instead
 // embedded inside a Property.
 
-QString PropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
+QString qbuPropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
 {
 	QString name = objectName();
 
@@ -185,7 +185,7 @@ QString PropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString PropertyList::CleanUpName(QString strName)
+QString qbuPropertyList::CleanUpName(QString strName)
 {
 	strName = strName.simplified();
 
@@ -196,7 +196,7 @@ QString PropertyList::CleanUpName(QString strName)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::push_back(PropertyList * pOther)
+void qbuPropertyList::push_back(qbuPropertyList * pOther)
 {
 	if (pOther != NULL) {
 		iterator it = pOther->begin();
@@ -240,7 +240,7 @@ static void printDomElem(QDomElement & e)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool PropertyList::fromXML( QString strXML )
+bool qbuPropertyList::fromXML( QString strXML )
 {
 	bool retVal;
 
@@ -266,7 +266,7 @@ bool PropertyList::fromXML( QString strXML )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool PropertyList::fromXML(QDomElement & domElem)
+bool qbuPropertyList::fromXML(QDomElement & domElem)
 {
 	bool retVal;
 	QDomNode n = domElem;
@@ -276,7 +276,7 @@ bool PropertyList::fromXML(QDomElement & domElem)
 		QDomElement e = n.toElement(); // try to convert the node to an element.
 		if(!e.isNull()) {
 
-			Property prop;
+			qbuProperty prop;
 			if (prop.fromXML(e)) {
 				push_back(prop);
 			}
@@ -291,7 +291,7 @@ bool PropertyList::fromXML(QDomElement & domElem)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool PropertyList::Load( QString strFile )
+bool qbuPropertyList::Load( QString strFile )
 {
 	QFile file(strFile);
 	bool retVal = file.open(QFile::ReadOnly|QFile::Text);
@@ -310,7 +310,7 @@ bool PropertyList::Load( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool PropertyList::Save( QString strFile )
+bool qbuPropertyList::Save( QString strFile )
 {
 	QString strXML = toXML(true);
 	bool retVal = !strXML.isEmpty();
@@ -328,14 +328,14 @@ bool PropertyList::Save( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int PropertyList::size() const
+int qbuPropertyList::size() const
 {
 	return m_lstProps.size();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::Print( std::ostream & st,qbuITKIndent indent )
+void qbuPropertyList::Print( std::ostream & st,qbuITKIndent indent )
 {
 	QString str = toXML(true,indent);
 	st << qPrintable(str) << std::endl;
@@ -343,7 +343,7 @@ void PropertyList::Print( std::ostream & st,qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyList::Print( QTextStream & st, qbuITKIndent indent )
+void qbuPropertyList::Print( QTextStream & st, qbuITKIndent indent )
 {
 	QString str = toXML(true,indent);
 	st << str << endl;
@@ -352,15 +352,15 @@ void PropertyList::Print( QTextStream & st, qbuITKIndent indent )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
-bool PropertyList::operator==( const PropertyList & other ) const
+bool qbuPropertyList::operator==( const qbuPropertyList & other ) const
 {
 	bool retVal = (other.size() == size());
 	if (retVal) {
 		const_iterator it1 = begin();
 		const_iterator it2 = other.begin();
 		for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
-			Property* p1 = *it1;
-			Property* p2 = *it2;
+			qbuProperty* p1 = *it1;
+			qbuProperty* p2 = *it2;
 			retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
 		}
 	}

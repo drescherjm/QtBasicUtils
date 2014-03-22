@@ -1,15 +1,15 @@
-#include "qbuBase/ProperyMapXMLHelper.h"
-#include "qbuBase/PropertyMap.h"
+#include "qbuBase/qbuProperyMapXMLHelper.h"
+#include "qbuBase/qbuPropertyMap.h"
 /////////////////////////////////////////////////////////////////////////////////////////
 
-ProperyMapXMLHelper::ProperyMapXMLHelper(int nMetaTypeID) : UserPropXMLHelper(nMetaTypeID)
+qbuProperyMapXMLHelper::qbuProperyMapXMLHelper(int nMetaTypeID) : qbuUserPropXMLHelper(nMetaTypeID)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool ProperyMapXMLHelper::fromXML(Property* pProp,QDomElement & docElem)
+bool qbuProperyMapXMLHelper::fromXML(qbuProperty* pProp,QDomElement & docElem)
 {
 	bool retVal = (pProp != NULL);
 	if (retVal) {

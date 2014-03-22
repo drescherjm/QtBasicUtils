@@ -1,8 +1,8 @@
-#include "qbuBase/Property.h"
+#include "qbuBase/qbuProperty.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdParseException.h"
 #include "qbuCmdLine/QCmdHelpException.h"
-#include "qbuBase/PropertyMap.h"
+#include "qbuBase/qbuPropertyMap.h"
 #include <iostream>
 #include <QDate>
 #include "testxmlimp.h"

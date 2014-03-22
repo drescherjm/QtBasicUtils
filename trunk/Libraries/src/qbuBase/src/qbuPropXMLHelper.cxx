@@ -1,16 +1,16 @@
-#include "qbuBase/PropXMLHelper.h"
+#include "qbuBase/qbuPropXMLHelper.h"
 #include <QMetaType>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropXMLHelper::UserPropXMLHelper(const char* strName) : m_strClasName(strName)
+qbuUserPropXMLHelper::qbuUserPropXMLHelper(const char* strName) : m_strClasName(strName)
 {
 	Initialize();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropXMLHelper::UserPropXMLHelper( int nMetaTypeId )
+qbuUserPropXMLHelper::qbuUserPropXMLHelper( int nMetaTypeId )
 {
 	m_strClasName = QMetaType::typeName(nMetaTypeId);
 	Initialize();
@@ -18,30 +18,30 @@ UserPropXMLHelper::UserPropXMLHelper( int nMetaTypeId )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const char* UserPropXMLHelper::GetClassName() const
+const char* qbuUserPropXMLHelper::GetClassName() const
 {
 	return m_strClasName;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserProperty* UserPropXMLHelper::construct()
+qbuUserProperty* qbuUserPropXMLHelper::construct()
 {
 	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool UserPropXMLHelper::fromXML(Property* pProp,QDomElement & domElem)
+bool qbuUserPropXMLHelper::fromXML(qbuProperty* pProp,QDomElement & domElem)
 {
 	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void UserPropXMLHelper::Initialize()
+void qbuUserPropXMLHelper::Initialize()
 {
-	PropXMLHelper* pPropXMLHelper = PropXMLHelper::instance();
+	qbuPropXMLHelper* pPropXMLHelper = qbuPropXMLHelper::instance();
 	if (pPropXMLHelper != NULL) {
 		pPropXMLHelper->addHelper(this);
 	}	
@@ -49,9 +49,9 @@ void UserPropXMLHelper::Initialize()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropXMLHelper* PropXMLHelper::GetXMLHelper(QString strClassName)
+qbuUserPropXMLHelper* qbuPropXMLHelper::GetXMLHelper(QString strClassName)
 {
-	UserPropXMLHelper* retVal = NULL;
+	qbuUserPropXMLHelper* retVal = NULL;
 	QMutexLocker lock(&m_mutex);
 
 	MapHelpers::const_iterator it = m_mapHelpers.find(strClassName);
@@ -64,7 +64,7 @@ UserPropXMLHelper* PropXMLHelper::GetXMLHelper(QString strClassName)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool PropXMLHelper::addHelper(UserPropXMLHelper* pHlpr)
+bool qbuPropXMLHelper::addHelper(qbuUserPropXMLHelper* pHlpr)
 {
 	bool retVal = (pHlpr != NULL);
 	if (retVal) {

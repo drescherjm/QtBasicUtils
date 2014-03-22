@@ -1,27 +1,26 @@
 #pragma once
 
-#ifndef __USERPROPERY_H__
-#define __USERPROPERY_H__
+#ifndef __QBUUSERPROPERY_H__
+#define __QBUUSERPROPERY_H__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#include "QUpdateTracker.h"
+#include "qbuBase/qbuUpdateTracker.h"
 #include <QObject>
 #include <QVariant>
 #include <QDomElement>
 #include <QSharedData>
-#include "qbuITKIndent.h"
+#include "qbuBase/qbuITKIndent.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
-class UserProperty : public QObject , public QUpdateTracker, public QSharedData
+class qbuUserProperty : public QObject , public qbuUpdateTracker, public QSharedData
 {
 	Q_OBJECT
 public:
-	UserProperty();
-	UserProperty(const UserProperty & other);
-	UserProperty& operator=(const UserProperty & other);
+	qbuUserProperty();
+	qbuUserProperty(const qbuUserProperty & other);
+	qbuUserProperty& operator=(const qbuUserProperty & other);
 public:
 	virtual QString		toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent())=0;
 	virtual bool		fromXML(QString strXML)=0;
@@ -34,8 +33,8 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //Q_DECLARE_METATYPE(UserProperty);
-Q_DECLARE_METATYPE(UserProperty*);
+Q_DECLARE_METATYPE(qbuUserProperty*);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __USERPROPERY_H__
+#endif // __QBUUSERPROPERY_H__

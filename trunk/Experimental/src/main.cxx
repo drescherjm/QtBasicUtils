@@ -1,7 +1,7 @@
 #include "xrvariant.h"
-#include "qbuBase/Property.h"
-#include "qbuBase/PropertyMap.h"
-#include "qbuBase/PropertyList.h"
+#include "qbuBase/qbuProperty.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropertyList.h"
 
 #include <iostream>
 #include <QFile>
@@ -35,12 +35,12 @@ void printDomElem(QDomElement & e)
 	std::cout << "Parse End." << std::endl << std::endl;
 }
 
-bool test_exportXML(Property & prop) 
+bool test_exportXML(qbuProperty & prop) 
 {
 	std::cout << "BEGIN: Testing test_exportXML" << std::endl;
 
 	QString strXML = prop.toXML();
-	Property prop1;
+	qbuProperty prop1;
 	prop1.fromXML(strXML);
 
 	std::cout << "Prop= " <<  strXML.toStdString() << std::endl;
@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
 		domDoc.save(stream,4);
 	}
 
-	Property prop;
+	qbuProperty prop;
 
 	prop.setObjectName("Name");
 	prop.SetData(QString("John M. Drescher"));
@@ -202,15 +202,15 @@ int main(int argc, char* argv[])
 	int nUserType= prop.GetData().userType();
 	QString str = QMetaType::typeName(nUserType);
 
-	Property pc2;
-	pc2.SetData(UserPropPtr(new PropertyMap(pc)));
+	qbuProperty pc2;
+	pc2.SetData(qbuUserPropPtr(new PropertyMap(pc)));
 
 	str = pc2.toXML();
 
-	if (pc2.GetData().canConvert<UserPropPtr>()) {
-		UserPropPtr ptr = pc2.GetData().value<UserPropPtr>();
+	if (pc2.GetData().canConvert<qbuUserPropPtr>()) {
+		qbuUserPropPtr ptr = pc2.GetData().value<qbuUserPropPtr>();
 		str = ptr.toXML();
-		UserPropPtr ptr1 = pc2;
+		qbuUserPropPtr ptr1 = pc2;
 		QString str_1 = ptr1.toXML();
 		PropertyMap* pPM1 = dynamic_cast<PropertyMap*>(ptr1.data());
 		if (pPM1) {
@@ -224,7 +224,7 @@ int main(int argc, char* argv[])
 	nUserType= pc2.GetData().userType();
 	str = QMetaType::typeName(nUserType);
 
-	UserProperty* pProp2 = pc2.GetData().value<UserProperty*>();
+	qbuUserProperty* pProp2 = pc2.GetData().value<qbuUserProperty*>();
 	PropertyMap* pProp3 = pc2.GetData().value<PropertyMap*>();
 
 	PropertyMap pc1;

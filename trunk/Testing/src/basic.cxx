@@ -13,8 +13,8 @@
 #include <QTimer>
 
 #include <math.h>
-#include "qbuBase/PropertyMap.h"
-#include "qbuBase/PropertyList.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropertyList.h"
 #include "testxmlimp.h"
 #include "testCommandLineInclude.h"
 #include "testSetVariable.h"

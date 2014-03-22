@@ -1,5 +1,5 @@
-#include "qbuBase/PropertyMap.h"
-#include "qbuBase/PropXMLHelper.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropXMLHelper.h"
 
 #include <QDomDocument>
 #include <QTextStream>
@@ -7,17 +7,17 @@
 #include <iostream>
 #include <QStringList>
 #include <QSet>
-#include "qbuBase/ProperyMapXMLHelper.h"
+#include "qbuBase/qbuProperyMapXMLHelper.h"
 #include <QXmlSimpleReader>
 #include <QDebug>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 static int m_nMetaID = qRegisterMetaType<PropertyMap>();
-static ProperyMapXMLHelper hlpr(m_nMetaID);
+static qbuProperyMapXMLHelper hlpr(m_nMetaID);
 
 static int m_nMetaIDPtr = qRegisterMetaType<PropertyMap*>();
-UserPropPtrHelper<PropertyMap> ptrHlpr(m_nMetaIDPtr);
+qbuUserPropPtrHelper<PropertyMap> ptrHlpr(m_nMetaIDPtr);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,9 +111,9 @@ PropertyMap::const_iterator PropertyMap::end() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-PropertyMap::iterator PropertyMap::insert(Property & prop)
+PropertyMap::iterator PropertyMap::insert(qbuProperty & prop)
 {
-	return insert(new Property(prop));
+	return insert(new qbuProperty(prop));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ PropertyMap::iterator PropertyMap::insert(Property & prop)
  *	\warning Do not pass this a pointer to a stack allocated Property.
  */
 
-PropertyMap::iterator PropertyMap::insert(Property* pProp)
+PropertyMap::iterator PropertyMap::insert(qbuProperty* pProp)
 {
 	iterator retVal = m_mapProps.end();
 	if (pProp != NULL) {
@@ -241,7 +241,7 @@ void PropertyMap::CopyProperty( QString strOldName, const PropertyMap & other, Q
 
 	PropertyMap::const_iterator it = other.find(strOldName);
 	if ( it != other.end()) {
-		Property prop = **it;
+		qbuProperty prop = **it;
 		
 		if (!strNewName.isEmpty()) {
 			prop.setObjectName(strNewName);
@@ -266,7 +266,7 @@ void PropertyMap::MoveProperty( QString strOldName, PropertyMap & other, QString
 
 	PropertyMap::iterator it = other.find(strOldName);
 	if ( it != other.end()) {
-		Property prop = **it;
+		qbuProperty prop = **it;
 
 		if (!strNewName.isEmpty()) {
 			prop.setObjectName(strNewName);
@@ -291,7 +291,7 @@ bool PropertyMap::RenameProperty(QString strOldName,QString strNewName)
 		if (retVal) {
 			retVal = find(strNewName) == end();
 			if (retVal) {
-				Property* pProp = *it;
+				qbuProperty* pProp = *it;
 				m_mapProps.erase(it);
 				pProp->setObjectName(strNewName);
 				retVal = (insert(pProp) != end());
@@ -338,7 +338,7 @@ int PropertyMap::RemoveProperties( QStringList lstProperties )
 	int retVal = 0;
 	iterator it = begin();
 	for(; it != end();++it) {
-		Property* pProp = *it;
+		qbuProperty* pProp = *it;
 		if (pProp != NULL) {
 			QString strName = pProp->objectName();
 			if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
@@ -368,7 +368,7 @@ void PropertyMap::addProperties( const PropertyMap* other )
 {
 	PropertyMap::const_iterator it = other->begin();
 	if ( it != other->end()) {
-		Property prop = **it;
+		qbuProperty prop = **it;
 		insert(prop);
 	}
 }
@@ -467,7 +467,7 @@ bool PropertyMap::fromXML(QDomElement & domElem)
 		QDomElement e = n.toElement(); // try to convert the node to an element.
 		if(!e.isNull()) {
 			
-			Property prop;
+			qbuProperty prop;
 			if (prop.fromXML(e)) {
 				insert(prop);
 			}
@@ -560,8 +560,8 @@ bool PropertyMap::operator==( const PropertyMap & other ) const
 		const_iterator it1 = begin();
 		const_iterator it2 = other.begin();
 		for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
-			Property* p1 = *it1;
-			Property* p2 = *it2;
+			qbuProperty* p1 = *it1;
+			qbuProperty* p2 = *it2;
 			retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
 		}
 	}
@@ -592,15 +592,15 @@ bool PropertyMap::EqualSubset( QStringList lstPropNames, const PropertyMap & oth
 {
 	bool retVal = !lstPropNames.empty();
 	if (retVal) {
-		Property prop1,prop2;
+		qbuProperty prop1,prop2;
 		const_iterator it1, it2;
 		foreach(QString strName,lstPropNames) {
 			it1 = find(strName);
 			it2 = other.find(strName);
 			retVal = (( it1 != end()) && (it2 != other.end()));
 			if (retVal) {
-				Property* p1 = *it1;
-				Property* p2 = *it2;
+				qbuProperty* p1 = *it1;
+				qbuProperty* p2 = *it2;
 
 				retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
 			}
@@ -614,7 +614,7 @@ bool PropertyMap::EqualSubset( QStringList lstPropNames, const PropertyMap & oth
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void PropertyMap::propertyInserted( Property * pProp )
+void PropertyMap::propertyInserted( qbuProperty * pProp )
 {
 
 }

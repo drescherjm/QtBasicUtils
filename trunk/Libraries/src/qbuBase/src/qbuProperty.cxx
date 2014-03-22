@@ -1,6 +1,6 @@
-#include "qbuBase/Property.h"
-#include "qbuBase/PropertyMap.h"
-#include "qbuBase/PropXMLHelper.h"
+#include "qbuBase/qbuProperty.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropXMLHelper.h"
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
@@ -10,27 +10,27 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Property::Property()
+qbuProperty::qbuProperty()
 {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Property::~Property()
+qbuProperty::~qbuProperty()
 {
 	destroy();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Property::Property(const Property & other)
+qbuProperty::qbuProperty(const qbuProperty & other)
 {
 	copy(other);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Property& Property::operator =(const Property & other)
+qbuProperty& qbuProperty::operator =(const qbuProperty & other)
 {
 	if ( &other != this ) {
 		destroy();
@@ -41,7 +41,7 @@ Property& Property::operator =(const Property & other)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Property::copy(const Property & other)
+void qbuProperty::copy(const qbuProperty & other)
 {
 	m_vt = other.m_vt;
 	setObjectName(other.objectName());
@@ -49,21 +49,21 @@ void Property::copy(const Property & other)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Property::destroy()
+void qbuProperty::destroy()
 {
 
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const QVariant& Property::GetData() const
+const QVariant& qbuProperty::GetData() const
 {
 	return m_vt;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-QString	Property::toXML(qbuITKIndent indent)
+QString	qbuProperty::toXML(qbuITKIndent indent)
 {
 	QString retVal;
 	QVariant::Type ty = GetData().type();
@@ -107,8 +107,8 @@ QString	Property::toXML(qbuITKIndent indent)
 
 		retVal = strTemp;
 	}
-	else  if (GetData().canConvert<UserPropPtr>()) {
-		UserPropPtr ptr = GetData().value<UserPropPtr>();
+	else  if (GetData().canConvert<qbuUserPropPtr>()) {
+		qbuUserPropPtr ptr = GetData().value<qbuUserPropPtr>();
 		if (!ptr.isNull()) {
 			retVal = ptr.toXML(false,indent);
 			QString strName = objectName();
@@ -130,7 +130,7 @@ QString	Property::toXML(qbuITKIndent indent)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-bool Property::fromXML(QString strXML)
+bool qbuProperty::fromXML(QString strXML)
 {
 	QDomDocument doc;
 	bool retVal = doc.setContent(strXML);
@@ -143,7 +143,7 @@ bool Property::fromXML(QString strXML)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-bool Property::fromXML(QDomElement & docElem)
+bool qbuProperty::fromXML(QDomElement & docElem)
 {
 	bool retVal = !docElem.isNull();
 	if (retVal) {
@@ -194,7 +194,7 @@ bool Property::fromXML(QDomElement & docElem)
 					QString strTypeName = docElem.attribute("tyName");
 					retVal = !strTypeName.isEmpty();
 					if (retVal) {
-						UserPropXMLHelper* pHlpr = PropXMLHelper::instance()->GetXMLHelper(strTypeName);
+						qbuUserPropXMLHelper* pHlpr = qbuPropXMLHelper::instance()->GetXMLHelper(strTypeName);
 						retVal = (pHlpr != NULL);
 						if (retVal) {
 							retVal = pHlpr->fromXML(this,docElem);
@@ -214,7 +214,7 @@ bool Property::fromXML(QDomElement & docElem)
 *  value is set the Modified flag is set.
 */
 
-QVariant& Property::SetData( const QVariant& vt )
+QVariant& qbuProperty::SetData( const QVariant& vt )
 {
 	m_vt = vt;
 	Modify();
@@ -228,18 +228,18 @@ QVariant& Property::SetData( const QVariant& vt )
 *  value is set the Modified flag is set.
 */
 
-QVariant& Property::SetData( const UserPropPtr & ptr )
+QVariant& qbuProperty::SetData( const qbuUserPropPtr & ptr )
 {
-	m_vt = QVariant::fromValue<UserPropPtr>(ptr);
+	m_vt = QVariant::fromValue<qbuUserPropPtr>(ptr);
 	Modify();
 	return m_vt;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Property::operator UserPropPtr() const
+qbuProperty::operator qbuUserPropPtr() const
 {
-	return GetData().value<UserPropPtr>();
+	return GetData().value<qbuUserPropPtr>();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -248,7 +248,7 @@ Property::operator UserPropPtr() const
 *	Load reads the Property from and XML file.
 */
 
-bool Property::Load( QString strFile )
+bool qbuProperty::Load( QString strFile )
 {
 	QFile file(strFile);
 	bool retVal = file.open(QFile::ReadOnly|QFile::Text);
@@ -272,7 +272,7 @@ bool Property::Load( QString strFile )
  *  is reset.
  */
 
-bool Property::Save( QString strFile )
+bool qbuProperty::Save( QString strFile )
 {
 	QString strXML = toXML();
 	bool retVal = !strXML.isEmpty();
@@ -290,7 +290,7 @@ bool Property::Save( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void Property::Print( std::ostream & st, qbuITKIndent indent )
+void qbuProperty::Print( std::ostream & st, qbuITKIndent indent )
 {
 	QString str = toXML(indent);
 	st << qPrintable(str) << std::endl;
@@ -298,7 +298,7 @@ void Property::Print( std::ostream & st, qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void Property::Print( QTextStream & st, qbuITKIndent indent )
+void qbuProperty::Print( QTextStream & st, qbuITKIndent indent )
 {
 	QString str = toXML(indent);
 	st << str << endl;
@@ -306,7 +306,7 @@ void Property::Print( QTextStream & st, qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool Property::operator==( const Property & other ) const
+bool qbuProperty::operator==( const qbuProperty & other ) const
 {
 	return m_vt == other.m_vt;
 }

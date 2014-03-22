@@ -3,8 +3,8 @@
 #ifndef __PROPERTYMAP_H__
 #define __PROPERTYMAP_H__
 
-#include "qbuBase/Property.h"
-#include "qbuBase/UserPropery.h"
+#include "qbuBase/qbuProperty.h"
+#include "qbuBase/qbuUserPropery.h"
 #include <QMap>
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@
  * \sa Property, PropertyList
  */
 
-class PropertyMap : public UserProperty
+class PropertyMap : public qbuUserProperty
 {
 	Q_OBJECT
 public:
@@ -26,12 +26,12 @@ public:
 	PropertyMap& operator=(const PropertyMap & other);
 	bool operator==(const PropertyMap & other) const;
 public:
-	typedef QMap<QString,Property*> Map;
+	typedef QMap<QString,qbuProperty*> Map;
 	typedef Map::iterator iterator;
 	typedef Map::const_iterator const_iterator;
 
-	iterator		insert(Property* pProp);
-	iterator		insert(Property & prop);
+	iterator		insert(qbuProperty* pProp);
+	iterator		insert(qbuProperty & prop);
 	iterator		begin();
 	iterator		end();
 	const_iterator	begin() const;
@@ -63,7 +63,7 @@ public:
 	virtual	int		RemoveProperties(QStringList lstProperties);
 
 protected:
-	virtual void	propertyInserted(Property * pProp);
+	virtual void	propertyInserted(qbuProperty * pProp);
 
 protected:
 	Map				m_mapProps;

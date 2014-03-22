@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef __QUPDATETRACKER_H__
-#define __QUPDATETRACKER_H__
+#ifndef __QBUUPDATETRACKER_H__
+#define __QBUUPDATETRACKER_H__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class QUpdateTracker
+class qbuUpdateTracker
 {
 public:
-	QUpdateTracker(bool bChanged=false);
+	qbuUpdateTracker(bool bChanged=false);
 public:
 	virtual bool Modify();
 	virtual bool HasChanged();
@@ -19,14 +19,14 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-inline QUpdateTracker::QUpdateTracker(bool bChanged) : m_bChanged(bChanged)
+inline qbuUpdateTracker::qbuUpdateTracker(bool bChanged) : m_bChanged(bChanged)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-inline bool QUpdateTracker::Modify()
+inline bool qbuUpdateTracker::Modify()
 {
 	bool retVal = HasChanged();
 	m_bChanged = true;
@@ -35,14 +35,14 @@ inline bool QUpdateTracker::Modify()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-inline bool QUpdateTracker::HasChanged()
+inline bool qbuUpdateTracker::HasChanged()
 {
 	return m_bChanged;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-inline bool QUpdateTracker::ForceUnmodified()
+inline bool qbuUpdateTracker::ForceUnmodified()
 {
 	bool retVal = HasChanged();
 	m_bChanged = false;
@@ -51,4 +51,4 @@ inline bool QUpdateTracker::ForceUnmodified()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QUPDATETRACKER_H__
+#endif // __QBUUPDATETRACKER_H__

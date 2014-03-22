@@ -3,12 +3,12 @@
 #include "testUserProps.h"
 #include "qbuCmdLine/QCmdParseError.h"
 
-#include "qbuBase/Property.h"
+#include "qbuBase/qbuProperty.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdParseException.h"
 #include "qbuCmdLine/QCmdHelpException.h"
-#include "qbuBase/PropertyMap.h"
-#include "qbuBase/PropertyList.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropertyList.h"
 #include <iostream>
 #include <QDate>
 
@@ -31,7 +31,7 @@ static bool add_John(PropertyMap* pPM)
 	bool retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property prop;
+		qbuProperty prop;
 
 		prop.SetData((int)37);
 		prop.setObjectName("Age");
@@ -66,12 +66,12 @@ static bool add_John(PropertyMap* pPM)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static bool add_John(PropertyList* pPL)
+static bool add_John(qbuPropertyList* pPL)
 {
 	bool retVal = (pPL != NULL);
 
 	if (retVal) {
-		Property prop;
+		qbuProperty prop;
 
 		prop.SetData((int)37);
 		prop.setObjectName("Age");
@@ -100,7 +100,7 @@ static bool add_Kathy(PropertyMap* pPM)
 	bool retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property prop;
+		qbuProperty prop;
 
 		prop.SetData((int)40);
 		prop.setObjectName("Age");
@@ -135,12 +135,12 @@ static bool add_Kathy(PropertyMap* pPM)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static bool add_Kathy(PropertyList* pPL)
+static bool add_Kathy(qbuPropertyList* pPL)
 {
 	bool retVal = (pPL != NULL);
 
 	if (retVal) {
-		Property prop;
+		qbuProperty prop;
 
 		prop.SetData((int)40);
 		prop.setObjectName("Age");
@@ -171,7 +171,7 @@ static bool test0()
 	retVal = (pPM != NULL);
 	
 	if (retVal) {
-		UserPropPtr ptr(pPM);
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(pPM);
 
 		if (retVal) {
@@ -199,7 +199,7 @@ static bool test1()
 	retVal = (pPM != NULL);
 
 	if (retVal) {
-		UserPropPtr ptr(pPM);
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
 
 		if (retVal) {
@@ -227,8 +227,8 @@ static bool test2()
 	retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPM);
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 
@@ -258,15 +258,15 @@ static bool test3()
 	retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPM);
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
 
 		if (retVal) {
 
-			UserPropPtr ptr1 = prop;
+			qbuUserPropPtr ptr1 = prop;
 
 			QString strXML0 = ptr1.toXML();
 
@@ -292,8 +292,8 @@ static bool test4()
 	retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPM);
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
@@ -324,8 +324,8 @@ static bool test5()
 	retVal = (pPM != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPM);
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPM);
 		retVal = add_John(dynamic_cast<PropertyMap*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
@@ -335,7 +335,7 @@ static bool test5()
 			retVal = prop.Save("PMUserSave.xml");
 
 			if (retVal) {
-				Property prop1;
+				qbuProperty prop1;
 				prop1.Load("PMUserSave.xml");
 			}
 
@@ -350,13 +350,13 @@ static bool test5()
 static bool test6()
 {
 	bool retVal;
-	PropertyList* pPList = new PropertyList;
+	qbuPropertyList* pPList = new qbuPropertyList;
 	retVal = (pPList != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPList);
-		retVal = add_John(dynamic_cast<PropertyList*>(ptr.data()));
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPList);
+		retVal = add_John(dynamic_cast<qbuPropertyList*>(ptr.data()));
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
 
@@ -365,7 +365,7 @@ static bool test6()
 			retVal = prop.Save("PLUserSave.xml");
 
 			if (retVal) {
-				Property prop1;
+				qbuProperty prop1;
 				retVal = prop1.Load("PLUserSave.xml");
 				if (retVal) {
 					QString strXML0 = prop.toXML();
@@ -386,14 +386,14 @@ static bool test6()
 static bool test7()
 {
 	bool retVal;
-	PropertyList* pPList = new PropertyList;
+	qbuPropertyList* pPList = new qbuPropertyList;
 	retVal = (pPList != NULL);
 
 	if (retVal) {
-		Property	prop;
-		UserPropPtr ptr(pPList);
+		qbuProperty	prop;
+		qbuUserPropPtr ptr(pPList);
 
-		retVal = add_John(dynamic_cast<PropertyList*>(ptr.data()));
+		retVal = add_John(dynamic_cast<qbuPropertyList*>(ptr.data()));
 		int nItems = pPList->size();
 		prop.SetData(ptr);
 		prop.setObjectName("Person0");
@@ -403,7 +403,7 @@ static bool test7()
 			retVal = prop.Save("PLUserSave.xml");
 
 			if (retVal) {
-				Property prop1;
+				qbuProperty prop1;
 				retVal = prop1.Load("PLUserSave.xml");
 				if (retVal) {
 					QString strXML0 = prop.toXML();
@@ -412,8 +412,8 @@ static bool test7()
 					retVal =(strXML0.compare(strXML1) == 0);
 
 					if (retVal) {
-						UserPropPtr ptr1 = prop1;
-						QExplicitlySharedDataPointer<PropertyList> pPL = ptr1.GetPtr();
+						qbuUserPropPtr ptr1 = prop1;
+						QExplicitlySharedDataPointer<qbuPropertyList> pPL = ptr1.GetPtr();
 						int nItems1=pPL.data()->size();
 						retVal = (nItems == nItems1);
 					}
@@ -450,16 +450,16 @@ static bool test8()
 static bool test9()
 {
 	// These are to test the assignment operator.
-	PropertyList list1;
+	qbuPropertyList list1;
 	add_John(&list1);
 
-	PropertyList list2;
+	qbuPropertyList list2;
 	add_Kathy(&list2);
 
 	list1 = list2;
-	PropertyList list3 = list2;
+	qbuPropertyList list3 = list2;
 
-	PropertyList list4(list1);
+	qbuPropertyList list4(list1);
 
 	return true;
 }

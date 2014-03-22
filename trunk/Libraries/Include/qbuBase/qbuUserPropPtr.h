@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef __USERPROPPTR_H__
-#define __USERPROPPTR_H__
+#ifndef __QBUUSERPROPPTR_H__
+#define __QBUUSERPROPPTR_H__
 
-#include "UserPropery.h"
+#include "qbuBase/qbuUserPropery.h"
 #include <QObject>
 #include <QVariant>
 #include <QExplicitlySharedDataPointer>
@@ -12,39 +12,39 @@ class QDomElement;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class UserPropPtr : public QObject
+class qbuUserPropPtr : public QObject
 {
 Q_OBJECT
 public:
-        typedef QExplicitlySharedDataPointer<UserProperty> SharedPtr;
+        typedef QExplicitlySharedDataPointer<qbuUserProperty> SharedPtr;
 public:
-	UserPropPtr();
-	UserPropPtr(UserProperty* pProp, bool bAutoDelete=true);
-	UserPropPtr(const UserPropPtr & other);
-	UserPropPtr& operator=(const UserPropPtr & other);
-	UserPropPtr(SharedPtr & other);
+	qbuUserPropPtr();
+	qbuUserPropPtr(qbuUserProperty* pProp, bool bAutoDelete=true);
+	qbuUserPropPtr(const qbuUserPropPtr & other);
+	qbuUserPropPtr& operator=(const qbuUserPropPtr & other);
+	qbuUserPropPtr(SharedPtr & other);
 public:
 	bool					isNull() const;
 	QString					toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
 	bool					fromXML(QString strXML);
 	bool					fromXML(QDomElement & domElem);
-	UserProperty*			data();
+	qbuUserProperty*			data();
 	SharedPtr				GetPtr();
-	const UserProperty*		data() const;
+	const qbuUserProperty*		data() const;
 	QString					typeName() const; 
 	bool					willAutoDelete() const;
 private:
-	void					copy(const UserPropPtr & other);
+	void					copy(const qbuUserPropPtr & other);
 	void					destroy();
 protected:
 	SharedPtr			m_pProp;
-	UserProperty*		m_pPropRaw;
+	qbuUserProperty*		m_pPropRaw;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(UserPropPtr)
+Q_DECLARE_METATYPE(qbuUserPropPtr)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __USERPROPPTR_H__
+#endif // __QBUUSERPROPPTR_H__

@@ -1,16 +1,16 @@
 #pragma once
 
-#ifndef __PROPERTY_H__
-#define __PROPERTY_H__
+#ifndef __QBUPROPERTY_H__
+#define __QBUPROPERTY_H__
 
 #include <QVariant>
 #include <QDomElement>
 #include <QObject>
 
-#include "UserPropPtr.h"
-#include "QUpdateTracker.h"
+#include "qbuBase/qbuUserPropPtr.h"
+#include "qbuBase/qbuUpdateTracker.h"
 #include <iosfwd>
-#include "qbuITKIndent.h"
+#include "qbuBase/qbuITKIndent.h"
 #include <QTextStream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -23,21 +23,21 @@
  *  \sa PropertyMap, PropertyList
  */
 
-class Property : public QObject, public QUpdateTracker
+class qbuProperty : public QObject, public qbuUpdateTracker
 {
 	Q_OBJECT
 public:
-	Property();
-	virtual ~Property();
-	Property(const Property & other);
-	Property& operator=(const Property & other);
+	qbuProperty();
+	virtual ~qbuProperty();
+	qbuProperty(const qbuProperty & other);
+	qbuProperty& operator=(const qbuProperty & other);
 
-	bool	  operator==(const Property & other) const;
+	bool	  operator==(const qbuProperty & other) const;
 public:
 	const QVariant&		GetData() const;
 	QVariant&			SetData(const QVariant&);
-	QVariant&			SetData( const UserPropPtr & ptr);
-	operator UserPropPtr() const;
+	QVariant&			SetData( const qbuUserPropPtr & ptr);
+	operator qbuUserPropPtr() const;
 public:
 	QString		toXML(qbuITKIndent indent = qbuITKIndent());
 	bool		fromXML(QString strXML);
@@ -48,7 +48,7 @@ public:
 	void		Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
 
 private:
-	void		copy( const Property & other );
+	void		copy( const qbuProperty & other );
 	void		destroy();
 protected:
 	QVariant	m_vt;
@@ -56,8 +56,9 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-Q_DECLARE_METATYPE(Property);
+Q_DECLARE_METATYPE(qbuProperty);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __PROPERTY_H__
+#endif // __QBUPROPERTY_H__
+
