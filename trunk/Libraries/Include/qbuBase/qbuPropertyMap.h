@@ -110,7 +110,7 @@ bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
 	const_iterator it = find(strFieldName);
 	retVal = (it != end());
 	if (retVal) {
-		Property* pProp =*it;
+		qbuProperty* pProp =*it;
 		QVariant vt = (*it)->GetData();
 		retVal = vt.canConvert<DataType>();
 		nOutVal = vt.value<DataType>();
@@ -124,7 +124,7 @@ template<typename DataType>
 bool qbuPropertyMap::setField( QString strFieldName, DataType nInVal )
 {
 	bool retVal;
-	Property prop;
+	qbuProperty prop;
 	prop.setObjectName(strFieldName);
 	prop.SetData(nInVal);
 	retVal = (insert(prop) != end());
