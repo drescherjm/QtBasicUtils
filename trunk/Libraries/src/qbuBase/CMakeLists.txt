@@ -22,6 +22,7 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuPropXMLHelper.cxx
 	./src/qbuProperyMapXMLHelper.cxx
 	./src/qbuITKIndent.cxx
+	./src/qbuStringList.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -38,6 +39,7 @@ SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUserPropery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUserPropPtr.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyList.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuStringList.h
 )
 
 # some .ui files

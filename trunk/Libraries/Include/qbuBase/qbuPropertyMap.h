@@ -52,11 +52,17 @@ public:
 	bool			RemoveProperty(QString strName);
 	bool			RenameProperty(QString strOldName,QString strNewName);
 	
-
 	bool			Load(QString strFile);
 	bool			Save(QString strFile);
 	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
+	bool			hasField(QString strFieldName) const;
+public:
+	template<typename DataType>
+	bool			getField(QString strFieldName, DataType & nOutVal);
+	template<typename DataType>
+	bool			setField(QString strFieldName, DataType nInVal);
+
 public:
 	virtual	void	addProperties(qbuPropertyMap * other);	
 	virtual void	addProperties(const qbuPropertyMap* other);
@@ -92,6 +98,37 @@ inline void qbuPropertyMap::clear()
 inline bool qbuPropertyMap::empty() const
 {
 	return m_mapProps.empty();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+template<typename DataType>
+bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
+{
+	bool retVal;
+	const_iterator it = find(strFieldName);
+	retVal = (it != end());
+	if (retVal) {
+		Property* pProp =*it;
+		QVariant vt = (*it)->GetData();
+		retVal = vt.canConvert<DataType>();
+		nOutVal = vt.value<DataType>();
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename DataType>
+bool qbuPropertyMap::setField( QString strFieldName, DataType nInVal )
+{
+	bool retVal;
+	Property prop;
+	prop.setObjectName(strFieldName);
+	prop.SetData(nInVal);
+	retVal = (insert(prop) != end());
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

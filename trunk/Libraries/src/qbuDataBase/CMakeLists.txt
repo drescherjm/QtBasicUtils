@@ -1,7 +1,5 @@
 myproject(qbuDataBase)
 
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8 FATAL_ERROR)
-
 OPTION(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
 
 FIND_PACKAGE( Qt4 REQUIRED )
@@ -46,7 +44,6 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDatabaseFunctions.cxx
 	./src/qbuInsertQuery.cxx
 	./src/qbuPropertyMap.cxx
-	./src/qbuStringList.cxx
 	./src/qbuException.cxx
 )
 
@@ -68,7 +65,6 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBConstants.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBMacros.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyMap.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuStringList.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 )
 
