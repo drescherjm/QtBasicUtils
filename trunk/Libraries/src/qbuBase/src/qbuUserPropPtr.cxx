@@ -2,7 +2,9 @@
 #include "qbuBase/qbuUserPropery.h"
 #include "qbuBase/qbuPropXMLHelper.h"
 #include "qbuBase/qbuProperty.h"
+#include "qbuBase/qbuPropertyTypeNameAlias.h"
 
+#define USERPROPPTRTYPENAME "QTUTILS::UserPropPtr"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,9 +18,9 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : qbuUserPropXMLHelper(nMetaTypeID)
+UserPropPtrXMLHelper::UserPropPtrXMLHelper(int nMetaTypeID) : qbuUserPropXMLHelper(USERPROPPTRTYPENAME)
 {
-
+	qbuPropertyTypeNameAlias::instance()->addAlias(QMetaType::typeName(nMetaTypeID),USERPROPPTRTYPENAME);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +159,6 @@ QString qbuUserPropPtr::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 				.arg(typeName())
 				.arg(retVal);
 
-
 			retVal = strTemp;
 		}
 	}
@@ -191,6 +192,8 @@ QString qbuUserPropPtr::typeName() const
 {
 	QString retVal = data()->metaObject()->className();
 	if (!retVal.isEmpty()) {
+
+		retVal = qbuPropertyTypeNameAlias::instance()->getAlias(retVal);
 		retVal.append("*");
 	}
 	return retVal;

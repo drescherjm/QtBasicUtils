@@ -16,6 +16,7 @@ set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POS
 SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuProperty.cxx
 	./src/qbuPropertyMap.cxx
+	./src/qbuPropertyTypeNameAlias.cxx
 	./src/qbuUserProperty.cxx
 	./src/qbuUserPropPtr.cxx
 	./src/qbuPropertyList.cxx
@@ -29,6 +30,7 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuMacros.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateTracker.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropXMLHelper.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyTypeNameAlias.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuProperyMapXMLHelper.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuNonThreadSafeSingleton.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuITKIndent.h

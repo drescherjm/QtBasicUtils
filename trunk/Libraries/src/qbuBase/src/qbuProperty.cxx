@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <QDomDocument>
+#include "qbuBase/qbuPropertyTypeNameAlias.h"
 
 
 
@@ -113,11 +114,13 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 			retVal = ptr.toXML(false,indent);
 			QString strName = objectName();
 
+			QString strTypeName = qbuPropertyTypeNameAlias::instance()->getAlias(GetData().typeName());
+
 			QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5%1</%2>\n")
 				.arg(indent.getIndent())
 				.arg(strName)
 				.arg(ty)
-				.arg(GetData().typeName())
+				.arg(strTypeName)
 				.arg(retVal);
 
 			retVal = strTemp;
