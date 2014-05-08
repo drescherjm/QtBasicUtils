@@ -620,3 +620,23 @@ void qbuPropertyMap::propertyInserted( qbuProperty * pProp )
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *	\brief
+ *	This returns the list of all properties currently in the qbuPropertyMap
+ */
+
+QStringList qbuPropertyMap::getPropertyList() const
+{
+	QStringList retVal;
+	
+	const_iterator it = begin();
+
+	for( ; it != end(); ++it) {
+		retVal << it.key();
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

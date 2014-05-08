@@ -13,7 +13,7 @@
  * This class defines a map of Properties. The key to the map here is the name of the property  
  * which is added in Property::setObjectName.
  *
- * \sa Property, PropertyList
+ * \sa Property, qbuPropertyList
  */
 
 class qbuPropertyMap : public qbuUserProperty
@@ -57,6 +57,8 @@ public:
 	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
 	bool			hasField(QString strFieldName) const;
+	QStringList		getPropertyList() const;
+
 public:
 	template<typename DataType>
 	bool			getField(QString strFieldName, DataType & nOutVal);

@@ -45,6 +45,7 @@ public:
 	bool			Save(QString strFile);
 	void			Print(std::ostream & st,qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st,qbuITKIndent indent = qbuITKIndent());
+
 protected:
 	List			m_lstProps;
 protected:
@@ -54,7 +55,7 @@ public:
 private:
 	void			copy( const qbuPropertyList & other );
 	void			destroy();
-
+	
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
