@@ -35,6 +35,9 @@ int QCmdArgFileList::ImportData( QString strValue )
 	}
 	else
 	{
+
+		strValue = QCmdLineFileList::removeOuterQuotes(strValue);
+
 		if ( m_pFnVerify != NULL ) {
 			retVal = (*m_pFnVerify)(strValue,m_nValue.size());
 			if ( retVal == QCmdParseError::STATUS_OK ) {

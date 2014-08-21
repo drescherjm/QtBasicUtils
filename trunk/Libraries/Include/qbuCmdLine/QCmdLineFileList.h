@@ -14,8 +14,6 @@
 
 #include <QStringList>
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdLineFileList
@@ -55,6 +53,8 @@ public:
 				PATH_MUST_EXIST			= 0x0020,
 				MUST_BE_FILE			= 0x0100,
 				MUST_BE_FOLDER			= 0x0200};
+public:
+	static QString	removeOuterQuotes(QString str);
 private:
 	void copy( const QCmdLineFileList & other );
 	void destroy();

@@ -79,3 +79,19 @@ bool QCmdLineFileList::operator==( const QCmdLineFileList & other ) const
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdLineFileList::removeOuterQuotes( QString retVal )
+{
+	QString strTmp = retVal.trimmed();
+	if (strTmp.startsWith('\"') && strTmp.endsWith('\"')) {
+
+		// Remove the starting quote
+		retVal = strTmp.remove(0,1);
+
+		// Remove the ending quote
+		retVal.chop(1);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

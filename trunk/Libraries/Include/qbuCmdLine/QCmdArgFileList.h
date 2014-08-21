@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __QCMDARGFILELIST_H__
 #define __QCMDARGFILELIST_H__
 
@@ -5,7 +7,7 @@
 #include "qbuCmdLine/QCmdLineFileList.h"
 #include "qbuCmdLine/QCmd.h"
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdArgFileList : public QCmdArgBasicBase<QCmdLineFileList>
 {
@@ -30,6 +32,6 @@ private:
 	void			destroy();
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-
-#endif //ndef __QCMDARGFILELIST_H__
+#endif // __QCMDARGFILELIST_H__
