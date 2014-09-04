@@ -727,7 +727,8 @@ int QCmd::qtutilsPrivate::testOptionName( QString strName )
 QString QCmd::qtutilsPrivate::removeOuterQuotes( QString retVal )
 {
 	QString strTmp = retVal.trimmed();
-	if (strTmp.startsWith('\"') && strTmp.endsWith('\"')) {
+	if ( (strTmp.startsWith('\"') && strTmp.endsWith('\"')) || 
+		(strTmp.startsWith('\'') && strTmp.endsWith('\''))) {
 
 		// Remove the starting quote
 		retVal = strTmp.remove(0,1);
