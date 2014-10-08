@@ -232,7 +232,8 @@ void qbuPropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & other, QString strNewName/*=""*/ )
+void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & other, QString strNewName/*=""*/, 
+	bool bOverWriteExisting /*=true*/)
 {
 	
 	if (strNewName.isEmpty()) {
@@ -245,9 +246,13 @@ void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & ot
 		
 		if (!strNewName.isEmpty()) {
 			prop.setObjectName(strNewName);
+			strOldName = strNewName;
 		}
 
-		insert(prop);
+		if ( (bOverWriteExisting) || !hasField(strOldName) ) {
+			insert(prop);
+		}
+		
 	}
 }
 
