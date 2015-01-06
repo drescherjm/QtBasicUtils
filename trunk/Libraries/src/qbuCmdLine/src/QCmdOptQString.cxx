@@ -57,6 +57,12 @@ int QCmdOptQString::ImportData( QString strValue )
 				retVal = QCmdParseError::STATUS_OK;
 			}
 			if (retVal ==  QCmdParseError::STATUS_OK ) {
+				//remove /" on reading data they will be added back in as needed
+				if ((strValue.startsWith("\\\"")) && (strValue.endsWith("\\\""))){
+					//strValue.replace("\\\"","\"");
+					strValue.replace("\\\"","");
+					//strValue.replace("\"","");
+				}
 				m_nValue = strValue;
 			}
 		}
