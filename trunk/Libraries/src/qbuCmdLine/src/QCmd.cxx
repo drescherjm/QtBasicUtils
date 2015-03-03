@@ -1800,6 +1800,39 @@ QString QCmd::generateOptionString( QString strOptionName,int nOptionValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString QCmd::generateOptionString( QString strOptionName,QStringList lstOptionValue )
+{
+	QString retVal;
+
+	strOptionName = strOptionName.trimmed();
+
+	if (lstOptionValue.isEmpty()) {
+
+		//todo: I am not sure if this is the correct handling of an empty list.
+		lstOptionValue << "";
+	}
+
+	QString strFirst = lstOptionValue.first();
+	lstOptionValue.pop_front();
+
+	if (qtutilsPrivate::isExtendedOption(strOptionName)) {
+		retVal =  QString("--%1=%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecissary(strFirst));
+	}
+	else
+	{
+		retVal = QString("-%1%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecissary(strFirst));
+	}
+	foreach(QString strVal, lstOptionValue) {
+		retVal +=" " + QCmd::doubleQuoteIfNecissary(strVal);
+	}
+
+	retVal += " .";
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QString QCmd::doubleQuoteIfNecissary( QString str )
 {
 	QString retVal = str;
