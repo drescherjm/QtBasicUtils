@@ -206,6 +206,9 @@ public:
 	static QString	generateOptionString(QString strOptionName,int nOptionValue);
 	static QString	generateOptionString(QString strOptionName,QString strOptionValue);
 	static QString	generateOptionString(QString strOptionName,QStringList lstOptionValue);
+	
+	template < typename valType >
+	static QString  generateOptionString(QString strOptionName,QList<valType> lstOptionValue);
 	static QString	doubleQuoteIfNecissary( QString str );
 
 private:
@@ -221,6 +224,20 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QCmd::Flags);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template < typename valType >
+QString QCmd::generateOptionString( QString strOptionName,QList<valType> lstOptionValue )
+{
+	QStringList lst;
+	foreach(valType nVal, lstOptionValue) {
+		lst << QString("%1").arg(nVal);
+	}
+
+	return QCmd::generateOptionString(strOptionName,lst);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

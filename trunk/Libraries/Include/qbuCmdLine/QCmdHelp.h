@@ -1,8 +1,7 @@
 #pragma once
 
-#ifndef __QCMDHELP_H__
-#define __QCMDHELP_H__
-
+#ifndef QCMDHELP_H
+#define QCMDHELP_H
 
 #include "qbuCmdLine/QCmd.h"
 #include "qbuCmdLine/QCmdLine.h"
@@ -21,8 +20,6 @@ private:
 	QCmdLine*	m_pCmdLine;
 };
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDHELP_H__
-
+#endif // QCMDHELP_H

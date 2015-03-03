@@ -10,12 +10,14 @@
 //
 //
 
-#ifndef __QCMDOPT_H__
-#define __QCMDOPT_H__
+#pragma once
+
+#ifndef QCMDOPT_H
+#define QCMDOPT_H
 
 #include "QNamedCmdPart.h"
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdOpt : public QNamedCmdPart  
 {
@@ -35,6 +37,6 @@ private:
 	void			destroy();
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-
-#endif //__QCMDOPT_H__
+#endif // QCMDOPT_H
