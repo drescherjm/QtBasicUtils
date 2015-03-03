@@ -52,7 +52,7 @@ public:
 	QString exportCommandString(QChar chCommand);
 	QString exportArgumentsAndOptionsString();
 	QString removeOuterQuotes(QString str);
-
+	
 	QStringList	splitOptionExName(QString str);
 public:
 	template <typename ValType,typename OptType>  int AddOpt(QString strName, 
@@ -66,6 +66,9 @@ public:
 
 	template <typename ValType,typename OptType> int GetOpt(QString strName, ValType & val);
 	template <typename ValType,typename OptType> int GetArg(QString strName, ValType & val);
+
+public:
+	static bool	isExtendedOption(QString strOption);
 	
 public:
 	QCmd*		m_pParent;
@@ -563,7 +566,7 @@ int QCmd::qtutilsPrivate::IsOption(QString & str, QCmdOpt *& pOption)
 		if ( str[0] == '-' ) {
 			if (str[1] != '-') {
 				if ( !str[1].isDigit() ) {
-                                        QString strName(str[1]);
+										QString strName(str[1]);
 					retVal = FindOpt(GetOptString(strName),pOption);
 					if ( wasSuccessful(retVal) ) {
 						str = QString( str.mid(2) );
@@ -796,6 +799,15 @@ bool QCmd::qtutilsPrivate::hasOpt( QString strName )
 
 	return (FindOpt(strName,pOpt) == QCmdParseError::STATUS_OK);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmd::qtutilsPrivate::isExtendedOption( QString strOption )
+{
+	return (strOption.trimmed().length() > 1);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -1714,11 +1726,11 @@ void QCmd::copy( const QCmd & other )
 	m_pPrivate->m_bOptional = other.m_pPrivate->m_bOptional;
 	m_pPrivate->m_bIgnoreCase = other.m_pPrivate->m_bIgnoreCase;
 
-        QArgList args = other.getArguments(true);
-        this->setArguments(args);
+		QArgList args = other.getArguments(true);
+		this->setArguments(args);
 
-        QOptList options = other.getOptions(true);
-        this->setOptions(options);
+		QOptList options = other.getOptions(true);
+		this->setOptions(options);
 
 	m_pPrivate->refreshArgMap();
 	m_pPrivate->refreshOptMap();
@@ -1757,6 +1769,38 @@ int QCmd::FindArg( QString strName, QCmdArg *& pArgument )
 bool QCmd::hasOpt( QString strName )
 {
 	return m_pPrivate->hasOpt(strName);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::generateOptionString( QString strOptionName,QString strOptionValue )
+{
+	QString retVal;
+
+	strOptionName = strOptionValue.trimmed();
+	strOptionValue = QCmd::doubleQuoteIfNecissary(strOptionValue.trimmed());
+
+	if (qtutilsPrivate::isExtendedOption(strOptionName)) {
+		retVal =  QString("--%1=%2").arg(strOptionName).arg(strOptionValue);
+	}
+	else
+	{
+		retVal = QString("-%1%2").arg(strOptionName).arg(strOptionValue);
+	}
+	
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmd::doubleQuoteIfNecissary( QString str )
+{
+	QString retVal = str;
+	if (str.contains(QRegExp("\\s+"))) {
+		retVal.prepend("\"");
+		retVal.append("\"");
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

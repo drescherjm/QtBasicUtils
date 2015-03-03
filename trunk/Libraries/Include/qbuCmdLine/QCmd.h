@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMD_H__
-#define __QCMD_H__
+#ifndef QCMD_H
+#define QCMD_H
 
 #include <float.h>
 #include <QString>
@@ -201,6 +201,11 @@ protected:
 
 	void		setOptions(QOptList & lstOptions);
 	void		setArguments(QArgList & lstArguments);
+public:
+
+	static QString	generateOptionString(QString strOptionName,QString strOptionValue);
+	static QString	doubleQuoteIfNecissary( QString str );
+
 private:
 	friend struct	qtutilsPrivate;
 	struct			qtutilsPrivate;
@@ -208,6 +213,7 @@ private:
 private:
 	void			copy(const QCmd & other);
 	void			destroy();
+	
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -216,4 +222,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QCmd::Flags);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMD_H__
+#endif // QCMD_H
