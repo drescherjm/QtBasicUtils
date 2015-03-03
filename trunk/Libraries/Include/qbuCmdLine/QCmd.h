@@ -203,6 +203,7 @@ protected:
 	void		setArguments(QArgList & lstArguments);
 public:
 
+	static QString	generateOptionString(QString strOptionName,int nOptionValue);
 	static QString	generateOptionString(QString strOptionName,QString strOptionValue);
 	static QString	doubleQuoteIfNecissary( QString str );
 

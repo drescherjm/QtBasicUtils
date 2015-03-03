@@ -1793,6 +1793,13 @@ QString QCmd::generateOptionString( QString strOptionName,QString strOptionValue
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString QCmd::generateOptionString( QString strOptionName,int nOptionValue )
+{
+	return QCmd::generateOptionString(strOptionName,QString("%1").arg(nOptionValue));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QString QCmd::doubleQuoteIfNecissary( QString str )
 {
 	QString retVal = str;
