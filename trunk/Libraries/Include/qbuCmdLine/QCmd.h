@@ -203,13 +203,14 @@ protected:
 	void		setArguments(QArgList & lstArguments);
 public:
 
-	static QString	generateOptionString(QString strOptionName,int nOptionValue);
-	static QString	generateOptionString(QString strOptionName,QString strOptionValue);
-	static QString	generateOptionString(QString strOptionName,QStringList lstOptionValue);
+	static QString		generateOptionString(QString strOptionName,int nOptionValue);
+	static QString		generateOptionString(QString strOptionName,QString strOptionValue);
+
+	static QStringList	generateOptionStringList(QString strOptionName,QStringList lstOptionValue);
 	
 	template < typename valType >
-	static QString  generateOptionString(QString strOptionName,QList<valType> lstOptionValue);
-	static QString	doubleQuoteIfNecissary( QString str );
+	static QStringList  generateOptionStringList(QString strOptionName,QList<valType> lstOptionValue);
+	static QString		doubleQuoteIfNecissary( QString str );
 
 private:
 	friend struct	qtutilsPrivate;
@@ -229,14 +230,14 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(QCmd::Flags);
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template < typename valType >
-QString QCmd::generateOptionString( QString strOptionName,QList<valType> lstOptionValue )
+QStringList QCmd::generateOptionStringList( QString strOptionName,QList<valType> lstOptionValue )
 {
 	QStringList lst;
 	foreach(valType nVal, lstOptionValue) {
 		lst << QString("%1").arg(nVal);
 	}
 
-	return QCmd::generateOptionString(strOptionName,lst);
+	return QCmd::generateOptionStringList(strOptionName,lst);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
