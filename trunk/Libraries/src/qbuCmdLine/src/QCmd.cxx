@@ -1777,7 +1777,7 @@ QString QCmd::generateOptionString( QString strOptionName,QString strOptionValue
 {
 	QString retVal;
 
-	strOptionName = strOptionValue.trimmed();
+	strOptionName = strOptionName.trimmed();
 	strOptionValue = QCmd::doubleQuoteIfNecissary(strOptionValue.trimmed());
 
 	if (qtutilsPrivate::isExtendedOption(strOptionName)) {
