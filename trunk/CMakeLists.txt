@@ -2,8 +2,6 @@ PROJECT(QtBasicUtils)
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8 FATAL_ERROR)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-#get_property( PredefinedTargetsFolderName GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER )
-#set_target_properties(ALL_BUILD PROPERTIES FOLDER PredefinedTargetsFolderName)
 
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
 set (${PROJECT_NAME}_VERSION_MINOR 0)
@@ -21,21 +19,21 @@ option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" 
 
 #########################################################################################
 
-Include(${PROJECT_SOURCE_DIR}/CMake/GetRuntime.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SiteConfig.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/GetCompilerVersion.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/HelperMacros.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetRuntime.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SiteConfig.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetCompilerVersion.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SetupDefaultInstallPath.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SetupProject.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/HelperMacros.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/MSVCPCHSupport.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/MSVC64BitPortability.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/MSVCPCHSupport.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/DisableBufferSecurityCheck.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/NamingConvention.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SupportRunJobs.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/DisableBufferSecurityCheck.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportRunJobs.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
@@ -55,7 +53,7 @@ INCLUDE( ${QT_USE_FILE} )
 # The following line will add support to copy the Qt dlls to the Debug and Release folders 
 # so that you can debug the application without the user having to deal with .dll path 
 # settings inside visual studio. 
-Include(${PROJECT_SOURCE_DIR}/CMake/GetQtRuntime.cmake)
+Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQtRuntime.cmake)
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
