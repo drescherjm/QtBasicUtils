@@ -1,5 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmd.h"
 #include "qbuCmdLine/QCmdArg.h"
 #include "qbuCmdLine/QCmdOpt.h"

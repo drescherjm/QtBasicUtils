@@ -1,3 +1,5 @@
+#include "qbuBasePCH.h"
+
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuPropertyMap.h"
 #include "qbuBase/qbuPropXMLHelper.h"

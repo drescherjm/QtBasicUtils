@@ -1,5 +1,8 @@
+#include "qbuBasePCH.h"
+
 #include "qbuBase/qbuProperyMapXMLHelper.h"
 #include "qbuBase/qbuPropertyMap.h"
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuProperyMapXMLHelper::qbuProperyMapXMLHelper(int nMetaTypeID) : qbuUserPropXMLHelper(nMetaTypeID)

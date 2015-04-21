@@ -1,10 +1,9 @@
+#include "qbuBasePCH.h"
+
 #include "qbuBase/qbuPropertyList.h"
 #include "qbuBase/qbuPropXMLHelper.h"
 
-#include <QDomDocument>
-#include <QTextStream>
-#include <QFile>
-#include <iostream>
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // The following is needed so that the UserPropPtr class can create objects of types it 

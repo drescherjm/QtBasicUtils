@@ -1,7 +1,10 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdArgQChar.h"
 #include "qbuCmdLine/QCmdArgBasicBaseMM.h"
 #include "qbuCmdLine/QCmdParseError.h"
-#include <stdio.h>
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 QCmdArgQChar::QCmdArgQChar(QString str, QString strDescription, QString strExplanation, 

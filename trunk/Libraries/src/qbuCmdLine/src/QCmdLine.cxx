@@ -1,10 +1,10 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdLine.h"
 #include "qbuCmdLine/QCmdHelp.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdParseException.h"
-#include <QFile>
-#include <QTextStream>
-#include <iostream>
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1,7 +1,8 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdParseException.h"
-#include <assert.h>
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmdParseException::Throw(quint32 nErrorCode, QString str0, QString str1)
 {
@@ -16,6 +17,8 @@ void QCmdParseException::Throw(quint32 nErrorCode, QString str0, QString str1)
 
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void QCmdParseException::Throw(quint32 nErrorCode, QString str0, const QStringList & sl)
 {
@@ -35,6 +38,8 @@ void QCmdParseException::Throw(quint32 nErrorCode, QString str0, const QStringLi
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void QCmdParseException::Throw(quint32 nErrorCode, QString str0, const QStringList & sl,QString str2)
 {
 	if ( nErrorCode != QCmdParseError::STATUS_OK ) {
@@ -52,9 +57,11 @@ void QCmdParseException::Throw(quint32 nErrorCode, QString str0, const QStringLi
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void QCmdParseException::Delete()
 {
 	delete this;
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////

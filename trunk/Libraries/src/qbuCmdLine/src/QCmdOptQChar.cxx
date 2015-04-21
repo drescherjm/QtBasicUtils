@@ -1,6 +1,8 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdOptQChar.h"
 #include "qbuCmdLine/QCmdParseError.h"
-#include <stdio.h>
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

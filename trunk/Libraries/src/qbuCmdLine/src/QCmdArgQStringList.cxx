@@ -1,3 +1,5 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdArgQStringList.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdArgBasicBase.h"

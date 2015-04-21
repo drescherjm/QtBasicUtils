@@ -1,3 +1,5 @@
+#include "qbuCmdLinePCH.h"
+
 #include "qbuCmdLine/QCmdOptBool.h"
 #include "qbuCmdLine/QCmdParseError.h"
 
@@ -152,5 +154,3 @@ QString QCmdOptBool::exportOptionName()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-

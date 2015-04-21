@@ -12,6 +12,7 @@
 
 =========================================================================*/
 
+#include "qbuBasePCH.h"
 #include "qbuBase/qbuITKIndent.h"
 
 #define ITK_STD_INDENT 2
@@ -30,7 +31,7 @@ New()
   return new Self;
 }
   
-  
+/////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Determine the next indentation level. Keep indenting by two until the 
  * max of forty.
@@ -54,7 +55,7 @@ const char* qbuITKIndent::getIndent()
 	return (blanks + (ITK_NUMBER_OF_BLANKS-m_Indent));
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Print out the indentation. Basically output a bunch of spaces.
  */
@@ -65,3 +66,4 @@ operator<<(std::ostream& os, const qbuITKIndent& ind)
   return os;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
