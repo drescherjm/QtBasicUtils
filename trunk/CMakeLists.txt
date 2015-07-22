@@ -54,16 +54,17 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Libraries/Include)
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
 	set (QT_LIBRARIES Qt5::Widgets Qt5::WinMain Qt5::Xml)
-	set (QT_MODULES Qt5::Widgets Qt5::Core Qt5::Gui Qt5::WinMain Qt5::Xml)
+	set (QT_MODULES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::WinMain Qt5::Xml)
 	
 	find_qt5_packages()
-	
+		
 else(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	set(QT_USE_QTXML true)
 	find_package(Qt4 REQUIRED)
 	include(${QT_USE_FILE})
 endif(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
+message( STATUS "LOCAL_PROJECT_NAME: ${LOCAL_PROJECT_NAME} - Qt5Core_MOC_EXECUTABLE=${Qt5Core_MOC_EXECUTABLE}" )
 
 # The following line will add support to copy the Qt dlls to the Debug and Release folders 
 # so that you can debug the application without the user having to deal with .dll path 
