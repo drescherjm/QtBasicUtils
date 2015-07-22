@@ -61,7 +61,7 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 	QString tempStr = this->GetDescription() + " [";
 	tempStr += fmt;
 	tempStr += ("]");
-	retVal.sprintf(tempStr.toAscii(),this->m_nDefaultValue);
+	retVal.sprintf(tempStr.toLatin1(),this->m_nDefaultValue);
 	return retVal;
 }
 

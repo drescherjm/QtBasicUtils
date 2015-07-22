@@ -1,8 +1,8 @@
 
-FIND_PACKAGE( Qt4 REQUIRED )
+# FIND_PACKAGE( Qt4 REQUIRED )
 
-set(QT_USE_QTXML true)
-INCLUDE( ${QT_USE_FILE} )
+# set(QT_USE_QTXML true)
+# INCLUDE( ${QT_USE_FILE} )
 
 include_directories(
 	Include 
@@ -27,7 +27,7 @@ SET( EXPERIMENTAL_MOC_HDRS
 )
 
 # and finally this will run moc:
-QT4_WRAP_CPP( EXPERIMENTAL_MOC_SRCS ${EXPERIMENTAL_MOC_HDRS} )
+QT45_WRAP_CPP( EXPERIMENTAL_MOC_SRCS ${EXPERIMENTAL_MOC_HDRS} )
 
 add_executable(experimental ${EXPERIMENTAL_SRCS} 
     ${EXPERIMENTAL_MOC_SRCS} 

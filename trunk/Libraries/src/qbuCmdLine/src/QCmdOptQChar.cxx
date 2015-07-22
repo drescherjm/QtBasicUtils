@@ -35,7 +35,7 @@ int QCmdOptQChar::ImportData( QString strValue )
 		}
 		else
 		{
-			retVal = sscanf(strTemp.toAscii(),"%c",&m_nValue);
+			retVal = sscanf(strTemp.toLatin1(),"%c",&m_nValue);
 			if ( retVal == 1 ) {
 				if ( m_bIgnoreCase && m_nMinValue.isLetter() && m_nMaxValue.isLetter()) {
 					if ( m_nValue.toUpper() < m_nMinValue.toUpper() ) {

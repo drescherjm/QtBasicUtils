@@ -92,13 +92,13 @@ MSVC_PCH_SUPPORT(${LOCAL_PROJECT_NAME})
 
 # this command will generate rules that will run rcc on all files from UPMC_LA_RCS
 # in result UPMC_LA_RC_SRCS variable will contain paths to files produced by rcc
-QT4_ADD_RESOURCES( ${LOCAL_PROJECT_NAME}_RC_SRCS ${${LOCAL_PROJECT_NAME}_RCS} )
+QT45_ADD_RESOURCES( ${LOCAL_PROJECT_NAME}_RC_SRCS ${${LOCAL_PROJECT_NAME}_RCS} )
 
 # and finally this will run moc:
-QT4_WRAP_CPP( ${LOCAL_PROJECT_NAME}_MOC_SRCS ${${LOCAL_PROJECT_NAME}_MOC_HDRS} )
+QT45_WRAP_CPP( ${LOCAL_PROJECT_NAME}_MOC_SRCS ${${LOCAL_PROJECT_NAME}_MOC_HDRS} )
 
 # this will run uic on .ui files:
-QT4_WRAP_UI( ${LOCAL_PROJECT_NAME}_UI_HDRS ${${LOCAL_PROJECT_NAME}_UIS} )
+QT45_WRAP_UI( ${LOCAL_PROJECT_NAME}_UI_HDRS ${${LOCAL_PROJECT_NAME}_UIS} )
 
 SOURCE_GROUP("Generated" FILES
 	  ${${LOCAL_PROJECT_NAME}_RC_SRCS}

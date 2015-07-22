@@ -57,7 +57,7 @@ QByteArray XRBase64::decode(QString ascii)
   uint j;
   int i;
   uint length = ascii.length();
-  const char* data = ascii.toAscii();
+  const char* data = ascii.toLatin1();
   //Make a buffer that can hold the maximum amount of
   //binary data that the ascii string can encode.  we
   //will truncate it later to the right size

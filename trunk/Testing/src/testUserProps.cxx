@@ -412,8 +412,9 @@ static bool test7()
 					retVal =(strXML0.compare(strXML1) == 0);
 
 					if (retVal) {
+
 						qbuUserPropPtr ptr1 = prop1;
-						QExplicitlySharedDataPointer<qbuPropertyList> pPL = ptr1.GetPtr();
+						QExplicitlySharedDataPointer<qbuPropertyList> pPL(static_cast<qbuPropertyList*>(ptr1.GetPtr().data()));
 						int nItems1=pPL.data()->size();
 						retVal = (nItems == nItems1);
 					}

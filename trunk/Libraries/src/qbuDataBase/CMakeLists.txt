@@ -2,10 +2,24 @@ myproject(qbuDataBase)
 
 OPTION(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
 
-FIND_PACKAGE( Qt4 REQUIRED )
-set(QT_USE_QTXML true)
-set(QT_USE_QTSQL true)
-INCLUDE( ${QT_USE_FILE} )
+# FIND_PACKAGE( Qt4 REQUIRED )
+# set(QT_USE_QTXML true)
+# set(QT_USE_QTSQL true)
+# INCLUDE( ${QT_USE_FILE} )
+
+if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+
+	set (QT_LIBRARIES Qt5::Widgets Qt5::WinMain Qt5::Xml)
+	set (QT_MODULES Qt5::Widgets Qt5::Core Qt5::Gui Qt5::WinMain Qt5::Xml Qt5::Sql)
+	
+	find_qt5_packages()
+	
+else(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+	set(QT_USE_QTXML true)
+	set(QT_USE_QTSQL true)
+	find_package(Qt4 REQUIRED)
+	include(${QT_USE_FILE})
+endif(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
 if(USE_BIND_FOR_INSERT)
 ADD_DEFINITIONS(-DUSE_BIND_FOR_INSERT)

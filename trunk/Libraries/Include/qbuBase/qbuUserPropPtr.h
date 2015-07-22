@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUUSERPROPPTR_H__
-#define __QBUUSERPROPPTR_H__
+#ifndef QBUUSERPROPPTR_H
+#define QBUUSERPROPPTR_H
 
 #include "qbuBase/qbuUserPropery.h"
 #include <QObject>
@@ -47,4 +47,4 @@ Q_DECLARE_METATYPE(qbuUserPropPtr)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUUSERPROPPTR_H__
+#endif // QBUUSERPROPPTR_H

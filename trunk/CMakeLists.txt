@@ -1,6 +1,6 @@
-PROJECT(QtBasicUtils)
+project(QtBasicUtils)
 
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.0 FATAL_ERROR)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
@@ -38,17 +38,32 @@ Include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportQt.cmake)
 
 #########################################################################################
 
-SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
-SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
+set (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
+set (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Libraries/Include)
 
-FIND_PACKAGE( Qt4 REQUIRED )
-set(QT_USE_QTXML true)
-INCLUDE( ${QT_USE_FILE} )
+# FIND_PACKAGE( Qt4 REQUIRED )
+# set(QT_USE_QTXML true)
+# INCLUDE( ${QT_USE_FILE} )
+
+if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+
+	set (QT_LIBRARIES Qt5::Widgets Qt5::WinMain Qt5::Xml)
+	set (QT_MODULES Qt5::Widgets Qt5::Core Qt5::Gui Qt5::WinMain Qt5::Xml)
+	
+	find_qt5_packages()
+	
+else(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+	set(QT_USE_QTXML true)
+	find_package(Qt4 REQUIRED)
+	include(${QT_USE_FILE})
+endif(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+
 
 # The following line will add support to copy the Qt dlls to the Debug and Release folders 
 # so that you can debug the application without the user having to deal with .dll path 
@@ -62,44 +77,41 @@ configure_file (
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 
-#set (${PROJECT_NAME}_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
-#set (${PROJECT_NAME}_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
-#set (${PROJECT_NAME}_RELEASE_LIB ${PROJECT_NAME}${CMAKE_RELEASE_POSTFIX} )
-#set (${PROJECT_NAME}_DEBUG_LIB ${PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
+#########################################################################################
 
-SET( ${PROJECT_NAME}_SRCS
+set( ${PROJECT_NAME}_SRCS
 
 )
 
-SET( ${PROJECT_NAME}_EXT_HDRS 
+set( ${PROJECT_NAME}_EXT_HDRS 
 	./Include/${PROJECT_NAME}.h
 
 )
 
-SET( ${PROJECT_NAME}_MOC_HDRS 
+set( ${PROJECT_NAME}_MOC_HDRS 
 	
 
 )
 
-SET( ${PROJECT_NAME}_INT_HDRS
+set( ${PROJECT_NAME}_INT_HDRS
 	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
 )
 
 # and finally this will run moc:
-QT4_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
+QT45_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
 
 #########################################################################################
 
 add_subdirectory(Libraries)
 
-IF(BUILD_TESTING)
+if(BUILD_TESTING)
 	ENABLE_TESTING()
 	add_subdirectory(Testing)
-ENDIF(BUILD_TESTING)
+endif(BUILD_TESTING)
 
-IF(BUILD_EXPERIMENTAL)
+if(BUILD_EXPERIMENTAL)
 	add_subdirectory(Experimental)
-ENDIF(BUILD_EXPERIMENTAL)
+endif(BUILD_EXPERIMENTAL)
 
 #########################################################################################
 
@@ -134,12 +146,12 @@ install (FILES
 
 #########################################################################################
 
-IF(BUILD_DOCUMENTATION)
+if(BUILD_DOCUMENTATION)
 
-ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/src)
-ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/Include)
+	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/src)
+	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/Include)
 
 add_subdirectory(doxygen)
-ENDIF(BUILD_DOCUMENTATION)
+endif(BUILD_DOCUMENTATION)
 
 

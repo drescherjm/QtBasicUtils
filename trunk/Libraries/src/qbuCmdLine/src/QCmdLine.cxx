@@ -47,7 +47,7 @@
 	{
 		m_strCmdSep = (";");
 		m_chCmdChar = '+';
-		m_bIgnoreCase = TRUE;
+		m_bIgnoreCase = true;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -305,7 +305,7 @@
 
 	bool QCmdLine::IsCmdChar(QString str)
 	{
-		bool retVal = FALSE;
+		bool retVal = false;
 
 		if ( !str.isEmpty() ) {
 			retVal = (str[0] == m_pPrivate->m_chCmdChar);

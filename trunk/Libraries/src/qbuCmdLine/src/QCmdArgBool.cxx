@@ -31,7 +31,7 @@ int QCmdArgBool::ImportData( QString strValue )
 		}
 		else
 			if ( strTemp.length() == 1 ) {
-				switch(strTemp[0].toAscii()) {
+				switch(strTemp[0].toLatin1()) {
 				case '+':
 					m_nValue = true;
 					break;

@@ -6,6 +6,7 @@
 #include <float.h>
 #include <QString>
 #include <QMap>
+#include <QObject>
 #include "qbuCmdLine/QCmdLineFileList.h"
 #include <limits>
 //#include "qbuCmdLine/QCmdArg.h"
