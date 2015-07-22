@@ -1,13 +1,15 @@
-#include "qbuInsertQuery.h"
-#include "qbuException.h"
+#include "qbuDataBasePCH.h"
+
+#include "qbuDataBase/qbuInsertQuery.h"
+#include "qbuDataBase/qbuException.h"
 #include <QStringList>
-#include "qbuPropertyMap.h"
-#include "..\Include\qbuTable.h"
-#include "..\..\qbuDatabase\qbuDatabasePCH.h"
-#include "qbuSelectQuery.h"
-#include "qbuStringList.h"
-#include "qbuDBColumnDef.h"
-#include "qbuDBColumnDefList.h"
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuDataBase/qbuTable.h"
+#include "qbuDataBase/qbuSelectQuery.h"
+#include "qbuBase/qbuStringList.h"
+#include "qbuDataBase/qbuDBColumnDef.h"
+#include "qbuDataBase/qbuDBColumnDefList.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -51,7 +53,7 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
-			Property* pProp = *it;
+			qbuProperty* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
 				lst.push_back(strName);
@@ -83,7 +85,7 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 			prepare(strInsert);
 			for(it = pData->begin() ;it != pData->end();++it) {
-				Property* pProp = *it;
+				qbuProperty* pProp = *it;
 				QString strName = pProp->objectName();
 				if (pTable->isValidField(strName)) {
 					strName.prepend(":");
@@ -180,7 +182,7 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 
 		qbuPropertyMap::iterator it = pData->begin();
 		for( ;it != pData->end();++it) {
-			Property* pProp = *it;
+			qbuProperty* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
 				lst.push_back(strName);
@@ -197,7 +199,7 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 			strInsert += "VALUES ( ";
 			bool bFirst = true;
 			for(it = pData->begin() ;it != pData->end();++it) {
-				Property* pProp = *it;
+				qbuProperty* pProp = *it;
 				QString strName = pProp->objectName();
 				if (pTable->isValidField(strName)) {
 					if (!bFirst) {

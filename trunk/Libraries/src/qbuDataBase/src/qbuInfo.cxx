@@ -1,6 +1,8 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuInfo.h"
 #include <QStringList>
-#include "qbuDataBase/qbuMacros.h"
+#include "qbuBase/qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +54,7 @@ void qbuInfo::copy( const qbuInfo & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuInfo::copy( const PropertyMap * other )
+void qbuInfo::copy( const qbuPropertyMap * other )
 {
 	if (other != NULL) {
 		const QStringList& lst = getDBFieldNames();
@@ -65,11 +67,13 @@ void qbuInfo::copy( const PropertyMap * other )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	This overrides the base behavior of copying every Property to only copying the 
+ *	This overrides the base behavior of copying every qbuProperty to only copying the 
  *  properties that are valid for thus qbuInfo instance.
  */
 
-void qbuInfo::addProperties( PropertyMap * other )
+void qbuInfo::addProperties( qbuPropertyMap * other )
 {
 	copy(other);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////

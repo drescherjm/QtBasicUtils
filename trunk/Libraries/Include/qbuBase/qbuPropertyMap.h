@@ -11,9 +11,9 @@
 
 /**
  * This class defines a map of Properties. The key to the map here is the name of the property  
- * which is added in Property::setObjectName.
+ * which is added in qbuProperty::setObjectName.
  *
- * \sa Property, qbuPropertyList
+ * \sa qbuProperty, qbuPropertyList
  */
 
 class qbuPropertyMap : public qbuUserProperty
@@ -87,7 +87,7 @@ private:
 
 /**
  *	\brief
- *	This member function removes all items from the PropertyMap.
+ *	This member function removes all items from the qbuPropertyMap.
  */
 
 inline void qbuPropertyMap::clear()

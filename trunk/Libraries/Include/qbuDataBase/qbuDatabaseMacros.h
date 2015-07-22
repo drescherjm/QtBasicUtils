@@ -1,12 +1,14 @@
-#ifndef __SMDATABASEMACROS_H__
-#define __SMDATABASEMACROS_H__
+#pragma once
+
+#ifndef QBUDATABASEMACROS_H
+#define QBUDATABASEMACROS_H
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #define IMPLEMENT_SA_SET(className,variableName, variableType, strColumName) \
 	bool className::set##variableName( variableType _value ) \
 	{ \
-		Property prop; \
+		qbuProperty prop; \
 		prop.setObjectName(strColumName); \
 		prop.SetData(_value); \
 		\
@@ -25,4 +27,4 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMDATABASEMACROS_H__
+#endif // QBUDATABASEMACROS_H

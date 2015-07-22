@@ -121,9 +121,9 @@ qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty & prop)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *  \brief This member inserts a Property that is allocated on the heap.
+ *  \brief This member inserts a qbuProperty that is allocated on the heap.
  *
- *	\warning Do not pass this a pointer to a stack allocated Property.
+ *	\warning Do not pass this a pointer to a stack allocated qbuProperty.
  */
 
 qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty* pProp)
@@ -146,11 +146,11 @@ qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty* pProp)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// The bMakeRoot will be used in the case that the PropertyMap is the root node in xml.
+// The bMakeRoot will be used in the case that the qbuPropertyMap is the root node in xml.
 // without this param an xml file of a ProperyMap would be invalid because each child 
 // would be considered a root node. If there is no root the fromXML would only import
-// the first child. Set this to false if the PropertyMap is not the root and is instead
-// embedded inside a Property.
+// the first child. Set this to false if the qbuPropertyMap is not the root and is instead
+// embedded inside a qbuProperty.
 
 QString qbuPropertyMap::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
@@ -587,11 +587,11 @@ int qbuPropertyMap::size() const
 /**
  *	\brief
  *	This member will test if the subset of Properties given by the list lstPropNames 
- *	have equal values in the other PropertyMap.
+ *	have equal values in the other qbuPropertyMap.
  *
  *	\note
  *	The return value will be false if either of the PropertyMaps does not have a 
- *	Property in its collection or the lstPropNames is empty.
+ *	qbuProperty in its collection or the lstPropNames is empty.
  *
  */
 

@@ -110,9 +110,9 @@ int main(int argc, char* argv[])
 
 	int id = qRegisterMetaType<qbuPropertyMap>();
 
-	int id1 = QMetaType::type("PropertyMap");
+	int id1 = QMetaType::type("qbuPropertyMap");
 
-	//int id2 = PropertyMap::m_nMetaID;
+	//int id2 = qbuPropertyMap::m_nMetaID;
 
 
 	{

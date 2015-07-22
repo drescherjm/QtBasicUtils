@@ -1,5 +1,7 @@
-#include "qbuDBColumnDef.h"
-#include "qbuDatabaseFunctions.h"
+#include "qbuDataBasePCH.h"
+
+#include "qbuDataBase/qbuDBColumnDef.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

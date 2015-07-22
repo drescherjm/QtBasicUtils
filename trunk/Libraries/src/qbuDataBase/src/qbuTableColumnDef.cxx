@@ -1,6 +1,8 @@
-#include "qbuBase/qbuTableColumnDef.h"
-#include "qbuBase/Property.h"
-#include "qbuBase/qbuDatabaseMacros.h"
+#include "qbuDataBasePCH.h"
+
+#include "qbuDataBase/qbuTableColumnDef.h"
+#include "qbuBase/qbuProperty.h"
+#include "qbuDataBase/qbuDatabaseMacros.h"
 #include <QStringList>
 
 /////////////////////////////////////////////////////////////////////////////////////////

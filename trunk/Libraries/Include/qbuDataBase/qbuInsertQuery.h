@@ -1,8 +1,10 @@
-#ifndef __SMINSERTQUERY_H__
-#define __SMINSERTQUERY_H__
+#pragma once
+
+#ifndef QBUINSERTQUERY_H
+#define QBUINSERTQUERY_H
 
 #include "qbuQuery.h"
-#include "qbuMacros.h"
+#include "qbuBase/qbuMacros.h"
 #include "qbuDBConstants.h"
 
 class qbuDatabase;
@@ -54,7 +56,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-#endif //__SMINSERTQUERY_H__
+#endif // QBUINSERTQUERY_H

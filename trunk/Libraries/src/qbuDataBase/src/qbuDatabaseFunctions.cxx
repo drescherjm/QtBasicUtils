@@ -1,4 +1,6 @@
-#include "qbuDatabaseFunctions.h"
+#include "qbuDataBasePCH.h"
+
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 #include <QRegExp>
 #include <QVariant>
 

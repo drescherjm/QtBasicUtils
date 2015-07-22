@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDARGBASIC_H__
-#define __QCMDARGBASIC_H__
+#ifndef QCMDARGBASIC_H
+#define QCMDARGBASIC_H
 
 #include "qbuCmdLine/QCmdArgBasicBaseMM.h"
 #include "qbuCmdLine/QCmdExtra.h"
@@ -44,4 +44,6 @@ typedef QCmdArgBasic<short,formatspec::SHORTFMT>	QCmdArg_short;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDARGBASIC_H__
+
+#endif // QCMDARGBASIC_H
+

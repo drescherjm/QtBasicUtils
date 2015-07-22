@@ -7,7 +7,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // The following is needed so that the UserPropPtr class can create objects of types it 
-// knows about. This registers PropertyList with PropXMLHelper which will call 
+// knows about. This registers qbuPropertyList with PropXMLHelper which will call 
 // hlpr->construct() to do the actual object construction.
 
 int qbuPropertyList::m_nMetaID = qRegisterMetaType<qbuPropertyList*>();
@@ -139,11 +139,11 @@ void qbuPropertyList::push_front(qbuProperty* pProp)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// The bMakeRoot will be used in the case that the PropertyList is the root node in xml.
+// The bMakeRoot will be used in the case that the qbuPropertyList is the root node in xml.
 // without this param an xml file of a ProperyMap would be invalid because each child 
 // would be considered a root node. If there is no root the fromXML would only import
-// the first child. Set this to false if the PropertyList is not the root and is instead
-// embedded inside a Property.
+// the first child. Set this to false if the qbuPropertyList is not the root and is instead
+// embedded inside a qbuProperty.
 
 QString qbuPropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
 {

@@ -1,4 +1,6 @@
-#include "qbuDBColumnDefList.h"
+#include "qbuDataBasePCH.h"
+
+#include "qbuDataBase/qbuDBColumnDefList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

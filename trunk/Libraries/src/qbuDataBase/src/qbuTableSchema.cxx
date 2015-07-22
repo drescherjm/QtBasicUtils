@@ -1,14 +1,16 @@
-#include "qbuTableSchema.h"
-#include "qbuSelectQuery.h"
-#include "qbuTable.h"
-#include "qbuDatabase.h"
-#include "qbuException.h"
+#include "qbuDataBasePCH.h"
 
-#include <QSqlRecord>
-#include <QStringList>
-#include <iostream>
-#include "qbuStringList.h"
-#include "smLog.h"
+#include "qbuDataBase/qbuTableSchema.h"
+#include "qbuDataBase/qbuSelectQuery.h"
+#include "qbuDataBase/qbuTable.h"
+#include "qbuDataBase/qbuDatabase.h"
+#include "qbuDataBase/qbuException.h"
+
+// #include <QSqlRecord>
+// #include <QStringList>
+// #include <iostream>
+#include "qbuBase/qbuStringList.h"
+//#include "smLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,7 +29,7 @@ bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 			int nField=0;
 			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
 				if (!isNull(nField)) {
-					Property prop;
+					qbuProperty prop;
 					prop.setObjectName(col.getNameOrAlias());
 					prop.SetData(value(nField));
 

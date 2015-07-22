@@ -99,7 +99,7 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 	else if (GetData().canConvert<qbuPropertyMap>()) {
 		qbuPropertyMap pc = GetData().value<qbuPropertyMap>();
 		QString strName = objectName();
-		retVal = pc.toXML(false,indent); // The PropertyMap is a root node
+		retVal = pc.toXML(false,indent); // The qbuPropertyMap is a root node
 
 		QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5%1</%2>\n")
 			.arg(indent.getIndent())
@@ -215,7 +215,7 @@ bool qbuProperty::fromXML(QDomElement & docElem)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*  SetData sets value of the Property to the user supplied QVariant.  Also after the 
+*  SetData sets value of the qbuProperty to the user supplied QVariant.  Also after the 
 *  value is set the Modified flag is set.
 */
 
@@ -229,7 +229,7 @@ QVariant& qbuProperty::SetData( const QVariant& vt )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*  SetData sets value of the Property to the user supplied UserPropPtr.  Also after the 
+*  SetData sets value of the qbuProperty to the user supplied UserPropPtr.  Also after the 
 *  value is set the Modified flag is set.
 */
 
@@ -250,7 +250,7 @@ qbuProperty::operator qbuUserPropPtr() const
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Load reads the Property from and XML file.
+*	Load reads the qbuProperty from and XML file.
 */
 
 bool qbuProperty::Load( QString strFile )
@@ -273,7 +273,7 @@ bool qbuProperty::Load( QString strFile )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	Save exports the Property to XML and saves that. After the save the Modified flag
+ *	Save exports the qbuProperty to XML and saves that. After the save the Modified flag
  *  is reset.
  */
 

@@ -1,9 +1,11 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuCreateTableQuery.h"
 #include <QStringList>
-#include "qbuBase/Property.h"
-#include "qbuPropertyMap.h"
+#include "qbuBase/qbuProperty.h"
+#include "qbuBase/qbuPropertyMap.h"
 #include <QList>
-#include "qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

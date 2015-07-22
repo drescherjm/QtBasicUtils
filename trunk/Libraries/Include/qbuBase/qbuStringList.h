@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUSTRINGLIST_H__
-#define __QBUSTRINGLIST_H__
+#ifndef QBUSTRINGLIST_H
+#define QBUSTRINGLIST_H
 
 #include <QStringList>
 #include "qbuBase/qbuMacros.h"
@@ -32,6 +32,6 @@ public:
 	QString toDelimitedString(QString delimiter=",");
 };
 
-#endif // __QBUSTRINGLIST_H__
-
 /////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUSTRINGLIST_H

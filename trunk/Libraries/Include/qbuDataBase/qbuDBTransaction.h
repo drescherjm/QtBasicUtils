@@ -1,7 +1,7 @@
-#ifndef __SMDBTRANSACTION_H__
-#define __SMDBTRANSACTION_H__
+#pragma once
 
-#include "qbuMacros.h"
+#ifndef QBUDBTRANSACTION_H
+#define QBUDBTRANSACTION_H
 
 class qbuDatabase;
 
@@ -36,4 +36,5 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMDBTRANSACTION_H__
+#endif // QBUDBTRANSACTION_H
+

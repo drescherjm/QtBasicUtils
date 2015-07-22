@@ -28,6 +28,8 @@ ENDIF(USE_BIND_FOR_INSERT)
 #set(Boost_ADDITIONAL_VERSIONS "1.47" "1.47.0" "1.48" "1.48.0")
 FIND_PACKAGE( Boost REQUIRED )
 
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIRS} )
+
 set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
 set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
 
@@ -57,7 +59,6 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuTableSchema.cxx
 	./src/qbuDatabaseFunctions.cxx
 	./src/qbuInsertQuery.cxx
-	./src/qbuPropertyMap.cxx
 	./src/qbuException.cxx
 )
 
@@ -78,7 +79,6 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuInsertQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBConstants.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBMacros.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyMap.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 )
 
@@ -131,11 +131,14 @@ IF(BUILD_DOCUMENTATION)
 
 ENDIF(BUILD_DOCUMENTATION)
 
+
 include_directories( 
+	${CMAKE_CURRENT_SOURCE_DIR} 
 	${PROJECT_BINARY_DIR} 
 	${PROJECT_BINARY_DIR}/.. 
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
+
 
 add_library(${LOCAL_PROJECT_NAME} 
 	${${LOCAL_PROJECT_NAME}_SRCS} 

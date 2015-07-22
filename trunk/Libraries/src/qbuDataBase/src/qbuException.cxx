@@ -1,3 +1,5 @@
+#include "qbuDataBasePCH.h"
+
 /*=========================================================================
 
 Copyright (c) Insight Software Consortium. All rights reserved.
@@ -12,9 +14,10 @@ PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
 
-#include "qbuException.h"
+#include "qbuDataBase/qbuException.h"
 #include <sstream>
 #include <QSharedData>
+#include "qbuBase/qbuITKIndent.h"
 //#include "smitkIndent.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -225,7 +228,7 @@ void
 qbuException
 ::Print(std::ostream& os) const
 {
-	smitkIndent indent;
+	qbuITKIndent indent;
 
 	// Print header
 	os << std::endl;
@@ -257,3 +260,5 @@ qbuException
 	// Print trailer
 	os << indent << std::endl;
 }  
+
+/////////////////////////////////////////////////////////////////////////////////////////

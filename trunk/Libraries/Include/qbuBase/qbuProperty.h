@@ -16,11 +16,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	A Property is an extended QVariant that allows for importing and exporting to and 
- *  from XML. It's most useful with the two collection classes (PropertyMap and PropertyList) 
+ *	A qbuProperty is an extended QVariant that allows for importing and exporting to and 
+ *  from XML. It's most useful with the two collection classes (qbuPropertyMap and qbuPropertyList) 
  *  that are designed to hold 0 or more Properties.
  *
- *  \sa PropertyMap, PropertyList
+ *  \sa qbuPropertyMap, qbuPropertyList
  */
 
 class qbuProperty : public QObject, public qbuUpdateTracker

@@ -1,16 +1,18 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuDatabase.h"
-#include "qbuDataBase/qbuPropertyMap.h"
+#include "qbuBase/qbuPropertyMap.h"
 #include <QStringList>
 #include <QSqlQuery>
 #include "qbuDataBase/qbuException.h"
 #include <iostream>
 #include "qbuDataBase/qbuTableSchema.h"
-#include "qbuDataBase/qbuStringList.h"
+#include "qbuBase/qbuStringList.h"
 #include "..\qbuDatabase\qbuDatabasePCH.h"
-#include "smLog.h"
+//#include "smLog.h"
 #include "qbuDataBase/qbuSelectQuery.h"
-#include "qbuBase/Property.h"
+#include "qbuBase/qbuProperty.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,7 +72,6 @@ bool qbuTable::upgradeTable( int nOldSchema, int nNewSchema )
 	}
 	return retVal;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

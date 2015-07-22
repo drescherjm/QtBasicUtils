@@ -1,3 +1,5 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuDBSavePoint.h"
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuDataBase/qbuQuery.h"
@@ -21,9 +23,9 @@ qbuDBSavePoint::qbuDBSavePoint(qbuDatabase* pDB) : m_pDB(pDB), m_bSavePointStart
 
 		m_bSavePointStarted = query.exec(QString("SAVEPOINT %1;").arg(m_strSavePoint));
 
-		if (!m_bSavePointStarted) {
-			QLOG_CRIT() << "A savepoint could not be started.";
-		}
+// 		if (!m_bSavePointStarted) {
+// 			QLOG_CRIT() << "A savepoint could not be started.";
+// 		}
 	}
 }
 
@@ -47,13 +49,13 @@ qbuDBSavePoint::~qbuDBSavePoint()
 			.arg(strCommand)
 			.arg(m_strSavePoint));			
 		if (!bSuccess) {
-			if (m_bFailSavePoint) {
-				QLOG_CRIT() << "A savepoint could not be rolled back";
-			}
-			else
-			{
-				QLOG_CRIT() << "A savepoint could not be released.";
-			}
+// 			if (m_bFailSavePoint) {
+// 				QLOG_CRIT() << "A savepoint could not be rolled back";
+// 			}
+// 			else
+// 			{
+// 				QLOG_CRIT() << "A savepoint could not be released.";
+// 			}
 		
 		}
 	}

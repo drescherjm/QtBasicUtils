@@ -1,6 +1,9 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuCreateViewQuery.h"
 #include "qbuDataBase/qbuException.h"
 #include <QDebug>
+#include <QSqlError>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -58,3 +61,4 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////

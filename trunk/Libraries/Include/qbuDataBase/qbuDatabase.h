@@ -1,9 +1,11 @@
-#ifndef __SMDATABASE_H__
-#define __SMDATABASE_H__
+#pragma once
+
+#ifndef QBUDATABASE_H
+#define QBUDATABASE_H
 
 #include <QSqlDatabase>
-#include "qbuMacros.h"
-#include "qbuStringList.h"
+#include "qbuBase/qbuMacros.h"
+#include "qbuBase/qbuStringList.h"
 
 class qbuDBSettingsTableBase;
 class qbuData;
@@ -82,4 +84,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMDATABASE_H__
+#endif // QBUDATABASE_H

@@ -1,3 +1,5 @@
+#include "qbuDataBasePCH.h"
+
 #include "qbuDataBase/qbuDatabase.h"
 
 #include <QSqlQuery>

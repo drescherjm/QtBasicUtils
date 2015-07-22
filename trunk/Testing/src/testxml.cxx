@@ -257,7 +257,7 @@ static bool test5()
 
 static bool test6()
 {
-	//This tests the update tracking of PropertyMap
+	//This tests the update tracking of qbuPropertyMap
 
 	qbuPropertyMap pmPeople,pmJohn, pmKathy;
 	qbuProperty prop;

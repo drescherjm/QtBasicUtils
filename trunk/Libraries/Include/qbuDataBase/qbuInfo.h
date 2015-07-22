@@ -1,5 +1,10 @@
-#include "qbuPropertyMap.h"
-#include "qbuMacros.h"
+#pragma once
+
+#ifndef QBUINFO_H
+#define QBUINFO_H
+
+#include "qbuBase/qbuPropertyMap.h"
+#include "qbuBase/qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,13 +19,14 @@ public:
 public:
 	virtual const QStringList&	getDBFieldNames() const =0;
 	virtual bool				isDBField(QString strField) const;
-	virtual void				addProperties(PropertyMap * other);
+	virtual void				addProperties(qbuPropertyMap * other);
 protected:
 	virtual void copy(const qbuInfo & other);
 private:
-	void copy(const PropertyMap * other);
+	void copy(const qbuPropertyMap * other);
 	void destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#endif // QBUINFO_H
