@@ -7,10 +7,12 @@
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDBExpression.h"
 
+class qbuPropertyMap;
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	\ingroup smDatabase
+*	\ingroup qbuDatabase
 */
 
 class qbuQuery : public qbuSimpleQuery

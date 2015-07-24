@@ -7,7 +7,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuCreateViewQuery::qbuCreateViewQuery(QSqlDatabase db) : Superclass(db)
+qbuCreateViewQuery::qbuCreateViewQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
 {
 	
 }

@@ -1,7 +1,9 @@
-#ifndef __SMCREATEVIEWQUERY_H__
-#define __SMCREATEVIEWQUERY_H__
+#pragma once
 
-#include "qbuQuery.h"
+#ifndef QBUCREATEVIEWQUERY_H
+#define QBUCREATEVIEWQUERY_H
+
+#include "qbuDataBase/qbuQuery.h"
 
 class qbuDatabase;
 
@@ -19,7 +21,7 @@ class qbuCreateViewQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuCreateViewQuery(QSqlDatabase db);
+	qbuCreateViewQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuCreateViewQuery();
 public:
 	bool	create(QString strViewName, QString strViewQuery, bool bTempView = false);
@@ -27,5 +29,5 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMCREATEVIEWQUERY_H__
+#endif // QBUCREATEVIEWQUERY_H
 
