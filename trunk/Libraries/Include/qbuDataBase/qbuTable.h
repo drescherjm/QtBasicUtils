@@ -60,10 +60,6 @@ public:
 	
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
-
-private:
-	class		qbuPrivate;
-	qbuPrivate*	m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
