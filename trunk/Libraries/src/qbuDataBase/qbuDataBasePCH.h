@@ -8,3 +8,4 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QDebug>
+#include <QStringList>

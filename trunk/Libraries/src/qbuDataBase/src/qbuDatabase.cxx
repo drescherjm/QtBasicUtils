@@ -15,7 +15,7 @@
 #include <boost/multi_index/mem_fun.hpp>
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 #include <iostream>
-//#include "../qbuDBTables/include/qbuDBSettingsTableBase.h"
+#include "qbuDatabase/qbuDBSettingsTableBase.h"
 
 using namespace ::boost;
 using namespace ::boost::multi_index;

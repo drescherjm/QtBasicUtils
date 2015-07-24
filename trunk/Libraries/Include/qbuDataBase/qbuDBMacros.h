@@ -1,7 +1,9 @@
-#ifndef __SMDBMACROS_H__
-#define __SMDBMACROS_H__
+#pragma once
 
-#include "qbuMacros.h"
+#ifndef QBUDBMACROS_H
+#define QBUDBMACROS_H
+
+#include "qbuBase/qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -90,5 +92,7 @@ public: \
 	QBU_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
 	QBU_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
 	QBU_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass)
-	
-#endif //__SMDBMACROS_H__
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUDBMACROS_H

@@ -60,6 +60,8 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDatabaseFunctions.cxx
 	./src/qbuInsertQuery.cxx
 	./src/qbuException.cxx
+	./src/qbuDBSettingsTableBase.cxx
+	./src/qbuDBSettingInfo.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -80,6 +82,8 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBConstants.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBMacros.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingsTableBase.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingInfo.h
 )
 
 SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
