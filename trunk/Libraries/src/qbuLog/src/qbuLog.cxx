@@ -1,0 +1,14 @@
+#include "smBasePCH.h"
+#include "smLog.h"
+#include <QRegExp>
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString logFileName(QString strFile,int nLine )
+{
+	//strFile.remove("..\\");
+	strFile.remove(QRegExp("\\.\\.[/\\\\]")); // Removes ..\ or ../
+	return QString("%1:%2").arg(strFile).arg(nLine);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,9 @@ set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJEC
 
 Include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
+# The following line will add additional finders to CMake without the need to be placed in the CMake install path
+LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Modules)
+
 #########################################################################################
 
 option (BUILD_TESTING 				"Build Tests" ON)
