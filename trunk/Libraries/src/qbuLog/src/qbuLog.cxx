@@ -1,5 +1,5 @@
-#include "smBasePCH.h"
-#include "smLog.h"
+#include "qbuLogPCH.h"
+#include "qbuLog/qbuLog.h"
 #include <QRegExp>
 
 /////////////////////////////////////////////////////////////////////////////////////////

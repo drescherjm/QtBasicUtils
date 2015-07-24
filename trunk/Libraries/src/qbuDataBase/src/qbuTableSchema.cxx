@@ -10,7 +10,7 @@
 // #include <QStringList>
 // #include <iostream>
 #include "qbuBase/qbuStringList.h"
-//#include "smLog.h"
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

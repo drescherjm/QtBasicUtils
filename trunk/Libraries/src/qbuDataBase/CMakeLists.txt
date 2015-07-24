@@ -2,10 +2,10 @@ myproject(qbuDataBase)
 
 OPTION(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
 
-# FIND_PACKAGE( Qt4 REQUIRED )
-# set(QT_USE_QTXML true)
-# set(QT_USE_QTSQL true)
-# INCLUDE( ${QT_USE_FILE} )
+set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
+set(QXT_USE_QXTCORE TRUE)
+find_package(Qxt REQUIRED)
+include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQxtRuntime.cmake)
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 

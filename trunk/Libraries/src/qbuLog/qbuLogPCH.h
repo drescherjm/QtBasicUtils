@@ -5,6 +5,4 @@
 #include <QDomDocument>
 #include <QTextStream>
 #include <QFile>
-#include <QSqlError>
-#include <QSqlRecord>
 #include <QDebug>

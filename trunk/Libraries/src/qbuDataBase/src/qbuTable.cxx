@@ -10,9 +10,9 @@
 #include "qbuDataBase/qbuTableSchema.h"
 #include "qbuBase/qbuStringList.h"
 #include "..\qbuDatabase\qbuDatabasePCH.h"
-//#include "smLog.h"
 #include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuBase/qbuProperty.h"
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

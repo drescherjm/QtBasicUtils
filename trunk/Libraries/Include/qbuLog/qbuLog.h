@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smBase_EXPORT logFileName(QString strFile, int nLine);
+QString logFileName(QString strFile, int nLine);
 
 #define QLOG_WARN() qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_INFO() qxtLog->info() << logFileName(__FILE__,__LINE__)
