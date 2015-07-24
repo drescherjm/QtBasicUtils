@@ -1,6 +1,9 @@
 myproject(qbuDataBase)
 
 OPTION(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
+option(USE_EXCEPTIONS "Use execptions" ON)
+
+conditional_define(USE_EXCEPTIONS QBU_HAVE_EXCEPTIONS)
 
 set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
 set(QXT_USE_QXTCORE TRUE)

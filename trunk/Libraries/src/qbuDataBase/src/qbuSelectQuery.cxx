@@ -197,7 +197,7 @@ bool qbuSelectQuery::generateQuery()
 					.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuSelectQuery::generateQuery");
+				throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuSelectQuery::generateQuery");
 #else
 
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;

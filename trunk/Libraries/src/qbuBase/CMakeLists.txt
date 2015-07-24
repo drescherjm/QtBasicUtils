@@ -13,7 +13,7 @@ set (${LOCAL_PROJECT_NAME}_TREE_LIB_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 set (${LOCAL_PROJECT_NAME}_TREE_RELEASE_LIB ${LOCAL_PROJECT_NAME} )
 set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
-SET( ${LOCAL_PROJECT_NAME}_SRCS
+set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuProperty.cxx
 	./src/qbuPropertyMap.cxx
 	./src/qbuPropertyTypeNameAlias.cxx
@@ -25,9 +25,10 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuITKIndent.cxx
 	./src/qbuStringList.cxx
 	./src/qbuObject.cxx
+	./src/qbuException.cxx
 )
 
-SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
+set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuMacros.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateTracker.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropXMLHelper.h
@@ -36,9 +37,10 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuNonThreadSafeSingleton.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuITKIndent.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSleeperThread.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 )
 
-SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
+set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuProperty.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyMap.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUserPropery.h
@@ -49,14 +51,14 @@ SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 )
 
 # some .ui files
-SET( ${LOCAL_PROJECT_NAME}_UIS
+set( ${LOCAL_PROJECT_NAME}_UIS
 )
 
 # and finally an resource file
-SET( ${LOCAL_PROJECT_NAME}_RCS
+set( ${LOCAL_PROJECT_NAME}_RCS
 )
 
-SET( ${LOCAL_PROJECT_NAME}_INT_HDRS
+set( ${LOCAL_PROJECT_NAME}_INT_HDRS
 
 )
 

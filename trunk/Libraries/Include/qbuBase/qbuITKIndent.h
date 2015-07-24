@@ -52,7 +52,8 @@ public:
   qbuITKIndent GetNextIndent();
 
   /** Print out the indentation. Basically output a bunch of spaces.  */
-  friend std::ostream& operator<<(std::ostream& os, const qbuITKIndent& o); 
+  friend std::ostream&	operator<<(std::ostream& os, const qbuITKIndent& o);
+  friend QTextStream&	operator<<(QTextStream& os, const qbuITKIndent& o);
 
   const char* getIndent();
 

@@ -4,6 +4,7 @@
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuDataBase/qbuQuery.h"
 #include "qbuLog/qbuLog.h"
+#include "qbuBase/qbuException.h"
 
 #include <QUuid>
 #include <QThread>
@@ -65,7 +66,7 @@ qbuDBSavePoint::~qbuDBSavePoint()
 				if (!bSuccess) {
 
 #ifdef QBU_HAVE_EXCEPTIONS
-					throw smException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBSavePoint::~qbuDBSavePoint");
+					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBSavePoint::~qbuDBSavePoint");
 #else
 					qDebug() << qPrintable(strMsg);
 #endif //def QBU_HAVE_EXCEPTIONS
@@ -123,7 +124,7 @@ bool qbuDBSavePoint::startSavePoint()
 			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuDBSavePoint::startSavePoint");
+			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBSavePoint::startSavePoint");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS

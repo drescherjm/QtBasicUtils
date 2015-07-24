@@ -1,5 +1,3 @@
-#include "qbuDataBasePCH.h"
-
 /*=========================================================================
 
 Copyright (c) Insight Software Consortium. All rights reserved.
@@ -14,11 +12,12 @@ PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
 
-#include "qbuDataBase/qbuException.h"
+#include "qbuBasePCH.h"
+#include "qbuBase/qbuException.h"
+#include "qbuBase/qbuITKIndent.h"
 #include <sstream>
 #include <QSharedData>
-#include "qbuBase/qbuITKIndent.h"
-//#include "qbuITKIndent.h"
+#include <QTextStream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,6 +98,8 @@ qbuException::~qbuException() throw()
 	// automatically, by the destructor of the smart pointer.
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const qbuException::smPrivate *
 qbuException::GetExceptionData() const
 {
@@ -111,6 +112,8 @@ qbuException::GetExceptionData() const
 	return thisData;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuException &
 qbuException::operator= ( const qbuException &orig )
 {
@@ -122,6 +125,8 @@ qbuException::operator= ( const qbuException &orig )
 	m_pPrivate = orig.m_pPrivate;
 	return *this;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool
 qbuException::operator==( const qbuException &orig )
@@ -144,6 +149,8 @@ qbuException::operator==( const qbuException &orig )
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void
 qbuException::SetLocation(const std::string& s)
 {
@@ -154,6 +161,8 @@ qbuException::SetLocation(const std::string& s)
 		IsNull ? "" : this->GetExceptionData()->m_Description.c_str(),
 		s);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void
 qbuException::SetDescription(const std::string& s) 
@@ -166,6 +175,8 @@ qbuException::SetDescription(const std::string& s)
 		IsNull ? "" : this->GetExceptionData()->m_Location.c_str());
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void
 qbuException::SetLocation(const char * s)
 {
@@ -176,6 +187,8 @@ qbuException::SetLocation(const char * s)
 	}
 	qbuException::SetLocation( location );
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void
 qbuException::SetDescription(const char *s)
@@ -188,12 +201,16 @@ qbuException::SetDescription(const char *s)
 	qbuException::SetDescription( description );
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const char *
 qbuException::GetLocation() const 
 {
 	// Note: std::string::c_str() might throw an exception.
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_Location.c_str();
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const char *
 qbuException::GetDescription() const
@@ -202,6 +219,8 @@ qbuException::GetDescription() const
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_Description.c_str();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const char *
 qbuException::GetFile() const 
 {
@@ -209,11 +228,15 @@ qbuException::GetFile() const
 	return !m_pPrivate ? "" : this->GetExceptionData()->m_File.c_str();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 unsigned int
 qbuException::GetLine() const 
 {
 	return !m_pPrivate ? 0 : this->GetExceptionData()->m_Line;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const char *
 qbuException::what() const throw()
@@ -221,12 +244,12 @@ qbuException::what() const throw()
 	const smPrivate * const thisData = this->GetExceptionData();
 
 	// Note: m_What.c_str() wouldn't be safe, because c_str() might throw an exception.
-	return thisData ? thisData->m_WhatPointer : "qbuException";
+	return thisData ? thisData->m_WhatPointer : "smException";
 }
 
-void
-qbuException
-::Print(std::ostream& os) const
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuException::Print(std::ostream& os) const
 {
 	qbuITKIndent indent;
 
@@ -262,3 +285,38 @@ qbuException
 }  
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuException::Print(QTextStream& os) const
+{
+	qbuITKIndent indent;
+
+	// Print header
+	os << endl;
+	os << indent << this->GetNameOfClass() << " (" << this << ")\n";
+
+	// Print self
+	indent.GetNextIndent();
+
+	if (m_pPrivate)
+	{
+		const smPrivate & data = *(this->GetExceptionData());
+
+		if (! data.m_Location.empty()) 
+		{
+			os << indent << "Location: \"" << QString::fromStdString(data.m_Location) << "\" " << endl;
+		}
+
+		if (! data.m_File.empty()) 
+		{
+			os << indent << "File: " << QString::fromStdString(data.m_File) << endl;
+			os << indent << "Line: " << data.m_Line << endl;
+		}
+
+		if (! data.m_Description.empty()) 
+		{
+			os << indent << "Description: " << QString::fromStdString(data.m_Description) << endl;  
+		}
+	}
+	// Print trailer
+	os << indent << endl;
+}  
