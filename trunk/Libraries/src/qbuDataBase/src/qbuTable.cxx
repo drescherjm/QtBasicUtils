@@ -71,7 +71,7 @@ bool qbuTable::upgradeTable(int nOldSchema, int nNewSchema)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::insertData(qbuPropertyMap* pData, smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
+bool qbuTable::insertData(qbuPropertyMap* pData, qbudb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
 {
 	bool retVal = (pData != nullptr);
 

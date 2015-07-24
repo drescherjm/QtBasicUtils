@@ -64,7 +64,7 @@ qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new smDBColDef containing a copy of this object with the TableAlias
+*	Returns a new qbuDBColDef containing a copy of this object with the TableAlias
 *  set from the param strTableAlias.
 */
 
@@ -78,7 +78,7 @@ qbuDBColDef qbuDBColDef::addTableAlias(QString strTableAlias) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new smDBColDef containing a copy of this object with the Alias
+*	Returns a new qbuDBColDef containing a copy of this object with the Alias
 *   set from the param strAlias.
 */
 
@@ -92,7 +92,7 @@ qbuDBColDef qbuDBColDef::addAlias(QString strAlias) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new smDBColDef containing a copy of this object with the Name
+*	Returns a new qbuDBColDef containing a copy of this object with the Name
 *   set from the param strName.
 */
 

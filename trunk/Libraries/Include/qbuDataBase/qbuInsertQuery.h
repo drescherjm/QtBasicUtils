@@ -30,19 +30,19 @@ public:
 
 public:
 	bool	create(qbuPropertyMap* pData, qbuTable* pTable,
-		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+		qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
 
 	bool	create(qbuSelectQuery* pQuery, qbuTable* pTable,
-		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+		qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
 
 	bool	generateQueryString(QString & strInsertQuery, qbuSelectQuery* pQuery,
-		qbuTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+		qbuTable* pTable, qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
 
 	bool	generateQueryString(QString & strInsertQuery,
 		qbuPropertyMap* pData, qbuTable* pTable,
-		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+		qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
 protected:
-	QString handleInsertMode(smdb::InsertMode im);
+	QString handleInsertMode(qbudb::InsertMode im);
 
 private:
 	/**
@@ -51,7 +51,7 @@ private:
 	*  the wrong rows being matched up in the insert.
 	*/
 	bool	generateQueryString(QString & strInsertQuery, QString strQuery,
-		QString strTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+		QString strTable, qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

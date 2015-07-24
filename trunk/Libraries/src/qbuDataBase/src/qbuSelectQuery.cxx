@@ -8,6 +8,7 @@
 #include "qbuDataBase/qbuDBColumnDefList.h"
 #include "qbuDataBase/qbuException.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDBJoin.h"
 
 
 #include "qbuLog/qbuLog.h"

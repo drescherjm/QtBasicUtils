@@ -1,45 +1,44 @@
 #pragma once
 
-#ifndef SMDBJOIN_H
-#define SMDBJOIN_H
+#ifndef QBUDBJOIN_H
+#define QBUDBJOIN_H
 
-#include "smDatabaseLibraryDefines.h"
-#include "smObject.h"
-#include "smDBConstants.h"
-#include "smDBExpression.h"
+#include "qbuBase/qbuObject.h"
+#include "qbuDataBase/qbuDBConstants.h"
+#include "qbuDataBase/qbuDBExpression.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smDatabase_EXPORT smDBJoin : public smObject
+class qbuDBJoin : public qbuObject
 {
-	SM_DECLARE_SUPERCLASS(smObject);
+	QBU_DECLARE_SUPERCLASS(qbuObject);
 public:
-	smDBJoin();
-	smDBJoin(const smDBJoin & other);
-	smDBJoin(smdb::JoinFlag jf,QString strSource, QString strAlias=QString());
-	smDBJoin& operator=(const smDBJoin & other);
-	~smDBJoin();
+	qbuDBJoin();
+	qbuDBJoin(const qbuDBJoin & other);
+	qbuDBJoin(qbudb::JoinFlag jf,QString strSource, QString strAlias=QString());
+	qbuDBJoin& operator=(const qbuDBJoin & other);
+	~qbuDBJoin();
 public:
 
 public:
-	bool		setJoinFlag(smdb::JoinFlag jf);
+	bool		setJoinFlag(qbudb::JoinFlag jf);
 	bool		setJoinSource(QString strSource, QString strAlias=QString());
 	bool		setAllowEmptyExpression(bool bAllowEmpty);
 
 public:
-	bool		appendExpression(const smDBExpression & dbExpression);
+	bool		appendExpression(const qbuDBExpression & dbExpression);
 
 public:
-	smDBJoin	addExpression(const smDBExpression & dbExpression) const;
-	smDBJoin	addJoinFlag(smdb::JoinFlag jf) const;
-	smDBJoin	addJoinSource(QString strSource, QString strAlias=QString()) const;
-	smDBJoin	addAllowEmptyExpression(bool bAllow) const;
+	qbuDBJoin	addExpression(const qbuDBExpression & dbExpression) const;
+	qbuDBJoin	addJoinFlag(qbudb::JoinFlag jf) const;
+	qbuDBJoin	addJoinSource(QString strSource, QString strAlias=QString()) const;
+	qbuDBJoin	addAllowEmptyExpression(bool bAllow) const;
 
 public:
 	QString toString(bool *bOK=nullptr) const;
 
 private:
-	void	copy( const smDBJoin & other );
+	void	copy( const qbuDBJoin & other );
 
 private:
 	class smPrivate;
@@ -48,5 +47,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // SMDBJOIN_H
-
+#endif // QBUDBJOIN_H

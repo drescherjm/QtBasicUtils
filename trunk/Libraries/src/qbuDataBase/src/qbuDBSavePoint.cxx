@@ -67,7 +67,7 @@ qbuDBSavePoint::~qbuDBSavePoint()
 #ifdef QBU_HAVE_EXCEPTIONS
 					throw smException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBSavePoint::~qbuDBSavePoint");
 #else
-					qDebug() << qPrintable(strError);
+					qDebug() << qPrintable(strMsg);
 #endif //def QBU_HAVE_EXCEPTIONS
 
 				}
@@ -119,11 +119,11 @@ bool qbuDBSavePoint::startSavePoint()
 		m_bSavePointStarted = query.exec(QString("SAVEPOINT %1;").arg(m_strSavePoint));
 
 		if (!m_bSavePointStarted) {
-			QString strMsg = QString("A SAVEPOINT could not be started. The following error occurred: %1").arg(m_pDB->lastError().text());
-			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
+			QString strError = QString("A SAVEPOINT could not be started. The following error occurred: %1").arg(m_pDB->lastError().text());
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw smException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBSavePoint::startSavePoint");
+			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuDBSavePoint::startSavePoint");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS

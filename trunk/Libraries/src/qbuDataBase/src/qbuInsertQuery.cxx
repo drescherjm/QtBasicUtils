@@ -44,7 +44,7 @@ QString generateInsertString(QStringList lst, QString strPrepend)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuInsertQuery::create(qbuPropertyMap* pData, qbuTable* pTable,
-	smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
+	qbudb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
 {
 	bool retVal = ((pData != nullptr) && (pTable != nullptr));
 	if (retVal) {
@@ -117,7 +117,7 @@ bool qbuInsertQuery::create(qbuPropertyMap* pData, qbuTable* pTable,
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuInsertQuery::create(qbuSelectQuery* pQuery, qbuTable* pTable,
-	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
+	qbudb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
 	QString strInsert;
 	bool retVal = generateQueryString(strInsert, pQuery, pTable, im);
@@ -147,27 +147,27 @@ bool qbuInsertQuery::create(qbuSelectQuery* pQuery, qbuTable* pTable,
 *	This member generates the proper SQL INSERT command for the smdb::InsertMode im.
 */
 
-QString qbuInsertQuery::handleInsertMode(smdb::InsertMode im)
+QString qbuInsertQuery::handleInsertMode(qbudb::InsertMode im)
 {
 	QString retVal;
 	switch (im) {
 	default:
-	case smdb::IM_NO_EXTRA_HANDLING:
+	case qbudb::IM_NO_EXTRA_HANDLING:
 		retVal = QString("INSERT INTO ");
 		break;
-	case smdb::IM_ROLLBACK:
+	case qbudb::IM_ROLLBACK:
 		retVal = QString("INSERT OR ROLLBACK INTO ");
 		break;
-	case smdb::IM_ABORT:
+	case qbudb::IM_ABORT:
 		retVal = QString("INSERT OR ABORT INTO ");
 		break;
-	case smdb::IM_REPLACE:
+	case qbudb::IM_REPLACE:
 		retVal = QString("INSERT OR REPLACE INTO ");
 		break;
-	case smdb::IM_IGNORE:
+	case qbudb::IM_IGNORE:
 		retVal = QString("INSERT OR IGNORE INTO ");
 		break;
-	case smdb::IM_FAIL:
+	case qbudb::IM_FAIL:
 		retVal = QString("INSERT OR FAIL INTO ");
 		break;
 	}
@@ -187,7 +187,7 @@ QString qbuInsertQuery::handleInsertMode(smdb::InsertMode im)
 
 bool qbuInsertQuery::generateQueryString(QString & strInsert, qbuPropertyMap* pData,
 	qbuTable* pTable,
-	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING*/)
+	qbudb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING*/)
 {
 	bool retVal = ((pData != nullptr) && (pTable != nullptr));
 	if (retVal) {
@@ -249,7 +249,7 @@ bool qbuInsertQuery::generateQueryString(QString & strInsert, qbuPropertyMap* pD
 
 bool qbuInsertQuery::generateQueryString(QString & strInsertQuery, qbuSelectQuery* pQuery,
 	qbuTable* pTable,
-	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
+	qbudb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
 	bool retVal = (pQuery != nullptr);
 	if (retVal) {
@@ -307,7 +307,7 @@ bool qbuInsertQuery::generateQueryString(QString & strInsertQuery, qbuSelectQuer
 bool qbuInsertQuery::generateQueryString(QString & strInsertQuery,
 	QString strQuery,
 	QString strTable,
-	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
+	qbudb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
 	bool retVal = (!strQuery.isEmpty() && !strTable.isEmpty());
 	if (retVal) {

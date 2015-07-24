@@ -39,6 +39,7 @@ public:
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
 	virtual int		count(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = NULL);
+	virtual int		countDistinct(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = nullptr);
 
 protected:
 	virtual bool				renameTable(QString strNewName);
@@ -53,7 +54,9 @@ public:
 	 *	This generates a select query to insert values from a qbuPropertyMap derivative
 	 *  into the database.
 	 */
-	bool insertData(qbuPropertyMap* pData,smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
+	bool insertData(qbuPropertyMap* pData,qbudb::InsertMode im = qbudb::IM_NO_EXTRA_HANDLING);
+
+	QString getUniqueTempTableName(QString strBase, int nIndexStart = 0) const;
 	
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;

@@ -1,16 +1,14 @@
-#include "smDatabasePCH.h"
+#include "qbuDatabasePCH.h"
 
-#include "smDBJoin.h"
-#include <QStringList>
-#include <QString>
-#include "smDBColumnDef.h"
+#include "qbuDataBase/qbuDBJoin.h"
+#include "qbuDataBase/qbuDBColumnDef.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class smDBJoin::smPrivate 
+class qbuDBJoin::smPrivate 
 {
 public:
-	smPrivate(smDBJoin* pPublic);
+	smPrivate(qbuDBJoin* pPublic);
 
 public:
 	bool isNaturalJoin();
@@ -21,32 +19,32 @@ public:
 	QString toString();
 
 public:
-	smDBJoin*			m_pPublic;
+	qbuDBJoin*			m_pPublic;
 	QString				m_strSource;
 	QString				m_strAlias;
-	smdb::JoinFlag		m_JoinFlag;
+	qbudb::JoinFlag		m_JoinFlag;
 	QStringList			m_lstExpressions;
 	bool				m_bAllowEmptyExpression;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin::smPrivate::smPrivate(smDBJoin* pPublic) : m_pPublic(pPublic), 
-	m_JoinFlag(smdb::JF_DEFAULT), m_bAllowEmptyExpression(false)
+qbuDBJoin::smPrivate::smPrivate(qbuDBJoin* pPublic) : m_pPublic(pPublic), 
+	m_JoinFlag(qbudb::JF_DEFAULT), m_bAllowEmptyExpression(false)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::smPrivate::isNaturalJoin()
+bool qbuDBJoin::smPrivate::isNaturalJoin()
 {
 	bool retVal;
 	switch(m_JoinFlag) {
-	case smdb::JF_NATURAL_CROSS_JOIN:
-	case smdb::JF_NATURAL_JOIN:
-	case smdb::JF_NATURAL_LEFT_JOIN:
-	case smdb::JF_NATURAL_LEFT_OUTER_JOIN:
+	case qbudb::JF_NATURAL_CROSS_JOIN:
+	case qbudb::JF_NATURAL_JOIN:
+	case qbudb::JF_NATURAL_LEFT_JOIN:
+	case qbudb::JF_NATURAL_LEFT_OUTER_JOIN:
 		retVal = true;
 		break;
 	default:
@@ -58,7 +56,7 @@ bool smDBJoin::smPrivate::isNaturalJoin()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::smPrivate::isValid()
+bool qbuDBJoin::smPrivate::isValid()
 {
 	bool retVal;
 
@@ -70,36 +68,36 @@ bool smDBJoin::smPrivate::isValid()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::smPrivate::isSingleSource()
+bool qbuDBJoin::smPrivate::isSingleSource()
 {
-	return m_JoinFlag == smdb::JF_SINGLE_SOURCE;
+	return m_JoinFlag == qbudb::JF_SINGLE_SOURCE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBJoin::smPrivate::toString()
+QString qbuDBJoin::smPrivate::toString()
 {
 	QString retVal;
 
 	if (isSingleSource()) {
-		retVal = smDBColDef(m_strSource,m_strAlias).getFullString();
+		retVal = qbuDBColDef(m_strSource,m_strAlias).getFullString();
 	}
 	else
 	if (isNaturalJoin()) {
-		retVal = getJoinString() + smDBColDef(m_strSource,m_strAlias).getFullString();
+		retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString();
 	}
 	else
 	{
-		smDBExpression expr = smDBExpression().AND(m_lstExpressions);
+		qbuDBExpression expr = qbuDBExpression().AND(m_lstExpressions);
 
 		QString strExpr = expr.toString();
 
 		if (!strExpr.simplified().isEmpty()) {
-			retVal = getJoinString() + smDBColDef(m_strSource,m_strAlias).getFullString() + " ON " + strExpr + " ";
+			retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString() + " ON " + strExpr + " ";
 		}
 		else
 		{
-			retVal = getJoinString() + smDBColDef(m_strSource,m_strAlias).getFullString();
+			retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString();
 		}
 
 	}
@@ -109,27 +107,27 @@ QString smDBJoin::smPrivate::toString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBJoin::smPrivate::getJoinString()
+QString qbuDBJoin::smPrivate::getJoinString()
 {
 	QString retVal;
 	
 	switch(m_JoinFlag) {
-	case smdb::JF_JOIN:
+	case qbudb::JF_JOIN:
 		retVal = "JOIN ";
 		break;
-	case smdb::JF_CROSS_JOIN:
+	case qbudb::JF_CROSS_JOIN:
 		retVal = "CROSS JOIN ";
 		break;
-	case smdb::JF_LEFT_JOIN:
+	case qbudb::JF_LEFT_JOIN:
 		retVal = "LEFT JOIN ";
 		break;
-	case smdb::JF_LEFT_OUTER_JOIN:
+	case qbudb::JF_LEFT_OUTER_JOIN:
 		retVal = "LEFT OUTER JOIN ";
 		break;
-	case smdb::JF_NATURAL_JOIN:
+	case qbudb::JF_NATURAL_JOIN:
 		retVal = "NATURAL JOIN ";
 		break;
-	case smdb::JF_NATURAL_CROSS_JOIN:
+	case qbudb::JF_NATURAL_CROSS_JOIN:
 		retVal = "NATURAL CROSS JOIN ";
 		break;
 	}
@@ -139,21 +137,21 @@ QString smDBJoin::smPrivate::getJoinString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin::smDBJoin() : m_pPrivate( new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin() : m_pPrivate( new smPrivate(this)) 
 {
 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin::smDBJoin( const smDBJoin & other )  : m_pPrivate(new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin( const qbuDBJoin & other )  : m_pPrivate(new smPrivate(this)) 
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin::smDBJoin( smdb::JoinFlag jf,QString strSource, QString strAlias )  : m_pPrivate( new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin( qbudb::JoinFlag jf,QString strSource, QString strAlias )  : m_pPrivate( new smPrivate(this)) 
 {
 	m_pPrivate->m_strSource = strSource;
 	m_pPrivate->m_strAlias = strAlias;
@@ -162,14 +160,14 @@ smDBJoin::smDBJoin( smdb::JoinFlag jf,QString strSource, QString strAlias )  : m
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin::~smDBJoin()
+qbuDBJoin::~qbuDBJoin()
 {
 	delete m_pPrivate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::setJoinFlag( smdb::JoinFlag jf )
+bool qbuDBJoin::setJoinFlag( qbudb::JoinFlag jf )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -180,7 +178,7 @@ bool smDBJoin::setJoinFlag( smdb::JoinFlag jf )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString smDBJoin::toString( bool *bOK/*=nullptr*/ ) const
+QString qbuDBJoin::toString( bool *bOK/*=nullptr*/ ) const
 {
 	QString retVal;
 
@@ -195,7 +193,7 @@ QString smDBJoin::toString( bool *bOK/*=nullptr*/ ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::appendExpression( const smDBExpression & dbExpression )
+bool qbuDBJoin::appendExpression( const qbuDBExpression & dbExpression )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -212,7 +210,7 @@ bool smDBJoin::appendExpression( const smDBExpression & dbExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void smDBJoin::copy( const smDBJoin & other )
+void qbuDBJoin::copy( const qbuDBJoin & other )
 {
 	m_pPrivate->m_JoinFlag = other.m_pPrivate->m_JoinFlag;
 	m_pPrivate->m_lstExpressions = other.m_pPrivate->m_lstExpressions;
@@ -223,9 +221,9 @@ void smDBJoin::copy( const smDBJoin & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin smDBJoin::addExpression( const smDBExpression & dbExpression ) const
+qbuDBJoin qbuDBJoin::addExpression( const qbuDBExpression & dbExpression ) const
 {
-	smDBJoin retVal(*this);
+	qbuDBJoin retVal(*this);
 
 	retVal.appendExpression(dbExpression);
 
@@ -234,9 +232,9 @@ smDBJoin smDBJoin::addExpression( const smDBExpression & dbExpression ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin smDBJoin::addJoinFlag( smdb::JoinFlag jf ) const
+qbuDBJoin qbuDBJoin::addJoinFlag( qbudb::JoinFlag jf ) const
 {
-	smDBJoin retVal(*this);
+	qbuDBJoin retVal(*this);
 
 	retVal.setJoinFlag(jf);
 
@@ -245,9 +243,9 @@ smDBJoin smDBJoin::addJoinFlag( smdb::JoinFlag jf ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin smDBJoin::addJoinSource( QString strSource, QString strAlias/*=QString()*/ ) const
+qbuDBJoin qbuDBJoin::addJoinSource( QString strSource, QString strAlias/*=QString()*/ ) const
 {
-	smDBJoin retVal(*this);
+	qbuDBJoin retVal(*this);
 
 	retVal.setJoinSource(strSource,strAlias);
 
@@ -256,7 +254,7 @@ smDBJoin smDBJoin::addJoinSource( QString strSource, QString strAlias/*=QString(
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::setJoinSource( QString strSource, QString strAlias/*=QString()*/ )
+bool qbuDBJoin::setJoinSource( QString strSource, QString strAlias/*=QString()*/ )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -268,7 +266,7 @@ bool smDBJoin::setJoinSource( QString strSource, QString strAlias/*=QString()*/ 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool smDBJoin::setAllowEmptyExpression( bool bAllowEmpty )
+bool qbuDBJoin::setAllowEmptyExpression( bool bAllowEmpty )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -279,9 +277,9 @@ bool smDBJoin::setAllowEmptyExpression( bool bAllowEmpty )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-smDBJoin smDBJoin::addAllowEmptyExpression( bool bAllow ) const
+qbuDBJoin qbuDBJoin::addAllowEmptyExpression( bool bAllow ) const
 {
-	smDBJoin retVal(*this);
+	qbuDBJoin retVal(*this);
 
 	retVal.setAllowEmptyExpression(bAllow);
 
