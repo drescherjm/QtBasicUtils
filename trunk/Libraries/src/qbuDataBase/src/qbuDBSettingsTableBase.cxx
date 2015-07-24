@@ -13,7 +13,7 @@ const QString qbuDBSettingsTableBase::g_strTable("DBSettings");
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBSettingsTableBase::qbuDBSettingsTableBase( std::shared_ptr<smDatabase> pDB ) : Superclass(pDB)
+qbuDBSettingsTableBase::qbuDBSettingsTableBase( std::shared_ptr<qbuDatabase> pDB ) : Superclass(pDB)
 {
 	
 }
@@ -144,7 +144,7 @@ int qbuDBSettingsTableBase::getDBSchemaVersion()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(SCHEMA_VERSION));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = query.value(0).toInt();
 		}
@@ -162,7 +162,7 @@ bool qbuDBSettingsTableBase::setDBSchemaVersion( int nSchema )
 			.arg(g_strTable)
 			.arg(nSchema)
 			.arg(getVariableName(SCHEMA_VERSION));
-		smSimpleQuery query(m_pDB);
+		qbuSimpleQuery query(m_pDB);
 		retVal = query.exec(strQuery);
 		if(retVal)
 		{
@@ -201,7 +201,7 @@ int qbuDBSettingsTableBase::getSetupSchemaVersion()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(SETUP_SCHEMA_VERSION));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = query.value(0).toInt();
 		}
@@ -219,7 +219,7 @@ bool qbuDBSettingsTableBase::setSetupSchemaVersion( int nSchema )
 			.arg(g_strTable)
 			.arg(nSchema)
 			.arg(getVariableName(SETUP_SCHEMA_VERSION));
-		smSimpleQuery query(m_pDB);
+		qbuSimpleQuery query(m_pDB);
 		retVal = query.exec(strQuery);
 		if(retVal)
 		{
@@ -249,7 +249,7 @@ int qbuDBSettingsTableBase::getMinimumDaysBetweenViewingCase()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(CASE_LAST_SEEN_MINIMUM_DAYS));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = query.value(0).toInt();
 		}
@@ -271,7 +271,7 @@ bool qbuDBSettingsTableBase::setMinimumDaysBetweenViewingCase( quint8 nDays )
 				.arg(g_strTable)
 				.arg(strVar)
 				.arg(nDays);
-			smSimpleQuery query(m_pDB);
+			qbuSimpleQuery query(m_pDB);
 			retVal = query.exec(strQuery);
 			if(retVal)
 			{
@@ -332,7 +332,7 @@ bool qbuDBSettingsTableBase::getAllowTruthEntry()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(ALLOW_TRUTH_ENTRY));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = (query.value(0).toInt() != 0);
 		}
@@ -358,7 +358,7 @@ bool qbuDBSettingsTableBase::setAllowTruthEntry( bool bAllow )
 				.arg(g_strTable)
 				.arg(strVar)
 				.arg(bAllow ? 1 :0);
-			smSimpleQuery query(m_pDB);
+			qbuSimpleQuery query(m_pDB);
 			retVal = query.exec(strQuery);
 		}
 	}
@@ -379,7 +379,7 @@ bool qbuDBSettingsTableBase::getAllowReaderReview()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(ALLOW_READER_REVIEW));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = (query.value(0).toInt() != 0);
 		}
@@ -405,7 +405,7 @@ bool qbuDBSettingsTableBase::setAllowReaderReview( bool bAllow )
 				.arg(g_strTable)
 				.arg(strVar)
 				.arg(bAllow ? 1 :0);
-			smSimpleQuery query(m_pDB);
+			qbuSimpleQuery query(m_pDB);
 			retVal = query.exec(strQuery);
 		}
 	}
@@ -431,7 +431,7 @@ bool qbuDBSettingsTableBase::setNumberOfCompletedCasesToIgnoreViewTimeout( uint8
 				.arg(g_strTable)
 				.arg(strVar)
 				.arg(nCases);
-			smSimpleQuery query(m_pDB);
+			qbuSimpleQuery query(m_pDB);
 			retVal = query.exec(strQuery);
 			if(retVal)
 			{
@@ -461,7 +461,7 @@ uint8_t qbuDBSettingsTableBase::getNumberOfCompletedCasesToIgnoreViewTimeout()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(CASE_VIEW_TIMEOUT_IGNORE_CASE_COUNT));
-		smSimpleQuery query(strQuery,m_pDB);
+		qbuSimpleQuery query(strQuery,m_pDB);
 		if (query.next()) {
 			retVal = query.value(0).toUInt();
 		}
@@ -478,7 +478,7 @@ QString qbuDBSettingsTableBase::getReaderDefaultPIN()
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = '%2'")
 			.arg(g_strTable)
 			.arg(getVariableName(READER_DEFAULT_PASSWORD));
-		smSimpleQuery query(strQuery, m_pDB);
+		qbuSimpleQuery query(strQuery, m_pDB);
 		if (query.next()) {
 			retVal = query.value(0).toString();
 		}

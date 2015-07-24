@@ -62,6 +62,7 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuException.cxx
 	./src/qbuDBSettingsTableBase.cxx
 	./src/qbuDBSettingInfo.cxx
+	./src/qbuSimpleQuery.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -84,6 +85,7 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingsTableBase.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingInfo.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSimpleQuery.h
 )
 
 SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

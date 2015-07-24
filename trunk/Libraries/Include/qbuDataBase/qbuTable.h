@@ -1,5 +1,7 @@
-#ifndef __SMTABLE_H__
-#define __SMTABLE_H__
+#pragma once
+
+#ifndef QBUTABLE_H
+#define QBUTABLE_H
 
 class qbuDatabase;
 class qbuPropertyMap;
@@ -7,6 +9,7 @@ class qbuInfo;
 
 #include <QObject>
 #include <QStringList>
+#include <memory>
 #include "qbuInsertQuery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +25,7 @@ class qbuTable : public QObject
 	friend class qbuTableSchema;
 	friend class qbuInsertQuery;
 public:
-	qbuTable(qbuDatabase* pDataBase);
+	qbuTable(std::shared_ptr<qbuDatabase> pDataBase);
 	virtual ~qbuTable();
 
 public:
@@ -52,7 +55,8 @@ public:
 	bool insertData(qbuPropertyMap* pData,smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 	
 protected:
-	qbuDatabase*		m_pDB;
+	std::shared_ptr<qbuDatabase>		m_pDB;
+
 private:
 	class		qbuPrivate;
 	qbuPrivate*	m_pPrivate;
@@ -60,4 +64,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMTABLE_H__
+#endif // QBUTABLE_H

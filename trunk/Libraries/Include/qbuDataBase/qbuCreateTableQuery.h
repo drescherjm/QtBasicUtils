@@ -1,4 +1,10 @@
+#pragma once
+
+#ifndef QBUCREATETABLEQUERY_H
+#define QBUCREATETABLEQUERY_H
+
 #include "qbuDataBase/qbuQuery.h"
+#include <memory>
 
 class qbuDatabase;
 
@@ -17,7 +23,7 @@ class qbuCreateTableQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuCreateTableQuery(QSqlDatabase db);
+	qbuCreateTableQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuCreateTableQuery();
 public:
 	bool	addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());
@@ -32,3 +38,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#endif // QBUCREATETABLEQUERY_H

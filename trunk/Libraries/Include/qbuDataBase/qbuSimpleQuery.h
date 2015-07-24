@@ -1,0 +1,56 @@
+#pragma once
+
+#ifndef QBUSIMPLEQUERY_H
+#define QBUSIMPLEQUERY_H
+
+#include <QObject>
+#include <QSQLError>
+#include <QSqlRecord>
+#include <qsql.h>
+#include <memory>
+
+class QSqlDatabase;
+class QSqlQuery;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *	\ingroup qbuDatabase
+ */
+
+class qbuSimpleQuery : public QObject
+{
+public:
+	typedef QObject Superclass;
+public:
+	qbuSimpleQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuSimpleQuery(QString strQuery, std::shared_ptr<QSqlDatabase> pDB);
+	virtual ~qbuSimpleQuery();
+
+	operator const QSqlQuery&() const; 
+
+public:
+	virtual bool exec();
+	virtual bool exec(const QString & query);
+	virtual bool first();
+	virtual bool next();
+	virtual bool prepare(const QString & query);
+	virtual	bool isNull(int field) const;
+	virtual	bool isValid() const;
+
+	virtual QSqlError	lastError() const;
+	virtual QString		executedQuery() const;
+	virtual QSqlRecord	record() const;
+	virtual	QVariant	value(int index) const;
+	virtual void		bindValue(const QString & placeholder, const QVariant & val, QSql::ParamType paramType = QSql::In);
+	virtual	void		bindValue(int pos, const QVariant & val, QSql::ParamType paramType = QSql::In);
+
+private:
+	class smPrivate;
+	std::unique_ptr<smPrivate>	m_pPrivate;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUSIMPLEQUERY_H
+

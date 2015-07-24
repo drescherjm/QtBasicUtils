@@ -13,7 +13,7 @@
  *	This smInfo class is used to retrieve settings from the DBSettings tables of each 
  *	database.
  *
- *	\ingroup smDatabase
+ *	\ingroup qbuDatabase
  */
 
 class qbuDBSettingInfo : public qbuInfo

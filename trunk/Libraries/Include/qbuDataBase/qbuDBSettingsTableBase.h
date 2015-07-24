@@ -14,7 +14,7 @@ class qbuDBSettingInfo;
 
 class qbuDBSettingsTableBase : public qbuTable
 {
-	friend class smDatabase;
+	friend class qbuDatabase;
 	QBU_DECLARE_SUPERCLASS(qbuTable);
 public:
 	typedef qbuDBSettingInfo InfoClass;
@@ -29,7 +29,7 @@ public:
 		READER_DEFAULT_PASSWORD,
 	};
 
-	qbuDBSettingsTableBase(std::shared_ptr<smDatabase> pDB);
+	qbuDBSettingsTableBase(std::shared_ptr<qbuDatabase> pDB);
 public:
 	virtual bool		upgradeTable(int nOldSchema, int nNewSchema);
 	virtual qbuInfo*	createInfoClass() const;

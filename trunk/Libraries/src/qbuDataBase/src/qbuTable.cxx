@@ -24,7 +24,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuTable::qbuTable( qbuDatabase* pDataBase ) : m_pDB(pDataBase)
+qbuTable::qbuTable(std::shared_ptr<qbuDatabase> pDataBase) : m_pDB(pDataBase)
 {
 	m_pPrivate = new qbuPrivate();	
 }
