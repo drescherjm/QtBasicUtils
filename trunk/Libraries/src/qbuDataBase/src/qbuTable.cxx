@@ -3,13 +3,9 @@
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuBase/qbuPropertyMap.h"
-#include <QStringList>
-#include <QSqlQuery>
 #include "qbuDataBase/qbuException.h"
-#include <iostream>
 #include "qbuDataBase/qbuTableSchema.h"
 #include "qbuBase/qbuStringList.h"
-#include "..\qbuDatabase\qbuDatabasePCH.h"
 #include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuBase/qbuProperty.h"
 #include "qbuLog/qbuLog.h"
@@ -26,7 +22,7 @@ public:
 
 qbuTable::qbuTable(std::shared_ptr<qbuDatabase> pDataBase) : m_pDB(pDataBase)
 {
-	m_pPrivate = new qbuPrivate();	
+	m_pPrivate = new qbuPrivate();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -40,64 +36,70 @@ qbuTable::~qbuTable()
 
 /**
 *	\brief
-*	This is the base upgradeTable. 
+*	This is the base upgradeTable.
 *	\details
 *	This function checks if the table needs to be created. If so it does and calls
-*  qbuTable::insertInitialValues() to insert these initial values. 
+*  qbuTable::insertInitialValues(int nSchema) to insert these initial values.
 */
 
-bool qbuTable::upgradeTable( int nOldSchema, int nNewSchema )
+bool qbuTable::upgradeTable(int nOldSchema, int nNewSchema)
 {
-	bool retVal = m_pDB->tableExists(getTableName()) ;
+	bool retVal = m_pDB->tableExists(getTableName());
 	if (!retVal) {
-		retVal = createTable( nNewSchema );
+		retVal = createTable(nNewSchema);
 		if (retVal) {
-			retVal = insertInitialValues();
+			retVal = insertInitialValues(nNewSchema);
 			if (!retVal) {
 
 				QString strError = QString("ERROR: Could not initialize table %1")
 					.arg(getTableName());
 
-				QLOG_CRIT() << strError;
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::upgradeTable");
+				throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::upgradeTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 			}
 		}
 	}
 	if (retVal) {
-		QLOG_INFO() << QString("The table %1 was upgraded to schema %2").arg(getTableName()).arg(nNewSchema);
+		QLOG_INFO() << QBULOG_DATABASE_TYPE << QString("The table %1 was upgraded to schema %2").arg(getTableName()).arg(nNewSchema);
 	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::insertData( qbuPropertyMap* pData,smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/ )
+bool qbuTable::insertData(qbuPropertyMap* pData, smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
 {
-	bool retVal = (pData != NULL);
+	bool retVal = (pData != nullptr);
 
 	if (retVal) {
-		qbuInsertQuery query(*m_pDB);
-		retVal = query.create(pData,this,im);
+		qbuInsertQuery query(m_pDB);
+		retVal = query.create(pData, this, im);
 		if (retVal) {
 			retVal = query.exec();
 			if (!retVal) {
 				// 
 
-				QString strError = QString("Failed to insert data into the table %1. Using the following query: ").arg(getTableName());
-				QLOG_CRIT() << strError;
+				QString strError = QString("Failed to insert data into the table %1. "
+					"Using the following query: ").arg(getTableName());
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 				QString str;
-				if (!query.generateQueryString(str,pData,this,im)) {
-					str = query.executedQuery(); 
+				if (!query.generateQueryString(str, pData, this, im)) {
+					str = query.executedQuery();
 				}
-				
-				QLOG_CRIT() << str;
 
-				pData->Print( std::cerr );
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << str;
+
+
+				QSqlError error = query.lastError();
+
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << error.text();
+
+				pData->Print(std::cerr);
 
 
 			}
@@ -110,7 +112,7 @@ bool qbuTable::insertData( qbuPropertyMap* pData,smdb::InsertMode im /*= IM_NO_E
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::isValidField( QString strName )
+bool qbuTable::isValidField(QString strName)
 {
 	return true;
 }
@@ -122,17 +124,24 @@ bool qbuTable::isValidField( QString strName )
 *	This member creates the table in the database using a CREATE TABLE SQL command.
 */
 
-bool qbuTable::internalCreateTable( QString strTableName, QString strTableSQL )
+bool qbuTable::internalCreateTable(QString strTableName, QString strTableSQL)
 {
-	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
+	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
-		QString	CREATE_TABLE =QString("CREATE TABLE %1 %2;").arg(strTableName).arg(strTableSQL);
-		QSqlQuery	query(*m_pDB);
+		QString	CREATE_TABLE = QString("CREATE TABLE %1 %2").arg(strTableName).arg(strTableSQL);
+		qbuSimpleQuery	query(m_pDB);
+
+		CREATE_TABLE = CREATE_TABLE.trimmed();
+
+		if (!CREATE_TABLE.endsWith(";")) {
+			CREATE_TABLE.append(";");
+		}
 
 		retVal = query.exec(CREATE_TABLE);
-		if(retVal)
+		if (retVal)
 		{
-			QLOG_INFO() << "Table" << qPrintable(strTableName) << "created";
+			QString strMsg = QString("The table %1 was created.").arg(strTableName);
+			QLOG_INFO() << QBULOG_DATABASE_TYPE << strMsg;
 		}
 		else
 		{
@@ -142,10 +151,10 @@ bool qbuTable::internalCreateTable( QString strTableName, QString strTableSQL )
 				.arg(query.lastError().text());
 
 
-			QLOG_CRIT() << qPrintable(strError);
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::internalCreateTable");
+			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::internalCreateTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -159,9 +168,9 @@ bool qbuTable::internalCreateTable( QString strTableName, QString strTableSQL )
 *	\brief The purpose of the member function is to add a column to an existing table.
 */
 
-bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strConstraint/*=QString()*/ )
+bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strConstraint/*=QString()*/)
 {
-	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
+	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
 		QString strSQL;
 		strSQL = QString("ALTER TABLE %1 ADD COLUMN %2 %3 %4")
@@ -170,12 +179,12 @@ bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strCo
 			.arg(strDataType)
 			.arg(strConstraint);
 
-		QSqlQuery	query(*m_pDB);
+		qbuSimpleQuery	query(m_pDB);
 
 		retVal = query.exec(strSQL);
-		if(retVal)
+		if (retVal)
 		{
-			QLOG_INFO() << "Column " << qPrintable(strCoumnName) << " added to table " << qPrintable(getTableName());
+			QLOG_INFO() << QBULOG_DATABASE_TYPE << "Column " << strCoumnName << " added to table " << getTableName();
 		}
 		else
 		{
@@ -183,11 +192,11 @@ bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strCo
 				.arg(strCoumnName)
 				.arg(getTableName())
 				.arg(query.lastError().text());
-			
-			QLOG_CRIT() << qPrintable(strError);
+
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::addColumn");
+			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::addColumn");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -197,21 +206,22 @@ bool qbuTable::addColumn( QString strCoumnName,QString strDataType,QString strCo
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::renameTable( QString strNewName )
+bool qbuTable::renameTable(QString strNewName)
 {
-	bool retVal = ( m_pDB != NULL) && (m_pDB->isOpen());
+	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
 		QString strSQL;
 		strSQL = QString("ALTER TABLE %1 RENAME TO %2")
 			.arg(getTableName())
 			.arg(strNewName);
 
-		QSqlQuery	query(*m_pDB);
+		qbuSimpleQuery	query(m_pDB);
 
 		retVal = query.exec(strSQL);
-		if(retVal)
+		if (retVal)
 		{
-			QLOG_INFO() << "Table " << qPrintable(getTableName()) << " renamed to " << qPrintable(strNewName);
+			QString strMsg = QString("The table %1 was renamed to %2").arg(getTableName()).arg(strNewName);
+			QLOG_INFO() << QBULOG_DATABASE_TYPE << strMsg;
 		}
 		else
 		{
@@ -219,12 +229,12 @@ bool qbuTable::renameTable( QString strNewName )
 				.arg(getTableName())
 				.arg(strNewName)
 				.arg(query.lastError().text());
-			
-			
-			QLOG_CRIT() << qPrintable(strError);
+
+
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuTable::renameTable");
+			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::renameTable");
 #endif //def QBU_HAVE_EXCEPTIONS
 
 		}
@@ -241,7 +251,7 @@ bool qbuTable::verifySchema()
 	if (retVal) {
 
 		std::auto_ptr<qbuInfo> ptr(createInfoClass());
-		retVal = (ptr.get() != NULL);
+		retVal = (ptr.get() != nullptr);
 		if (retVal) {
 			retVal = schema.verifyTable(ptr.get());
 		}
@@ -260,16 +270,34 @@ const QStringList& qbuTable::getRequiredFieldList() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::verifyRequiredFields( qbuInfo * pInfo ) const
+/**
+*	\brief
+*	This member function returns the list of optional Primary Keys.
+*
+*	\details
+*	Optional Primary Keys will be set to the default value in insert queries. For
+*	integer primary keys this value will most likely be -1.
+*
+*/
+
+const QStringList& qbuTable::getOptionalPrimaryKeyList() const
 {
-	return verifyRequiredFields(pInfo,getRequiredFieldList());
+	static QStringList lst;
+	return lst;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::verifyRequiredFields( qbuInfo * pInfo, const QStringList & lstFields ) const
+bool qbuTable::verifyRequiredFields(qbuInfo * pInfo) const
 {
-	bool retVal = (pInfo != NULL);
+	return verifyRequiredFields(pInfo, getRequiredFieldList());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuTable::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFields) const
+{
+	bool retVal = (pInfo != nullptr);
 	if (retVal) {
 		qbuStringList lstMissingRequired;
 
@@ -282,9 +310,14 @@ bool qbuTable::verifyRequiredFields( qbuInfo * pInfo, const QStringList & lstFie
 
 		retVal = lstMissingRequired.isEmpty();
 		if (!retVal) {
-			QLOG_WARN() << "A query on table " << qPrintable(getTableName())
-				<< " will fail because the following fields are not defined in the qbuInfo class: " << qPrintable(lstMissingRequired.toCSVString());
 
+			QString strMessage = QString("A query on table %1 will fail because the "
+				"following fields are not defined in the qbuInfo class (%2): %3")
+				.arg(getTableName())
+				.arg(pInfo->metaObject()->className())
+				.arg(lstMissingRequired.toCSVString());
+
+			QLOG_WARN() << QBULOG_DATABASE_TYPE << strMessage;
 		}
 	}
 	return retVal;
@@ -293,14 +326,14 @@ bool qbuTable::verifyRequiredFields( qbuInfo * pInfo, const QStringList & lstFie
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\brief
- *	This member fixes known bad data in the table.
- *
- *	\details
- *	The base class implementation does nothing override in the child to perform  fixes 
- *	for a table.
- *
- */
+*	\brief
+*	This member fixes known bad data in the table.
+*
+*	\details
+*	The base class implementation does nothing override in the child to perform  fixes
+*	for a table.
+*
+*/
 
 bool qbuTable::fixKnownProblems()
 {
@@ -309,29 +342,81 @@ bool qbuTable::fixKnownProblems()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuTable::count( QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= NULL*/ )
+int qbuTable::count(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= nullptr*/)
 {
 	int retVal = -1;
-	qbuSelectQuery query(*m_pDB);
+	qbuSelectQuery query(m_pDB);
 
 	// Setup a typical Count(*) query
-	qbuDBColDef countval = qbuDBColDef("COUNT(*)",false).addAlias("Count");
+	qbuDBColDef countval = qbuDBColDef("COUNT(*)", qbuDBColDef::OP_IS_EXPRESSION).addAlias("Count");
 
 	query.addSelectField(countval);
 	query.addFromField(getTableName());
 
-	// Add where expressions if necissary..
-	if (pPropMap != NULL) {
-		query.appendWhereExpressions(lstFields,pPropMap);
+	// Add where expressions if necessary..
+	if (pPropMap != nullptr) {
+		query.appendWhereExpressions(lstFields, pPropMap);
 	}
 
 	// Now get the value of the count.
 	if (query.generateQuery() && query.exec() && query.next()) {
 		qbuPropertyMap ret;
 		if (query.getRecord(&ret)) {
-			ret.getField<int>("Count",retVal);
+			ret.getField<int>("Count", retVal);
 		}
 	}
-	
+
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int qbuTable::countDistinct(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= nullptr*/)
+{
+	int retVal = -1;
+	qbuSelectQuery query(m_pDB);
+
+	// Setup a typical Count(*) query
+	qbuDBColDef countval = qbuDBColDef("COUNT(*)", qbuDBColDef::OP_IS_EXPRESSION).addAlias("Count");
+
+	query.addSelectField(countval);
+
+	qbuSelectQuery nested(m_pDB);
+	nested.addSelectField("*");
+	nested.setSelectOption(qbuSelectQuery::QBU_SELECT_DISTINCT);
+	nested.addFromField(getTableName());
+
+	// Add where expressions if necessary..
+	if (pPropMap != nullptr) {
+		nested.appendWhereExpressions(lstFields, pPropMap);
+	}
+
+	query.addFromField(nested, "T1");
+
+	// Now get the value of the count.
+	if (query.generateQuery() && query.exec() && query.next()) {
+		qbuPropertyMap ret;
+		if (query.getRecord(&ret)) {
+			ret.getField<int>("Count", retVal);
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuTable::getUniqueTempTableName(QString strBase, int nIndexStart/*=0*/) const
+{
+	QString retVal = strBase;
+	if (m_pDB->tableExists(retVal)) {
+		for (int i = nIndexStart; i < 100 && m_pDB->tableExists(retVal); ++i) {
+			retVal = QString("%1_%2")
+				.arg(strBase)
+				.arg(i);
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

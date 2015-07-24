@@ -10,7 +10,7 @@
 
 /**
  *	\brief 
- *	This smInfo class is used to retrieve settings from the DBSettings tables of each 
+ *	This qbuInfo class is used to retrieve settings from the DBSettings tables of each 
  *	database.
  *
  *	\ingroup qbuDatabase

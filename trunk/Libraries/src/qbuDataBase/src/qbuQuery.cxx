@@ -1,6 +1,7 @@
 #include "qbuDataBasePCH.h"
 #include "qbuDataBase/qbuQuery.h"
 #include "qbuBase/qbuPropertyMap.h"
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,7 +13,7 @@ qbuQuery::qbuQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	This member takes two smDBColDefs and an operator and creates an sql expression as
+*	This member takes two qbuDBColDefs and an operator and creates an sql expression as
 *  follows: ( first operator second )
 *  for example: ( T1.StudyID = T2.StudyID )
 */
@@ -105,13 +106,13 @@ QString qbuQuery::genExprTableAlias(QString strField, QString strTA1, QString st
 
 bool qbuQuery::appendWhereExpression(QString strExpression)
 {
-	QLOG_CRIT() << SMLOG_DATABASE_TYPE << "qbuQuery::appendWhereExpression(QString strExpression) should never be called";
+	QLOG_CRIT() << QBULOG_DATABASE_TYPE << "qbuQuery::appendWhereExpression(QString strExpression) should never be called";
 	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuQuery::appendWhereExpression(const smDBExpression & expr)
+bool qbuQuery::appendWhereExpression(const qbuDBExpression & expr)
 {
 	QString strExpr;
 	bool retVal;

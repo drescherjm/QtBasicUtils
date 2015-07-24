@@ -2,6 +2,7 @@
 
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDBExpression.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,39 +24,51 @@ QString qbuDBColDef::getFullString() const
 		retVal.append(" AS ");
 		retVal.append(m_strAlias);
 	}
+
+	if (m_options.testFlag(OP_DESCENDING)) {
+		retVal.append(" DESC");
+	}
 	return retVal;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef::qbuDBColDef( QString strFieldName, QString strAlias ) : 
-    m_strName(singleQuoteIfNecissary(strFieldName)),
-	m_strAlias(singleQuoteIfNecissary(strAlias))
+qbuDBColDef::qbuDBColDef(QString strFieldName, QString strAlias) :
+m_strName(singleQuoteIfNecissary(strFieldName)),
+m_strAlias(singleQuoteIfNecissary(strAlias))
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef::qbuDBColDef( QString strFieldName, bool bAutoQuote ) 
+qbuDBColDef::qbuDBColDef(QString strFieldName, Options op) : m_options(op)
 {
-	addNameInt(strFieldName,bAutoQuote);
+	addNameInt(strFieldName);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef::qbuDBColDef( const qbuDBColDef & other )
+qbuDBColDef::qbuDBColDef(const qbuDBColDef & other)
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- *	Returns a new qbuDBColDef containing a copy of this object with the TableAlias
- *  set from the param strTableAlias.
- */
+qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
+{
+	m_strName = expr.toString();
+	m_strAlias = singleQuoteIfNecissary(strAlias);
+}
 
-qbuDBColDef qbuDBColDef::addTableAlias( QString strTableAlias ) const
+/////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+*	Returns a new smDBColDef containing a copy of this object with the TableAlias
+*  set from the param strTableAlias.
+*/
+
+qbuDBColDef qbuDBColDef::addTableAlias(QString strTableAlias) const
 {
 	qbuDBColDef retVal(*this);
 	retVal.m_strTableAlias = singleQuoteIfNecissary(strTableAlias);
@@ -65,11 +78,11 @@ qbuDBColDef qbuDBColDef::addTableAlias( QString strTableAlias ) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new qbuDBColDef containing a copy of this object with the Alias
+*	Returns a new smDBColDef containing a copy of this object with the Alias
 *   set from the param strAlias.
 */
 
-qbuDBColDef qbuDBColDef::addAlias( QString strAlias ) const
+qbuDBColDef qbuDBColDef::addAlias(QString strAlias) const
 {
 	qbuDBColDef retVal(*this);
 	retVal.m_strAlias = singleQuoteIfNecissary(strAlias);
@@ -79,39 +92,41 @@ qbuDBColDef qbuDBColDef::addAlias( QString strAlias ) const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-*	Returns a new qbuDBColDef containing a copy of this object with the Name
+*	Returns a new smDBColDef containing a copy of this object with the Name
 *   set from the param strName.
 */
 
-qbuDBColDef qbuDBColDef::addName(QString strName, bool bAutoQuote/* =true */ ) const
+qbuDBColDef qbuDBColDef::addName(QString strName, Options op/* =true */) const
 {
 	qbuDBColDef retVal(*this);
-	retVal.addNameInt(strName,bAutoQuote);
+	retVal.m_options = op;
+	retVal.addNameInt(strName);
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuDBColDef::copy( const qbuDBColDef & other )
+void qbuDBColDef::copy(const qbuDBColDef & other)
 {
 	m_strName = other.m_strName;
 	m_strAlias = other.m_strAlias;
 	m_strTableAlias = other.m_strTableAlias;
+	m_options = other.m_options;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	Returns the string containing the name prepended with the table alias if it exists.
- *  An example of this is the following: T1.StudyID would be returned if the 
- *  name was set to StudyID and the TableAlias set to T1
- */
+*	Returns the string containing the name prepended with the table alias if it exists.
+*  An example of this is the following: T1.StudyID would be returned if the
+*  name was set to StudyID and the TableAlias set to T1
+*/
 
 QString qbuDBColDef::getFullName() const
 {
 	QString retVal = m_strName;
 	if (!m_strTableAlias.isEmpty()) {
-		retVal.prepend(m_strTableAlias+".");
+		retVal.prepend(m_strTableAlias + ".");
 	}
 	return retVal;
 
@@ -127,9 +142,9 @@ QString qbuDBColDef::getNameOnly() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef& qbuDBColDef::operator=( const qbuDBColDef other )
+qbuDBColDef& qbuDBColDef::operator=(const qbuDBColDef other)
 {
-	if ( &other != this ) {
+	if (&other != this) {
 		copy(other);
 	}
 	return *this;
@@ -137,16 +152,16 @@ qbuDBColDef& qbuDBColDef::operator=( const qbuDBColDef other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef qbuDBColDef::addExpression( QString strExpression ) const
+qbuDBColDef qbuDBColDef::addExpression(QString strExpression) const
 {
-	return addName(strExpression,false);
+	return addName(strExpression, OP_IS_EXPRESSION);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuDBColDef::addNameInt( QString strName,bool bAutoQuote )
+void qbuDBColDef::addNameInt(QString strName)
 {
-	if (bAutoQuote) {
+	if (m_options.testFlag(OP_AUTO_QUOTE)) {
 		m_strName = singleQuoteIfNecissary(strName);
 	}
 	else
@@ -155,3 +170,25 @@ void qbuDBColDef::addNameInt( QString strName,bool bAutoQuote )
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBColDef::isExpression() const
+{
+	return m_options.testFlag(OP_IS_EXPRESSION);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuDBColDef::getAlias() const
+{
+	return m_strAlias;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBColDef::hasAlias() const
+{
+	return !getAlias().isEmpty();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,6 @@
 
 #include "qbuDataBase/qbuInsertQuery.h"
 #include "qbuDataBase/qbuException.h"
-#include <QStringList>
 #include "qbuBase/qbuPropertyMap.h"
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuSelectQuery.h"
@@ -10,19 +9,20 @@
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDBColumnDefList.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuInsertQuery::qbuInsertQuery(QSqlDatabase db) : Superclass(db)
+qbuInsertQuery::qbuInsertQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
 {
-	
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuInsertQuery::~qbuInsertQuery()
 {
-	
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ QString generateInsertString(QStringList lst, QString strPrepend)
 {
 	QString retVal;
 	bool bFirst = true;
-	foreach(QString str,lst) {
+	foreach(QString str, lst) {
 		retVal += strPrepend + str;
 		if (bFirst) {
 			bFirst = false;
@@ -43,16 +43,16 @@ QString generateInsertString(QStringList lst, QString strPrepend)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
-						   smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/ )
+bool qbuInsertQuery::create(qbuPropertyMap* pData, qbuTable* pTable,
+	smdb::InsertMode im /*= IM_NO_EXTRA_HANDLING*/)
 {
-	bool retVal = ((pData != NULL) && (pTable != NULL));
+	bool retVal = ((pData != nullptr) && (pTable != nullptr));
 	if (retVal) {
 
 		QStringList lst;
 
 		qbuPropertyMap::iterator it = pData->begin();
-		for( ;it != pData->end();++it) {
+		for (; it != pData->end(); ++it) {
 			qbuProperty* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
@@ -79,30 +79,35 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 			strInsert = handleInsertMode(im);
 
 			strInsert += pTable->getTableName();
-			strInsert += " (" + generateInsertString(lst,"") + ") ";
+			strInsert += " (" + generateInsertString(lst, "") + ") ";
 
-			strInsert += "VALUES (" + generateInsertString(lst,":") + "); ";
+			strInsert += "VALUES (" + generateInsertString(lst, ":") + "); ";
 
-			prepare(strInsert);
-			for(it = pData->begin() ;it != pData->end();++it) {
-				qbuProperty* pProp = *it;
-				QString strName = pProp->objectName();
-				if (pTable->isValidField(strName)) {
-					strName.prepend(":");
+			retVal = prepare(strInsert);
+			if (retVal) {
+				for (it = pData->begin(); it != pData->end(); ++it) {
+					qbuProperty* pProp = *it;
+					QString strName = pProp->objectName();
+					if (pTable->isValidField(strName)) {
+						strName.prepend(":");
 
-					QVariant vt = pProp->GetData();
-					//The following code converts bools to 1 or 0 for SQLITE
-					//without this conversion the text "true" or "false" would be inserted 
-					//in the database.
+						QVariant vt = pProp->GetData();
+						//The following code converts bools to 1 or 0 for SQLITE
+						//without this conversion the text "true" or "false" would be inserted 
+						//in the database.
 
-					if (vt.type() == QVariant::Bool) {
-						vt = vt.toBool() ? QVariant(int(1)) : QVariant(int(0));
+						if (vt.type() == QVariant::Bool) {
+							vt = vt.toBool() ? QVariant(int(1)) : QVariant(int(0));
+						}
+
+						bindValue(strName, vt);
 					}
-
-					bindValue(strName,vt);
 				}
 			}
-
+			else
+			{
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << QString("An insert query for table %1 failed to prepare. Data will not make it to the database").arg(pTable->getTableName());
+			}
 		}
 
 	}
@@ -111,11 +116,11 @@ bool qbuInsertQuery::create( qbuPropertyMap* pData,qbuTable* pTable,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuInsertQuery::create( qbuSelectQuery* pQuery,qbuTable* pTable, 
-						   smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
+bool qbuInsertQuery::create(qbuSelectQuery* pQuery, qbuTable* pTable,
+	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
 	QString strInsert;
-	bool retVal = generateQueryString(strInsert,pQuery,pTable,im);
+	bool retVal = generateQueryString(strInsert, pQuery, pTable, im);
 	if (retVal) {
 		retVal = exec(strInsert);
 
@@ -125,7 +130,7 @@ bool qbuInsertQuery::create( qbuSelectQuery* pQuery,qbuTable* pTable,
 				.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuInsertQuery::create");
+			throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuInsertQuery::create");
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS
@@ -142,46 +147,55 @@ bool qbuInsertQuery::create( qbuSelectQuery* pQuery,qbuTable* pTable,
 *	This member generates the proper SQL INSERT command for the smdb::InsertMode im.
 */
 
-QString qbuInsertQuery::handleInsertMode( smdb::InsertMode im )
+QString qbuInsertQuery::handleInsertMode(smdb::InsertMode im)
 {
 	QString retVal;
-	switch(im) {
-		default:
-		case smdb::IM_NO_EXTRA_HANDLING:
-			retVal = QString("INSERT INTO ");
-			break;
-		case smdb::IM_ROLLBACK:
-			retVal = QString("INSERT OR ROLLBACK INTO ");
-			break;
-		case smdb::IM_ABORT:
-			retVal = QString("INSERT OR ABORT INTO ");
-			break;
-		case smdb::IM_REPLACE:
-			retVal = QString("INSERT OR REPLACE INTO ");
-			break;
-		case smdb::IM_IGNORE:
-			retVal = QString("INSERT OR IGNORE INTO ");
-			break;
-		case smdb::IM_FAIL:
-			retVal = QString("INSERT OR FAIL INTO ");
-			break;
-	}	
+	switch (im) {
+	default:
+	case smdb::IM_NO_EXTRA_HANDLING:
+		retVal = QString("INSERT INTO ");
+		break;
+	case smdb::IM_ROLLBACK:
+		retVal = QString("INSERT OR ROLLBACK INTO ");
+		break;
+	case smdb::IM_ABORT:
+		retVal = QString("INSERT OR ABORT INTO ");
+		break;
+	case smdb::IM_REPLACE:
+		retVal = QString("INSERT OR REPLACE INTO ");
+		break;
+	case smdb::IM_IGNORE:
+		retVal = QString("INSERT OR IGNORE INTO ");
+		break;
+	case smdb::IM_FAIL:
+		retVal = QString("INSERT OR FAIL INTO ");
+		break;
+	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* pData,
-										qbuTable* pTable, 
-										smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING*/ )
+/**
+*	\brief
+*	This generates a query string for the insert.
+*	\details
+*	Instead of using the built in Qt database inserting using bound values this query
+*	generates a SQL string that can be executed directly with the values in the string.
+*
+*/
+
+bool qbuInsertQuery::generateQueryString(QString & strInsert, qbuPropertyMap* pData,
+	qbuTable* pTable,
+	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING*/)
 {
-	bool retVal = ((pData != NULL) && (pTable != NULL));
+	bool retVal = ((pData != nullptr) && (pTable != nullptr));
 	if (retVal) {
 
 		QStringList lst;
 
 		qbuPropertyMap::iterator it = pData->begin();
-		for( ;it != pData->end();++it) {
+		for (; it != pData->end(); ++it) {
 			qbuProperty* pProp = *it;
 			QString strName = pProp->objectName();
 			if (pTable->isValidField(strName)) {
@@ -194,11 +208,11 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 			strInsert = handleInsertMode(im);
 
 			strInsert += pTable->getTableName();
-			strInsert += " (" + generateInsertString(lst,"") + ") ";
+			strInsert += " (" + generateInsertString(lst, "") + ") ";
 
 			strInsert += "VALUES ( ";
 			bool bFirst = true;
-			for(it = pData->begin() ;it != pData->end();++it) {
+			for (it = pData->begin(); it != pData->end(); ++it) {
 				qbuProperty* pProp = *it;
 				QString strName = pProp->objectName();
 				if (pTable->isValidField(strName)) {
@@ -211,15 +225,8 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 					}
 
 					QVariant vt = pProp->GetData();
-					//The following code converts bools to 1 or 0 for SQLITE
-					//without this conversion the text "true" or "false" would be inserted 
-					//in the database.
-
-					//strInsert += singleQuoteIfNecissary(vt.toString());
-
 					strInsert += toQueryValue(vt);
 
-					//strInsert += "\" " + vt.toString() + "\" ";
 				}
 			}
 			strInsert += " ); ";
@@ -232,19 +239,19 @@ bool qbuInsertQuery::generateQueryString( QString & strInsert, qbuPropertyMap* p
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\brief 
- *	This member generates the insert query string for the query in pQuery into
- *	the table pTable.
- *
- *	\details
- *	@param strInsertQuery is the returned query. 
- */
+*	\brief
+*	This member generates the insert query string for the query in pQuery into
+*	the table pTable.
+*
+*	\details
+*	@param strInsertQuery is the returned query.
+*/
 
-bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, qbuSelectQuery* pQuery, 
-										 qbuTable* pTable, 
-										 smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
+bool qbuInsertQuery::generateQueryString(QString & strInsertQuery, qbuSelectQuery* pQuery,
+	qbuTable* pTable,
+	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
-	bool retVal = (pQuery != NULL);
+	bool retVal = (pQuery != nullptr);
 	if (retVal) {
 		QString strSQL;
 		retVal = pQuery->generateSQL(strSQL);
@@ -257,14 +264,32 @@ bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, qbuSelectQue
 			strInsert += pTable->getTableName();
 
 			qbuDBColumnDefList* pList = pQuery->getSelectFields();
-			retVal = (pList != NULL);
+			retVal = (pList != nullptr);
 			if (retVal) {
 
 				qbuStringList sl;
 
 				// Get the header names from the qbuSelectQuery
-				foreach(qbuDBColDef colDef,*pList) {
-					sl.push_back(colDef.getNameOnly());
+				foreach(qbuDBColDef colDef, *pList) {
+					if (!colDef.isExpression()) {
+						sl.push_back(colDef.getNameOnly());
+					}
+					else
+					{
+						QString str = colDef.getAlias();
+						retVal = (!str.isEmpty());
+						if (retVal) {
+							sl.push_back(str);
+						}
+						else
+						{
+							QString strMessage = QString("Please make sure the following expression has an alias: %1").append(colDef.getNameOnly());
+							QLOG_WARN() << QBULOG_DATABASE_TYPE << strMessage;
+							break;
+						}
+
+					}
+
 				}
 
 				strInsert += QString(" ( %1 ) %2 ; ").arg(sl.toCSVString()).arg(strSQL);
@@ -272,17 +297,17 @@ bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, qbuSelectQue
 				strInsertQuery = strInsert;
 			}
 		}
-		
+
 	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuInsertQuery::generateQueryString( QString & strInsertQuery, 
-										 QString strQuery, 
-										 QString strTable, 
-										 smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */ )
+bool qbuInsertQuery::generateQueryString(QString & strInsertQuery,
+	QString strQuery,
+	QString strTable,
+	smdb::InsertMode im /*= smdb::IM_NO_EXTRA_HANDLING */)
 {
 	bool retVal = (!strQuery.isEmpty() && !strTable.isEmpty());
 	if (retVal) {
@@ -293,6 +318,8 @@ bool qbuInsertQuery::generateQueryString( QString & strInsertQuery,
 		strInsert += QString(" %1 ; ").arg(strQuery);
 
 		strInsertQuery = strInsert;
-	}	
+	}
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////

@@ -64,6 +64,7 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDBSettingInfo.cxx
 	./src/qbuSimpleQuery.cxx
 	./src/qbuDBExpression.cxx
+	./src/qbuDBJoin.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -88,6 +89,7 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingInfo.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSimpleQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBExpression.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBJoin.h
 )
 
 SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

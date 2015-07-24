@@ -3,7 +3,7 @@
 #ifndef QBULOG_H
 #define QBULOG_H
 
-#define SMLOG_DATABASE_TYPE "DATABASE"
+#define QBULOG_DATABASE_TYPE "DATABASE"
 
 #include <QString>
 #include <QxtLogger>
@@ -20,7 +20,7 @@ QString logFileName(QString strFile, int nLine);
 #define QLOG_TRACE() qxtLog->trace() << logFileName(__FILE__,__LINE__)
 #define QLOG_WRITE() qxtLog->write() << logFileName(__FILE__,__LINE__)
 #define QLOG_DEBUG() qxtLog->debug() << logFileName(__FILE__,__LINE__)
-#define QLOG_DATABASE() qxtLog->write() << logFileName(__FILE__,__LINE__) << SMLOG_DATABASE_TYPE
+#define QLOG_DATABASE() qxtLog->write() << logFileName(__FILE__,__LINE__) << QBULOG_DATABASE_TYPE
 
 
 /////////////////////////////////////////////////////////////////////////////////////////

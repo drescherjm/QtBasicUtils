@@ -61,7 +61,7 @@ QString doubleQuoteIfNecissary(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString toQueryValue( QVariant & vt )
+extern QString toQueryValue(QVariant & vt)
 {
 	QString retVal;
 
@@ -88,4 +88,12 @@ QString toQueryValue( QVariant & vt )
 		break;
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString toQueryValue(const QVariant & vt)
+{
+	QVariant val = vt;
+	return toQueryValue(val);
 }

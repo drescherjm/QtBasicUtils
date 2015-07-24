@@ -25,33 +25,33 @@ class qbuInsertQuery : public qbuQuery
 {
 	QBU_DECLARE_SUPERCLASS(qbuQuery);
 public:
-	qbuInsertQuery(QSqlDatabase db);
+	qbuInsertQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuInsertQuery();
 
 public:
-	bool	create(qbuPropertyMap* pData,qbuTable* pTable,
-		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
+	bool	create(qbuPropertyMap* pData, qbuTable* pTable,
+		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 
-	bool	create(qbuSelectQuery* pQuery,qbuTable* pTable,
-		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
+	bool	create(qbuSelectQuery* pQuery, qbuTable* pTable,
+		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 
 	bool	generateQueryString(QString & strInsertQuery, qbuSelectQuery* pQuery,
-		qbuTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
+		qbuTable* pTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 
-	bool	generateQueryString(QString & strInsertQuery, 
+	bool	generateQueryString(QString & strInsertQuery,
 		qbuPropertyMap* pData, qbuTable* pTable,
 		smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 protected:
-	QString handleInsertMode( smdb::InsertMode im );
+	QString handleInsertMode(smdb::InsertMode im);
 
 private:
 	/**
-	 *	\note
-	 *	The following member is very dangerous because it could result in
-	 *  the wrong rows being matched up in the insert.
-	 */
+	*	\note
+	*	The following member is very dangerous because it could result in
+	*  the wrong rows being matched up in the insert.
+	*/
 	bool	generateQueryString(QString & strInsertQuery, QString strQuery,
-		QString strTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING );
+		QString strTable, smdb::InsertMode im = smdb::IM_NO_EXTRA_HANDLING);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

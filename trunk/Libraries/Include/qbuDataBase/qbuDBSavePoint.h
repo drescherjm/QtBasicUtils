@@ -4,8 +4,10 @@
 #define QBUDBSAVEPOINT_H
 
 #include <QString>
+#include <memory>
 
 class qbuDatabase;
+class qbuQuery;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,23 +25,30 @@ class qbuDatabase;
  *	\see qbuDBTransaction
  */
 
-class qbuDBSavePoint 
+class qbuDBSavePoint
 {
 public:
-	qbuDBSavePoint(qbuDatabase * pDB);
+	qbuDBSavePoint(std::shared_ptr<qbuDatabase> pDB, bool bStart = true, QString strBaseName = QString());
 	virtual ~qbuDBSavePoint();
 public:
 	void			failSavePoint(bool bFail);
+	bool			startSavePoint();
+	bool			isStarted();
 private:
-	qbuDatabase*		m_pDB;
+	std::shared_ptr<qbuDatabase>		m_pDB;
 	bool			m_bSavePointStarted;
 	bool			m_bFailSavePoint;
 	QString			m_strSavePoint;
 private:
 	// The following are intentionally not implemented to prevent copying this object.
-	qbuDBSavePoint& operator=(const qbuDBSavePoint & noAssign );
-	qbuDBSavePoint(const qbuDBSavePoint & noCopy );
+	qbuDBSavePoint& operator=(const qbuDBSavePoint & noAssign);
+	qbuDBSavePoint(const qbuDBSavePoint & noCopy);
 	qbuDBSavePoint();
+private:
+	bool	warningCanNotRelease(qbuQuery & query);
+	bool	criticalCanNotRelease(qbuQuery & query);
+	bool	releaseSavePoint(qbuQuery & query);
+	bool	rollbackSavePoint(qbuQuery & query);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

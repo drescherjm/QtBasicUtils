@@ -6,9 +6,6 @@
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuDataBase/qbuException.h"
 
-// #include <QSqlRecord>
-// #include <QStringList>
-// #include <iostream>
 #include "qbuBase/qbuStringList.h"
 #include "qbuLog/qbuLog.h"
 
@@ -18,31 +15,6 @@ qbuTableSchema::qbuTableSchema( qbuTable* pTable ) : m_pTable(pTable)
 {
 
 }
-
-/*
-bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
-{
-	bool retVal = (m_pPrivate != NULL) && (pPropMap != NULL);
-	if (retVal) {
-		retVal = isValid();
-		if (retVal) {
-			int nField=0;
-			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
-				if (!isNull(nField)) {
-					qbuProperty prop;
-					prop.setObjectName(col.getNameOrAlias());
-					prop.SetData(value(nField));
-
-					pPropMap->insert(prop);
-				}
-				nField++;
-			}
-		}
-	}
-	return retVal;
-}
-
-*/
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,9 +26,9 @@ bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 
 bool qbuTableSchema::analyzeTable()
 {
-	bool retVal = (m_pTable != NULL);
+	bool retVal = (m_pTable != nullptr);
 	if (retVal) {
-		qbuQuery query(*m_pTable->m_pDB);
+		qbuQuery query(m_pTable->m_pDB);
 		QString strQuery = QString("PRAGMA table_info(%1);").arg(m_pTable->getTableName());
 		retVal = query.prepare(strQuery);
 		if (retVal) {
@@ -96,7 +68,7 @@ bool qbuTableSchema::analyzeTable()
 				.arg(strQuery)
 				.arg(query.lastError().text());
 
-			QLOG_CRIT() << qPrintable(strError);
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
 
 #ifdef QBU_HAVE_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
@@ -112,7 +84,7 @@ bool qbuTableSchema::analyzeTable()
 
 bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 {
-	bool retVal = (pInfo != NULL);
+	bool retVal = (pInfo != nullptr);
 	qbuStringList lst = pInfo->getDBFieldNames();
 
 	QStringList				lstMissing;
@@ -156,9 +128,11 @@ bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 				
 			}
 			//strError += "\nqbuTableSchema::verifyTable end " + m_pTable->getTableName();
-			QLOG_CRIT() << qPrintable(strError);
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
 		}
 	}
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 

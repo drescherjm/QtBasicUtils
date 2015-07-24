@@ -98,7 +98,7 @@ bool qbuDBSettingsTableBase::lookupSetting( qbuDBSettingInfo* pSettingInfo )
 			SELECT 'RatingTypeName', 'RatingTypeID' FROM RatingTypes WHERE
 			TypeID = nRatingTypeID
 			*/
-			smSelectQuery query(m_pDB);
+			qbuSelectQuery query(m_pDB);
 			query.addSelectField(smRatingTypeInfo::g_strRatingTypeName);
 			query.addSelectField(smRatingTypeInfo::g_strRatingTypeID);
 			query.addFromField(getTableName());

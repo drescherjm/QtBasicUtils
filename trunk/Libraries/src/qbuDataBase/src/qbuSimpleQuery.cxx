@@ -78,7 +78,7 @@ bool qbuSimpleQuery::exec()
 		while (i.hasNext()) {
 			i.next();
 
-			QString var = i.key().toAscii().data();
+			QString var = i.key().toLatin1().data();
 
 			int idx = 0;
 			do {

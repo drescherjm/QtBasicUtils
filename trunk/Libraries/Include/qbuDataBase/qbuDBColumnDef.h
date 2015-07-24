@@ -1,28 +1,46 @@
-#ifndef __SMDBCOLUMNDEF_H__
-#define __SMDBCOLUMNDEF_H__
+#pragma once
+
+#ifndef QBUDBCOLUMNDEF_H
+#define QBUDBCOLUMNDEF_H
 
 #include <QString>
+#include <QFlags>
+
+class qbuDBExpression;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\note
- *	Please take note of the addXXX const functions returning qbuDBColDefs. They do 
- *	respect the const and do not change the value of the this object. The returned 
- *	value contains the update.
- */
+*	\note
+*	Please take note of the addXXX const functions returning smDBColDefs. They do
+*	respect the const and do not change the value of the this object. The returned
+*	value contains the update.
+*/
 
-struct qbuDBColDef
+struct qbuDBColDef : public QObject
 {
+	Q_OBJECT
 public:
+	enum Option {
+		OP_NO_CODE = 0,
+		OP_AUTO_QUOTE = 1,
+		OP_IS_EXPRESSION = 2,
+		OP_DESCENDING = 4,
+	};
+
+	Q_DECLARE_FLAGS(Options, Option);
+
+public:
+	qbuDBColDef(const qbuDBExpression & expr, QString strAlias);
 	qbuDBColDef(QString strField, QString strAlias);
-	qbuDBColDef(QString strField, bool bAutoQuote=true);
-	qbuDBColDef( const qbuDBColDef & other );
+	qbuDBColDef(QString strField, Options op = OP_AUTO_QUOTE);
+	qbuDBColDef(const qbuDBColDef & other);
 	qbuDBColDef& operator=(const qbuDBColDef other);
+
 public:
 	qbuDBColDef addTableAlias(QString strTableAlias) const;
 	qbuDBColDef addAlias(QString strAlias) const;
-	qbuDBColDef addName(QString strAlias, bool bAutoQuote=true) const;
+	qbuDBColDef addName(QString strAlias, Options op = OP_AUTO_QUOTE) const;
 	qbuDBColDef addExpression(QString strExpression) const;
 public:
 	//Get the string that will be suitable for a column-def for a query.
@@ -36,16 +54,25 @@ public:
 
 	//Return only the name 
 	QString getNameOnly() const;
+
+	//Return only the alias
+	QString getAlias() const;
+
+	bool	isExpression() const;
+	bool	hasAlias() const;
+
 private:
 	void	copy(const qbuDBColDef & other);
-	void	addNameInt(QString strName,bool bAutoQuote);
+	void	addNameInt(QString strName);
 public:
 	QString		m_strName;
 	QString		m_strAlias;
 	QString		m_strTableAlias;
+	Options		m_options;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMDBCOLUMNDEF_H__
+Q_DECLARE_OPERATORS_FOR_FLAGS(qbuDBColDef::Options);
 
+#endif // QBUDBCOLUMNDEF_H

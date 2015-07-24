@@ -8,7 +8,9 @@
 #include "qbuDataBase/qbuDBColumnDefList.h"
 #include "qbuDataBase/qbuException.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-#include <iostream>
+
+
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,11 +18,12 @@ bool qbuSelectQuery::g_bDumpQueries = false;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuSelectQuery::qbuPrivate
+class qbuSelectQuery::smPrivate
 {
 public:
 	qbuDBColumnDefList			m_lstSelect;
 	qbuDBColumnDefList			m_lstFrom;
+	QStringList					m_lstJOIN;
 	qbuDBColumnDefList			m_lstGroupBy;
 	qbuDBColumnDefList			m_lstOrderBy;
 	QString						m_strWhereClause;
@@ -30,19 +33,20 @@ public:
 	QString		generateCSVList(QStringList lst);
 	QString		generateCSVList(QStringList lst, QStringList lstAliases);
 	QString		getNextAlias(QStringList lst, QStringList::iterator & it);
+	void		handleOrderByASC(qbuDBColDef &col, QString strASC);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 //This takes a QString lists and inserts commas between each item.
 
-QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
+QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
 	retVal.push_back(QString("%1").arg(doubleQuoteIfNecissary(*it)));
-	for(++it;it != lst.end();++it) {
-		retVal.push_back(QString(", %1").arg(doubleQuoteIfNecissary(*it)));	
+	for (++it; it != lst.end(); ++it) {
+		retVal.push_back(QString(", %1").arg(doubleQuoteIfNecissary(*it)));
 	}
 	return retVal;
 }
@@ -51,7 +55,7 @@ QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
 
 
 // NOTE: it is advanced after alias is retrieved if not at the end
-QString qbuSelectQuery::qbuPrivate::getNextAlias( QStringList lst, QStringList::iterator & it )
+QString qbuSelectQuery::smPrivate::getNextAlias(QStringList lst, QStringList::iterator & it)
 {
 	QString retVal;
 	if (it != lst.end()) {
@@ -68,31 +72,31 @@ QString qbuSelectQuery::qbuPrivate::getNextAlias( QStringList lst, QStringList::
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\brief
- *	This takes a QString lists and inserts commas between each item. And supports aliases
- */
+*	\brief
+*	This takes a QString lists and inserts commas between each item. And supports aliases
+*/
 
-QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
+QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
 	QStringList::iterator itAlias = lstAliases.begin();
 	retVal.push_back(QString("%1%2")
 		.arg(doubleQuoteIfNecissary(*it))
-		.arg(getNextAlias(lstAliases,itAlias)));
-	for(++it;it != lst.end();++it) {
+		.arg(getNextAlias(lstAliases, itAlias)));
+	for (++it; it != lst.end(); ++it) {
 		retVal.push_back(QString(", %1%2")
 			.arg(doubleQuoteIfNecissary(*it))
-			.arg(getNextAlias(lstAliases,itAlias)));	
+			.arg(getNextAlias(lstAliases, itAlias)));
 	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSelectQuery::qbuSelectQuery(QSqlDatabase db) : Superclass(db)
+qbuSelectQuery::qbuSelectQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB),
+m_pPrivate(new smPrivate)
 {
-	m_pPrivate = new qbuPrivate();
 	setSelectOption(QBU_SELECT_DEFAULT);
 }
 
@@ -100,19 +104,18 @@ qbuSelectQuery::qbuSelectQuery(QSqlDatabase db) : Superclass(db)
 
 qbuSelectQuery::~qbuSelectQuery()
 {
-	delete m_pPrivate;
-}
 
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addSelectField(QString strField,QString strAlias/*=QString()*/,QString strTableAlias)
+bool qbuSelectQuery::addSelectField(QString strField, QString strAlias/*=QString()*/, QString strTableAlias)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
-		
+
 		strAlias = singleQuoteIfNecissary(strAlias);
-		qbuDBColDef col = qbuDBColDef(strField,strAlias).addTableAlias(strTableAlias);
+		qbuDBColDef col = qbuDBColDef(strField, strAlias).addTableAlias(strTableAlias);
 		retVal = addSelectField(col);
 	}
 	return retVal;
@@ -120,9 +123,9 @@ bool qbuSelectQuery::addSelectField(QString strField,QString strAlias/*=QString(
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addSelectField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addSelectField(const qbuDBColDef & colDef)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		m_pPrivate->m_lstSelect.push_back(colDef);
 	}
@@ -131,11 +134,18 @@ bool qbuSelectQuery::addSelectField( const qbuDBColDef & colDef )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addFromField( QString strField,QString strAlias/*=QString()*/)
+bool qbuSelectQuery::addSelectField(qbuDBExpression & expression, QString strAlias/*=QString()*/)
 {
-	bool retVal = (m_pPrivate != NULL);
+	return addSelectField(expression.toString(), strAlias);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addFromField(QString strField, QString strAlias/*=QString()*/)
+{
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
-		qbuDBColDef col(strField,strAlias);
+		qbuDBColDef col(strField, strAlias);
 		m_pPrivate->m_lstFrom.push_back(col);
 	}
 	return retVal;
@@ -145,11 +155,11 @@ bool qbuSelectQuery::addFromField( QString strField,QString strAlias/*=QString()
 
 
 /**
- *	\brief
- *	This member adds a nested select query in the from field. 
- */
+*	\brief
+*	This member adds a nested select query in the from field.
+*/
 
-bool qbuSelectQuery::addFromField( qbuSelectQuery & nestedQuery,QString strAlias )
+bool qbuSelectQuery::addFromField(qbuSelectQuery & nestedQuery, QString strAlias)
 {
 	bool retVal;
 	QString strNested;
@@ -157,7 +167,7 @@ bool qbuSelectQuery::addFromField( qbuSelectQuery & nestedQuery,QString strAlias
 	if (retVal) {
 		strNested.prepend(" ( ");
 		strNested.append(" ) ");
-		retVal = addFromField(strNested,strAlias);
+		retVal = addFromField(strNested, strAlias);
 	}
 	return retVal;
 }
@@ -166,33 +176,43 @@ bool qbuSelectQuery::addFromField( qbuSelectQuery & nestedQuery,QString strAlias
 
 bool qbuSelectQuery::generateQuery()
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		QString strQuery;
 		retVal = generateSQL(strQuery);
 		if (retVal) {
-			strQuery.append(";");
+
+			strQuery = strQuery.trimmed();
+
+			if (!strQuery.endsWith(";")) {
+				strQuery.append(";");
+			}
+
 			retVal = prepare(strQuery);
 			if (!retVal) {
-				// Some SQL error occurred
-				//qDebug() << "Failed prepare a query " << qPrintable(strQuery) << lastError();
 
-				QString strError = QString("ERROR: Failed prepare a query %1 %2")
+				QString strError = QString("ERROR: qbuSelectQuery::generateQuery failed prepare a query:\n%1\n%2")
 					.arg(strQuery)
 					.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
+				throw smException(__FILE__, __LINE__, qPrintable(strError), "qbuSelectQuery::generateQuery");
 #else
-				qDebug() << qPrintable(strError);
+
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
+
 #endif //def QBU_HAVE_EXCEPTIONS
 
 			}
 
 			if (g_bDumpQueries) {
-				std::cout << "Dumping Query:" << std::endl << qPrintable(strQuery) << std::endl;
+				QLOG_INFO() << QBULOG_DATABASE_TYPE << "qbuSelectQuery::generateQuery Dumping Query:" << "\n" << strQuery;
 			}
 
+		}
+		else
+		{
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << "qbuSelectQuery::generateQuery failed to generate the SQL for a query.";
 		}
 
 	}
@@ -201,9 +221,9 @@ bool qbuSelectQuery::generateQuery()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::setWhereClause( QString strWhere )
+bool qbuSelectQuery::setWhereClause(QString strWhere)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		m_pPrivate->m_strWhereClause = strWhere;
 	}
@@ -212,14 +232,14 @@ bool qbuSelectQuery::setWhereClause( QString strWhere )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
+bool qbuSelectQuery::getRecord(qbuPropertyMap* pPropMap)
 {
-	bool retVal = (m_pPrivate != NULL) && (pPropMap != NULL);
+	bool retVal = (m_pPrivate != nullptr) && (pPropMap != nullptr);
 	if (retVal) {
 		retVal = isValid();
 		if (retVal) {
-			int nField=0;
-			foreach(qbuDBColDef col,m_pPrivate->m_lstSelect) {
+			int nField = 0;
+			foreach(qbuDBColDef col, m_pPrivate->m_lstSelect) {
 				if (!isNull(nField)) {
 					qbuProperty prop;
 					prop.setObjectName(col.getNameOrAlias());
@@ -237,20 +257,20 @@ bool qbuSelectQuery::getRecord( qbuPropertyMap* pPropMap )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // This is used to set the option that comes just after the select. Currently the options 
-bool qbuSelectQuery::setSelectOption( SelectOption option )
+bool qbuSelectQuery::setSelectOption(SelectOption option)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		m_pPrivate->m_SelectOption = option;
 	}
-	return retVal;	
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::appendWhereExpression( QString strExpression )
+bool qbuSelectQuery::appendWhereExpression(QString strExpression)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 
 	if (retVal) {
 		retVal = !strExpression.isEmpty();
@@ -268,11 +288,28 @@ bool qbuSelectQuery::appendWhereExpression( QString strExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addSelectFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::appendWhereExpression(const qbuDBExpression & expr)
+{
+	QString strExpr;
+	bool retVal;
+	strExpr = expr.toString(&retVal);
+	if (retVal) {
+		retVal = appendWhereExpression(strExpr);
+	}
+	else
+	{
+		QLOG_CRIT() << QBULOG_DATABASE_TYPE << "Failed to generate expression";
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addSelectFields(const QStringList & lstFields, QString strTableAlias)
 {
 	bool retVal = !lstFields.isEmpty();
 
-	foreach(QString str,lstFields) {
+	foreach(QString str, lstFields) {
 		qbuDBColDef coldef = qbuDBColDef(str).addTableAlias(strTableAlias);
 		if (!addSelectField(coldef)) {
 			retVal = false;
@@ -284,12 +321,12 @@ bool qbuSelectQuery::addSelectFields( const QStringList & lstFields, QString str
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addGroupByField( QString strField, QString strTableAlias )
+bool qbuSelectQuery::addGroupByField(QString strField, QString strTableAlias)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		if (!strTableAlias.isEmpty()) {
-			strField.prepend(strTableAlias+".");
+			strField.prepend(strTableAlias + ".");
 		}
 		qbuDBColDef col(strField);
 		retVal = addGroupByField(col);
@@ -299,9 +336,9 @@ bool qbuSelectQuery::addGroupByField( QString strField, QString strTableAlias )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addGroupByField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addGroupByField(const qbuDBColDef & colDef)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		qbuDBColDef col(colDef);
 		col.m_strAlias.clear();
@@ -312,25 +349,28 @@ bool qbuSelectQuery::addGroupByField( const qbuDBColDef & colDef )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByField( QString strField, QString strTableAlias )
+bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, QString strASC/*=QString()*/)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		if (!strTableAlias.isEmpty()) {
-			strField.prepend(strTableAlias+".");
+			strField.prepend(strTableAlias + ".");
 		}
 		qbuDBColDef col(strField);
+
+		m_pPrivate->handleOrderByASC(col, strASC);
+
 		retVal = addOrderByField(col);
-		
+
 	}
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByField( const qbuDBColDef & colDef )
+bool qbuSelectQuery::addOrderByField(const qbuDBColDef & colDef)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		qbuDBColDef col(colDef);
 		col.m_strAlias.clear();
@@ -342,168 +382,95 @@ bool qbuSelectQuery::addOrderByField( const qbuDBColDef & colDef )
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\brief 
- *  This member generates the SQL for the current query and returns that in the
- *	string strSQL.
- *	
- */
+*	\brief
+*  This member generates the SQL for the current query and returns that in the
+*	string strSQL.
+*
+*/
 
-bool qbuSelectQuery::generateSQL( QString & strSQL )
+bool qbuSelectQuery::generateSQL(QString & strSQL)
 {
 	bool retVal;
 	QString strSelect = m_pPrivate->m_lstSelect.toString();
 	retVal = !strSelect.isEmpty();
 	if (retVal) {
-		QString strFrom   = m_pPrivate->m_lstFrom.toString();
+		QString strFrom = m_pPrivate->m_lstFrom.toString();
 		retVal = !strFrom.isEmpty();
 		if (retVal) {
 			QString strSelectOption;
-			switch(m_pPrivate->m_SelectOption) {
-				case QBU_SELECT_DISTINCT:
-					strSelectOption = "DISTINCT ";
-					break;
-				case QBU_SELECT_ALL:
-					strSelectOption = "ALL ";
-					break;
+			switch (m_pPrivate->m_SelectOption) {
+			case QBU_SELECT_DISTINCT:
+				strSelectOption = "DISTINCT ";
+				break;
+			case QBU_SELECT_ALL:
+				strSelectOption = "ALL ";
+				break;
 			}
-			QString strQuery = QString("SELECT %1%2 FROM %3")
+			QString strQuery = QString("SELECT %1%2 \nFROM %3")
 				.arg(strSelectOption)
 				.arg(strSelect)
 				.arg(strFrom);
 
+			if (!m_pPrivate->m_lstJOIN.isEmpty()) {
+				foreach(QString str, m_pPrivate->m_lstJOIN) {
+					strQuery.append(" ");
+					strQuery.append(str);
+				}
+			}
+
 			if (!m_pPrivate->m_strWhereClause.isEmpty()) {
-				strQuery.append(" WHERE ");
+				strQuery.append(" \nWHERE ");
 				strQuery.append(m_pPrivate->m_strWhereClause);
 			}
 			if (!m_pPrivate->m_lstGroupBy.isEmpty()) {
-				strQuery.append(" GROUP BY ");
+				strQuery.append(" \nGROUP BY ");
 				QString strGroupBy = m_pPrivate->m_lstGroupBy.toString();
 
 				if (!m_pPrivate->m_strHavingClause.isEmpty()) {
-					strGroupBy.append(QString(" HAVING ( %1 ) ").arg(m_pPrivate->m_strHavingClause));
+					strGroupBy.append(QString(" \nHAVING ( %1 ) ").arg(m_pPrivate->m_strHavingClause));
 				}
 				strQuery.append(strGroupBy);
 			}
 			if (!m_pPrivate->m_lstOrderBy.isEmpty()) {
-				strQuery.append(" ORDER BY ");
+				strQuery.append(" \nORDER BY ");
 				QString strOrderBy = m_pPrivate->m_lstOrderBy.toString();
 				strQuery.append(strOrderBy);
 			}
-		
+
 			if (retVal) {
 				strSQL = strQuery;
 			}
 		}
-	}
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- *	This member takes two qbuDBColDefs and an operator and creates an sql expression as 
- *  follows: ( first operator second ) 
- *  for example: ( T1.StudyID = T2.StudyID ) 
- */
-
-QString qbuSelectQuery::genExpr( const qbuDBColDef & first, const qbuDBColDef & second,
-									 QString strOperator/*=QString("=")*/ )
-{
-	QString retVal;
-	QString strFirst = first.getFullName();
-	QString strSecond = second.getFullName();
-	if ( (!strFirst.isEmpty()) && (!strSecond.isEmpty()) ) {
-		retVal = genExpr(strFirst,strSecond,strOperator);
-		//retVal = QString("( %1 %2 %3 )").arg(strFirst).arg(strOperator).arg(strSecond);
-	}
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QString qbuSelectQuery::genExpr( const qbuDBColDef & first, QString strSecond,QString strOperator/*=QString("=")*/ )
-{
-	QString retVal;
-	QString strFirst = first.getFullName();
-	
-	if ( (!strFirst.isEmpty()) && (!strSecond.isEmpty()) ) {
-		retVal = genExpr(strFirst,strSecond,strOperator);
-		//retVal = QString("( %1 %2 %3 )").arg(strFirst).arg(strOperator).arg(strSecond);
-	}
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-bool qbuSelectQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strField, 
-							QString strTableAlias/*=""*/,QString strOperator/*=QString("=")*/ )
-{
-	bool retVal = (pProps != NULL);
-	if (retVal) {
-		qbuPropertyMap::iterator it = pProps->find(strField);
-		if (it != pProps->end()) {
-			qbuProperty* pProp = *it;
-			const QVariant& vt =pProp->GetData();
-			retVal = vt.canConvert(QVariant::String);
-			if (retVal) {
-				strExpr = genExpr(strField,vt.toString(),strOperator);
-				//strExpr = QString(" ( %1 %2 %3 ) ").arg(strField).arg(strOperator).arg(vt.toString());
-			}
-
+		else
+		{
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << "qbuSelectQuery::generateSQL can not generate SQL with no FROM.";
 		}
 	}
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QString qbuSelectQuery::genExpr( QString strFirst, QString strSecond,QString strOperator/*=QString("=")*/ )
-{
-	QString retVal;
-	if ( (!strFirst.isEmpty()) && (!strSecond.isEmpty()) ) {
-		retVal = QString(" ( %1 %2 %3 ) ").arg(strFirst).arg(strOperator).arg(strSecond);
+	else
+	{
+		QLOG_CRIT() << QBULOG_DATABASE_TYPE << "qbuSelectQuery::generateSQL can not generate SQL without an empty selection list.";
 	}
 	return retVal;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- *	\brief
- *	This is added to simplify the generation of binary expressions.
- *	\details
- *	This member is best described by an example..
- *	Suppose you wanted to generate the following expression:
- *	( T1.StudyID = T2.StudyID ) 
- *
- *	If you use the qbuSelectQuery::genExpr() members above that would require 3 calls 
- *	instead of the one with this member. 
- *	qbuSelectQuery::genExprTableAlias( qbuStudyInfo::g_strStudyID, "T1","T2" );
- */
-
-QString qbuSelectQuery::genExprTableAlias( QString strField, QString strTA1, QString strTA2, QString strOperator/*=QString("=")*/ )
-{
-	qbuDBColDef colDef1 = qbuDBColDef(strField).addTableAlias(strTA1);
-	qbuDBColDef colDef2 = qbuDBColDef(strField).addTableAlias(strTA2);
-	return genExpr(colDef1,colDef2,strOperator);
-}
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuDBColumnDefList* qbuSelectQuery::getSelectFields()
 {
-	return (m_pPrivate != NULL) ? &m_pPrivate->m_lstSelect : NULL;
+	return (m_pPrivate != nullptr) ? &m_pPrivate->m_lstSelect : nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::addOrderByFields(const QStringList & lstFields, QString strTableAlias, QString strASC)
 {
 	bool retVal = !lstFields.isEmpty();
 
-	foreach(QString str,lstFields) {
+	foreach(QString str, lstFields) {
 		qbuDBColDef coldef = qbuDBColDef(str).addTableAlias(strTableAlias);
+
+		m_pPrivate->handleOrderByASC(coldef, strASC);
+
 		if (!addOrderByField(coldef)) {
 			retVal = false;
 		}
@@ -514,11 +481,11 @@ bool qbuSelectQuery::addOrderByFields( const QStringList & lstFields, QString st
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addGroupByFields( const QStringList & lstFields, QString strTableAlias )
+bool qbuSelectQuery::addGroupByFields(const QStringList & lstFields, QString strTableAlias)
 {
 	bool retVal = !lstFields.isEmpty();
 
-	foreach(QString str,lstFields) {
+	foreach(QString str, lstFields) {
 		qbuDBColDef coldef = qbuDBColDef(str).addTableAlias(strTableAlias);
 		if (!addGroupByField(coldef)) {
 			retVal = false;
@@ -531,15 +498,15 @@ bool qbuSelectQuery::addGroupByFields( const QStringList & lstFields, QString st
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *	\brief
- *	Appends an Having expression.
- *	\details
- *	This member will fail if you have not added any group by fields.
- */
+*	\brief
+*	Appends an Having expression.
+*	\details
+*	This member will fail if you have not added any group by fields.
+*/
 
-bool qbuSelectQuery::appendHavingExpression( QString strExpression )
+bool qbuSelectQuery::appendHavingExpression(QString strExpression)
 {
-	bool retVal = (m_pPrivate != NULL);
+	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 		retVal = !strExpression.isEmpty();
 
@@ -559,25 +526,40 @@ bool qbuSelectQuery::appendHavingExpression( QString strExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::appendWhereExpressions( QStringList & lstWhereFields, qbuPropertyMap* pProps )
+bool qbuSelectQuery::addJoin(const qbuDBJoin & DBJoin)
 {
-	bool retVal = (pProps != NULL);
+	bool retVal = (m_pPrivate != nullptr);
+
 	if (retVal) {
-		foreach(QString str,lstWhereFields) {
-			QString strExpr;
-			retVal = qbuSelectQuery::genExpr(strExpr,pProps,str);
-			if (retVal) {
-				appendWhereExpression(strExpr);
-			}
-			else
-			{
-				break;
-			}
+		QString strJOIN = DBJoin.toString(&retVal);
+
+		if (retVal && !strJOIN.isEmpty()) {
+			m_pPrivate->m_lstJOIN.append(strJOIN);
+		}
+		else
+		{
+			QString strMsg = QString("Failed to generate a JOIN. Did you forget to add an expression to the JOIN? "
+				"If this is a JOIN that does not require an expression please use setAllowEmptyExpression(true) "
+				"to allow an empty expression.");
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
 		}
 	}
 
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
+void qbuSelectQuery::smPrivate::handleOrderByASC(qbuDBColDef &col, QString strASC)
+{
+	if (!strASC.isEmpty()) {
+		strASC = strASC.trimmed();
+		if (!strASC.isEmpty()) {
+			if (strASC.compare("DESC", Qt::CaseInsensitive) == 0) {
+				col.m_options |= qbuDBColDef::OP_DESCENDING;
+			}
+		}
+	}
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////

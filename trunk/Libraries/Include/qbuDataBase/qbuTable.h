@@ -34,6 +34,7 @@ public:
 	virtual bool	verifySchema();
 	virtual bool	fixKnownProblems();
 	virtual const QStringList&	getRequiredFieldList() const;
+	virtual const QStringList&	getOptionalPrimaryKeyList() const;
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo) const;
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
@@ -44,7 +45,7 @@ protected:
 	virtual bool				createTable(int nSchema)=0;
 	virtual bool				internalCreateTable(QString strTableName, QString strTableSQL);
 	virtual	bool				addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());
-	virtual bool				insertInitialValues()=0;
+	virtual bool				insertInitialValues(int nSchema) = 0;
 	virtual QString				getTableName() const =0;
 	virtual	bool				isValidField(QString strName);
 public:
