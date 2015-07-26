@@ -1,8 +1,4 @@
-
-# FIND_PACKAGE( Qt4 REQUIRED )
-
-# set(QT_USE_QTXML true)
-# INCLUDE( ${QT_USE_FILE} )
+myproject(Experimental)
 
 include_directories(
 	Include 
@@ -10,29 +6,31 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-SET( EXPERIMENTAL_SRCS
+SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/xrvariant.cpp
 	./src/xrbase64.cpp
 	./src/main.cxx
 )
 
-SET( EXPERIMENTAL_HDRS 
+SET( ${LOCAL_PROJECT_NAME}_HDRS 
 	./Include/xrvariant.h
 	./Include/xrbase64.h
 	
 )
 
-SET( EXPERIMENTAL_MOC_HDRS 
+SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
 
 )
 
 # and finally this will run moc:
-QT45_WRAP_CPP( EXPERIMENTAL_MOC_SRCS ${EXPERIMENTAL_MOC_HDRS} )
+QT45_WRAP_CPP( ${LOCAL_PROJECT_NAME}_MOC_SRCS ${${LOCAL_PROJECT_NAME}_MOC_HDRS} )
 
-add_executable(experimental ${EXPERIMENTAL_SRCS} 
-    ${EXPERIMENTAL_MOC_SRCS} 
-	${EXPERIMENTAL_HDRS}
-	${EXPERIMENTAL_MOC_HDRS}
+add_executable(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SRCS} 
+    ${${LOCAL_PROJECT_NAME}_MOC_SRCS} 
+	${${LOCAL_PROJECT_NAME}_HDRS}
+	${${LOCAL_PROJECT_NAME}_MOC_HDRS}
 )
 
-target_link_libraries(experimental  ${QT_LIBRARIES} ${${PROJECT_NAME}_LIBRARIES} )
+target_link_libraries(${LOCAL_PROJECT_NAME}  ${QT_LIBRARIES} ${${PROJECT_NAME}_LIBRARIES} )
+
+set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Development)
