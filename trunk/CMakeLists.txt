@@ -16,7 +16,7 @@ LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Modules)
 #########################################################################################
 
 option (BUILD_TESTING 				"Build Tests" ON)
-option (BUILD_EXPERIMENTAL 			"Build Experimental Code" ON)
+option (BUILD_DEVELOPMENT 			"Build Development Code" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
 option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" ON)
 
@@ -49,10 +49,6 @@ set (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Libraries/Include)
-
-# FIND_PACKAGE( Qt4 REQUIRED )
-# set(QT_USE_QTXML true)
-# INCLUDE( ${QT_USE_FILE} )
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
@@ -113,9 +109,9 @@ if(BUILD_TESTING)
 	add_subdirectory(Testing)
 endif(BUILD_TESTING)
 
-if(BUILD_EXPERIMENTAL)
-	add_subdirectory(Experimental)
-endif(BUILD_EXPERIMENTAL)
+if(BUILD_DEVELOPMENT)
+	add_subdirectory(Development)
+endif(BUILD_DEVELOPMENT)
 
 #########################################################################################
 
