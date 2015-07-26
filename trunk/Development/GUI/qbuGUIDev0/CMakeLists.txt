@@ -4,6 +4,7 @@ include_directories(
 	Include 
 	../Include
 	${${PROJECT_NAME}_INCLUDE_DIRS}
+	${LOCAL_PROJECT_BINARY_DIR}
 )
 
 set( ${LOCAL_PROJECT_NAME}_SRCS
@@ -22,6 +23,10 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 # and finally an resource file
 set( ${LOCAL_PROJECT_NAME}_RCS
 	
+)
+
+set( ${LOCAL_PROJECT_NAME}_UIS
+	./rc/qbuGUIDev0MainWindow.ui
 )
 
 # this command will generate rules that will run rcc on all files from ${LOCAL_PROJECT_NAME}_RCS
@@ -50,6 +55,7 @@ add_executable(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SRCS}
 	${${LOCAL_PROJECT_NAME}_HDRS}
 	${${LOCAL_PROJECT_NAME}_MOC_HDRS}
 	${${LOCAL_PROJECT_NAME}_RCS}
+	${${LOCAL_PROJECT_NAME}_UI_HDRS}
 )
 
 target_link_libraries(${LOCAL_PROJECT_NAME}  ${QT_LIBRARIES} ${${PROJECT_NAME}_LIBRARIES} )

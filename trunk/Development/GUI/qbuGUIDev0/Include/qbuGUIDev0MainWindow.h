@@ -5,10 +5,11 @@
 
 #include <QMainWindow>
 #include <qbuBase/qbuMacros.h>
+#include "ui_qbuGUIDev0MainWindow.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuGUIDev0MainWindow : public QMainWindow
+class qbuGUIDev0MainWindow : public QMainWindow, public Ui::qbuGUIDev0MainWindow
 {
 	Q_OBJECT
 	QBU_DECLARE_SUPERCLASS(QMainWindow)
