@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QBURADIOBUTTON_H
+#define QBURADIOBUTTON_H
+
 #include <QRadioButton>
 #include <qbuBase/qbuMacros.h>
 
@@ -14,3 +19,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#endif // QBURADIOBUTTON_H

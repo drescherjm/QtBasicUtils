@@ -28,14 +28,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="qbuRadioButton" name="radioButton_2">
         <property name="text">
          <string>RadioButton</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_3">
+       <widget class="qbuRadioButton" name="radioButton_3">
         <property name="text">
          <string>RadioButton</string>
         </property>
@@ -75,6 +75,11 @@
    <extends>QGroupBox</extends>
    <header>qbuWidgets/qbugroupbox.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>qbuRadioButton</class>
+   <extends>QRadioButton</extends>
+   <header>qbuWidgets/qburadiobutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
