@@ -10,6 +10,7 @@ include_directories(
 set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/main.cxx
 	./src/qbuGUIDev0MainWindow.cxx
+	./src/DevelopGUIDB0.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_HDRS 
@@ -18,6 +19,7 @@ set( ${LOCAL_PROJECT_NAME}_HDRS
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
 	./Include/qbuGUIDev0MainWindow.h
+	./Include/DevelopGUIDB0.h
 )
 
 # and finally an resource file
@@ -27,6 +29,7 @@ set( ${LOCAL_PROJECT_NAME}_RCS
 
 set( ${LOCAL_PROJECT_NAME}_UIS
 	./rc/qbuGUIDev0MainWindow.ui
+	./rc/DevelopGUIDB0.ui
 )
 
 # this command will generate rules that will run rcc on all files from ${LOCAL_PROJECT_NAME}_RCS
