@@ -4,7 +4,7 @@
 
 qbuGUIDev0MainWindow::qbuGUIDev0MainWindow(QWidget *parent /*= 0*/, Qt::WindowFlags flags /*= 0*/) : Superclass(parent,flags)
 {
-
+	setupUi(this);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
