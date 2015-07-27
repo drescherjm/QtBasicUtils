@@ -20,6 +20,7 @@ set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POS
 
 set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuGroupBox.cxx
+	./src/qbuRadioButton.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -28,6 +29,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuGroupBox.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuRadioButton.h
 )
 
 # some .ui files
