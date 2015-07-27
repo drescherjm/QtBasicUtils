@@ -61,6 +61,6 @@ add_executable(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SRCS}
 	${${LOCAL_PROJECT_NAME}_UI_HDRS}
 )
 
-target_link_libraries(${LOCAL_PROJECT_NAME}  ${QT_LIBRARIES} ${${PROJECT_NAME}_LIBRARIES} )
+target_link_libraries(${LOCAL_PROJECT_NAME}  ${QT_LIBRARIES} qbuWidgets )
 
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Development)

@@ -33,10 +33,16 @@
     <property name="title">
      <string>Widgets</string>
     </property>
+    <addaction name="actionDBDev0"/>
    </widget>
    <addaction name="menuWidgets"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDBDev0">
+   <property name="text">
+    <string>DBDev0</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

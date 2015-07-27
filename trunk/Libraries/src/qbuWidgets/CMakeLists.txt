@@ -23,10 +23,11 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuGroupBox.h
+	
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuGroupBox.h
 )
 
 # some .ui files
