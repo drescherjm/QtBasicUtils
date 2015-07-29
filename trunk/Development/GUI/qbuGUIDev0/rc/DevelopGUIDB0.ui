@@ -28,16 +28,37 @@
        </widget>
       </item>
       <item>
-       <widget class="qbuRadioButton" name="radioButton_2">
+       <widget class="qbu::qbuRadioButton" name="radioButton_2">
         <property name="text">
          <string>RadioButton</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="qbuRadioButton" name="radioButton_3">
+       <widget class="qbu::qbuRadioButton" name="radioButton_3">
         <property name="text">
          <string>RadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbuRadioButton">
+        <property name="text">
+         <string>qbuRadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton">
+        <property name="text">
+         <string>qbuRadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton_2">
+        <property name="text">
+         <string>qbuRadioButton</string>
         </property>
        </widget>
       </item>
@@ -71,15 +92,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>qbuGroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>qbuWidgets/qbugroupbox.h</header>
-   <container>1</container>
+   <class>qbu::qbuRadioButton</class>
+   <extends>QRadioButton</extends>
+   <header>qbuWidgets/qbuRadioButton.h</header>
   </customwidget>
   <customwidget>
-   <class>qbuRadioButton</class>
-   <extends>QRadioButton</extends>
-   <header>qbuWidgets/qburadiobutton.h</header>
+   <class>qbuGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>qbuWidgets/qbuGroupBox.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

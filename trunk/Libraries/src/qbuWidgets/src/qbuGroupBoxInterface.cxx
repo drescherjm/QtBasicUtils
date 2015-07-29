@@ -44,7 +44,7 @@ QString qbuGroupBoxInterface::whatsThis() const
 
 QString qbuGroupBoxInterface::includeFile() const
 {
-	return "qbuGroupBox.h";
+	return "qbuWidgets/qbuGroupBox.h";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

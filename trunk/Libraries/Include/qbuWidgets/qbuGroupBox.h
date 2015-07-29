@@ -12,7 +12,7 @@
 class QDESIGNER_WIDGET_EXPORT qbuGroupBox : public QGroupBox
 {
 	Q_OBJECT
-		QBU_DECLARE_SUPERCLASS(QGroupBox)
+	QBU_DECLARE_SUPERCLASS(QGroupBox)
 public:
 	explicit qbuGroupBox(QWidget* parent = 0);
 	explicit qbuGroupBox(const QString &title, QWidget* parent = 0);

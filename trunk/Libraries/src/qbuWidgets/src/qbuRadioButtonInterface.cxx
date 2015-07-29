@@ -16,7 +16,7 @@ qbuRadioButtonInterface::qbuRadioButtonInterface(QObject *parent /*= 0*/) : QObj
 
 QString qbuRadioButtonInterface::name() const
 {
-	return "qbuRadioButton";
+	return "qbu::qbuRadioButton";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ QString qbuRadioButtonInterface::whatsThis() const
 
 QString qbuRadioButtonInterface::includeFile() const
 {
-	return "qbuRadioButton.h";
+	return "qbuWidgets/qbuRadioButton.h";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@ bool qbuRadioButtonInterface::isContainer() const
 
 QWidget * qbuRadioButtonInterface::createWidget(QWidget *parent)
 {
-	return new qbuRadioButton(parent);
+	return new qbu::qbuRadioButton(parent);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -90,10 +90,13 @@ QString qbuRadioButtonInterface::domXml() const
 {
 	return
 		"<ui language=\"c++\">\n"
-		"<widget class = \"qbuRadioButton\">\n"
+		"<widget class = \"qbu::qbuRadioButton\">\n"
 		"<property name = \"text\" >\n"
 		"<string>qbuRadioButton</string>\n"
 		"</property>\n"
+// 		"<property name = \"header\">"
+// 		"<string>qbuWidgets/qbuRadioButton.h</string>"
+// 		"</property>\n"
 // 		"<property name = \"objectName\">\n"
 // 		"<string notr = \"true\">radioButton< / string>\n"
 // 		"</property>\n"
