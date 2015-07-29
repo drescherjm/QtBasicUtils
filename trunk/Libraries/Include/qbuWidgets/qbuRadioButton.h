@@ -5,10 +5,11 @@
 
 #include <QRadioButton>
 #include <qbuBase/qbuMacros.h>
+#include <QtDesigner/QtDesigner>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuRadioButton : public QRadioButton
+class QDESIGNER_WIDGET_EXPORT qbuRadioButton : public QRadioButton
 {
 	Q_OBJECT
 		QBU_DECLARE_SUPERCLASS(QRadioButton)

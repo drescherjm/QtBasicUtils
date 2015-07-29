@@ -5,10 +5,11 @@
 
 #include <QGroupBox>
 #include <qbuBase/qbuMacros.h>
+#include <QtDesigner/QtDesigner>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuGroupBox : public QGroupBox
+class QDESIGNER_WIDGET_EXPORT qbuGroupBox : public QGroupBox
 {
 	Q_OBJECT
 		QBU_DECLARE_SUPERCLASS(QGroupBox)
