@@ -1,0 +1,105 @@
+#include "qbuWidgetsPCH.h"
+
+#include "qbuWidgets/qbuRadioButtonInterface.h"
+#include "qbuWidgets/qbuRadioButton.h"
+#include <QIcon>
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuRadioButtonInterface::qbuRadioButtonInterface(QObject *parent /*= 0*/) : QObject(parent),
+	m_bInitilaized(false)
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::name() const
+{
+	return "qbuRadioButton";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::group() const
+{
+	return "qbuWidgets";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::toolTip() const
+{
+	return "Nothing to see here!";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::whatsThis() const
+{
+	return tr("A RadioButton that has properties to simplify the data transfer between the form and a database.");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::includeFile() const
+{
+	return "qbuRadioButton.h";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QIcon qbuRadioButtonInterface::icon() const
+{
+	return QIcon();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuRadioButtonInterface::isContainer() const
+{
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QWidget * qbuRadioButtonInterface::createWidget(QWidget *parent)
+{
+	return new qbuRadioButton(parent);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuRadioButtonInterface::isInitialized() const
+{
+	return m_bInitilaized;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuRadioButtonInterface::initialize(QDesignerFormEditorInterface *core)
+{
+	if (!m_bInitilaized) {
+		m_bInitilaized = true;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuRadioButtonInterface::domXml() const
+{
+	return
+		"<ui language=\"c++\">\n"
+		"<widget class = \"qbuRadioButton\">\n"
+		"<property name = \"text\" >\n"
+		"<string>qbuRadioButton</string>\n"
+		"</property>\n"
+// 		"<property name = \"objectName\">\n"
+// 		"<string notr = \"true\">radioButton< / string>\n"
+// 		"</property>\n"
+
+		"</widget>\n"
+		"</ui>\n";
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

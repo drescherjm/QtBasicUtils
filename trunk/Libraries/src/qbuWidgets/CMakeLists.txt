@@ -1,5 +1,11 @@
 myproject(qbuWidgets)
 
+if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+	set (QT_MODULES ${QT_MODULES} Qt5::Designer )
+	
+	find_qt5_packages()
+endif()
+
 set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
 set(QXT_USE_QXTCORE TRUE)
 find_package(Qxt REQUIRED)
@@ -19,8 +25,11 @@ set (${LOCAL_PROJECT_NAME}_TREE_RELEASE_LIB ${LOCAL_PROJECT_NAME} )
 set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POSTFIX} )
 
 set( ${LOCAL_PROJECT_NAME}_SRCS
+	./src/qbuWidgetsPlugin.cxx
 	./src/qbuGroupBox.cxx
+	./src/qbuGroupBoxInterface.cxx
 	./src/qbuRadioButton.cxx
+	./src/qbuRadioButtonInterface.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -28,8 +37,11 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuWidgetsPlugin.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuGroupBox.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuGroupBoxInterface.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuRadioButton.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuRadioButtonInterface.h	
 )
 
 # some .ui files
@@ -76,7 +88,6 @@ if(BUILD_DOCUMENTATION)
 
 endif(BUILD_DOCUMENTATION)
 
-
 include_directories( 
 	${CMAKE_CURRENT_SOURCE_DIR} 
 	${PROJECT_BINARY_DIR} 
@@ -84,8 +95,7 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-
-add_library(${LOCAL_PROJECT_NAME} 
+add_library(${LOCAL_PROJECT_NAME} SHARED
 	${${LOCAL_PROJECT_NAME}_SRCS} 
 	${${LOCAL_PROJECT_NAME}_EXT_HDRS} 
 	${${LOCAL_PROJECT_NAME}_MOC_HDRS}
@@ -102,11 +112,14 @@ install (FILES
 	DESTINATION lib
 )
 
+TARGET_LINK_LIBRARIES( ${LOCAL_PROJECT_NAME} ${QT_LIBRARIES} ${UPMC_EXTERNAL_LIBS} )
+
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)
+set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES DEFINE_SYMBOL QDESIGNER_EXPORT_WIDGETS )
 
 install (TARGETS ${LOCAL_PROJECT_NAME} DESTINATION lib)
 install (FILES ${${LOCAL_PROJECT_NAME}_EXT_HDRS} ${${LOCAL_PROJECT_NAME}_MOC_HDRS} DESTINATION include)
 
-set (${PROJECT_NAME}_LIBRARIES ${${PROJECT_NAME}_LIBRARIES} ${LOCAL_PROJECT_NAME} PARENT_SCOPE)
+setup_qt_plugin( ${LOCAL_PROJECT_NAME} )
 
 
