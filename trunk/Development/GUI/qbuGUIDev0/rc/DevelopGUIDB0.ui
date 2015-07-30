@@ -96,6 +96,20 @@
     </widget>
    </item>
    <item>
+    <widget class="qbu::qbuLineEdit" name="qbu::qbuLineEdit">
+     <property name="text">
+      <string>qbuLineEdit</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="qbu::qbuTextEdit" name="qbu::qbuTextEdit">
+     <property name="text" stdset="0">
+      <string>qbuTextEdit</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -128,6 +142,16 @@
    <class>qbu::qbuCheckBox</class>
    <extends>QCheckBox</extends>
    <header>qbuWidgets/qbuCheckBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qbu::qbuLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>qbuWidgets/qbuLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qbu::qbuTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>qbuWidgets/qbuTextEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
