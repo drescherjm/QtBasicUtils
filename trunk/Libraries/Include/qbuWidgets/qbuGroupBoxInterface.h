@@ -28,7 +28,7 @@ public:
 	virtual bool isInitialized() const;
 	virtual void initialize(QDesignerFormEditorInterface *core);
 
-//	virtual QString domXml() const;
+	virtual QString domXml() const;
 	virtual QString name() const;
 	virtual QString group() const;
 	virtual QString toolTip() const;

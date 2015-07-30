@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QBUCHECKBOXINTERFACE_H
+#define QBUCHECKBOXINTERFACE_H
+
 #ifndef QT_VERSION_CHECK
 #include <qglobal.h>
 #endif
@@ -38,3 +43,6 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUCHECKBOXINTERFACE_H
+

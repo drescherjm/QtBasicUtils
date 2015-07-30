@@ -85,52 +85,55 @@ bool qbuTableSchema::analyzeTable()
 bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 {
 	bool retVal = (pInfo != nullptr);
-	qbuStringList lst = pInfo->getDBFieldNames();
-
-	QStringList				lstMissing;
-	qbuTableColumnDefList	lstCurrent = m_lstColumns;
-	qbuTableColumnDefList	lstExtra;
-
-	// Note: We still want to verify if the counts are different so that we can produce debug output.
-	retVal = ((lst.count() > 0) ||  (m_lstColumns.count() > 0) );
 	if (retVal) {
-		qbuTableColumnDefList::iterator it = m_lstColumns.begin();
-		for(; it != m_lstColumns.end(); ++it ) {
-			QString strName;
-			bool bFound = (it->getName(strName));
-			
-			if (bFound) {
-				bFound = (lst.contains(strName,Qt::CaseInsensitive));
-				if (bFound) {
-					lst.removeAll(strName,Qt::CaseInsensitive);
-				}
-			}
-			if (!bFound) {
-				it->Print(std::cerr);
-				lstExtra.push_back(*it);
-			}
-		}
+		qbuStringList lst = pInfo->getDBFieldNames();
 
-		retVal = (lst.empty() && lstExtra.empty());
-		if (!retVal) {
-			QString strError = QString("qbuTableSchema::verifyTable failed for the table %1 ").arg(m_pTable->getTableName());
-			if (!lst.empty()) {
-				strError += "\nThe database table is missing the following columns that are in the info class: " + lst.toCSVString();
-			}
-			if (!lstExtra.empty()) {
-				strError += "\nThe database table has the following columns that are not in the info class: ";
-				foreach(qbuTableColumnDef col,lstExtra) {
-					QString strName;
-					if (col.getName(strName)) {
-						strError += strName + " ";
+		QStringList				lstMissing;
+		qbuTableColumnDefList	lstCurrent = m_lstColumns;
+		qbuTableColumnDefList	lstExtra;
+
+		// Note: We still want to verify if the counts are different so that we can produce debug output.
+		retVal = ((lst.count() > 0) || (m_lstColumns.count() > 0));
+		if (retVal) {
+			qbuTableColumnDefList::iterator it = m_lstColumns.begin();
+			for (; it != m_lstColumns.end(); ++it) {
+				QString strName;
+				bool bFound = (it->getName(strName));
+
+				if (bFound) {
+					bFound = (lst.contains(strName, Qt::CaseInsensitive));
+					if (bFound) {
+						lst.removeAll(strName, Qt::CaseInsensitive);
 					}
 				}
-				
+				if (!bFound) {
+					it->Print(std::cerr);
+					lstExtra.push_back(*it);
+				}
 			}
-			//strError += "\nqbuTableSchema::verifyTable end " + m_pTable->getTableName();
-			QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
+
+			retVal = (lst.empty() && lstExtra.empty());
+			if (!retVal) {
+				QString strError = QString("qbuTableSchema::verifyTable failed for the table %1 ").arg(m_pTable->getTableName());
+				if (!lst.empty()) {
+					strError += "\nThe database table is missing the following columns that are in the info class: " + lst.toCSVString();
+				}
+				if (!lstExtra.empty()) {
+					strError += "\nThe database table has the following columns that are not in the info class: ";
+					foreach(qbuTableColumnDef col, lstExtra) {
+						QString strName;
+						if (col.getName(strName)) {
+							strError += strName + " ";
+						}
+					}
+
+				}
+				//strError += "\nqbuTableSchema::verifyTable end " + m_pTable->getTableName();
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
+			}
 		}
 	}
+
 	return retVal;
 }
 

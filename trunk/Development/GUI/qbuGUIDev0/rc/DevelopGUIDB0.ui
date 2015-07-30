@@ -6,69 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>285</height>
+    <width>672</width>
+    <height>770</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <item>
-    <widget class="qbuGroupBox" name="groupBox">
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QRadioButton" name="radioButton">
-        <property name="text">
-         <string>RadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="qbu::qbuRadioButton" name="radioButton_2">
-        <property name="text">
-         <string>RadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="qbu::qbuRadioButton" name="radioButton_3">
-        <property name="text">
-         <string>RadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="qbu::qbuRadioButton" name="qbuRadioButton">
-        <property name="text">
-         <string>qbuRadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton">
-        <property name="text">
-         <string>qbuRadioButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton_2">
-        <property name="text">
-         <string>qbuRadioButton</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="qbu::qbuComboBox" name="qbu::qbuComboBox">
      <property name="text" stdset="0">
       <string>qbuComboBox</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="qbu::qbuCheckBox" name="qbu::qbuCheckBox">
+     <property name="text">
+      <string>qbuCheckBox</string>
      </property>
     </widget>
    </item>
@@ -84,6 +40,60 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="qbu::qbuGroupBox" name="qbu::qbuGroupBox">
+     <property name="title">
+      <string>qbuGroupBox</string>
+     </property>
+     <property name="text" stdset="0">
+      <string>qbuGroupBox</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton">
+        <property name="text">
+         <string>qbuRadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbuRadioButton">
+        <property name="text">
+         <string>qbuRadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="radioButton_2">
+        <property name="text">
+         <string>RadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="qbu::qbuRadioButton_2">
+        <property name="text">
+         <string>qbuRadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="qbu::qbuRadioButton" name="radioButton_3">
+        <property name="text">
+         <string>RadioButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="text">
+         <string>RadioButton</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -104,7 +114,7 @@
    <header>qbuWidgets/qbuRadioButton.h</header>
   </customwidget>
   <customwidget>
-   <class>qbuGroupBox</class>
+   <class>qbu::qbuGroupBox</class>
    <extends>QGroupBox</extends>
    <header>qbuWidgets/qbuGroupBox.h</header>
    <container>1</container>
@@ -113,6 +123,11 @@
    <class>qbu::qbuComboBox</class>
    <extends>QComboBox</extends>
    <header>qbuWidgets/qbuComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qbu::qbuCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>qbuWidgets/qbuCheckBox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

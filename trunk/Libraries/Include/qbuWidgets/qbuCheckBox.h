@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QBUCHECKBOX_H
+#define QBUCHECKBOX_H
+
 #include <QCheckBox>
 #include <qbuBase/qbuMacros.h>
 #include <QtDesigner/QtDesigner>
@@ -19,4 +24,7 @@ namespace qbu {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 };
+
+
+#endif // QBUCHECKBOX_H
 

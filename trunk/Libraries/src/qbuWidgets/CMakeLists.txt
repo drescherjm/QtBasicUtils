@@ -34,8 +34,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuComboBoxInterface.cxx
 	./src/qbuCheckBox.cxx
 	./src/qbuCheckBoxInterface.cxx
-	./src/qbuButtonGroup.cxx
-	./src/qbuButtonGroupInterface.cxx
+	# ./src/qbuButtonGroup.cxx
+	# ./src/qbuButtonGroupInterface.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -52,8 +52,8 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuComboBoxInterface.h	
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBox.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBoxInterface.h	
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonGroup.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonGroupInterface.h
+	# ${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonGroup.h
+	# ${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonGroupInterface.h
 )
 
 # some .ui files

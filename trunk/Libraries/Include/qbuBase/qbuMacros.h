@@ -149,8 +149,12 @@ private: \
 
 # define QBU_NAMESPACE qbu
 # define QBU_PREPEND_NAMESPACE(name) ::QBU_NAMESPACE::name
+# define QBU_PREPEND_NAMESPACE0(name) QBU_NAMESPACE::name
 # define QBU_USE_NAMESPACE using namespace ::QBU_NAMESPACE;
 # define QBU_BEGIN_NAMESPACE namespace QBU_NAMESPACE {
 # define QBU_END_NAMESPACE };
+
+#define QBU_QUOTE(name) #name
+#define QBU_STR_VALUE(macro) QBU_QUOTE(macro)
 
 #endif //__QBUMACROS_H__
