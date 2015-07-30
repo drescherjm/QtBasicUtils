@@ -94,13 +94,6 @@ QString qbuRadioButtonInterface::domXml() const
 		"<property name = \"text\" >\n"
 		"<string>qbuRadioButton</string>\n"
 		"</property>\n"
-// 		"<property name = \"header\">"
-// 		"<string>qbuWidgets/qbuRadioButton.h</string>"
-// 		"</property>\n"
-// 		"<property name = \"objectName\">\n"
-// 		"<string notr = \"true\">radioButton< / string>\n"
-// 		"</property>\n"
-
 		"</widget>\n"
 		"</ui>\n";
 }

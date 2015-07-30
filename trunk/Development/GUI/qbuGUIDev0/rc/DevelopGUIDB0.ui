@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>393</width>
-    <height>242</height>
+    <width>431</width>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,13 @@
     </widget>
    </item>
    <item>
+    <widget class="qbu::qbuComboBox" name="qbu::qbuComboBox">
+     <property name="text" stdset="0">
+      <string>qbuComboBox</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -101,6 +108,11 @@
    <extends>QGroupBox</extends>
    <header>qbuWidgets/qbuGroupBox.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>qbu::qbuComboBox</class>
+   <extends>QComboBox</extends>
+   <header>qbuWidgets/qbuComboBox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -3,7 +3,15 @@
 #ifndef QBURADIOBUTTONINTERFACE_H
 #define QBURADIOBUTTONINTERFACE_H
 
+#ifndef QT_VERSION_CHECK
+#include <qglobal.h>
+#endif
+
+#if (QT_VERSION < QT_VERSION_CHECK(5,5,0))
 #include <QDesignerCustomWidgetInterface>
+#else
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
+#endif 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
