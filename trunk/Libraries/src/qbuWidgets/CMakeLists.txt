@@ -32,6 +32,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuRadioButtonInterface.cxx
 	./src/qbuComboBox.cxx
 	./src/qbuComboBoxInterface.cxx
+	./src/qbuCheckBox.cxx
+	./src/qbuCheckBoxInterface.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -46,6 +48,8 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuRadioButtonInterface.h	
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuComboBox.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuComboBoxInterface.h	
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBox.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBoxInterface.h	
 )
 
 # some .ui files
