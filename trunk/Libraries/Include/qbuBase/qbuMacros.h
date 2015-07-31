@@ -1,5 +1,8 @@
-#ifndef __QBUMACROS_H__
-#define __QBUMACROS_H__
+#pragma once
+
+#ifndef QBUMACROS_H
+#define QBUMACROS_H
+
 #pragma warning( error : 4706)
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -157,4 +160,6 @@ private: \
 #define QBU_QUOTE(name) #name
 #define QBU_STR_VALUE(macro) QBU_QUOTE(macro)
 
-#endif //__QBUMACROS_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUMACROS_H

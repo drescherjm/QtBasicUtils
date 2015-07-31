@@ -13,7 +13,7 @@
  *	helpers.
  */
 
-#define QBU_DECLARE_SMINFO_HELPERS(thisClass,baseClass) \
+#define QBU_DECLARE_INFO_HELPERS(thisClass,baseClass) \
 public: \
 	QBU_DECLARE_SUPERCLASS(baseClass) \
 	QBU_DECLARE_CONSTRUCTOR_DESTRUCTOR(thisClass) \
@@ -29,7 +29,7 @@ public: \
  *  derived classes. 
  */
 
-#define QBU_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
+#define QBU_IMPLEMENT_INFO_COPY_DESTROY(thisClass) \
 	void thisClass::copy(const thisClass & other) {} \
 	\
 	void thisClass::destroy() \
@@ -49,7 +49,7 @@ public: \
  *
  */
 
-#define QBU_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass) \
+#define QBU_IMPLEMENT_INFO_COPY_CONSTRUCTORS(thisClass) \
 	thisClass::thisClass( const thisClass & other ) : Superclass() \
 	{ \
 		Superclass::copy(other); \
@@ -68,7 +68,7 @@ public: \
 *	derived classes.
 */
 
-#define QBU_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
+#define QBU_IMPLEMENT_INFO_ASSIGNMENT_OPERATORS(thisClass) \
 	thisClass& thisClass::operator=( const Superclass & other ) \
 	{ \
 		Superclass::operator =(other); \
@@ -89,9 +89,9 @@ public: \
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #define QBU_IMPLEMENT_INFO_HELPERS(thisClass) \
-	QBU_IMPLEMENT_SMINFO_ASSIGNMENT_OPERATORS(thisClass) \
-	QBU_IMPLEMENT_SMINFO_COPY_DESTROY(thisClass) \
-	QBU_IMPLEMENT_SMINFO_COPY_CONSTRUCTORS(thisClass)
+	QBU_IMPLEMENT_INFO_ASSIGNMENT_OPERATORS(thisClass) \
+	QBU_IMPLEMENT_INFO_COPY_DESTROY(thisClass) \
+	QBU_IMPLEMENT_INFO_COPY_CONSTRUCTORS(thisClass)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

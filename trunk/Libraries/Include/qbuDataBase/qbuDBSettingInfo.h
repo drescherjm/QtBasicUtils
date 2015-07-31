@@ -18,7 +18,7 @@
 
 class qbuDBSettingInfo : public qbuInfo
 {
-	QBU_DECLARE_SMINFO_HELPERS(qbuDBSettingInfo, qbuInfo);
+	QBU_DECLARE_INFO_HELPERS(qbuDBSettingInfo, qbuInfo);
 public:
 	bool setSettingName(QString strName);	
 	bool setSettingValue(QString strValue);
