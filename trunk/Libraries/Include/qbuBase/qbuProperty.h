@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUPROPERTY_H__
-#define __QBUPROPERTY_H__
+#ifndef QBUPROPERTY_H
+#define QBUPROPERTY_H
 
 #include <QVariant>
 #include <QDomElement>
@@ -60,5 +60,5 @@ Q_DECLARE_METATYPE(qbuProperty);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUPROPERTY_H__
 
+#endif // QBUPROPERTY_H
