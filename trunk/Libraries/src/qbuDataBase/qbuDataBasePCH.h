@@ -1,5 +1,6 @@
 // c++
 #include <iostream>
+#include <memory>
 
 // Qt
 #include <QDomDocument>
@@ -9,3 +10,4 @@
 #include <QSqlRecord>
 #include <QDebug>
 #include <QStringList>
+#include <QSqlQuery>

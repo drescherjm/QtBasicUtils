@@ -2,20 +2,14 @@
 
 #include "qbuDataBase/qbuDatabase.h"
 
-#include <QSqlQuery>
-#include <QVariant>
-#include <QStringList>
-#include <QDebug>
-#include <QSqlError>
-
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/sequenced_index.hpp>
 #include <boost/multi_index/mem_fun.hpp>
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-#include <iostream>
 #include "qbuDatabase/qbuDBSettingsTableBase.h"
+#include "qbuLog/qbuLog.h"
 
 using namespace ::boost;
 using namespace ::boost::multi_index;
@@ -60,10 +54,10 @@ public:
 	bool	isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias );
 	bool	incrementAttachedCount(QString strDatabaseFileName);
 	bool	decrementAttachedCount(QString strDatabaseFileName);
-	bool	detachDatabaseByAlias(qbuDatabase* pPublic,QString strAlias);
-	bool	detachDatabaseByName(qbuDatabase* pPublic,QString strDBName);
+	bool	detachDatabaseByAlias(std::shared_ptr<qbuDatabase> pPublic,QString strAlias);
+	bool	detachDatabaseByName(std::shared_ptr<qbuDatabase> pPublic,QString strDBName);
 	template<typename tag>
-	bool	detachDatabase(qbuDatabase* pPublic,QString strKey);
+	bool	detachDatabase(std::shared_ptr<qbuDatabase> pPublic,QString strKey);
 public:
 	setAttachedDB	m_setAttachedDBs;
 };
@@ -71,9 +65,9 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename tag>
-bool qbuDatabase::qbuPrivate::detachDatabase( qbuDatabase* pPublic,QString strKey )
+bool qbuDatabase::qbuPrivate::detachDatabase( std::shared_ptr<qbuDatabase> pPublic,QString strKey )
 {
-	bool retVal = (pPublic != NULL);
+	bool retVal = (pPublic != nullptr);
 	if (retVal) {
 		setAttachedDB::index<tag>::type::iterator it = m_setAttachedDBs.get<tag>().find(strKey);
 		retVal = (it != m_setAttachedDBs.get<tag>().end());
@@ -147,9 +141,9 @@ bool qbuDatabase::qbuPrivate::decrementAttachedCount( QString strDatabaseFileNam
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDatabase::qbuPrivate::detachDatabaseByAlias( qbuDatabase* pPublic,QString strAlias )
+bool qbuDatabase::qbuPrivate::detachDatabaseByAlias( std::shared_ptr<qbuDatabase> pPublic,QString strAlias )
 {
-	bool retVal = (pPublic != NULL);
+	bool retVal = (pPublic != nullptr);
 	if (retVal) {
 		retVal = detachDatabase<DBAlias>(pPublic,strAlias);
 	}
@@ -158,9 +152,9 @@ bool qbuDatabase::qbuPrivate::detachDatabaseByAlias( qbuDatabase* pPublic,QStrin
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDatabase::qbuPrivate::detachDatabaseByName( qbuDatabase* pPublic,QString strDBName )
+bool qbuDatabase::qbuPrivate::detachDatabaseByName( std::shared_ptr<qbuDatabase> pPublic,QString strDBName )
 {
-	bool retVal = (pPublic != NULL);
+	bool retVal = (pPublic != nullptr);
 	if (retVal) {
 		retVal = detachDatabase<DBName>(pPublic,strDBName);
 	}
@@ -215,14 +209,14 @@ int qbuDatabase::getDBSchemaVersion()
 	if (isOpen()) {
 		/*
 		QString strQuery = QString("SELECT Value FROM %1 WHERE Name = 'SCHEMA_VERSION'").arg(g_strDBSettingsTable);
-		QSqlQuery query(strQuery,*this);
+		qbuSimpleQuery query(strQuery,*this);
 		if (query.next()) {
 			retVal = query.value(0).toInt();
 		}
 		*/
 
-		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
-		if (pSettingsTable.get() != NULL) {
+		std::shared_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		if (pSettingsTable.get() != nullptr) {
 			retVal = pSettingsTable->getDBSchemaVersion();
 		}
 	}
@@ -267,17 +261,23 @@ bool qbuDatabase::performUpgrade()
 {
 	bool retVal = isOpen();
 	if (retVal) {
-		int nSchema = getDBSchemaVersion();
-		if (needsUpgrade(nSchema)) {
-			int nOldSchema = getApplicationSchemaVersion();
-			retVal = preUpgradeDB(nSchema,nOldSchema);
+		int nOldSchema = getDBSchemaVersion();
+		if (needsUpgrade(nOldSchema)) {
+			int nNewSchema = getApplicationSchemaVersion();
+			
+			QString strMsg = QString("The database will be upgraded from schema %1 to schema %2")
+				.arg(nOldSchema)
+				.arg(nNewSchema);
+			QLOG_INFO() << QBULOG_DATABASE_TYPE << strMsg;
+							
+			retVal = preUpgradeDB(nOldSchema,nNewSchema);
 			if (retVal) {
-				retVal = upgradeDB(nSchema,nOldSchema);
+				retVal = upgradeDB(nOldSchema,nNewSchema);
 			}
 		}
 	}
 	if (!retVal) {
-		qDebug() << "Database Upgrade Failed at performUpgrade()";
+		QLOG_WARN() << QBULOG_DATABASE_TYPE << "Database Upgrade Failed at performUpgrade()";
 	}
 	return retVal;
 }
@@ -306,14 +306,24 @@ int qbuDatabase::getApplicationSchemaVersion()
  *	This member function determines if the database schema needs to be upgraded. 
  */
 
-bool qbuDatabase::needsUpgrade( int nSchema/*=-2*/ )
+bool qbuDatabase::needsUpgrade( int nOldSchema/*=-2*/ )
 {
-	bool retVal = (nSchema < 0);
+	bool retVal = (nOldSchema < 0);
 	if (retVal) {
-		nSchema = getDBSchemaVersion();
+		nOldSchema = getDBSchemaVersion();
 	}
 
-	retVal = (nSchema < getApplicationSchemaVersion());
+	int nNewSchema = getApplicationSchemaVersion();
+
+	retVal = (nOldSchema < nNewSchema);
+
+	if (!retVal) {
+		QString strMsg = QString("The database %1 is at schema %2 and it does not need to be upgraded to schema %3.")
+			.arg(getDefaultAttachName())
+			.arg(nOldSchema)
+			.arg(nNewSchema);
+		QLOG_INFO() << QBULOG_DATABASE_TYPE << strMsg;
+	}
 
 	return retVal;
 }
@@ -339,11 +349,15 @@ bool qbuDatabase::preUpgradeDB( int nOldSchema, int nNewSchema )
 	}
 	if (retVal) {
 		// Update the settings table.
-		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
-		retVal = (pSettingsTable.get() != NULL);
+		std::shared_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		retVal = (pSettingsTable.get() != nullptr);
 		if (retVal) {
 			pSettingsTable->upgradeTable(nOldSchema,nNewSchema);
 		}
+	}
+
+	if (!retVal) {
+		QLOG_WARN() << QBULOG_DATABASE_TYPE << "preUpgradeDB failed";
 	}
 	return retVal;
 }
@@ -392,8 +406,8 @@ bool qbuDatabase::createSettingsTable()
 	bool retVal = isOpen();
 	if (retVal) {
 
-		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
-		retVal = (pSettingsTable.get() != NULL);
+		std::shared_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		retVal = (pSettingsTable.get() != nullptr);
 		if (retVal) {
 			pSettingsTable->createTable(0);
 		}
@@ -408,8 +422,8 @@ bool qbuDatabase::setDBSchemaVersion( int nSchema )
 	bool retVal = isOpen();
 	if (retVal) {
 				
-		std::auto_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
-		retVal = (pSettingsTable.get() != NULL);
+		std::shared_ptr<qbuDBSettingsTableBase> pSettingsTable(getSettingsTable());
+		retVal = (pSettingsTable.get() != nullptr);
 		if (retVal) {
 			pSettingsTable->setDBSchemaVersion(nSchema);
 		}
@@ -427,7 +441,7 @@ bool qbuDatabase::setDBSchemaVersion( int nSchema )
 
 void qbuDatabase::copy( const qbuDatabase & other )
 {
-	if (m_pPrivate == NULL) {
+	if (m_pPrivate == nullptr) {
 		m_pPrivate = new qbuPrivate();
 	}
 }
@@ -437,7 +451,7 @@ void qbuDatabase::copy( const qbuDatabase & other )
 void qbuDatabase::destroy()
 {
 	delete m_pPrivate;
-	m_pPrivate = NULL;
+	m_pPrivate = nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -471,9 +485,9 @@ bool qbuDatabase::attachDatabase( QString strDatabaseFileName, QString strDBAlia
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDatabase::attachDatabase( qbuDatabase* pDB, QString strDBAlias )
+bool qbuDatabase::attachDatabase( std::shared_ptr<qbuDatabase> pDB, QString strDBAlias )
 {
-	bool retVal = (pDB != NULL);
+	bool retVal = (pDB != nullptr);
 	if (retVal) {
 		QString strConnection = pDB->databaseName();
 		retVal = !strConnection.isEmpty();
@@ -488,7 +502,8 @@ bool qbuDatabase::attachDatabase( qbuDatabase* pDB, QString strDBAlias )
 
 QString qbuDatabase::generateConnectionName( QString strDataBaseName )
 {
-	return QString("__%1").arg(strDataBaseName);
+	static int nConnection = 0;
+	return QString("__%2_%1").arg(strDataBaseName).arg(nConnection++);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -537,21 +552,21 @@ bool qbuDatabase::verifyDBSchema()
 
 bool qbuDatabase::isDatabaseAttached( QString strDatabaseFileName, QString & strDBAlias )
 {
-	return (m_pPrivate != NULL) ? m_pPrivate->isDatabaseAttached(strDatabaseFileName,strDBAlias) : false;
+	return (m_pPrivate != nullptr) ? m_pPrivate->isDatabaseAttached(strDatabaseFileName,strDBAlias) : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDatabase::detachDatabaseByAlias( QString strDBAlias )
 {
-	return (m_pPrivate != NULL) ? m_pPrivate->detachDatabaseByAlias(this,strDBAlias) : false;
+	return (m_pPrivate != nullptr) ? m_pPrivate->detachDatabaseByAlias(shared_from_this(),strDBAlias) : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDatabase::detachDatabaseByName( QString strDBName )
 {
-	return (m_pPrivate != NULL) ? m_pPrivate->detachDatabaseByName(this,strDBName) : false;
+	return (m_pPrivate != nullptr) ? m_pPrivate->detachDatabaseByName(shared_from_this(),strDBName) : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -657,3 +672,4 @@ bool qbuDatabase::fixKnownProblems()
 	return true;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////

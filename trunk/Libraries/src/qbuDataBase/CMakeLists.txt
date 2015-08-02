@@ -152,7 +152,6 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-
 add_library(${LOCAL_PROJECT_NAME} 
 	${${LOCAL_PROJECT_NAME}_SRCS} 
 	${${LOCAL_PROJECT_NAME}_EXT_HDRS} 

@@ -20,7 +20,7 @@ class qbuData;
  *
  */
 
-class qbuDatabase : public QSqlDatabase
+class qbuDatabase : public QObject, public QSqlDatabase, public std::enable_shared_from_this<qbuDatabase>
 {
 	QBU_DECLARE_SUPERCLASS(QSqlDatabase);
 public:
@@ -42,7 +42,7 @@ public:
 	virtual bool	attachDatabase(QString strDatabaseFileName, QString strDBAlias);
 
 	// Attach a database file to the connection.
-	virtual bool	attachDatabase(qbuDatabase* pDB, QString strDBAlias);
+	virtual bool	attachDatabase(std::shared_ptr<qbuDatabase> pDB, QString strDBAlias);
 
 	virtual bool	detachDatabaseByAlias(QString strAlias);
 	virtual bool	detachDatabaseByName(QString strDBName);
@@ -56,7 +56,7 @@ public:
 	virtual bool	hasConnection();
 
 	virtual bool	verifyDBSchema();
-	virtual	qbuDBSettingsTableBase*	getSettingsTable() =0;
+	virtual	std::shared_ptr<qbuDBSettingsTableBase>	getSettingsTable() =0;
 
 	virtual	QString	getDefaultAttachName()=0;
 
