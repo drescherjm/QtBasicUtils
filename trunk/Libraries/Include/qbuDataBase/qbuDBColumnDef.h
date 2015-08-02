@@ -3,6 +3,7 @@
 #ifndef QBUDBCOLUMNDEF_H
 #define QBUDBCOLUMNDEF_H
 
+#include <QObject>
 #include <QString>
 #include <QFlags>
 
