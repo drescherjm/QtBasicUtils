@@ -1,6 +1,6 @@
 option (QBU_BUILD_DATABASE 				"Build Database Support" ON)
 option (QBU_BUILD_LOG 					"Build Log Support" ON)
-option (QBU_BUILD_WIDGETS				"Build Widgets Support" ON)
+option (QBU_BUILD_WIDGETS				"Build Widgets Support" OFF)
 
 add_subdirectory(qbuBase)
 add_subdirectory(qbuCmdLine)

@@ -1,2 +1,4 @@
 add_subdirectory(Experimental)
-add_subdirectory(GUI)
+if (QBU_BUILD_WIDGETS)
+	add_subdirectory(GUI)
+endif()
