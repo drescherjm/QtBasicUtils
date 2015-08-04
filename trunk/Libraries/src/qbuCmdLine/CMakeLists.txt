@@ -34,6 +34,7 @@ SET( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/QCmdLineFileList.cxx
 	./src/QCmdHelp.cxx
 	./src/QNamedCmdPart.cxx
+	./src/qbuCmdWaitForAnyKey.cxx
 )
 
 SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -69,6 +70,7 @@ SET( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/QCmdArgQStringList.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/QCmdArgFileList.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/QCmdHelp.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCmdWaitForAnyKey.h
 )
 
 SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
