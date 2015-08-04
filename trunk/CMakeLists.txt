@@ -6,9 +6,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
 set (${PROJECT_NAME}_VERSION_MINOR 0)
 set (${PROJECT_NAME}_VERSION_PATCH 0)
+set (${PROJECT_NAME}_VERSION_PATCH_CLEAN ${${PROJECT_NAME}_VERSION_PATCH})
 set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
-Include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
 # The following line will add additional finders to CMake without the need to be placed in the CMake install path
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Modules)
@@ -156,4 +157,5 @@ if(BUILD_DOCUMENTATION)
 add_subdirectory(doxygen)
 endif(BUILD_DOCUMENTATION)
 
-
+#dump_all_variables_starting_with( ${PROJECT_NAME} )
+#dump_all_variables()
