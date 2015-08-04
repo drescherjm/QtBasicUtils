@@ -1,12 +1,9 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuSelectQuery.h"
-#include <QStringList>
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuPropertyMap.h"
-#include <QDebug>
 #include "qbuDataBase/qbuDBColumnDefList.h"
-#include "qbuDataBase/qbuException.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 #include "qbuDataBase/qbuDBJoin.h"
 

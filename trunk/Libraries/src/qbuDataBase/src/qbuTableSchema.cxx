@@ -4,7 +4,6 @@
 #include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuDatabase.h"
-#include "qbuDataBase/qbuException.h"
 
 #include "qbuBase/qbuStringList.h"
 #include "qbuLog/qbuLog.h"

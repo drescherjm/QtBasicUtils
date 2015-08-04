@@ -1,7 +1,7 @@
 myproject(qbuDataBase)
 
 option(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
-option(USE_EXCEPTIONS "Use execptions" ON)
+option(USE_EXCEPTIONS "Use exceptions" ON)
 
 conditional_define(USE_EXCEPTIONS QBU_HAVE_EXCEPTIONS)
 
@@ -62,7 +62,6 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuTableSchema.cxx
 	./src/qbuDatabaseFunctions.cxx
 	./src/qbuInsertQuery.cxx
-	./src/qbuException.cxx
 	./src/qbuDBSettingsTableBase.cxx
 	./src/qbuDBSettingInfo.cxx
 	./src/qbuSimpleQuery.cxx
@@ -86,7 +85,6 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuInsertQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBConstants.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBMacros.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingsTableBase.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingInfo.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSimpleQuery.h

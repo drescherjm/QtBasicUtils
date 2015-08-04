@@ -1,7 +1,6 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuInsertQuery.h"
-#include "qbuDataBase/qbuException.h"
 #include "qbuBase/qbuPropertyMap.h"
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuSelectQuery.h"

@@ -3,7 +3,6 @@
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuBase/qbuPropertyMap.h"
-#include "qbuDataBase/qbuException.h"
 #include "qbuDataBase/qbuTableSchema.h"
 #include "qbuBase/qbuStringList.h"
 #include "qbuDataBase/qbuSelectQuery.h"

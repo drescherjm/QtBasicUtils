@@ -1,7 +1,6 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuCreateViewQuery.h"
-#include "qbuDataBase/qbuException.h"
 #include <QDebug>
 #include <QSqlError>
 

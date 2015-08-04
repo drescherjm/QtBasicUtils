@@ -11,3 +11,7 @@
 #include <QDebug>
 #include <QStringList>
 #include <QSqlQuery>
+#include <QDebug>
+
+// qbu
+#include "qbuBase/qbuException.h"

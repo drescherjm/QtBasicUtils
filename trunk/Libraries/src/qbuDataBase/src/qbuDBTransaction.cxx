@@ -2,6 +2,10 @@
 
 #include "qbuDataBase/qbuDBTransaction.h"
 #include "qbuDataBase/qbuDatabase.h"
+#include "qbuLog/qbuLog.h"
+#include <QMessageBox>
+#include <QThread>
+#include <QCoreApplication>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,14 +15,14 @@ qbuDBTransaction::qbuDBTransaction(std::shared_ptr<qbuDatabase> pDB) : m_pDB(pDB
 	if (m_pDB != nullptr) {
 		m_bTransactionStarted = m_pDB->transaction();
 		if (!m_bTransactionStarted) {
-			QString strMsg = QString("Could not start a transaction: %1").arg(m_pDB->lastError().text());
-			QLOG_CRIT() << SMLOG_DATABASE_TYPE << strMsg;
+			QString strError = QString("Could not start a transaction: %1").arg(m_pDB->lastError().text());
+			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef SM_HAVE_EXCEPTIONS
-			throw smException(__FILE__,__LINE__,qPrintable(strMsg),"smDBTransaction::smDBTransaction");
+#ifdef QBU_HAVE_EXCEPTIONS
+			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBTransaction::qbuDBTransaction");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def SM_HAVE_EXCEPTIONS
+#endif //def QBU_HAVE_EXCEPTIONS
 
 		}
 		else
@@ -39,7 +43,7 @@ qbuDBTransaction::~qbuDBTransaction()
 
 				QString strMsg = QString("A commit failed with the following error: %1").arg(m_pDB->lastError().text());
 
-				QLOG_CRIT() << SMLOG_DATABASE_TYPE << strMsg;
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
 
 				// Lets attempt recovery..
 				if (m_pDB->lastError().text().contains("lock",Qt::CaseInsensitive)) {
@@ -56,8 +60,8 @@ qbuDBTransaction::~qbuDBTransaction()
 
 					m_pDB->rollback();
 
-#ifdef SM_HAVE_EXCEPTIONS
-					throw smException(__FILE__,__LINE__,qPrintable(strMsg),"smDBTransaction::~smDBTransaction");
+#ifdef QBU_HAVE_EXCEPTIONS
+					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
 					qDebug() << qPrintable(strError);
 #endif //def SM_HAVE_EXCEPTIONS
@@ -77,10 +81,10 @@ qbuDBTransaction::~qbuDBTransaction()
 
 				QString strMsg = QString("A commit could not be rolled back as a result of the following database error: %1").arg(m_pDB->lastError().text());
 
-				QLOG_CRIT() << SMLOG_DATABASE_TYPE << strMsg;
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
 
-#ifdef SM_HAVE_EXCEPTIONS
-				throw smException(__FILE__,__LINE__,qPrintable(strMsg),"smDBTransaction::~smDBTransaction");
+#ifdef QBU_HAVE_EXCEPTIONS
+				throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
 				qDebug() << qPrintable(strError);
 #endif //def SM_HAVE_EXCEPTIONS
