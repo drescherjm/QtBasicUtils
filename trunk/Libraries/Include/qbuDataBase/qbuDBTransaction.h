@@ -19,15 +19,17 @@ class qbuDatabase;
 class qbuDBTransaction 
 {
 public:
-	qbuDBTransaction(qbuDatabase * pDB);
+	qbuDBTransaction(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuDBTransaction();
 public:
 	void			failTransaction(bool bFail);
 private:
-	qbuDatabase*		m_pDB;
+	std::shared_ptr<qbuDatabase>	m_pDB;
 	bool			m_bTransactionStarted;
 	bool			m_bFailTransaction;
 private:
+	bool			criticalCanNotCommit();
+	bool			warningCanNotCommit();
 	// The following are intentionally not implemented to prevent copying this object.
 	qbuDBTransaction& operator=(const qbuDBTransaction & noAssign );
 	qbuDBTransaction(const qbuDBTransaction & noCopy );
