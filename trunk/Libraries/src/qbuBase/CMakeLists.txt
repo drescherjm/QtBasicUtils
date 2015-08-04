@@ -1,5 +1,7 @@
 myproject(qbuBase)
 
+init_lib_shared_static_option(OFF)
+
 set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
 set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
 
@@ -26,6 +28,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuStringList.cxx
 	./src/qbuObject.cxx
 	./src/qbuException.cxx
+	./src/qbuCSVModelWriter.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -48,6 +51,7 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuPropertyList.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuStringList.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuObject.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCSVModelWriter.h
 )
 
 # some .ui files
@@ -86,13 +90,13 @@ SOURCE_GROUP("Resources" FILES
 	  ${${LOCAL_PROJECT_NAME}_RCS}
 )
 
-IF(BUILD_DOCUMENTATION)
+if(BUILD_DOCUMENTATION)
 
-ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR})
-ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/src)
-ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/Include)
+	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR})
+	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/src)
+	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/Include)
 
-ENDIF(BUILD_DOCUMENTATION)
+endif(BUILD_DOCUMENTATION)
 
 
 message( STATUS ${${PROJECT_NAME}_INCLUDE_DIRS})
@@ -113,6 +117,35 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_UI_HDRS}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
+
+#########################################################################################
+
+if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
+	TARGET_LINK_LIBRARIES ( 
+		${LOCAL_PROJECT_NAME} 
+		${UPMC_EXTERNAL_LIBS} 
+		${QT_LIBRARIES} 
+		${QXT_LIBRARIES}
+	)
+
+	install(TARGETS ${LOCAL_PROJECT_NAME}
+	   RUNTIME
+	   DESTINATION bin
+	   COMPONENT Applications
+	)
+
+endif(BUILD_${LOCAL_PROJECT_NAME}_SHARED)
+
+#########################################################################################
+
+GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME} 
+	BASE_NAME ${LOCAL_PROJECT_NAME}
+	EXPORT_MACRO_NAME ${LOCAL_PROJECT_NAME}_EXPORT
+	EXPORT_FILE_NAME "${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDefines.h"
+	STATIC_DEFINE ${LOCAL_PROJECT_NAME}_STATIC
+)
+
+#########################################################################################
 
 install (FILES
 	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake

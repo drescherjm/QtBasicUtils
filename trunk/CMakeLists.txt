@@ -42,6 +42,7 @@ Include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportQt.cmake)
+include(GenerateExportHeader)
 
 #########################################################################################
 
