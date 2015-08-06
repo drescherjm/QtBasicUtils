@@ -1,5 +1,6 @@
 myproject(qbuLog)
 
+init_lib_shared_static_option(OFF)
 
 set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
 set(QXT_USE_QXTCORE TRUE)
@@ -22,10 +23,14 @@ set (${LOCAL_PROJECT_NAME}_TREE_DEBUG_LIB ${LOCAL_PROJECT_NAME}${CMAKE_DEBUG_POS
 
 set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuLog.cxx
+	./src/qbuFileLoggerEngine.cxx
+	./src/qbuFilteredFileLoggerEngine.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuLog.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuFileLoggerEngine.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuFilteredFileLoggerEngine.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
@@ -94,11 +99,41 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
+#########################################################################################
+
+if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
+	target_link_libraries ( 
+		${LOCAL_PROJECT_NAME} 
+		${UPMC_EXTERNAL_LIBS} 
+		${QT_LIBRARIES} 
+		${QXT_LIBRARIES}
+	)
+
+	#########################################################################################
+
+	install(TARGETS ${LOCAL_PROJECT_NAME}
+	   RUNTIME
+	   DESTINATION bin
+	   COMPONENT Applications
+	)
+endif()
+
+#########################################################################################
+
 install (FILES
-	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	${PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
+	${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
+	${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
+	${LOCAL_PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
 	DESTINATION lib
+)
+
+#########################################################################################
+
+GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME} 
+	BASE_NAME ${LOCAL_PROJECT_NAME}
+	EXPORT_MACRO_NAME ${LOCAL_PROJECT_NAME}_EXPORT
+	EXPORT_FILE_NAME "${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDefines.h"
+	STATIC_DEFINE ${LOCAL_PROJECT_NAME}_STATIC
 )
 
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)

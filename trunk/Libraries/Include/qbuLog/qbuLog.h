@@ -3,6 +3,8 @@
 #ifndef QBULOG_H
 #define QBULOG_H
 
+//#include "qbuLogLibraryDefines.h"
+
 #define QBULOG_DATABASE_TYPE "DATABASE"
 
 #include <QString>
