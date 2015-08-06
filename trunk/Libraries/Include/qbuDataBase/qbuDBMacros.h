@@ -95,4 +95,53 @@ public: \
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#define QBU_IMPLEMENT_UPGRADE_DB_TABLE(thisClass, tableClass,tableName) \
+	bool thisClass::upgrade##tableName( int nOldSchema, int nNewSchema ) \
+	{ \
+		bool retVal = isOpen(); \
+		if (retVal) { \
+			tableClass table(m_pPublic->shared_from_this()); \
+			retVal = table.upgradeTable(nOldSchema,nNewSchema); \
+		} \
+		return retVal; \
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define QBU_IMPLEMENT_VERIFY_DB_TABLE(thisClass, tableClass,tableName) \
+	bool thisClass::verify##tableName##Schema( QString & strTableName ) \
+	{ \
+		tableClass table(m_pPublic->shared_from_this()); \
+		strTableName = table.getTableName(); \
+		return table.verifySchema(); \
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define QBU_IMPLEMENT_ADD_DB_VIEW(thisClass, viewClass,viewName) \
+	bool thisClass::add##viewName( int nOldSchema, int nNewSchema ) \
+	{ \
+		bool retVal = isOpen(); \
+		if (retVal) { \
+			viewClass view(m_pPublic->shared_from_this()); \
+			retVal = view.upgradeDBView(nOldSchema,nNewSchema,true); \
+		} \
+		return retVal; \
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#define QBU_IMPLEMENT_DB_FIX_KNOWN_TABLE_PROBLEMS(thisClass, tableClass,tableName) \
+	bool thisClass::fix##tableName() \
+	{ \
+		bool retVal = isOpen(); \
+		if (retVal) { \
+			tableClass table(m_pPublic->shared_from_this()); \
+			retVal = table.fixKnownProblems(); \
+		} \
+		return retVal; \
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif // QBUDBMACROS_H
