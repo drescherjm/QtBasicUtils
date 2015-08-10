@@ -41,6 +41,9 @@ public:
 	virtual int		count(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = NULL);
 	virtual int		countDistinct(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = nullptr);
 
+	template< typename T>
+	bool	exportData(T*, QList< QSharedPointer<T> > & lst);
+
 protected:
 	virtual bool				renameTable(QString strNewName);
 	virtual bool				createTable(int nSchema)=0;
@@ -61,6 +64,43 @@ public:
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>
+bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst)
+{
+
+	qbuStringList lstWhereFields = pInfo->getDBFieldNames();
+	bool retVal = true;
+	if (retVal) {
+		qbuSelectQuery query(m_pDB);
+		query.addSelectFields(lstWhereFields);
+		query.addFromField(getTableName());
+		query.appendWhereExpressions(lstWhereFields, pInfo, qbuQuery::WE_IGNORE_MISSING_FIELDS);
+		if (retVal) {
+			retVal = query.generateQuery();
+			if (retVal) {
+				retVal = query.exec();
+				if (retVal) {
+					T record;
+					while (query.next() && retVal) {
+						retVal = query.getRecord(&record);
+						if (retVal) {
+
+							QSharedPointer<T> ptr(new T(record));
+
+							lst.push_back(ptr);
+						}
+					}
+				}
+			}
+		}
+
+	}
+	return retVal;
+
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
