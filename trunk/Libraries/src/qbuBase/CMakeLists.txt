@@ -2,8 +2,8 @@ myproject(qbuBase)
 
 init_lib_shared_static_option(OFF)
 
-set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
-set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
+# set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
+# set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
 
 set (${LOCAL_PROJECT_NAME}_INSTALL_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
 set (${LOCAL_PROJECT_NAME}_INSTALL_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
@@ -29,6 +29,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuObject.cxx
 	./src/qbuException.cxx
 	./src/qbuCSVModelWriter.cxx
+	./src/qbuErrorBase.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -41,6 +42,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuITKIndent.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSleeperThread.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuErrorBase.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

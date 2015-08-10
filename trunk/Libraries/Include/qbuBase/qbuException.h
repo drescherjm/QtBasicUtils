@@ -14,8 +14,8 @@ PURPOSE.  See the above copyright notices for more information.
 
 #pragma once
 
-#ifndef SMEXCEPTION_H
-#define SMEXCEPTION_H
+#ifndef QBUEXCEPTION_H
+#define QBUEXCEPTION_H
 
 #include <stdexcept>
 #include <QSharedDataPointer>
@@ -90,4 +90,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // SMEXCEPTION_H
+#endif // QBUEXCEPTION_H
