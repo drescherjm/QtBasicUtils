@@ -1,5 +1,7 @@
-#ifndef __SMSELECTQUERY_H__
-#define __SMSELECTQUERY_H__
+#pragma once
+
+#ifndef QBUSELECTQUERY_H
+#define QBUSELECTQUERY_H
 
 #include "qbuQuery.h"
 #include "qbuDBColumnDef.h"
@@ -68,5 +70,4 @@ private:
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMSELECTQUERY_H__
-
+#endif // QBUSELECTQUERY_H

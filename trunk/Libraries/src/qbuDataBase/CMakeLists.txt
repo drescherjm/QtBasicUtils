@@ -33,8 +33,8 @@ find_package( Boost REQUIRED )
 
 include_directories( ${Boost_INCLUDE_DIRS} )
 
-set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
-set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
+# set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
+# set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
 
 set (${LOCAL_PROJECT_NAME}_INSTALL_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
 set (${LOCAL_PROJECT_NAME}_INSTALL_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
@@ -67,6 +67,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuSimpleQuery.cxx
 	./src/qbuDBExpression.cxx
 	./src/qbuDBJoin.cxx
+	./src/qbuDeleteQuery.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -90,6 +91,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSimpleQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBExpression.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBJoin.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDeleteQuery.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
