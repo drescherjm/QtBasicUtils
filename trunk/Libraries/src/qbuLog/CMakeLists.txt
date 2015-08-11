@@ -25,6 +25,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuLog.cxx
 	./src/qbuFileLoggerEngine.cxx
 	./src/qbuFilteredFileLoggerEngine.cxx
+	./src/qbuLoggerWidget.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -34,6 +35,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuLoggerWidget.h
 )
 
 # some .ui files
