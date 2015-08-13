@@ -50,7 +50,8 @@ include(GenerateExportHeader)
 set (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
 
-set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Libraries/Include)
+set(${PROJECT_NAME}_SRC_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/Libraries/Include)
+set(${PROJECT_NAME}_INCLUDE_DIRS ${${LOCAL_PROJECT_NAME}_TREE_INCLUDE} ${PROJECT_BINARY_DIR}/Libraries/src)
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
@@ -79,29 +80,6 @@ configure_file (
 )
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
-
-#########################################################################################
-
-set( ${PROJECT_NAME}_SRCS
-
-)
-
-set( ${PROJECT_NAME}_EXT_HDRS 
-	./Include/${PROJECT_NAME}.h
-
-)
-
-set( ${PROJECT_NAME}_MOC_HDRS 
-	
-
-)
-
-set( ${PROJECT_NAME}_INT_HDRS
-	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
-)
-
-# and finally this will run moc:
-QT45_WRAP_CPP( ${PROJECT_NAME}_MOC_SRCS ${${PROJECT_NAME}_MOC_HDRS} )
 
 #########################################################################################
 
@@ -157,5 +135,5 @@ if(BUILD_DOCUMENTATION)
 add_subdirectory(doxygen)
 endif(BUILD_DOCUMENTATION)
 
-#dump_all_variables_starting_with( ${PROJECT_NAME} )
+dump_all_variables_starting_with( ${PROJECT_NAME} )
 #dump_all_variables()
