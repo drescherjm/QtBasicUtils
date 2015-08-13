@@ -3,7 +3,7 @@
 #ifndef QBUSTATE_H
 #define QBUSTATE_H
 
-#include "qbuBaseLibraryDefines.h"
+#include "qbuBase/qbuBaseLibraryDefines.h"
 
 #include <QState>
 #include "qbuMacros.h"

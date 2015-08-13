@@ -1,7 +1,6 @@
 #include "qbuBasePCH.h"
-#include "qbuState.h"
-#include "qbuMacros.h"
-#include <QDebug>
+#include "qbuBase/qbuState.h"
+#include "qbuBase/qbuMacros.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
