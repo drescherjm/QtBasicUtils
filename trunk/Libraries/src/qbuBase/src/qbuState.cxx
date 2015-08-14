@@ -2,6 +2,11 @@
 #include "qbuBase/qbuState.h"
 #include "qbuBase/qbuMacros.h"
 
+#ifdef QBU_HAS_LOG
+#include <qbuLog/qbuLog.h>
+#endif // QBU_HAS_LOG
+
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuState::qbuState( QState * parent /*= 0 */ ) : Superclass(parent)
@@ -29,7 +34,7 @@ void qbuState::onEntry( QEvent *event )
 {
 	Superclass::onEntry(event);
 
-#ifdef DEBUG_STATE_MACHINE
+#ifdef QBU_HAS_LOG
 
 	QString name;
 	const QMetaObject* pMetaObject= this->metaObject();
@@ -38,9 +43,9 @@ void qbuState::onEntry( QEvent *event )
 		name = pMetaObject->className();
 	}
 
-	qDebug() << "Entering state " << qPrintable(name);
+	QLOG_INFO() << "Entering state " << name;
 
-#endif //def DEBUG_STATE_MACHINE
+#endif //def QBU_HAS_LOG
 
 }
 
@@ -50,7 +55,7 @@ void qbuState::onExit( QEvent *event )
 {
 	Superclass::onExit(event);
 
-#ifdef DEBUG_STATE_MACHINE
+#ifdef QBU_HAS_LOG
 
 	QString name;
 	const QMetaObject* pMetaObject= this->metaObject();
@@ -59,9 +64,10 @@ void qbuState::onExit( QEvent *event )
 		name = pMetaObject->className();
 	}
 
-	qDebug() << "Exiting state " << qPrintable(name);
+	QLOG_INFO() << "Exiting state " << name;
 
-#endif //def DEBUG_STATE_MACHINE
+#endif //def QBU_HAS_LOG
+
 }
 
 
