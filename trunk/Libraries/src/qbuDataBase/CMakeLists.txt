@@ -72,6 +72,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDBExpression.cxx
 	./src/qbuDBJoin.cxx
 	./src/qbuDeleteQuery.cxx
+	./src/qbuDBView.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -96,6 +97,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBExpression.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBJoin.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDeleteQuery.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBView.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
@@ -165,6 +167,35 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_UI_HDRS}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
+
+#########################################################################################
+
+if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
+	TARGET_LINK_LIBRARIES ( 
+		${LOCAL_PROJECT_NAME} 
+		${UPMC_EXTERNAL_LIBS} 
+		${QT_LIBRARIES} 
+		${QXT_LIBRARIES}
+	)
+
+	install(TARGETS ${LOCAL_PROJECT_NAME}
+	   RUNTIME
+	   DESTINATION bin
+	   COMPONENT Applications
+	)
+
+endif(BUILD_${LOCAL_PROJECT_NAME}_SHARED)
+
+#########################################################################################
+
+GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME} 
+	BASE_NAME ${LOCAL_PROJECT_NAME}
+	EXPORT_MACRO_NAME ${LOCAL_PROJECT_NAME}_EXPORT
+	EXPORT_FILE_NAME "${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDefines.h"
+	STATIC_DEFINE ${LOCAL_PROJECT_NAME}_STATIC
+)
+
+#########################################################################################
 
 install (FILES
 	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake

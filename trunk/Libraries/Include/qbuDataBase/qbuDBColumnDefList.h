@@ -1,5 +1,7 @@
-#ifndef __SMDBCOLUMNDEFLIST_H__
-#define __SMDBCOLUMNDEFLIST_H__
+#pragma once
+
+#ifndef QBUDBCOLUMNDEFLIST_H
+#define QBUDBCOLUMNDEFLIST_H
 
 #include "qbuDBColumnDef.h"
 #include <QList>
@@ -23,5 +25,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMDBCOLUMNDEFLIST_H__
-
+#endif // QBUDBCOLUMNDEFLIST_H
