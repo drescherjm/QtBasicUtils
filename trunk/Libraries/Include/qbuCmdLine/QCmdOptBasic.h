@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDOPTBASIC_H__
-#define __QCMDOPTBASIC_H__
+#ifndef QCMDOPTBASIC_H
+#define QCMDOPTBASIC_H
 
 #include "qbuCmdLine/QCmdOptBasicBaseMM.h"
 
@@ -54,4 +54,5 @@ typedef QCmdOptBasic<short,formatspec::SHORTFMT>	QCmdOpt_short;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDOPTBASIC_H__
+#endif // QCMDOPTBASIC_H
+

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QNAMEDCMDPART_H__
-#define __QNAMEDCMDPART_H__
+#ifndef QNAMEDCMDPART_H
+#define QNAMEDCMDPART_H
 
 #include "qbuCmdLine/QCmdPart.h"
 
@@ -36,4 +36,4 @@ inline QString QNamedCmdPart::GetName()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QNAMEDCMDPART_H__
+#endif // QNAMEDCMDPART_H

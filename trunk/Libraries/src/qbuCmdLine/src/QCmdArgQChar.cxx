@@ -77,7 +77,7 @@ int QCmdArgQChar::ImportData( QString strValue )
 QString QCmdArgQChar::GetSyntax()
 {
 	QString retVal;
-	QString tempStr = GetDescription() + ("%s [");
+	QString tempStr = GetDescription() + ("[");
 	tempStr += "%1";
 	tempStr += ("]");
 	retVal = QString(tempStr).arg(m_nDefaultValue);

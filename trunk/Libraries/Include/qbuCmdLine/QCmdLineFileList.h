@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDLINEFILELIST_H
+#define QCMDLINEFILELIST_H
+
 //
 // C++ Interface: QCmdLineFileList
 //
@@ -9,8 +14,6 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef __QCMDLINEFILELIST_H__
-#define __QCMDLINEFILELIST_H__
 
 #include <QStringList>
 
@@ -71,10 +74,14 @@ inline QCmdLineFileList& QCmdLineFileList::operator=(const QCmdLineFileList & ot
 	return (*this);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 inline QCmdLineFileList::QCmdLineFileList(const QCmdLineFileList & other )
 {
 	copy(other);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline void QCmdLineFileList::destroy() 
 {
@@ -82,6 +89,6 @@ inline void QCmdLineFileList::destroy()
 	m_strDefaultPath.clear();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-
-#endif //ndef __QCMDLINEFILELIST_H__
+#endif // QCMDLINEFILELIST_H

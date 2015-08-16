@@ -1,9 +1,11 @@
 #pragma once
 
-#ifndef __QCMDARGBASICBASE_H__
-#define __QCMDARGBASICBASE_H__
+#ifndef QCMDARGBASICBASE_H
+#define QCMDARGBASICBASE_H
 
 #include "qbuCmdLine/QCmdArg.h"
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE> class QCmdArgBasicBase : public QCmdArg  
 {
@@ -27,4 +29,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDARGBASICBASE_H__
+#endif // QCMDARGBASICBASE_H

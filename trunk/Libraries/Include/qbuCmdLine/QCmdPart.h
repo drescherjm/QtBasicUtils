@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDPART_H
+#define QCMDPART_H
+
 //
 // C++ Interface: QCmdPart
 //
@@ -9,11 +14,6 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-
-#pragma once
-
-#ifndef __QCMDPART_H__
-#define __QCMDPART_H__
 
 #include <QString>
 
@@ -46,14 +46,20 @@ protected:
 	QString			m_strExplanation;
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 inline QCmdPart::~QCmdPart()
 {
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline QString QCmdPart::GetDescription()
 {
 	return m_strDescription;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 inline QString QCmdPart::GetExplanation()
 {
@@ -62,4 +68,7 @@ inline QString QCmdPart::GetExplanation()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDPART_H__
+
+
+#endif // QCMDPART_H
+

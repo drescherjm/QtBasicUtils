@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDOPTBASICBASE_H__
-#define __QCMDOPTBASICBASE_H__
+#ifndef QCMDOPTBASICBASE_H
+#define QCMDOPTBASICBASE_H
 
 #include "qbuCmdLine/QCmdOpt.h"
 
@@ -35,4 +35,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDOPTBASICBASE_H__
+#endif // QCMDOPTBASICBASE_H

@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDPARSEERROR_H
+#define QCMDPARSEERROR_H
+
 
 //
 // C++ Interface: QCmdParseError
@@ -10,11 +15,6 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-
-#pragma once
-
-#ifndef __QCMDPARSEERROR_H__
-#define __QCMDPARSEERROR_H__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,4 +39,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDPARSEERROR_H__
+#endif // QCMDPARSEERROR_H

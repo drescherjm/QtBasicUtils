@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDARGBOOL_H
+#define QCMDARGBOOL_H
+
 //
 // C++ Interface: QCmdArgBool
 //
@@ -14,7 +19,7 @@
 
 #include "qbuCmdLine/QCmdArgBasicBase.h"
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdArgBool : public QCmdArgBasicBase<bool>
 {
@@ -33,4 +38,6 @@ private:
 	void			destroy();
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
+#endif // QCMDARGBOOL_H

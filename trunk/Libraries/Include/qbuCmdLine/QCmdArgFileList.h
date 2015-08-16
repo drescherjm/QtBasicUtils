@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDARGFILELIST_H__
-#define __QCMDARGFILELIST_H__
+#ifndef QCMDARGFILELIST_H
+#define QCMDARGFILELIST_H
 
 #include "qbuCmdLine/QCmdArgBasicBase.h"
 #include "qbuCmdLine/QCmdLineFileList.h"
@@ -34,4 +34,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDARGFILELIST_H__
+#endif // QCMDARGFILELIST_H

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDLINE_H__
-#define __QCMDLINE_H__
+#ifndef QCMDLINE_H
+#define QCMDLINE_H
 
 #include "qbuCmdLine/QCmd.h"
 
@@ -55,4 +55,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDLINE_H__
+#endif // QCMDLINE_H

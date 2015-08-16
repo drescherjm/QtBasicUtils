@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QCMDARGBASICBASEMM_H__
-#define __QCMDARGBASICBASEMM_H__
+#ifndef QCMDARGBASICBASEMM_H
+#define QCMDARGBASICBASEMM_H
 
 #include "qbuCmdLine/QCmdArgBasicBase.h"
 
@@ -32,4 +32,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDARGBASICBASEMM_H__
+#endif // QCMDARGBASICBASEMM_H

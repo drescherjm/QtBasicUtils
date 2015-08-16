@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDARG_H
+#define QCMDARG_H
+
 //
 // C++ Interface: QCmdArg
 //
@@ -10,12 +15,9 @@
 //
 //
 
-#ifndef __QCMDARG_H__
-#define __QCMDARG_H__
-
 #include "QNamedCmdPart.h"
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdArg : public QNamedCmdPart  
 {
@@ -47,6 +49,6 @@ inline bool QCmdArg::isOptional()
 	return m_bOptional;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-
-#endif //def __QCMDARG_H__
+#endif // QCMDARG_H

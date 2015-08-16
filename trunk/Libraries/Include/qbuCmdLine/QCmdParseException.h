@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QCMDPARSEEXCEPTION_H
+#define QCMDPARSEEXCEPTION_H
+
 //
 // C++ Interface: QCmdParseException
 //
@@ -9,11 +14,6 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-
-#pragma once
-
-#ifndef __QCMDPARSEEXCEPTION_H__
-#define __QCMDPARSEEXCEPTION_H__
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,4 +64,5 @@ inline QString QCmdParseException::GetErrorString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QCMDPARSEEXCEPTION_H__
+
+#endif // QCMDPARSEEXCEPTION_H

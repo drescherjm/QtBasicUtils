@@ -21,7 +21,7 @@ QString QCmdParseError::GetErrorString(quint32 nErrorCode, QString str0, QString
 		strError = ("ERROR: Found extra data while parsing parameter%1. %2%3");
 		break;
 	case PARAM_MISSING_DATA:
-		strError = ("ERROR: The parameter %s was missing data%1. %2%3");
+		strError = ("ERROR: The parameter %1 was missing data%2. %3");
 		break;
 	case PARAM_TOO_BIG:
 		strError = ("PARAM_TOO_BIG %1 %2%3");
