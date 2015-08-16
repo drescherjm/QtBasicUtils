@@ -544,6 +544,10 @@ int QCmd::qtutilsPrivate::Parse(QStringList & strLst)
 			break;
 		}
 		if ( retVal != QCmdParseError::STATUS_OK ) {
+			// Try to get additional information about the error.
+			if ((pOpt != nullptr) && (str.isEmpty())) {
+				str = pOpt->exportOptionName();
+			}
 			break;
 		}
 
