@@ -3,13 +3,14 @@
 #ifndef QBUERRORBASE_H
 #define QBUERRORBASE_H
 
-//#include "qbuBaseLibraryDefines.h"
+#include "qbuBase/qbuBaseLibraryDefines.h"
+
 #include <QString>
 #include <memory>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class /*qbuBase_EXPORT*/ qbuErrorBase
+class qbuBase_EXPORT qbuErrorBase
 {
 public:
 	qbuErrorBase();
