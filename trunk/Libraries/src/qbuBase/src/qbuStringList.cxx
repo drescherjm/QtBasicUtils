@@ -26,6 +26,22 @@ QString qbuStringList::toDelimitedString( QString delimiter/*=","*/ )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString qbuStringList::toDoubleDelimitedString(QString before, QString after)
+{
+	QString retVal;
+	if (!isEmpty()) {
+		foreach(QString str, *this) {
+			retVal.push_back(QString("%1%2%3")
+				.arg(before)
+				.arg(str)
+				.arg(after));
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  *	\brief
  *	This member function adds a case insensitive removeAll. 

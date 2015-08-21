@@ -25,11 +25,12 @@ public:
 	inline qbuStringList(const QStringList &l) : QStringList(l) { }
 	inline qbuStringList(const QList<QString> &l) : QStringList(l) { }
 public:
-	int		removeAll(QString strRemove,Qt::CaseSensitivity cs);
-	int		indexOf(const QString & str, Qt::CaseSensitivity cs, int from=0) const;
-	int		lastIndexOf( const QString & value, Qt::CaseSensitivity cs, int from = -1 ) const;
-	QString toCSVString();
-	QString toDelimitedString(QString delimiter=",");
+	int			removeAll(QString strRemove,Qt::CaseSensitivity cs);
+	int			indexOf(const QString & str, Qt::CaseSensitivity cs, int from=0) const;
+	int			lastIndexOf( const QString & value, Qt::CaseSensitivity cs, int from = -1 ) const;
+	QString		toCSVString();
+	QString		toDelimitedString(QString delimiter=",");
+	QString		toDoubleDelimitedString(QString before, QString after);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
