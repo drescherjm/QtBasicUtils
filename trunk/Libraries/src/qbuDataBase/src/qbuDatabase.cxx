@@ -638,11 +638,11 @@ bool qbuDatabase::verifyCoverage( qbuStringList & lstSucceeded, qbuStringList & 
 		}
 
 		if (!retVal) {
-			std::cerr << "Verify coverage test failed" << std::endl;
-			std::cerr << "Tables that failed verify: " << qPrintable(lstFailed.toCSVString()) << std::endl;
-			std::cerr << "Tables that were not in the database but verified in code: " << qPrintable(lstExtra.toCSVString()) << std::endl;
-			std::cerr << "Temp tables that were in the db but not verified: " << qPrintable(lstTemp.toCSVString()) << std::endl;
-			std::cerr << "Regular tables that were in the db but not verified: " << qPrintable(lstTables.toCSVString()) << std::endl;
+			QLOG_WARN() << "Verify coverage test failed\n"
+				<< "Tables that failed verify: " << lstFailed.toCSVString() << "\n"
+				<< "Tables that were not in the database but verified in code: " << lstExtra.toCSVString() << "\n"
+				<< "Temp tables that were in the db but not verified: " << lstTemp.toCSVString() << "\n"
+				<< "Regular tables that were in the db but not verified: " << lstTables.toCSVString();
 		}
 	}
 	return retVal;
