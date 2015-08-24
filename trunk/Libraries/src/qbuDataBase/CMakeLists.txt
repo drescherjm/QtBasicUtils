@@ -73,6 +73,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDBJoin.cxx
 	./src/qbuDeleteQuery.cxx
 	./src/qbuDBView.cxx
+	./src/qbuSqlQueryModel.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -104,6 +105,7 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuInfo.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuTableColumnDef.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBColumnDef.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSqlQueryModel.h
 )
 
 # some .ui files
