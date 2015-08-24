@@ -241,7 +241,7 @@ bool qbuTable::verifySchema()
 	bool retVal = schema.analyzeTable();
 	if (retVal) {
 
-		std::auto_ptr<qbuInfo> ptr(createInfoClass());
+		std::unique_ptr<qbuInfo> ptr(createInfoClass());
 		retVal = (ptr.get() != nullptr);
 		if (retVal) {
 			retVal = schema.verifyTable(ptr.get());
