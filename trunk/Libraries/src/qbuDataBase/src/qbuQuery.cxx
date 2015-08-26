@@ -60,7 +60,17 @@ bool qbuQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strFie
 			const QVariant& vt = pProp->GetData();
 			retVal = vt.canConvert(QVariant::String);
 			if (retVal) {
-				strExpr = genExpr(strField, vt.toString(), strOperator);
+				
+				switch (vt.type()) {
+				case QVariant::Date:
+				case QVariant::DateTime:
+					strExpr = genExpr(strField, QString("\'%1\'").arg(vt.toString()), strOperator);
+					break;
+				default:
+					strExpr = genExpr(strField, vt.toString(), strOperator);
+					break;
+				}
+				
 				//strExpr = QString(" ( %1 %2 %3 ) ").arg(strField).arg(strOperator).arg(vt.toString());
 			}
 
