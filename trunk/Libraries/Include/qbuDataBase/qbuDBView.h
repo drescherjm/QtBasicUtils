@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef QBUDBVIEW_H
+#define QBUDBVIEW_H
+
 class qbuDatabase;
 class qbuPropertyMap;
 class qbuInfo;
@@ -39,4 +44,4 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
+#endif // QBUDBVIEW_H
