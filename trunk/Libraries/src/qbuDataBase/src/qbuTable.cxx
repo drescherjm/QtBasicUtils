@@ -74,24 +74,33 @@ bool qbuTable::insertData(qbuPropertyMap* pData, qbudb::InsertMode im /*= IM_NO_
 			if (!retVal) {
 				// 
 
+
 				QString strError = QString("Failed to insert data into the table %1. "
-					"Using the following query: ").arg(getTableName());
-				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
+					"Using the following query: \n").arg(getTableName());
+
+				QTextStream stream(&strError);
+
+				//QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 				QString str;
-				if (!query.generateQueryString(str, pData, this, im)) {
-					str = query.executedQuery();
+				if (query.generateQueryString(str, pData, this, im)) {
+					stream << str << "\n";
 				}
-
-				QLOG_CRIT() << QBULOG_DATABASE_TYPE << str;
+				else
+				{
+					stream << query.executedQuery() << "\n";
+				}
+				
+				//QLOG_CRIT() << QBULOG_DATABASE_TYPE << str;
 
 
 				QSqlError error = query.lastError();
 
-				QLOG_CRIT() << QBULOG_DATABASE_TYPE << error.text();
+				stream << error.text() << "\n";
 
-				pData->Print(std::cerr);
-
+				pData->Print(stream);
+				
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
 			}
 		}
