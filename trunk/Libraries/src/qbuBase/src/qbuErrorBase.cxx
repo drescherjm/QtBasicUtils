@@ -63,3 +63,14 @@ bool qbuErrorBase::hasRecordedErrors()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuErrorBase::prependFailureReason(QString strFailure)
+{
+	bool retVal = (m_pPrivate != nullptr);
+	if (retVal) {
+		m_pPrivate->m_strFailureMessage.prepend(strFailure);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

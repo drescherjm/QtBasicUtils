@@ -16,6 +16,7 @@ public:
 	qbuErrorBase();
 	virtual ~qbuErrorBase();
 public:
+	bool		prependFailureReason(QString strFailure);
 	bool		appendFailureReason( QString strFailure );
 	QString		getFailureReasons();
 	bool		hasRecordedErrors();
