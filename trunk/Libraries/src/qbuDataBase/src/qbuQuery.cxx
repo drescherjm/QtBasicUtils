@@ -62,6 +62,9 @@ bool qbuQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strFie
 			if (retVal) {
 				
 				switch (vt.type()) {
+				case QVariant::String:
+					strExpr = genExpr(strField, QString("\'%1\'").arg(vt.toString()), strOperator);
+					break;
 				case QVariant::Date:
 					strExpr = genExpr(QString("date(%1)").arg(strField), QString("date(\'%1\')").arg(vt.toString()), strOperator);
 					break;
