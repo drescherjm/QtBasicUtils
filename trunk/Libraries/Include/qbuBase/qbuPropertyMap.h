@@ -46,7 +46,8 @@ public:
 	QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
 	bool			fromXML(QString strXML);
 	bool			fromXML(QDomElement & domElem);
-	void			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
+	unsigned int	CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other);
+	bool			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
 	void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");
 	bool			EqualSubset(QStringList lstPropNames, const qbuPropertyMap & other);
 	bool			RemoveProperty(QString strName);

@@ -57,10 +57,7 @@ void qbuInfo::copy( const qbuInfo & other )
 void qbuInfo::copy( const qbuPropertyMap * other )
 {
 	if (other != NULL) {
-		const QStringList& lst = getDBFieldNames();
-		foreach(QString str,lst) {
-			CopyProperty(str,*other);
-		}
+		CopyProperties(getDBFieldNames(), *other);
 	}
 }
 

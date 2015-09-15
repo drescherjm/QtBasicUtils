@@ -234,7 +234,16 @@ void qbuPropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & other, QString strNewName/*=""*/, 
+/**
+ *	\brief 
+ *	This function copies a property from other if found and optionally renames 
+ *	the property if strNewName is specified.
+ *
+ *	\returns true if a property was copied.
+ *
+ */
+
+bool qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & other, QString strNewName/*=""*/, 
 	bool bOverWriteExisting /*=true*/)
 {
 	
@@ -243,7 +252,10 @@ void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & ot
 	}
 
 	qbuPropertyMap::const_iterator it = other.find(strOldName);
-	if ( it != other.end()) {
+
+	bool retVal = (it != other.end() );
+
+	if (retVal) {
 		qbuProperty prop = **it;
 		
 		if (!strNewName.isEmpty()) {
@@ -251,11 +263,13 @@ void qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & ot
 			strOldName = strNewName;
 		}
 
-		if ( (bOverWriteExisting) || !hasField(strOldName) ) {
+		retVal = ((bOverWriteExisting) || !hasField(strOldName));
+		if ( retVal ) {
 			insert(prop);
 		}
 		
 	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -651,6 +665,22 @@ QStringList qbuPropertyMap::getPropertyList() const
 bool qbuPropertyMap::hasField( QString strFieldName ) const
 {
 	return (find(strFieldName) != end());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+unsigned int qbuPropertyMap::CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other)
+{
+	unsigned int retVal = 0;
+
+	const QStringList& lst = lstPropNames;
+	foreach(QString str, lst) {
+		if (CopyProperty(str, other)) {
+			retVal++;
+		}
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
