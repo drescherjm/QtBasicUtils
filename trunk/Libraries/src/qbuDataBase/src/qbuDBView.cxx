@@ -6,6 +6,8 @@
 #include "qbuBase/qbuStringList.h"
 #include "qbuDataBase/qbuCreateViewQuery.h"
 #include "qbuDataBase/qbuSimpleQuery.h"
+#include "qbuDataBase/qbuInfo.h"
+#include "qbuLog/qbuLog.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +159,36 @@ bool qbuDBView::dropView()
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS
 
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBView::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFields) const
+{
+	bool retVal = (pInfo != nullptr);
+	if (retVal) {
+		qbuStringList lstMissingRequired;
+
+		const QStringList& lst = lstFields;
+		foreach(QString str, lst) {
+			if (!pInfo->hasField(str)) {
+				lstMissingRequired.push_back(str);
+			}
+		}
+
+		retVal = lstMissingRequired.isEmpty();
+		if (!retVal) {
+
+			QString strMessage = QString("A query on table %1 will fail because the "
+				"following fields are not defined in the qbuInfo class (%2): %3")
+				.arg(getDBViewName())
+				.arg(pInfo->metaObject()->className())
+				.arg(lstMissingRequired.toCSVString());
+
+			QLOG_WARN() << QBULOG_DATABASE_TYPE << strMessage;
 		}
 	}
 	return retVal;

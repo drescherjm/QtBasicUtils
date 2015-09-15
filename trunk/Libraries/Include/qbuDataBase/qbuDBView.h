@@ -29,6 +29,7 @@ public:
 	virtual bool		verifySchema();
 	virtual QString		getDBViewName() const =0;
 	virtual const QStringList&	getFieldList() const;
+	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
 protected:
 	virtual bool				dropView();
@@ -37,7 +38,6 @@ protected:
 	virtual bool				internalCreateDBView(QString strDBViewName, QString strDBViewSQL, bool bTempView=false);
 
 	virtual	bool				isValidField(QString strName);
-
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
 };
