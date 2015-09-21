@@ -36,6 +36,8 @@ public:
 public:
 	virtual bool	performUpgrade();
 
+	virtual	bool	forceUpdateViews();
+
 	virtual bool	fixKnownProblems();
 
 	// Attach a database file to the connection.
