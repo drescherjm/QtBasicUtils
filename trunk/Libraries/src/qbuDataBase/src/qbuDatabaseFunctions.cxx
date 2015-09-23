@@ -61,6 +61,25 @@ QString doubleQuoteIfNecissary(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+extern QString quoteSQLObjectNameIfNecissary(QString str)
+{
+	QString retVal = str;
+	if (str.contains(QRegExp("\\s+"))) {
+		if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
+			retVal.prepend("\"");
+			retVal.append("\"");
+		}
+
+	}
+	else if ( !str.isEmpty() && str[0].isDigit() ) {
+		retVal.prepend("\"");
+		retVal.append("\"");
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 extern QString toQueryValue(QVariant & vt)
 {
 	QString retVal;
@@ -97,3 +116,5 @@ extern QString toQueryValue(const QVariant & vt)
 	QVariant val = vt;
 	return toQueryValue(val);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////

@@ -8,4 +8,5 @@ extern bool	   isSingleQuoted(QString str);
 extern bool	   isDoubleQuoted(QString str);
 extern QString toQueryValue(QVariant & vt);
 extern QString toQueryValue(const QVariant & vt);
+extern QString	quoteSQLObjectNameIfNecissary(QString str);
 
