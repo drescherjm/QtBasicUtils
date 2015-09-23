@@ -29,7 +29,8 @@ public:
 	qbuSelectQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuSelectQuery();
 public:
-	enum	SelectOption { QBU_SELECT_DEFAULT, QBU_SELECT_DISTINCT, QBU_SELECT_ALL };
+	enum	SelectOption	{ QBU_SELECT_DEFAULT, QBU_SELECT_DISTINCT, QBU_SELECT_ALL };
+	enum	OrderByOption	{ QBU_ASC, QBU_DESC };
 public:
 	virtual	bool	generateSQL(QString & strSQL);
 	virtual bool	generateQuery();
@@ -46,14 +47,14 @@ public:
 	bool	appendWhereExpression(QString strExpression);
 	bool	appendWhereExpression(const qbuDBExpression & expr);
 
-	bool	addOrderByField(QString strField, QString strTableAlias = QString(), QString strASC = QString());
+	bool	addOrderByField(QString strField, QString strTableAlias = QString(), OrderByOption orderBy = QBU_ASC);
 	bool	addGroupByField(QString strField, QString strTableAlias = QString());
 
-	bool	addOrderByField(const qbuDBColDef & colDef);
+	bool	addOrderByField(const qbuDBColDef & colDef, OrderByOption orderBy = QBU_ASC);
 
 	bool	addGroupByField(const qbuDBColDef & colDef);
 
-	bool	addOrderByFields(const QStringList & lstFields, QString strTableAlias = QString(), QString strASC = QString());
+	bool	addOrderByFields(const QStringList & lstFields, QString strTableAlias = QString(), OrderByOption orderBy=QBU_ASC);
 	bool	addGroupByFields(const QStringList & lstFields, QString strTableAlias = QString());
 
 	bool	appendHavingExpression(QString strExpression);

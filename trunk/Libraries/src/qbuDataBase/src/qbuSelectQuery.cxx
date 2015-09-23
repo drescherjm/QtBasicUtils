@@ -31,7 +31,7 @@ public:
 	QString		generateCSVList(QStringList lst);
 	QString		generateCSVList(QStringList lst, QStringList lstAliases);
 	QString		getNextAlias(QStringList lst, QStringList::iterator & it);
-	void		handleOrderByASC(qbuDBColDef &col, QString strASC);
+	void		handleOrderByASC(qbuDBColDef &col, OrderByOption order);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -347,7 +347,7 @@ bool qbuSelectQuery::addGroupByField(const qbuDBColDef & colDef)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, QString strASC/*=QString()*/)
+bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, OrderByOption order)
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -356,7 +356,7 @@ bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, QS
 		}
 		qbuDBColDef col(strField);
 
-		m_pPrivate->handleOrderByASC(col, strASC);
+		m_pPrivate->handleOrderByASC(col, order);
 
 		retVal = addOrderByField(col);
 
@@ -366,7 +366,7 @@ bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, QS
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByField(const qbuDBColDef & colDef)
+bool qbuSelectQuery::addOrderByField(const qbuDBColDef & colDef, OrderByOption order)
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -460,14 +460,14 @@ qbuDBColumnDefList* qbuSelectQuery::getSelectFields()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addOrderByFields(const QStringList & lstFields, QString strTableAlias, QString strASC)
+bool qbuSelectQuery::addOrderByFields(const QStringList & lstFields, QString strTableAlias, OrderByOption order)
 {
 	bool retVal = !lstFields.isEmpty();
 
 	foreach(QString str, lstFields) {
 		qbuDBColDef coldef = qbuDBColDef(str).addTableAlias(strTableAlias);
 
-		m_pPrivate->handleOrderByASC(coldef, strASC);
+		m_pPrivate->handleOrderByASC(coldef, order);
 
 		if (!addOrderByField(coldef)) {
 			retVal = false;
@@ -548,15 +548,13 @@ bool qbuSelectQuery::addJoin(const qbuDBJoin & DBJoin)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuSelectQuery::smPrivate::handleOrderByASC(qbuDBColDef &col, QString strASC)
+void qbuSelectQuery::smPrivate::handleOrderByASC(qbuDBColDef &col, OrderByOption order)
 {
-	if (!strASC.isEmpty()) {
-		strASC = strASC.trimmed();
-		if (!strASC.isEmpty()) {
-			if (strASC.compare("DESC", Qt::CaseInsensitive) == 0) {
-				col.m_options |= qbuDBColDef::OP_DESCENDING;
-			}
-		}
+	switch (order)
+	{
+	case qbuSelectQuery::QBU_DESC:
+		col.m_options |= qbuDBColDef::OP_DESCENDING;
+		break;
 	}
 }
 
