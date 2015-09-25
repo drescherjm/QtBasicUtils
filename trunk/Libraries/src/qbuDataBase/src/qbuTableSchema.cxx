@@ -130,6 +130,23 @@ bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 				//strError += "\nqbuTableSchema::verifyTable end " + m_pTable->getTableName();
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
 			}
+			if (retVal) {
+				QSet<QString> setRequired = m_pTable->getRequiredFieldList().toSet();
+				if (!setRequired.isEmpty()) {
+					setRequired.subtract(pInfo->getDBFieldNames().toSet());
+
+					retVal = setRequired.isEmpty();
+					if (!retVal) {
+						QString strError = QString("qbuTableSchema::verifyTable failed for the table %1 ").arg(m_pTable->getTableName());
+						strError += "\nThe database has the following columns listed as required but they are not in the info class: ";
+						foreach(QString strField, setRequired) {
+							strError += strField + " ";
+						}	
+						QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
+					}
+				
+				}
+			}
 		}
 	}
 
