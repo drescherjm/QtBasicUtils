@@ -54,7 +54,7 @@ public: \
 *	Declare private helper functions for copy constructor and assignment operator
 */
 #define QBU_DECLARE_CPY_ASGN_HELPERS(className) \
-private: \
+protected: \
 	void copy(const className & other); \
 	void destroy(); 
 
