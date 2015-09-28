@@ -2,6 +2,7 @@
 
 #include "qbuDataBase/qbuDBJoin.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +25,7 @@ public:
 	QString				m_strAlias;
 	qbudb::JoinFlag		m_JoinFlag;
 	QStringList			m_lstExpressions;
+	QStringList			m_lstUsing;
 	bool				m_bAllowEmptyExpression;
 };
 
@@ -98,6 +100,10 @@ QString qbuDBJoin::smPrivate::toString()
 		else
 		{
 			retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString();
+			if (!m_lstUsing.isEmpty()) {
+				retVal += QString(" USING ( %1 ) ").arg(m_lstUsing.join(","));
+			}
+					
 		}
 
 	}
@@ -282,6 +288,30 @@ qbuDBJoin qbuDBJoin::addAllowEmptyExpression( bool bAllow ) const
 	qbuDBJoin retVal(*this);
 
 	retVal.setAllowEmptyExpression(bAllow);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBJoin qbuDBJoin::addUSINGFields(const QStringList & lstFields) const
+{
+	qbuDBJoin retVal(*this);
+
+	retVal.setUSINGFields(lstFields);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBJoin::setUSINGFields(const QStringList & lstFields)
+{
+	bool retVal = m_pPrivate->m_lstExpressions.isEmpty();
+
+	foreach (QString str,lstFields) {
+		m_pPrivate->m_lstUsing << quoteSQLObjectNameIfNecissary(str);
+	}
 
 	return retVal;
 }

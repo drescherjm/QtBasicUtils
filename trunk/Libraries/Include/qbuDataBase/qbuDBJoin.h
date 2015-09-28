@@ -24,6 +24,7 @@ public:
 	bool		setJoinFlag(qbudb::JoinFlag jf);
 	bool		setJoinSource(QString strSource, QString strAlias=QString());
 	bool		setAllowEmptyExpression(bool bAllowEmpty);
+	bool		setUSINGFields(const QStringList & lstFields);
 
 public:
 	bool		appendExpression(const qbuDBExpression & dbExpression);
@@ -33,6 +34,7 @@ public:
 	qbuDBJoin	addJoinFlag(qbudb::JoinFlag jf) const;
 	qbuDBJoin	addJoinSource(QString strSource, QString strAlias=QString()) const;
 	qbuDBJoin	addAllowEmptyExpression(bool bAllow) const;
+	qbuDBJoin	addUSINGFields(const QStringList & lstFields) const;
 
 public:
 	QString toString(bool *bOK=nullptr) const;
