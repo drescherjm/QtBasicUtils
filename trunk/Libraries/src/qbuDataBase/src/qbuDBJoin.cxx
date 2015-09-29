@@ -136,6 +136,9 @@ QString qbuDBJoin::smPrivate::getJoinString()
 	case qbudb::JF_NATURAL_CROSS_JOIN:
 		retVal = "NATURAL CROSS JOIN ";
 		break;
+	case qbudb::JF_NATURAL_LEFT_OUTER_JOIN:
+		retVal = "NATURAL LEFT OUTER JOIN ";
+		break;
 	}
 
 	return retVal;
