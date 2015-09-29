@@ -9,6 +9,7 @@
 #include <QObject>
 #include "qbuCmdLine/QCmdLineFileList.h"
 #include <limits>
+#include "qbuBase/qbuErrorBase.h"
 //#include "qbuCmdLine/QCmdArg.h"
 //#include "qbuCmdLine/QCmdOpt.h"
 
@@ -29,7 +30,7 @@ const double	NEG_DOUBLE_MAX = -1.0 * DBL_MAX;
  
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class QCmd : public QObject
+class QCmd : public QObject, public qbuErrorBase
 {
 	Q_OBJECT
 public:
