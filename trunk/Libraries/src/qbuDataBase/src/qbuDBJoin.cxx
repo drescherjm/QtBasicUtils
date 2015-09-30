@@ -82,11 +82,11 @@ QString qbuDBJoin::smPrivate::toString()
 	QString retVal;
 
 	if (isSingleSource()) {
-		retVal = qbuDBColDef(m_strSource,m_strAlias).getFullString();
+		retVal = qbuDBColDef(m_strSource).addAlias(m_strAlias).getFullString();
 	}
 	else
 	if (isNaturalJoin()) {
-		retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString();
+		retVal = getJoinString() + qbuDBColDef(m_strSource).addAlias(m_strAlias).getFullString();
 	}
 	else
 	{
