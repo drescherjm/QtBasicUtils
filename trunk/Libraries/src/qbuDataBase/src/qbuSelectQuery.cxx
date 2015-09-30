@@ -143,7 +143,7 @@ bool qbuSelectQuery::addFromField(QString strField, QString strAlias/*=QString()
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
-		qbuDBColDef col(strField, strAlias);
+		qbuDBColDef col = qbuDBColDef(strField).addAlias(strAlias);
 		m_pPrivate->m_lstFrom.push_back(col);
 	}
 	return retVal;
@@ -411,7 +411,7 @@ bool qbuSelectQuery::generateSQL(QString & strSQL)
 
 			if (!m_pPrivate->m_lstJOIN.isEmpty()) {
 				foreach(QString str, m_pPrivate->m_lstJOIN) {
-					strQuery.append(" ");
+					strQuery.append("\n ");
 					strQuery.append(str);
 				}
 			}

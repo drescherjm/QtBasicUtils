@@ -95,13 +95,13 @@ QString qbuDBJoin::smPrivate::toString()
 		QString strExpr = expr.toString();
 
 		if (!strExpr.simplified().isEmpty()) {
-			retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString() + " ON " + strExpr + " ";
+			retVal = getJoinString() + qbuDBColDef(m_strSource).addAlias(m_strAlias).getFullString() + " ON\n  " + strExpr + " ";
 		}
 		else
 		{
-			retVal = getJoinString() + qbuDBColDef(m_strSource,m_strAlias).getFullString();
+			retVal = getJoinString() + qbuDBColDef(m_strSource).addAlias(m_strAlias).getFullString();
 			if (!m_lstUsing.isEmpty()) {
-				retVal += QString(" USING ( %1 ) ").arg(m_lstUsing.join(","));
+				retVal += QString(" USING \n   ( %1 ) ").arg(m_lstUsing.join(","));
 			}
 					
 		}

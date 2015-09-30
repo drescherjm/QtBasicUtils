@@ -3,6 +3,7 @@
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 #include "qbuDataBase/qbuDBExpression.h"
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +37,12 @@ qbuDBColDef::qbuDBColDef(QString strFieldName, QString strAlias) :
 m_strName(quoteSQLObjectNameIfNecissary(strFieldName)),
 m_strAlias(quoteSQLObjectNameIfNecissary(strAlias))
 {
+	QRegExp reg("[TQV]+\\d+");
 
+	if (reg.exactMatch(strAlias)) {
+		QString strMsg = QString("Suspicious use of the Alias parameter -n %1. It looks like a table alias instead.").arg(__FUNCTION__);
+		QLOG_WARN() << strMsg;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
