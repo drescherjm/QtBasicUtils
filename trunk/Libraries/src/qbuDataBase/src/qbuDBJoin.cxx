@@ -15,6 +15,7 @@ public:
 	bool isNaturalJoin();
 	bool isSingleSource();
 	bool isValid();
+	bool hasUSING();
 
 	QString getJoinString();
 	QString toString();
@@ -63,7 +64,8 @@ bool qbuDBJoin::smPrivate::isValid()
 	bool retVal;
 
 	retVal = ( (isNaturalJoin() || isSingleSource())  && m_lstExpressions.isEmpty()) || 
-		(!(isNaturalJoin() || isSingleSource()) && ( !m_lstExpressions.isEmpty() || m_bAllowEmptyExpression) );
+		(!(isNaturalJoin() || isSingleSource()) && 
+		( !m_lstExpressions.isEmpty() || hasUSING() || m_bAllowEmptyExpression) );
 
 	return retVal;
 }
@@ -142,6 +144,13 @@ QString qbuDBJoin::smPrivate::getJoinString()
 	}
 
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBJoin::smPrivate::hasUSING()
+{
+	return !m_lstUsing.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +235,7 @@ void qbuDBJoin::copy( const qbuDBJoin & other )
 	m_pPrivate->m_strSource = other.m_pPrivate->m_strSource;
 	m_pPrivate->m_strAlias = other.m_pPrivate->m_strAlias;
 	m_pPrivate->m_bAllowEmptyExpression = other.m_pPrivate->m_bAllowEmptyExpression;
+	m_pPrivate->m_lstUsing = other.m_pPrivate->m_lstUsing;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -312,8 +322,10 @@ bool qbuDBJoin::setUSINGFields(const QStringList & lstFields)
 {
 	bool retVal = m_pPrivate->m_lstExpressions.isEmpty();
 
-	foreach (QString str,lstFields) {
-		m_pPrivate->m_lstUsing << quoteSQLObjectNameIfNecissary(str);
+	if (retVal) {
+		foreach(QString str, lstFields) {
+			m_pPrivate->m_lstUsing << quoteSQLObjectNameIfNecissary(str);
+		}
 	}
 
 	return retVal;
