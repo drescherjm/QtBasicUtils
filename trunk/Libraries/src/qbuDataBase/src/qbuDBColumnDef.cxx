@@ -41,7 +41,7 @@ m_strAlias(quoteSQLObjectNameIfNecissary(strAlias))
 
 	if (reg.exactMatch(strAlias)) {
 		QString strMsg = QString("Suspicious use of the Alias parameter -n %1. It looks like a table alias instead.").arg(__FUNCTION__);
-		QLOG_WARN() << strMsg;
+		QLOG_WARN() << QBULOG_DATABASE_TYPE  << strMsg;
 	}
 }
 

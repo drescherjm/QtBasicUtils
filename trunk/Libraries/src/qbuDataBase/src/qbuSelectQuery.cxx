@@ -296,7 +296,8 @@ bool qbuSelectQuery::appendWhereExpression(const qbuDBExpression & expr)
 	}
 	else
 	{
-		QLOG_CRIT() << QBULOG_DATABASE_TYPE << "Failed to generate expression";
+		QString strMessage = QString("%1 failed to generate a WHERE expression.").arg(__FUNCTION__);
+		QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMessage;
 	}
 	return retVal;
 }
