@@ -43,6 +43,11 @@ public:
 	qbuDBColDef addAlias(QString strAlias) const;
 	qbuDBColDef addName(QString strAlias, Options op = OP_AUTO_QUOTE) const;
 	qbuDBColDef addExpression(QString strExpression) const;
+
+public:
+	void	setTableAlias(QString strTableAlias);
+	void	setAlias(QString strAlias);
+
 public:
 	//Get the string that will be suitable for a column-def for a query.
 	QString getFullString() const;

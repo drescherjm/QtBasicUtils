@@ -77,7 +77,7 @@ qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
 qbuDBColDef qbuDBColDef::addTableAlias(QString strTableAlias) const
 {
 	qbuDBColDef retVal(*this);
-	retVal.m_strTableAlias = quoteSQLObjectNameIfNecissary(strTableAlias);
+	retVal.setTableAlias(strTableAlias);
 	return retVal;
 }
 
@@ -91,7 +91,7 @@ qbuDBColDef qbuDBColDef::addTableAlias(QString strTableAlias) const
 qbuDBColDef qbuDBColDef::addAlias(QString strAlias) const
 {
 	qbuDBColDef retVal(*this);
-	retVal.m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+	retVal.setAlias(strAlias);
 	return retVal;
 }
 
@@ -195,6 +195,20 @@ QString qbuDBColDef::getAlias() const
 bool qbuDBColDef::hasAlias() const
 {
 	return !getAlias().isEmpty();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuDBColDef::setTableAlias(QString strTableAlias)
+{
+	m_strTableAlias = quoteSQLObjectNameIfNecissary(strTableAlias);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuDBColDef::setAlias(QString strAlias)
+{
+	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

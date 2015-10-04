@@ -352,14 +352,14 @@ bool qbuSelectQuery::addOrderByField(QString strField, QString strTableAlias, Or
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
-		if (!strTableAlias.isEmpty()) {
-			strField.prepend(strTableAlias + ".");
-		}
+
 		qbuDBColDef col(strField);
 
-		m_pPrivate->handleOrderByASC(col, order);
+		if (!strTableAlias.isEmpty()) {
+			col.setTableAlias(strTableAlias);
+		}
 
-		retVal = addOrderByField(col);
+		retVal = addOrderByField(col,order);
 
 	}
 	return retVal;
@@ -373,6 +373,7 @@ bool qbuSelectQuery::addOrderByField(const qbuDBColDef & colDef, OrderByOption o
 	if (retVal) {
 		qbuDBColDef col(colDef);
 		col.m_strAlias.clear();
+		m_pPrivate->handleOrderByASC(col, order);
 		m_pPrivate->m_lstOrderBy.push_back(col);
 	}
 	return retVal;
