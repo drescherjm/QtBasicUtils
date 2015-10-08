@@ -540,12 +540,12 @@ bool qbuSelectQuery::appendHavingExpression(QString strExpression)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addJoin(const qbuDBJoin & DBJoin)
+bool qbuSelectQuery::addJoin(const qbuDBJoin & dbJoin)
 {
 	bool retVal = (m_pPrivate != nullptr);
 
 	if (retVal) {
-		QString strJOIN = DBJoin.toString(&retVal);
+		QString strJOIN = dbJoin.toString(&retVal);
 
 		if (retVal && !strJOIN.isEmpty()) {
 			m_pPrivate->m_lstJOIN.append(strJOIN);

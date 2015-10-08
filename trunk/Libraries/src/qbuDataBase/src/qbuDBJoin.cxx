@@ -205,6 +205,10 @@ QString qbuDBJoin::toString( bool *bOK/*=nullptr*/ ) const
 	if (bVal) {
 		retVal = m_pPrivate->toString();
 	}
+
+	if (bOK != nullptr) {
+		*bOK = bVal;
+	}
 	
 	return retVal;
 }

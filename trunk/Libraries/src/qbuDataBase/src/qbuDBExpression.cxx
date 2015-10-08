@@ -73,11 +73,11 @@ QString qbuDBExpression::toString( bool *bOK ) const
 			retVal = QString(" ( %1 ) ").arg(retVal);
 		}
 
-		if (bOK != nullptr) {
-			*bOK = bValid;
-		}
 	}
 
+	if (bOK != nullptr) {
+		*bOK = bValid;
+	}
 	return retVal;
 }
 
