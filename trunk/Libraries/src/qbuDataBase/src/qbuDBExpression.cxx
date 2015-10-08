@@ -72,6 +72,10 @@ QString qbuDBExpression::toString( bool *bOK ) const
 		if (m_pPrivate->m_bEncloseInParentheses) {
 			retVal = QString(" ( %1 ) ").arg(retVal);
 		}
+
+		if (bOK != nullptr) {
+			*bOK = bValid;
+		}
 	}
 
 	return retVal;

@@ -308,7 +308,7 @@ bool qbuSelectQuery::appendWhereExpression(const qbuDBExpression & expr)
 		}
 		else
 		{
-			strMessage.append(QString("The expression is %1").arg(strExpr));
+			strMessage.append(QString(" The expression is %1").arg(strExpr));
 		}
 		
 		QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMessage;
