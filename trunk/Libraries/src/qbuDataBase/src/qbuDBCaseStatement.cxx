@@ -79,6 +79,10 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 		retVal.append(" END");
 	}
 
+	if (bOK != nullptr) {
+		*bOK = bValid;
+	}
+
 	return retVal;
 }
 
