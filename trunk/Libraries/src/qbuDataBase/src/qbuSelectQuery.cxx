@@ -280,6 +280,11 @@ bool qbuSelectQuery::appendWhereExpression(QString strExpression)
 			m_pPrivate->m_strWhereClause.append(strExpression);
 		}
 	}
+	else
+	{
+		QString strMsg = QString("The private pointer is null at %1").arg(__FUNCTION__);
+		QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
+	}
 
 	return retVal;
 }
@@ -297,6 +302,15 @@ bool qbuSelectQuery::appendWhereExpression(const qbuDBExpression & expr)
 	else
 	{
 		QString strMessage = QString("%1 failed to generate a WHERE expression.").arg(__FUNCTION__);
+
+		if (strExpr.isEmpty()) {
+			strMessage.append(" The expression is empty. ");
+		}
+		else
+		{
+			strMessage.append(QString("The expression is %1").arg(strExpr));
+		}
+		
 		QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMessage;
 	}
 	return retVal;
