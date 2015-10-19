@@ -44,6 +44,9 @@ public:
 	template< typename T>
 	bool	exportData(T*, QList< QSharedPointer<T> > & lst);
 
+	template< typename T>
+	bool	exportData(T*, QList< std::shared_ptr<T> > & lst);
+
 protected:
 	virtual bool				renameTable(QString strNewName);
 	virtual bool				createTable(int nSchema)=0;
@@ -101,6 +104,44 @@ bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst)
 	return retVal;
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>
+bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst)
+{
+
+	qbuStringList lstWhereFields = pInfo->getDBFieldNames();
+	bool retVal = true;
+	if (retVal) {
+		qbuSelectQuery query(m_pDB);
+		query.addSelectFields(lstWhereFields);
+		query.addFromField(getTableName());
+		query.appendWhereExpressions(lstWhereFields, pInfo, qbuQuery::WE_IGNORE_MISSING_FIELDS);
+		if (retVal) {
+			retVal = query.generateQuery();
+			if (retVal) {
+				retVal = query.exec();
+				if (retVal) {
+					T record;
+					while (query.next() && retVal) {
+						retVal = query.getRecord(&record);
+						if (retVal) {
+
+							std::shared_ptr<T> ptr(new T(record));
+
+							lst.push_back(ptr);
+						}
+					}
+				}
+			}
+		}
+
+	}
+	return retVal;
+
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
