@@ -7,7 +7,8 @@
 #include <qglobal.h>
 #endif
 
-#if (QT_VERSION < QT_VERSION_CHECK(5,5,0))
+// Note: QT_VERSION_CHECK(5,5,0) does not work in qt4 moc since it does not expand macros so we force a version directly!
+#if (QT_VERSION < 0x050500)
 #include <QDesignerCustomWidgetInterface>
 #else
 #include <QtUiPlugin/QDesignerCustomWidgetInterface>
@@ -18,7 +19,7 @@
 class qbuGroupBoxInterface : public QObject, public QDesignerCustomWidgetInterface
 {
 	Q_OBJECT
-    Q_INTERFACES(QDesignerCustomWidgetInterface)
+	Q_INTERFACES(QDesignerCustomWidgetInterface)
 
 public:
 	explicit qbuGroupBoxInterface(QObject *parent = 0);

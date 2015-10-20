@@ -15,7 +15,7 @@ namespace qbu {
 	class QDESIGNER_WIDGET_EXPORT qbuLineEdit : public QLineEdit
 	{
 		Q_OBJECT
-			QBU_DECLARE_SUPERCLASS(QLineEdit)
+		QBU_DECLARE_SUPERCLASS(QLineEdit)
 	public:
 		explicit qbuLineEdit(QWidget* parent = 0);
 		explicit qbuLineEdit(const QString &title, QWidget* parent = 0);
