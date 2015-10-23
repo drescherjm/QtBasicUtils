@@ -86,6 +86,8 @@ conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 
 add_subdirectory(Libraries)
 
+conditional_define(QBU_BUILD_DATABASE QBU_BUILD_DATABASE)
+
 if(BUILD_TESTING)
 	ENABLE_TESTING()
 	add_subdirectory(Testing)

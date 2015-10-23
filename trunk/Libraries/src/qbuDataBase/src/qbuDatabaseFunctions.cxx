@@ -33,26 +33,17 @@ bool isSQLFunction(QString str)
 QString singleQuoteIfNecissary(QString str)
 {
 	QString retVal = str;
-	if (str.contains(QRegExp("\\s+"))) {
+
+	QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
+
+	if (!reg.exactMatch(str) ) {
 		if ( !beginsAndEnds(str,'(',')') && !beginsAndEnds(str,'\'','\'') && !beginsAndEnds(str,'\"','\"')) {
 			if (!isSQLFunction(str)) {
 				retVal.prepend("\'");
 				retVal.append("\'");
 			}
 		}
-		else
-			// If a string has both numbers and letters lets quote it!
-			if (retVal.contains(QRegExp("\\d")) && retVal.contains(QRegExp("[a-zA-Z]"))) {
-				retVal.prepend("\'");
-				retVal.append("\'");
-			}
 	}
-	else
-		// If a string has both numbers and letters lets quote it!
-		if (retVal.contains(QRegExp("\\d")) && retVal.contains(QRegExp("[a-zA-Z]"))) {
-			retVal.prepend("\'");
-			retVal.append("\'");
-		}
 	return retVal;
 }
 

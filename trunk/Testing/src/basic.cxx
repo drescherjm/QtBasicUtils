@@ -20,6 +20,74 @@
 #include "testSetVariable.h"
 #include "cmdTestFloatOpts.h"
 
+#ifdef QBU_BUILD_DATABASE
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "qbuDataBase/qbuDatabaseFunctions.h"
+
+class QCmdTestSingleQuote : public QCmd
+{
+public:
+	QCmdTestSingleQuote(QString strName, QString strDescription);
+	virtual int Execute();
+protected:
+	bool	isQuoted(QString str);
+	QString quoteIfNecissary(QString str);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestSingleQuote::QCmdTestSingleQuote(QString strName, QString strDescription) : 
+	QCmd(strName,strDescription)
+{
+	bool bQuote = true;
+	AddOpt("quote_expected", "Give the expected value", "", bQuote);
+	QString strMsg;
+	AddArg("string", "The string to test", "For testing consistency between command line and CTest execution the outer quotes of this string are removed.", strMsg);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestSingleQuote::Execute()
+{
+	bool bQuote = false;
+	int retVal = GetOpt("quote_expected", bQuote);
+
+	if (QCmdParseError::Succeeded(retVal)) {
+		QString str;
+		retVal = GetArg("string", str, QCmd::REMOVE_OUTER_QUOTES);
+
+		QString strOut = quoteIfNecissary(str);
+
+		bool bIsQuoted = isQuoted(strOut);
+
+		if (bIsQuoted != bQuote) {
+			retVal = QCmdParseError::USER_EXECUTION_ERROR;
+		}
+
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdTestSingleQuote::isQuoted(QString str)
+{
+	return str.startsWith("\'") && str.endsWith("\'");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdTestSingleQuote::quoteIfNecissary(QString str)
+{
+	return ::singleQuoteIfNecissary(str);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif //def QBU_BUILD_DATABASE
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class QCmdTestPropertyMapSimple : public QCmd
@@ -737,6 +805,11 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestSETVariable);
 
 		myCmdLine.AddCmd(&cmdFloatOpts);
+		
+#ifdef QBU_BUILD_DATABASE
+		QCmdTestSingleQuote		cmdTestSingleQuote("DBSINGLEQUOTE", "Test the database singleQuoteIfNecissary() member");
+		myCmdLine.AddCmd(&cmdTestSingleQuote);
+#endif // def QBU_BUILD_DATABASE
 
 		myCmdLine.AddCmd(&myHelp);
 		
