@@ -40,7 +40,19 @@ QString singleQuoteIfNecissary(QString str)
 				retVal.append("\'");
 			}
 		}
+		else
+			// If a string has both numbers and letters lets quote it!
+			if (retVal.contains(QRegExp("\\d")) && retVal.contains(QRegExp("[a-zA-Z]"))) {
+				retVal.prepend("\'");
+				retVal.append("\'");
+			}
 	}
+	else
+		// If a string has both numbers and letters lets quote it!
+		if (retVal.contains(QRegExp("\\d")) && retVal.contains(QRegExp("[a-zA-Z]"))) {
+			retVal.prepend("\'");
+			retVal.append("\'");
+		}
 	return retVal;
 }
 
