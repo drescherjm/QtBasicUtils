@@ -34,16 +34,19 @@ QString singleQuoteIfNecissary(QString str)
 {
 	QString retVal = str;
 
-	QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
+	if (!str.isEmpty()) {
+		QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
 
-	if (!reg.exactMatch(str) ) {
-		if ( !beginsAndEnds(str,'(',')') && !beginsAndEnds(str,'\'','\'') && !beginsAndEnds(str,'\"','\"')) {
-			if (!isSQLFunction(str)) {
-				retVal.prepend("\'");
-				retVal.append("\'");
+		if (!reg.exactMatch(str)) {
+			if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
+				if (!isSQLFunction(str)) {
+					retVal.prepend("\'");
+					retVal.append("\'");
+				}
 			}
 		}
 	}
+
 	return retVal;
 }
 
@@ -54,8 +57,10 @@ QString doubleQuoteIfNecissary(QString str)
 	QString retVal = str;
 	if (str.contains(QRegExp("\\s+"))) {
 		if ( !beginsAndEnds(str,'(',')') && !beginsAndEnds(str,'\'','\'') && !beginsAndEnds(str,'\"','\"')) {
-			retVal.prepend("\"");
-			retVal.append("\"");
+			if (!isSQLFunction(str)) {
+				retVal.prepend("\"");
+				retVal.append("\"");
+			}
 		}
 		
 	}
@@ -69,8 +74,10 @@ extern QString quoteSQLObjectNameIfNecissary(QString str)
 	QString retVal = str;
 	if (str.contains(QRegExp("\\s+"))) {
 		if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
-			retVal.prepend("\"");
-			retVal.append("\"");
+			if (!isSQLFunction(str)) {
+				retVal.prepend("\"");
+				retVal.append("\"");
+			}
 		}
 
 	}

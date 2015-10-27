@@ -112,7 +112,6 @@ bool qbuSelectQuery::addSelectField(QString strField, QString strAlias/*=QString
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
 
-		strAlias = singleQuoteIfNecissary(strAlias);
 		qbuDBColDef col = qbuDBColDef(strField, strAlias).addTableAlias(strTableAlias);
 		retVal = addSelectField(col);
 	}
