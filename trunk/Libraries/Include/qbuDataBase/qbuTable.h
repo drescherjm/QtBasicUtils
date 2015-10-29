@@ -42,10 +42,10 @@ public:
 	virtual int		countDistinct(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = nullptr);
 
 	template< typename T>
-	bool	exportData(T*, QList< QSharedPointer<T> > & lst);
+	bool	exportData(T*, QList< QSharedPointer<T> > & lst, qbuDBExpression expr = qbuDBExpression());
 
 	template< typename T>
-	bool	exportData(T*, QList< std::shared_ptr<T> > & lst);
+	bool	exportData(T*, QList< std::shared_ptr<T> > & lst, qbuDBExpression expr = qbuDBExpression());
 
 protected:
 	virtual bool				renameTable(QString strNewName);
@@ -71,7 +71,7 @@ protected:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst)
+bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst, qbuDBExpression expr)
 {
 
 	qbuStringList lstWhereFields = pInfo->getDBFieldNames();
@@ -81,6 +81,9 @@ bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst)
 		query.addSelectFields(lstWhereFields);
 		query.addFromField(getTableName());
 		query.appendWhereExpressions(lstWhereFields, pInfo, qbuQuery::WE_IGNORE_MISSING_FIELDS);
+		if (expr.isValid()) {
+			query.appendWhereExpression(expr);
+		}
 		if (retVal) {
 			retVal = query.generateQuery();
 			if (retVal) {
@@ -108,7 +111,7 @@ bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst)
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst)
+bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst, qbuDBExpression expr)
 {
 
 	qbuStringList lstWhereFields = pInfo->getDBFieldNames();
@@ -118,6 +121,9 @@ bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst)
 		query.addSelectFields(lstWhereFields);
 		query.addFromField(getTableName());
 		query.appendWhereExpressions(lstWhereFields, pInfo, qbuQuery::WE_IGNORE_MISSING_FIELDS);
+		if (expr.isValid()) {
+			query.appendWhereExpression(expr);
+		}
 		if (retVal) {
 			retVal = query.generateQuery();
 			if (retVal) {
