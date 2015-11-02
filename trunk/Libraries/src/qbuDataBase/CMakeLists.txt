@@ -75,6 +75,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDBView.cxx
 	./src/qbuSqlQueryModel.cxx
 	./src/qbuDBCaseStatement.cxx
+	./src/qbuUpdateQuery.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -101,6 +102,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDeleteQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBView.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBCaseStatement.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateQuery.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

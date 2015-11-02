@@ -1,5 +1,7 @@
-#ifndef __SMTABLESCHEMA_H__
-#define __SMTABLESCHEMA_H__
+#pragma once
+
+#ifndef QBUTABLESCHEMA_H
+#define QBUTABLESCHEMA_H
 
 #include <QObject>
 #include "qbuTableColumnDef.h"
@@ -29,4 +31,4 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif //__SMTABLESCHEMA_H__
+#endif // QBUTABLESCHEMA_H
