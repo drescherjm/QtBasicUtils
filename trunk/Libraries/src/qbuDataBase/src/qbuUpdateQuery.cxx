@@ -288,3 +288,37 @@ bool qbuUpdateQuery::go()
 	return generateQuery() && exec();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuUpdateQuery::addSetExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps,
+	UpdateExprCode code /*= UE_IGNORE_MISSING_FIELDS*/)
+{
+	bool retVal = (pProps != nullptr);
+	if (retVal) {
+		foreach(QString str, lstWhereFields) {
+			QString strExpr;
+			retVal = genExpr(strExpr, pProps, str);
+			if (retVal) {
+				retVal = addSetExpression(strExpr);
+			}
+			if (!retVal) {
+				switch (code) {
+				case UE_FAIL_ON_MISSING_FIELDS:
+					retVal = false;
+					break;
+				case UE_IGNORE_MISSING_FIELDS:
+					retVal = true;
+					break;
+				}
+			}
+			if (!retVal) {
+				break;
+			}
+
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

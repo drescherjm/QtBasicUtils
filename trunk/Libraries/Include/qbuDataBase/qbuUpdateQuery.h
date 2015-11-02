@@ -27,6 +27,12 @@ public:
 public:
 	qbuUpdateQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuUpdateQuery();
+
+	enum UpdateExprCode {
+		UE_IGNORE_MISSING_FIELDS = 0,
+		UE_FAIL_ON_MISSING_FIELDS
+	};
+
 public:
 	virtual	bool	generateSQL(QString & strSQL);
 	virtual bool	generateQuery();
@@ -35,6 +41,7 @@ public:
 	bool	addFromField(QString strField,QString strAlias=QString());
 	bool	addFromField(qbuUpdateQuery & nestedQuery,QString strAlias);
 	bool	addSetExpression(QString strExpression);
+	bool	addSetExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, UpdateExprCode code = UE_IGNORE_MISSING_FIELDS);
 	bool	setWhereClause(QString strWhere);
 	bool	appendWhereExpression(QString strExpression);
 	using	Superclass::appendWhereExpression;
