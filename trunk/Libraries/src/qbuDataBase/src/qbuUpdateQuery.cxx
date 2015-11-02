@@ -297,7 +297,7 @@ bool qbuUpdateQuery::addSetExpressions(const QStringList & lstWhereFields, qbuPr
 	if (retVal) {
 		foreach(QString str, lstWhereFields) {
 			QString strExpr;
-			retVal = genExpr(strExpr, pProps, str);
+			retVal = genSetExpr(strExpr, pProps, str);
 			if (retVal) {
 				retVal = addSetExpression(strExpr);
 			}
@@ -320,5 +320,56 @@ bool qbuUpdateQuery::addSetExpressions(const QStringList & lstWhereFields, qbuPr
 
 	return retVal;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuUpdateQuery::genSetExpr(QString & strExpr, qbuPropertyMap* pProps, QString strField, QString strTableAlias /*= ""*/)
+{
+	bool retVal = (pProps != nullptr);
+	if (retVal) {
+		qbuPropertyMap::iterator it = pProps->find(strField);
+		retVal = (it != pProps->end());
+
+		if (retVal) {
+
+			const QString strOperator = QString("=");
+
+			qbuProperty* pProp = *it;
+			const QVariant& vt = pProp->GetData();
+			retVal = vt.canConvert(QVariant::String);
+			if (retVal) {
+
+				switch (vt.type()) {
+				case QVariant::String:
+					strExpr = genExpr(strField, QString("\'%1\'").arg(vt.toString()), strOperator);
+					break;
+				case QVariant::Date:
+					strExpr = genExpr(strField, QString("date(\'%1\')").arg(vt.toString()), strOperator);
+					break;
+				case QVariant::DateTime:
+					strExpr = genExpr(strField, QString("datetime(\'%1\')").arg(vt.toString()), strOperator);
+					break;
+				case QVariant::Bool:
+					if (vt.toBool()) {
+						strExpr = genExpr(strField, QString::number(1), strOperator);
+					}
+					else
+					{
+						strExpr = genExpr(strField, QString::number(0), strOperator);
+					}
+					break;
+				default:
+					strExpr = genExpr(strField, vt.toString(), strOperator);
+					break;
+				}
+
+				//strExpr = QString(" ( %1 %2 %3 ) ").arg(strField).arg(strOperator).arg(vt.toString());
+			}
+
+		}
+	}
+	return retVal;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
