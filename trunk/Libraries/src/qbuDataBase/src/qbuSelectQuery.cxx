@@ -417,13 +417,6 @@ bool qbuSelectQuery::generateSQL(QString & strSQL)
 	bool retVal;
 	QString strSelect = m_pPrivate->m_lstSelect.toString();
 	retVal = !strSelect.isEmpty();
-
-	if (retVal) {
-		if (m_pPrivate->m_nLimit > 0) {
-			strSelect.append(QString(" LIMIT %1").arg(m_pPrivate->m_nLimit));
-		}
-	}
-
 	if (retVal) {
 		QString strFrom = m_pPrivate->m_lstFrom.toString();
 		retVal = !strFrom.isEmpty();
@@ -480,6 +473,12 @@ bool qbuSelectQuery::generateSQL(QString & strSQL)
 	else
 	{
 		QLOG_CRIT() << QBULOG_DATABASE_TYPE << "qbuSelectQuery::generateSQL can not generate SQL without an empty selection list.";
+	}
+
+	if (retVal) {
+		if (m_pPrivate->m_nLimit > 0) {
+			strSQL.append(QString(" LIMIT %1").arg(m_pPrivate->m_nLimit));
+		}
 	}
 	return retVal;
 }
