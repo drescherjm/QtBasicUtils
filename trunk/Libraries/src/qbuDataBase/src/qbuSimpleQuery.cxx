@@ -7,11 +7,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuSimpleQuery::smPrivate
+class qbuSimpleQuery::qbuPrivate
 {
 public:
-	smPrivate( std::shared_ptr<QSqlDatabase> pDatabase);
-	smPrivate(QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase);
+	qbuPrivate( std::shared_ptr<QSqlDatabase> pDatabase);
+	qbuPrivate(QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase);
 
 public:
 	QSqlQuery	m_query;
@@ -20,7 +20,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::smPrivate::smPrivate(std::shared_ptr<QSqlDatabase> pDatabase) : m_pDB(pDatabase),
+qbuSimpleQuery::qbuPrivate::qbuPrivate(std::shared_ptr<QSqlDatabase> pDatabase) : m_pDB(pDatabase),
 	m_query(*pDatabase)
 {
 
@@ -28,7 +28,7 @@ qbuSimpleQuery::smPrivate::smPrivate(std::shared_ptr<QSqlDatabase> pDatabase) : 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::smPrivate::smPrivate( QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase ) : m_pDB(pDatabase),
+qbuSimpleQuery::qbuPrivate::qbuPrivate( QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase ) : m_pDB(pDatabase),
 	m_query(strQuery,*pDatabase)
 {
 
@@ -36,14 +36,14 @@ qbuSimpleQuery::smPrivate::smPrivate( QString strQuery,std::shared_ptr<QSqlDatab
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuSimpleQuery( std::shared_ptr<QSqlDatabase> pDatabase) : m_pPrivate( new smPrivate(pDatabase) )
+qbuSimpleQuery::qbuSimpleQuery( std::shared_ptr<QSqlDatabase> pDatabase) : m_pPrivate( new qbuPrivate(pDatabase) )
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuSimpleQuery( QString strQuery, std::shared_ptr<QSqlDatabase> pDB ) : m_pPrivate( new smPrivate(strQuery, pDB) )
+qbuSimpleQuery::qbuSimpleQuery( QString strQuery, std::shared_ptr<QSqlDatabase> pDB ) : m_pPrivate( new qbuPrivate(strQuery, pDB) )
 {
 
 }

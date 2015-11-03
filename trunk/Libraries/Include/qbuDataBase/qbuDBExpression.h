@@ -40,8 +40,8 @@ public:
 private:
 	void	copy( const qbuDBExpression & other );
 private:
-	class smPrivate;
-	smPrivate* m_pPrivate;
+	class qbuPrivate;
+	qbuPrivate* m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

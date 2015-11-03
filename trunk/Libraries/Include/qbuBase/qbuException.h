@@ -83,9 +83,9 @@ public:
 	/** Provide std::exception::what() implementation. */
 	virtual const char* what() const throw();
 private:
-	class		smPrivate;
-	QSharedDataPointer<smPrivate> m_pPrivate;
-	const smPrivate * GetExceptionData() const;
+	class		qbuPrivate;
+	QSharedDataPointer<qbuPrivate> m_pPrivate;
+	const qbuPrivate * GetExceptionData() const;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

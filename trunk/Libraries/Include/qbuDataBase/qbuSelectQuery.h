@@ -35,6 +35,7 @@ public:
 	virtual	bool	generateSQL(QString & strSQL);
 	virtual bool	generateQuery();
 public:
+	bool	setRecordLimit(quint32 nLimit);
 	bool	setSelectOption(SelectOption option);
 	bool	addSelectField(QString strField, QString strAlias = QString(), QString strTableAlias = QString());
 	bool	addSelectField(qbuDBExpression & expression, QString strAlias = QString());
@@ -66,8 +67,8 @@ public:
 public:
 	static bool	g_bDumpQueries;
 private:
-	class	smPrivate;
-	std::unique_ptr<smPrivate>		m_pPrivate;
+	class	qbuPrivate;
+	std::unique_ptr<qbuPrivate>		m_pPrivate;
 };
 /////////////////////////////////////////////////////////////////////////////////////////
 

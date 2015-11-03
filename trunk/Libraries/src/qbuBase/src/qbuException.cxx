@@ -21,11 +21,11 @@ PURPOSE.  See the above copyright notices for more information.
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuException::smPrivate : public QSharedData
+class qbuException::qbuPrivate : public QSharedData
 {
 protected:
 	// Constructor. Might throw an exception.
-	smPrivate(
+	qbuPrivate(
 		const std::string& file, unsigned int line,
 		const std::string& description,
 		const std::string& location)
@@ -44,7 +44,7 @@ protected:
 	}
 
 private:
-	void operator=(const smPrivate&); //purposely not implemented
+	void operator=(const qbuPrivate&); //purposely not implemented
 
 	friend class qbuException;
 
@@ -71,7 +71,7 @@ qbuException::qbuException(
 								 const char *desc,
 								 const char *loc)
 {
-	m_pPrivate = new smPrivate(file == 0 ? "" : file, lineNumber, desc == 0 ? "" : desc, loc == 0 ? "" : loc);
+	m_pPrivate = new qbuPrivate(file == 0 ? "" : file, lineNumber, desc == 0 ? "" : desc, loc == 0 ? "" : loc);
 }
 
 qbuException::qbuException(
@@ -80,7 +80,7 @@ qbuException::qbuException(
 								 const std::string& desc,
 								 const std::string& loc)
 {
-	m_pPrivate = new smPrivate(file, lineNumber, desc, loc);
+	m_pPrivate = new qbuPrivate(file, lineNumber, desc, loc);
 }
 
 qbuException::qbuException( const qbuException &orig )
@@ -100,15 +100,15 @@ qbuException::~qbuException() throw()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-const qbuException::smPrivate *
+const qbuException::qbuPrivate *
 qbuException::GetExceptionData() const
 {
 	// Note: dynamic_cast does a runtime check if the m_ExceptionData pointer is indeed
 	// pointing to an ExceptionData object. In this case, a static_cast could have been
 	// used instead, which only does compile time checking. But we expect the
 	// runtime overhead of this particular dynamic_cast to be insignificant.
-	const smPrivate * thisData = 
-		dynamic_cast< const smPrivate *>( this->m_pPrivate.data() );
+	const qbuPrivate * thisData = 
+		dynamic_cast< const qbuPrivate *>( this->m_pPrivate.data() );
 	return thisData;
 }
 
@@ -132,8 +132,8 @@ bool
 qbuException::operator==( const qbuException &orig )
 {
 	// operator== is reimplemented, but it still behaves like the previous version, from ITK 3.6.0.
-	const smPrivate *const thisData = this->GetExceptionData();
-	const smPrivate *const origData = orig.GetExceptionData();
+	const qbuPrivate *const thisData = this->GetExceptionData();
+	const qbuPrivate *const origData = orig.GetExceptionData();
 
 	if ( thisData == origData )
 	{
@@ -155,7 +155,7 @@ void
 qbuException::SetLocation(const std::string& s)
 {
 	const bool IsNull = !m_pPrivate;
-	m_pPrivate = new smPrivate(
+	m_pPrivate = new qbuPrivate(
 		IsNull ? "" : this->GetExceptionData()->m_File.c_str(),
 		IsNull ? 0 : this->GetExceptionData()->m_Line,
 		IsNull ? "" : this->GetExceptionData()->m_Description.c_str(),
@@ -168,7 +168,7 @@ void
 qbuException::SetDescription(const std::string& s) 
 {
 	const bool IsNull =  !m_pPrivate;
-	m_pPrivate = new smPrivate(
+	m_pPrivate = new qbuPrivate(
 		IsNull ? "" : this->GetExceptionData()->m_File.c_str(),
 		IsNull ? 0 : this->GetExceptionData()->m_Line,
 		s,
@@ -241,7 +241,7 @@ qbuException::GetLine() const
 const char *
 qbuException::what() const throw()
 { 
-	const smPrivate * const thisData = this->GetExceptionData();
+	const qbuPrivate * const thisData = this->GetExceptionData();
 
 	// Note: m_What.c_str() wouldn't be safe, because c_str() might throw an exception.
 	return thisData ? thisData->m_WhatPointer : "smException";
@@ -262,7 +262,7 @@ void qbuException::Print(std::ostream& os) const
 
 	if (m_pPrivate)
 	{
-		const smPrivate & data = *(this->GetExceptionData());
+		const qbuPrivate & data = *(this->GetExceptionData());
 
 		if (! data.m_Location.empty()) 
 		{
@@ -299,7 +299,7 @@ void qbuException::Print(QTextStream& os) const
 
 	if (m_pPrivate)
 	{
-		const smPrivate & data = *(this->GetExceptionData());
+		const qbuPrivate & data = *(this->GetExceptionData());
 
 		if (! data.m_Location.empty()) 
 		{

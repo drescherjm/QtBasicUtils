@@ -46,8 +46,8 @@ public:
 	virtual	void		bindValue(int pos, const QVariant & val, QSql::ParamType paramType = QSql::In);
 
 private:
-	class smPrivate;
-	std::unique_ptr<smPrivate>	m_pPrivate;
+	class qbuPrivate;
+	std::unique_ptr<qbuPrivate>	m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

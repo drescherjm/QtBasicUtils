@@ -6,10 +6,10 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuDBJoin::smPrivate 
+class qbuDBJoin::qbuPrivate 
 {
 public:
-	smPrivate(qbuDBJoin* pPublic);
+	qbuPrivate(qbuDBJoin* pPublic);
 
 public:
 	bool isNaturalJoin();
@@ -32,7 +32,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBJoin::smPrivate::smPrivate(qbuDBJoin* pPublic) : m_pPublic(pPublic), 
+qbuDBJoin::qbuPrivate::qbuPrivate(qbuDBJoin* pPublic) : m_pPublic(pPublic), 
 	m_JoinFlag(qbudb::JF_DEFAULT), m_bAllowEmptyExpression(false)
 {
 
@@ -40,7 +40,7 @@ qbuDBJoin::smPrivate::smPrivate(qbuDBJoin* pPublic) : m_pPublic(pPublic),
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBJoin::smPrivate::isNaturalJoin()
+bool qbuDBJoin::qbuPrivate::isNaturalJoin()
 {
 	bool retVal;
 	switch(m_JoinFlag) {
@@ -59,7 +59,7 @@ bool qbuDBJoin::smPrivate::isNaturalJoin()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBJoin::smPrivate::isValid()
+bool qbuDBJoin::qbuPrivate::isValid()
 {
 	bool retVal;
 
@@ -72,14 +72,14 @@ bool qbuDBJoin::smPrivate::isValid()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBJoin::smPrivate::isSingleSource()
+bool qbuDBJoin::qbuPrivate::isSingleSource()
 {
 	return m_JoinFlag == qbudb::JF_SINGLE_SOURCE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString qbuDBJoin::smPrivate::toString()
+QString qbuDBJoin::qbuPrivate::toString()
 {
 	QString retVal;
 
@@ -115,7 +115,7 @@ QString qbuDBJoin::smPrivate::toString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString qbuDBJoin::smPrivate::getJoinString()
+QString qbuDBJoin::qbuPrivate::getJoinString()
 {
 	QString retVal;
 	
@@ -148,28 +148,28 @@ QString qbuDBJoin::smPrivate::getJoinString()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBJoin::smPrivate::hasUSING()
+bool qbuDBJoin::qbuPrivate::hasUSING()
 {
 	return !m_lstUsing.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBJoin::qbuDBJoin() : m_pPrivate( new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin() : m_pPrivate( new qbuPrivate(this)) 
 {
 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBJoin::qbuDBJoin( const qbuDBJoin & other )  : m_pPrivate(new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin( const qbuDBJoin & other )  : m_pPrivate(new qbuPrivate(this)) 
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBJoin::qbuDBJoin( qbudb::JoinFlag jf,QString strSource, QString strAlias )  : m_pPrivate( new smPrivate(this)) 
+qbuDBJoin::qbuDBJoin( qbudb::JoinFlag jf,QString strSource, QString strAlias )  : m_pPrivate( new qbuPrivate(this)) 
 {
 	m_pPrivate->m_strSource = strSource;
 	m_pPrivate->m_strAlias = strAlias;

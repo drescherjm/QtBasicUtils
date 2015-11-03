@@ -6,10 +6,10 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuDBExpression::smPrivate
+class qbuDBExpression::qbuPrivate
 {
 public:
-	smPrivate();
+	qbuPrivate();
 
 public:
 	bool	isValid();
@@ -22,21 +22,21 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::smPrivate::smPrivate() : m_bEncloseInParentheses(false)
+qbuDBExpression::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::smPrivate::isValid()
+bool qbuDBExpression::qbuPrivate::isValid()
 {
 	return !m_strExpression.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuDBExpression::smPrivate::init( QString strField0, QString strField1, QString strOperator, bool bEnclose )
+void qbuDBExpression::qbuPrivate::init( QString strField0, QString strField1, QString strOperator, bool bEnclose )
 {
 	if ( (!strField0.isEmpty()) && (!strField1.isEmpty()) ) {
 		m_strExpression = QString("%1 %2 %3").arg(strField0).arg(strOperator).arg(strField1);
@@ -85,19 +85,19 @@ QString qbuDBExpression::toString( bool *bOK ) const
 
 qbuDBExpression::qbuDBExpression()
 {
-	m_pPrivate = new smPrivate;
+	m_pPrivate = new qbuPrivate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBExpression & other ) : m_pPrivate (new smPrivate)
+qbuDBExpression::qbuDBExpression( const qbuDBExpression & other ) : m_pPrivate (new qbuPrivate)
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( QString strExpression, bool bEnclose ) : m_pPrivate (new smPrivate)
+qbuDBExpression::qbuDBExpression( QString strExpression, bool bEnclose ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->m_strExpression = strExpression;
 	m_pPrivate->m_bEncloseInParentheses = bEnclose;
@@ -106,21 +106,21 @@ qbuDBExpression::qbuDBExpression( QString strExpression, bool bEnclose ) : m_pPr
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuDBExpression::qbuDBExpression( QString strField0, QString strField1, QString strOperator, bool 
-	bEnclose )  : m_pPrivate (new smPrivate)
+	bEnclose )  : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(strField0,strField1,strOperator,bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new smPrivate)
+qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),strField1,strOperator,bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new smPrivate)
+qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),colDef1.getFullName(),strOperator,bEnclose);
 }

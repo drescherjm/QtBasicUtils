@@ -43,8 +43,8 @@ private:
 	void	copy( const qbuDBJoin & other );
 
 private:
-	class smPrivate;
-	smPrivate* m_pPrivate;
+	class qbuPrivate;
+	qbuPrivate* m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

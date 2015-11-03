@@ -16,8 +16,11 @@ bool qbuSelectQuery::g_bDumpQueries = false;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuSelectQuery::smPrivate
+class qbuSelectQuery::qbuPrivate
 {
+public:
+	qbuPrivate();
+
 public:
 	qbuDBColumnDefList			m_lstSelect;
 	qbuDBColumnDefList			m_lstFrom;
@@ -27,6 +30,7 @@ public:
 	QString						m_strWhereClause;
 	QString						m_strHavingClause;
 	qbuSelectQuery::SelectOption	m_SelectOption;
+	quint32						m_nLimit;
 public:
 	QString		generateCSVList(QStringList lst);
 	QString		generateCSVList(QStringList lst, QStringList lstAliases);
@@ -38,7 +42,7 @@ public:
 
 //This takes a QString lists and inserts commas between each item.
 
-QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst)
+QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
@@ -53,7 +57,7 @@ QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst)
 
 
 // NOTE: it is advanced after alias is retrieved if not at the end
-QString qbuSelectQuery::smPrivate::getNextAlias(QStringList lst, QStringList::iterator & it)
+QString qbuSelectQuery::qbuPrivate::getNextAlias(QStringList lst, QStringList::iterator & it)
 {
 	QString retVal;
 	if (it != lst.end()) {
@@ -74,7 +78,7 @@ QString qbuSelectQuery::smPrivate::getNextAlias(QStringList lst, QStringList::it
 *	This takes a QString lists and inserts commas between each item. And supports aliases
 */
 
-QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
+QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList lstAliases)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
@@ -93,7 +97,7 @@ QString qbuSelectQuery::smPrivate::generateCSVList(QStringList lst, QStringList 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuSelectQuery::qbuSelectQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB),
-m_pPrivate(new smPrivate)
+m_pPrivate(new qbuPrivate)
 {
 	setSelectOption(QBU_SELECT_DEFAULT);
 }
@@ -406,6 +410,13 @@ bool qbuSelectQuery::generateSQL(QString & strSQL)
 	bool retVal;
 	QString strSelect = m_pPrivate->m_lstSelect.toString();
 	retVal = !strSelect.isEmpty();
+
+	if (retVal) {
+		if (m_pPrivate->m_nLimit > 0) {
+			strSelect.append(QString(" LIMIT %1").arg(m_pPrivate->m_nLimit));
+		}
+	}
+
 	if (retVal) {
 		QString strFrom = m_pPrivate->m_lstFrom.toString();
 		retVal = !strFrom.isEmpty();
@@ -563,7 +574,15 @@ bool qbuSelectQuery::addJoin(const qbuDBJoin & dbJoin)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuSelectQuery::smPrivate::handleOrderByASC(qbuDBColDef &col, OrderByOption order)
+bool qbuSelectQuery::setRecordLimit(quint32 nLimit)
+{
+	m_pPrivate->m_nLimit = nLimit;
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuSelectQuery::qbuPrivate::handleOrderByASC(qbuDBColDef &col, OrderByOption order)
 {
 	switch (order)
 	{
