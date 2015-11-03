@@ -456,7 +456,9 @@ bool qbuPropertyMap::fromXML( QString strXML )
 
 	QDomElement docElem = doc.documentElement();
 
+#ifdef DEBUG_XML_DUMPS
 	qDebug() << docElem;
+#endif // DEBUG_XML_DUMPS
 
 	QDomNode n = docElem.firstChild();
 
@@ -464,8 +466,10 @@ bool qbuPropertyMap::fromXML( QString strXML )
 
 	if (retVal) {
 
+#ifdef DEBUG_XML_DUMPS
 		qDebug() << n;
-
+#endif //def DEBUG_XML_DUMPS
+		
 		QDomElement e = n.toElement();
 		retVal = !e.isNull();
 		if (retVal) {

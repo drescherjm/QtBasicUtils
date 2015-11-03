@@ -20,6 +20,7 @@ option (BUILD_TESTING 				"Build Tests" ON)
 option (BUILD_DEVELOPMENT 			"Build Development Code" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
 option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" ON)
+option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
 
 #########################################################################################
 
@@ -81,6 +82,7 @@ configure_file (
 )
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
+conditional_define(DEBUG_XML_DUMPS DEBUG_XML_DUMPS)
 
 #########################################################################################
 
