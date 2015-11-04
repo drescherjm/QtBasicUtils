@@ -24,6 +24,13 @@ public:
 	explicit qbuState ( QState * parent = 0 );
 	qbuState ( ChildMode childMode, QState * parent = 0 );
 	virtual ~qbuState();
+
+public:
+	bool	isInState();
+
+protected:
+	bool	m_bInState;
+
 protected:
 	virtual void onEntry(QEvent *event);
 	virtual void onExit(QEvent *event);
