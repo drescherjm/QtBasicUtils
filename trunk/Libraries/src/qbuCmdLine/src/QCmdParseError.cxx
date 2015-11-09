@@ -128,6 +128,9 @@ QString QCmdParseError::GetErrorString(quint32 nErrorCode, QString str0, QString
 	case CALC_VALUE_TOO_LARGE:
 		strError = ("Calculated value higher than set maximum %1 %2%3");
 		break;
+	case UNEXPECTED_NULL_POINTER:
+		strError = ("Unexpected null pointer %1 %2 %3");
+		break;
 	default:
 		strError = ("ERROR: Unknown parse error. %1 %2 %3");
 		break;
