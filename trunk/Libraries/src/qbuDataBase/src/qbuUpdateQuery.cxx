@@ -6,8 +6,9 @@
 #include "qbuDataBase/qbuDBColumnDefList.h"
 #include "qbuBase/qbuException.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-//#include <iostream>
 #include "qbuBase/qbuStringList.h"
+
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
