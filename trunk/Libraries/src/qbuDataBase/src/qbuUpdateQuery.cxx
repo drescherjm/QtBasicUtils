@@ -231,6 +231,15 @@ bool qbuUpdateQuery::generateSQL( QString & strSQL )
 		}
 
 	}
+	else
+	{
+		if (strFrom.isEmpty()) {
+			QLOG_WARN() << QString("In %1 the update query generation will fail because the FROM is empty!").arg(__FUNCTION__);
+		}
+		if (m_pPrivate->m_lstSet.isEmpty()) {
+			QLOG_WARN() << QString("In %1 the update query generation will fail because there is nothing to set!").arg(__FUNCTION__);
+		}
+	}
 	return retVal;
 }
 
