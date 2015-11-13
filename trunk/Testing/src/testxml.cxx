@@ -9,8 +9,6 @@
 #include "qxml.h"
 #include "qdebug.h"
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QCmdTestXMLExport::QCmdTestXMLExport(QString strName, QString strDescription) :
@@ -367,6 +365,87 @@ static bool test9()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test10()
+{
+	qbuPropertyMap pc;
+	qbuProperty prop;
+
+	QString strSQL = QString("SELECT *\n FROM Table\n WHERE StudyID < 10");
+
+	prop.setObjectName("SQL");
+	prop.SetData(strSQL);
+	pc.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.SetData(QString("John M. Drescher"));
+	pc.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.SetData(QChar(' '));
+	pc.insert(prop);
+
+	QString str = pc.toXML();
+
+	qbuPropertyMap pc1;
+
+	bool retVal = pc1.fromXML(str);
+
+	QString str1 = pc1.toXML();
+
+	if (retVal) {
+		retVal = (str.compare(str1, Qt::CaseInsensitive) == 0);
+	}
+
+	if (!retVal) {
+		QString("%1 failed. A string containing the '<' character will not work in an xml export / import");
+	}
+
+	return retVal;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+static bool test11()
+{
+	qbuPropertyMap pc;
+	qbuProperty prop;
+
+	QString strSQL = QString("SELECT *\n FROM Table\n WHERE StudyID > 10");
+
+	prop.setObjectName("SQL");
+	prop.SetData(strSQL);
+	pc.insert(prop);
+
+	prop.setObjectName("Name");
+	prop.SetData(QString("John M. Drescher"));
+	pc.insert(prop);
+
+	prop.setObjectName("Sex");
+	prop.SetData(QChar(' '));
+	pc.insert(prop);
+
+	QString str = pc.toXML();
+
+	qbuPropertyMap pc1;
+
+	bool retVal = pc1.fromXML(str);
+
+	QString str1 = pc1.toXML();
+
+	if (retVal) {
+		retVal = (str.compare(str1, Qt::CaseInsensitive) == 0);
+	}
+
+	if (!retVal) {
+		QString("%1 failed. A string containing the '>' character will not work in an xml export / import");
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int  QCmdTestXMLExport::Execute()
 {
 	int nTest;
@@ -404,6 +483,12 @@ int  QCmdTestXMLExport::Execute()
 		break;
 	case 9:
 		bVal = test9();
+		break;
+	case 10:
+		bVal = test10();
+		break;
+	case 11:
+		bVal = test11();
 		break;
 	default:
 		bVal = false;

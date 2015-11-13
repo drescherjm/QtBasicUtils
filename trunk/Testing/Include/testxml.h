@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __TESTXML_H__
-#define __TESTXML_H__
+#ifndef TESTXML_H
+#define TESTXML_H
 
 #include "qbuCmdLine/QCmd.h"
 
@@ -16,4 +16,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __TESTXML_H__
+#endif // TESTXML_H
