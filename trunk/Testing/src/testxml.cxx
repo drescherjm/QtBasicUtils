@@ -396,6 +396,39 @@ static bool test10()
 		retVal = (str.compare(str1, Qt::CaseInsensitive) == 0);
 	}
 
+	if (retVal) {
+		QString strTest;
+		
+		qbuPropertyMap::iterator it = pc1.find("SQL");
+
+		retVal = (it != pc1.end());
+
+		if (retVal) {
+			qbuProperty* pProp = *it;
+
+			retVal = (pProp != nullptr);
+
+			if (retVal) {
+				strTest = pProp->GetData().toString();
+
+				if (retVal) {
+					retVal = (strTest.trimmed().compare(strSQL.trimmed(), Qt::CaseInsensitive) == 0);
+				}
+			}
+
+			if (retVal) {
+				QString strMsg = QString("The SQL matches between (%1) and (%2)").arg(strSQL).arg(strTest);
+				std::cout << qPrintable(strMsg) << std::endl;
+			}
+			else
+			{
+				QString strMsg = QString("The SQL does NOT match between (%1) and (%2)").arg(strSQL).arg(strTest);
+				std::cout << qPrintable(strMsg) << std::endl;
+			}
+		}
+		
+	}
+
 	if (!retVal) {
 		QString("%1 failed. A string containing the '<' character will not work in an xml export / import");
 	}

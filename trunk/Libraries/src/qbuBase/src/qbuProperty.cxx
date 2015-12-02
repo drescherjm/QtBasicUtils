@@ -85,7 +85,7 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 			}
 			break;
 		default:
-			retVal = GetData().toString();
+			retVal = handleXMLEscaping(GetData().toString());
 		}
 		
 		QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">%5</%2>\n")
@@ -314,6 +314,17 @@ void qbuProperty::Print( QTextStream & st, qbuITKIndent indent )
 bool qbuProperty::operator==( const qbuProperty & other ) const
 {
 	return m_vt == other.m_vt;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuProperty::handleXMLEscaping(QString strValue)
+{
+	return strValue.replace("&", "&amp;")
+		.replace("<", "&lt;")
+		.replace(">", "&gt;")
+		.replace("\"", "&quot;")
+		.replace("'", "&apos;");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -50,6 +50,10 @@ public:
 private:
 	void		copy( const qbuProperty & other );
 	void		destroy();
+
+protected:
+	QString		handleXMLEscaping(QString strValue);
+
 protected:
 	QVariant	m_vt;
 };
