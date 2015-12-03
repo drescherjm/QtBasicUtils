@@ -68,7 +68,7 @@ void qbuInfo::copy( const qbuPropertyMap * other )
  *  properties that are valid for thus qbuInfo instance.
  */
 
-void qbuInfo::addProperties( qbuPropertyMap * other )
+void qbuInfo::addProperties( const qbuPropertyMap * other )
 {
 	copy(other);
 }

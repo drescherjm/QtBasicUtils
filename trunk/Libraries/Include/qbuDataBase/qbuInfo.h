@@ -19,7 +19,7 @@ public:
 public:
 	virtual const QStringList&	getDBFieldNames() const =0;
 	virtual bool				isDBField(QString strField) const;
-	virtual void				addProperties(qbuPropertyMap * other);
+	virtual void				addProperties(const qbuPropertyMap * other);
 protected:
 	virtual void copy(const qbuInfo & other);
 private:
