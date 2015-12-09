@@ -36,6 +36,7 @@ public:
 	virtual QString toString(bool *bOK=nullptr) const;
 
 	virtual bool	isValid() const;
+	virtual bool	isEmpty() const;
 
 private:
 	void	copy( const qbuDBExpression & other );

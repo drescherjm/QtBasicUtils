@@ -14,7 +14,7 @@ public:
 public:
 	bool	isValid();
 	void	init( QString strField0, QString strField1, QString strOperator, bool bEnclose);
-
+	bool	isEmpty();
 public:
 	bool			m_bEncloseInParentheses;
 	QString			m_strExpression;
@@ -32,6 +32,13 @@ qbuDBExpression::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
 bool qbuDBExpression::qbuPrivate::isValid()
 {
 	return !m_strExpression.isEmpty();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBExpression::qbuPrivate::isEmpty()
+{
+	return m_strExpression.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -231,6 +238,13 @@ qbuDBExpression& qbuDBExpression::operator=( const qbuDBExpression & other )
 		copy(other);
 	}
 	return *this;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBExpression::isEmpty() const
+{
+	return (m_pPrivate != nullptr) ? m_pPrivate->isEmpty() : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
