@@ -32,7 +32,7 @@ if(USE_BIND_FOR_INSERT)
 	add_definitions(-DUSE_BIND_FOR_INSERT)
 ENDIF(USE_BIND_FOR_INSERT)
 
-#set(Boost_ADDITIONAL_VERSIONS "1.47" "1.47.0" "1.48" "1.48.0")
+set(Boost_ADDITIONAL_VERSIONS "1.60" "1.60.0")
 find_package( Boost REQUIRED )
 
 include_directories( ${Boost_INCLUDE_DIRS} )
