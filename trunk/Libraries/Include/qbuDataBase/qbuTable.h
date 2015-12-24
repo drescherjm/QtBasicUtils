@@ -11,6 +11,7 @@ class qbuInfo;
 #include <QStringList>
 #include <memory>
 #include "qbuInsertQuery.h"
+#include <QSharedPointer>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
