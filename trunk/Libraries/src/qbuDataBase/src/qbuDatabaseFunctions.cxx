@@ -113,7 +113,16 @@ extern QString toQueryValue(QVariant & vt)
 		retVal = "\'" + vt.toString() + "\'";
 		break;
 	default:
-		retVal = singleQuoteIfNecissary(vt.toString());
+		QString str = vt.toString();
+		if (str.isEmpty()) {
+			//std::cerr << "Got a blank string! in: " << __FUNCTION__ << std::endl;
+			retVal = "\'\'";
+		}
+		else
+		{
+			retVal = singleQuoteIfNecissary(str);
+		}
+		
 		break;
 	}
 	return retVal;

@@ -86,6 +86,63 @@ QString QCmdTestSingleQuote::quoteIfNecissary(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class QCmdTestSingleQuote1 : public QCmd
+{
+public:
+	QCmdTestSingleQuote1(QString strName, QString strDescription);
+	virtual int Execute();
+protected:
+	bool	isQuoted(QString str);
+	QString quoteIfNecissary(QString str);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QCmdTestSingleQuote1::QCmdTestSingleQuote1(QString strName, QString strDescription) :
+QCmd(strName, strDescription)
+{
+	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdTestSingleQuote1::Execute()
+{
+	bool bQuote = true;
+	
+	int retVal = QCmdParseError::STATUS_OK;
+	
+	QString str = " ";
+
+	QString strOut = quoteIfNecissary(str);
+
+	bool bIsQuoted = isQuoted(strOut);
+
+	if (bIsQuoted != bQuote) {
+		retVal = QCmdParseError::USER_EXECUTION_ERROR;
+	}
+	
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdTestSingleQuote1::isQuoted(QString str)
+{
+	return str.startsWith("\'") && str.endsWith("\'");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString QCmdTestSingleQuote1::quoteIfNecissary(QString str)
+{
+	return ::singleQuoteIfNecissary(str);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 #endif //def QBU_BUILD_DATABASE
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -809,6 +866,8 @@ int main(int argc, char* argv[])
 #ifdef QBU_BUILD_DATABASE
 		QCmdTestSingleQuote		cmdTestSingleQuote("DBSINGLEQUOTE", "Test the database singleQuoteIfNecissary() member");
 		myCmdLine.AddCmd(&cmdTestSingleQuote);
+		QCmdTestSingleQuote1	cmdTestSingleQuote1("DBSINGLEQUOTE_1", "Test the database singleQuoteIfNecissary() member for a single space.");
+		myCmdLine.AddCmd(&cmdTestSingleQuote1);
 #endif // def QBU_BUILD_DATABASE
 
 		myCmdLine.AddCmd(&myHelp);
