@@ -43,6 +43,7 @@ QString singleQuoteIfNecissary(QString str)
 
 					// BUG_FIX: Single quotes inside a string constant need to be doubled to escape them.
 					retVal.replace('\'', "\'\'");
+					retVal.replace(QRegExp(";\\s\\n"), ";\n");
 
 					retVal.prepend("\'");
 					retVal.append("\'");
