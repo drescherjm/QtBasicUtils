@@ -40,6 +40,10 @@ QString singleQuoteIfNecissary(QString str)
 		if (!reg.exactMatch(str)) {
 			if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
 				if (!isSQLFunction(str)) {
+
+					// BUG_FIX: Single quotes inside a string constant need to be doubled to escape them.
+					retVal.replace('\'', "\'\'");
+
 					retVal.prepend("\'");
 					retVal.append("\'");
 				}
