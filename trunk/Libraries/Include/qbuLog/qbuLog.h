@@ -24,7 +24,6 @@ QString logFileName(QString strFile, int nLine);
 #define QLOG_DEBUG() qxtLog->debug() << logFileName(__FILE__,__LINE__)
 #define QLOG_DATABASE() qxtLog->write() << logFileName(__FILE__,__LINE__) << QBULOG_DATABASE_TYPE
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #endif // QBULOG_H
