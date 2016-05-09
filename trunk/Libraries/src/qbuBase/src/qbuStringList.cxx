@@ -73,6 +73,19 @@ int qbuStringList::removeAll( QString strRemove,Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+int qbuStringList::removeAll(QStringList & strlstRemove, Qt::CaseSensitivity cs)
+{
+	int retVal = 0;
+
+	foreach(QString str, strlstRemove) {
+		retVal += removeAll(str, cs);
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  *	\brief
  *	This member function adds a case insensitive indexOf. 
