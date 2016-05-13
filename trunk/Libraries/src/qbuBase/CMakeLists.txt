@@ -31,6 +31,10 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuCSVModelWriter.cxx
 	./src/qbuErrorBase.cxx
 	./src/qbuState.cxx
+	./src/qbuNonButtonCheckableSignal.cxx
+	./src/qbuButtonSignalGroup.cxx
+	./src/qbuButtonSignalBase.cxx
+	./src/qbuButtonSignal.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -56,6 +60,10 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuObject.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCSVModelWriter.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuState.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuNonButtonCheckableSignal.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignalGroup.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignalBase.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignal.h
 )
 
 # some .ui files
