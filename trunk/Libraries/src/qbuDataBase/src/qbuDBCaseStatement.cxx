@@ -23,6 +23,7 @@ public:
 	bool			m_bEncloseInParentheses;
 	QString			m_strCaseMainExpr;
 	CasePairList	m_lstCasePairs;
+	QString			m_strElse;
 
 };
 
@@ -76,6 +77,10 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 				.arg(pair.second));
 		}
 
+		if (!m_pPrivate->m_strElse.isEmpty()) {
+			retVal.append(QString(" ELSE %1 ").arg(m_pPrivate->m_strElse));
+		}
+
 		retVal.append(" END");
 	}
 
@@ -88,21 +93,21 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCaseStatement::qbuDBCaseStatement()
+qbuDBCaseStatement::qbuDBCaseStatement() : m_pPrivate{std::make_unique<qbuPrivate>()}
 {
-	m_pPrivate = new qbuPrivate;
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCaseStatement::qbuDBCaseStatement( const qbuDBCaseStatement & other ) : m_pPrivate (new qbuPrivate)
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBCaseStatement & other) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCaseStatement::qbuDBCaseStatement( QString strCaseStatement, bool bEnclose ) : m_pPrivate (new qbuPrivate)
+qbuDBCaseStatement::qbuDBCaseStatement(QString strCaseStatement, bool bEnclose) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 {
 	m_pPrivate->m_strCaseMainExpr = strCaseStatement;
 	m_pPrivate->m_bEncloseInParentheses = bEnclose;
@@ -110,7 +115,7 @@ qbuDBCaseStatement::qbuDBCaseStatement( QString strCaseStatement, bool bEnclose 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCaseStatement::qbuDBCaseStatement( const qbuDBExpression & mainExpr ) : m_pPrivate (new qbuPrivate)
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBExpression & mainExpr) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 {
 	m_pPrivate->m_strCaseMainExpr = mainExpr.toString();
 }
@@ -119,7 +124,7 @@ qbuDBCaseStatement::qbuDBCaseStatement( const qbuDBExpression & mainExpr ) : m_p
 
 qbuDBCaseStatement::~qbuDBCaseStatement()
 {
-	delete m_pPrivate;
+	/*delete m_pPrivate;*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +145,7 @@ void qbuDBCaseStatement::copy( const qbuDBCaseStatement & other )
 	m_pPrivate->m_bEncloseInParentheses = other.m_pPrivate->m_bEncloseInParentheses;
 	m_pPrivate->m_strCaseMainExpr = other.m_pPrivate->m_strCaseMainExpr;
 	m_pPrivate->m_lstCasePairs = other.m_pPrivate->m_lstCasePairs;
+	m_pPrivate->m_strElse = other.m_pPrivate->m_strElse;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +177,22 @@ bool qbuDBCaseStatement::addCase( int nValue, QString strText, bool bAutoQuote )
 		}
 
 		m_pPrivate->m_lstCasePairs.push_back(qbuPrivate::CasePair(nValue,strText));
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBCaseStatement::addElse(QString strText, bool bAutoQuote /*= true*/)
+{
+	bool retVal = (m_pPrivate != nullptr);
+	if (retVal) {
+
+		if (bAutoQuote) {
+			retVal = m_pPrivate->handleAutoQuote(strText);
+		}
+
+		m_pPrivate->m_strElse = strText;
 	}
 	return retVal;
 }

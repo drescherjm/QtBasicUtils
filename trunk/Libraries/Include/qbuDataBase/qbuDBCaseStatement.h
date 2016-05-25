@@ -26,6 +26,7 @@ public:
 	bool	setEncloseInParentheses(bool bEnclose);
 
 	bool	addCase(int nValue, QString strText, bool bAutoQuote=true);
+	bool	addElse(QString strText, bool bAutoQuote = true);
 
 public:
 	QString toString(bool *bOK=nullptr) const;
@@ -36,10 +37,9 @@ private:
 	void	copy( const qbuDBCaseStatement & other );
 private:
 	class qbuPrivate;
-	qbuPrivate* m_pPrivate;
+	std::unique_ptr<qbuPrivate> m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #endif // QBUDBCASESTATEMENT_H
-
