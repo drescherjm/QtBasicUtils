@@ -152,14 +152,15 @@ bool qbuQuery::appendWhereExpression(const qbuDBExpression & expr)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuQuery::appendWhereExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, WhereExprCode code /*= WE_FAIL_ON_MISSING*/)
+bool qbuQuery::appendWhereExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, WhereExprCode code /*= WE_FAIL_ON_MISSING*/, 
+	QString strTableAlias)
 {
 
 	bool retVal = (pProps != nullptr);
 	if (retVal) {
 		foreach(QString str, lstWhereFields) {
 			QString strExpr;
-			retVal = genExpr(strExpr, pProps, str);
+			retVal = genExpr(strExpr, pProps, str,strTableAlias);
 			if (retVal) {
 				appendWhereExpression(strExpr);
 			}

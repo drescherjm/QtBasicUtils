@@ -30,7 +30,8 @@ public:
 public:
 	virtual 	bool	appendWhereExpression(QString strExpression);
 	virtual		bool	appendWhereExpression(const qbuDBExpression & expr);
-	virtual		bool	appendWhereExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, WhereExprCode code = WE_FAIL_ON_MISSING_FIELDS);
+	virtual		bool	appendWhereExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, WhereExprCode code = WE_FAIL_ON_MISSING_FIELDS, 
+		QString strTableAlias=QString());
 public:
 	static bool genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strField, QString strTableAlias = "", QString strOperator = QString("="));
 	static QString genExpr(const qbuDBColDef & first, const qbuDBColDef & second, QString strOperator = QString("="));
