@@ -17,7 +17,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuButtonSignal::qbuPrivate::qbuPrivate() : m_pButton{}, m_md { qbuButtonSignal::BS_NORMAL }
+qbuButtonSignal::qbuPrivate::qbuPrivate() : m_pButton(), m_md (qbuButtonSignal::BS_NORMAL )
 {
 
 }

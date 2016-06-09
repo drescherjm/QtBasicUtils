@@ -93,21 +93,33 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#if _MSC_VER > 1600
 qbuDBCaseStatement::qbuDBCaseStatement() : m_pPrivate{std::make_unique<qbuPrivate>()}
+#else
+qbuDBCaseStatement::qbuDBCaseStatement() : m_pPrivate(new qbuPrivate)
+#endif 
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#if _MSC_VER > 1600
 qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBCaseStatement & other) : m_pPrivate{ std::make_unique<qbuPrivate>() }
+#else
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBCaseStatement & other) : m_pPrivate(new qbuPrivate)
+#endif
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#if _MSC_VER > 1600
 qbuDBCaseStatement::qbuDBCaseStatement(QString strCaseStatement, bool bEnclose) : m_pPrivate{ std::make_unique<qbuPrivate>() }
+#else
+qbuDBCaseStatement::qbuDBCaseStatement(QString strCaseStatement, bool bEnclose) : m_pPrivate( new qbuPrivate )
+#endif
 {
 	m_pPrivate->m_strCaseMainExpr = strCaseStatement;
 	m_pPrivate->m_bEncloseInParentheses = bEnclose;
@@ -115,7 +127,11 @@ qbuDBCaseStatement::qbuDBCaseStatement(QString strCaseStatement, bool bEnclose) 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#if _MSC_VER > 1600
 qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBExpression & mainExpr) : m_pPrivate{ std::make_unique<qbuPrivate>() }
+#else
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBExpression & mainExpr) : m_pPrivate ( new qbuPrivate )
+#endif
 {
 	m_pPrivate->m_strCaseMainExpr = mainExpr.toString();
 }

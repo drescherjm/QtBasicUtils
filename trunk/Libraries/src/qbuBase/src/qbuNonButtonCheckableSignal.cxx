@@ -17,8 +17,8 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuNonButtonCheckableSignal::qbuPrivate::qbuPrivate() : m_pObject{}, m_md { qbuNonButtonCheckableSignal::BS_NORMAL },
-m_bChecked{false}
+qbuNonButtonCheckableSignal::qbuPrivate::qbuPrivate() : m_pObject(nullptr), m_md(qbuNonButtonCheckableSignal::BS_NORMAL),
+m_bChecked(false)
 {
 
 }
