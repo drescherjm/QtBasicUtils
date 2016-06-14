@@ -11,7 +11,12 @@ struct qbuDBColDef;
 
 class qbuDBExpression : public qbuObject
 {
-	QBU_DECLARE_SUPERCLASS(qbuObject);
+	QBU_DECLARE_SUPERCLASS(qbuObject);	
+
+public:
+	enum NullExpr{ IS_NULL, 
+		IS_NOT_NULL
+	};
 public:
 	qbuDBExpression();
 	qbuDBExpression( const qbuDBExpression & other );
@@ -19,8 +24,9 @@ public:
 	qbuDBExpression( QString strField0, QString strField1, QString strOperator, bool bEnclose = true  );
 	qbuDBExpression( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose = true  );
 	qbuDBExpression( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose = true  );
+	qbuDBExpression( const qbuDBColDef & colDef0, NullExpr nullExpr);
 	~qbuDBExpression();
-
+	
 	qbuDBExpression& operator=(const qbuDBExpression & other);
 
 public:

@@ -62,6 +62,10 @@ void qbuDBExpression::qbuPrivate::init( QString strField0, QString strField1, QS
 			m_strExpression = strField1;
 			m_bEncloseInParentheses = false;
 		}
+// 		else if (strOperator.indexOf("NULL") >= 0) {
+// 			m_strExpression = QString("%1 %2").arg(strField0).arg(strOperator);
+// 			m_bEncloseInParentheses = bEnclose;
+// 		}
 	}
 }
 
@@ -130,6 +134,20 @@ qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, QString strField1
 qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),colDef1.getFullName(),strOperator,bEnclose);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression::qbuDBExpression(const qbuDBColDef & colDef0, NullExpr nullExpr) : m_pPrivate(new qbuPrivate)
+{
+	switch (nullExpr) {
+	case IS_NULL:
+		m_pPrivate->init(colDef0.getFullName(), "IS NULL", "",true);
+		break;
+	case IS_NOT_NULL:
+		m_pPrivate->init(colDef0.getFullName(), "IS NOT NULL", "", true);
+		break;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
