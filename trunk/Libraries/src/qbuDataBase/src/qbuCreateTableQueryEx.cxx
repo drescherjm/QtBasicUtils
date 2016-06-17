@@ -59,7 +59,7 @@ bool qbuCreateTableQueryEx::createFromSelect(qbuSelectQuery & query)
 	retVal = (pFields != nullptr);
 	if (retVal) {
 		foreach(auto field, *pFields) {
-			QString strName = field.m_strName;
+			QString strName = field.getNameOrAlias();
 			if (!doesColumnExist(strName)) {
 				retVal = addColumn(strName, getExpectedTypeFromColumnName(strName));
 				if (!retVal) {
