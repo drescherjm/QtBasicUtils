@@ -139,7 +139,7 @@ bool qbuCreateTableQuery::doesColumnExist(QString strColumnName)
 	bool retVal = false;
 
 	foreach(auto sqlColumn, m_pPrivate->m_lstColumns) {
-		retVal = (sqlColumn.m_strColumnName.compare(strColumnName.trimmed(), Qt::CaseInsensitive));
+		retVal = (sqlColumn.m_strColumnName.compare(strColumnName.trimmed(), Qt::CaseInsensitive) == 0);
 
 		if (retVal) {
 			break;
