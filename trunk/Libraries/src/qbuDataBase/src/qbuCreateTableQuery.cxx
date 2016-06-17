@@ -1,52 +1,10 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuCreateTableQuery.h"
-#include <QStringList>
+#include "qbuDataBase/qbuCTSQLColumn.h"
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuPropertyMap.h"
-#include <QList>
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-struct sqlColumn
-{
-public:
-	sqlColumn();
-public:
-	QString m_strColumnName;
-	QString m_strDataType;
-	QString m_strConstraints;
-	bool	m_bPrimaryKey;
-public:
-	QString getColDef() const;
-};
-
-typedef QList<sqlColumn> sqlColumnList;
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-sqlColumn::sqlColumn() : m_bPrimaryKey(false)
-{
-	
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QString sqlColumn::getColDef() const
-{
-	QString retVal;
-	retVal = m_strColumnName;
-	if (!m_strDataType.isEmpty()) {
-		retVal.append(" ");
-		retVal.append(m_strDataType);
-	}
-	if (!m_strConstraints.isEmpty()) {
-		retVal.append(" ");
-		retVal.append(m_strConstraints);
-	}
-	return retVal;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +34,7 @@ bool qbuCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString st
 {
 	bool retVal = (!strCoumnName.isEmpty());
 	if (retVal) {
-		sqlColumn column;
+		qbuCTSQLColumn column;
 		column.m_strColumnName = doubleQuoteIfNecissary(strCoumnName);
 		column.m_strConstraints = strConstraint;
 		column.m_strDataType = strDataType;
@@ -174,3 +132,28 @@ QString qbuCreateTableQuery::generateColumnsQueryString()
 	return retVal;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuCreateTableQuery::doesColumnExist(QString strColumnName)
+{
+	bool retVal = false;
+
+	foreach(auto sqlColumn, m_pPrivate->m_lstColumns) {
+		retVal = (sqlColumn.m_strColumnName.compare(strColumnName.trimmed(), Qt::CaseInsensitive));
+
+		if (retVal) {
+			break;
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuCreateTableQuery::sqlColumnList* qbuCreateTableQuery::getColumnList()
+{
+	return &m_pPrivate->m_lstColumns;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

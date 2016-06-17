@@ -3,6 +3,7 @@
 #ifndef QBUQUERY_H
 #define QBUQUERY_H
 
+#include "qbuDataBase/qbuDataBaseLibraryDefines.h"
 #include "qbuDataBase/qbuSimpleQuery.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDBExpression.h"
@@ -15,7 +16,7 @@ class qbuPropertyMap;
 *	\ingroup qbuDatabase
 */
 
-class qbuQuery : public qbuSimpleQuery
+class qbuDataBase_EXPORT qbuQuery : public qbuSimpleQuery
 {
 public:
 	typedef qbuSimpleQuery Superclass;

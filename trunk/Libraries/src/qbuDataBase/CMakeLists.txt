@@ -78,6 +78,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuUpdateQuery.cxx
 	./src/qbuInfoAll.cxx
 	./src/qbuData.cxx
+	./src/qbuCreateTableQueryEx.cxx
+	./src/qbuCTSQLColumn.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -105,6 +107,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBView.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBCaseStatement.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateQuery.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCreateTableQueryEx.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
@@ -125,7 +128,7 @@ set( ${LOCAL_PROJECT_NAME}_RCS
 )
 
 set( ${LOCAL_PROJECT_NAME}_INT_HDRS
-
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCTSQLColumn.h
 )
 
 #Add precompiled header support

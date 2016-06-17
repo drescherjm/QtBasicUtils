@@ -7,6 +7,7 @@
 #include <memory>
 
 class qbuDatabase;
+class qbuCTSQLColumn;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,23 +19,32 @@ class qbuDatabase;
  *
 */
 
-class qbuCreateTableQuery : public qbuQuery
+class qbuDataBase_EXPORT qbuCreateTableQuery : public qbuQuery
 {
 public:
-	typedef qbuQuery Superclass;
+	typedef qbuQuery Superclass; 
+	typedef QList<qbuCTSQLColumn> sqlColumnList;
+
 public:
 	qbuCreateTableQuery(std::shared_ptr<QSqlDatabase> pDB);
 	virtual ~qbuCreateTableQuery();
 public:
-	bool	addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());
-	bool	addPKColumn(QString strCoumnName,QString strDataType,QString strConstraint /*=QString("NOT NULL")*/);
+	virtual bool	addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());
+	virtual bool	addPKColumn(QString strCoumnName,QString strDataType,QString strConstraint /*=QString("NOT NULL")*/);
 	
 	// Note this is only the column definitions.
-	QString generateColumnsQueryString();
+	virtual QString generateColumnsQueryString();
+
+protected:
+	bool	doesColumnExist(QString strColumnName);
+	sqlColumnList* getColumnList();
+
 private:
 	class	qbuPrivate;
 	qbuPrivate*		m_pPrivate;
 };
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
