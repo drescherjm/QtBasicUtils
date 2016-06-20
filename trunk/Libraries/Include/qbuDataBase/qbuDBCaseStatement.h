@@ -26,6 +26,7 @@ public:
 	bool	setEncloseInParentheses(bool bEnclose);
 
 	bool	addCase(int nValue, QString strText, bool bAutoQuote=true);
+	bool	addCase(QString strValue, QString strText, bool bAutoQuote = true);
 	bool	addElse(QString strText, bool bAutoQuote = true);
 
 public:

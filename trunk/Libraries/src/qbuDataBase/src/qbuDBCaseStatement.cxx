@@ -11,7 +11,7 @@ public:
 	qbuPrivate();
 
 public:
-	typedef QPair<int,QString>	CasePair;
+	typedef QPair<QString,QString>	CasePair;
 	typedef QList<CasePair>		CasePairList;
 
 public:
@@ -192,7 +192,23 @@ bool qbuDBCaseStatement::addCase( int nValue, QString strText, bool bAutoQuote )
 			retVal = m_pPrivate->handleAutoQuote(strText);
 		}
 
-		m_pPrivate->m_lstCasePairs.push_back(qbuPrivate::CasePair(nValue,strText));
+		m_pPrivate->m_lstCasePairs.push_back(qbuPrivate::CasePair(QString::number(nValue),strText));
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBCaseStatement::addCase(QString strValue, QString strText, bool bAutoQuote /*= true*/)
+{
+	bool retVal = (m_pPrivate != nullptr);
+	if (retVal) {
+
+		if (bAutoQuote) {
+			retVal = m_pPrivate->handleAutoQuote(strText);
+		}
+
+		m_pPrivate->m_lstCasePairs.push_back(qbuPrivate::CasePair(strValue, strText));
 	}
 	return retVal;
 }
