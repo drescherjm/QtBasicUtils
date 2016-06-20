@@ -24,12 +24,14 @@ public:
 	QString			m_strCaseMainExpr;
 	CasePairList	m_lstCasePairs;
 	QString			m_strElse;
+	bool			m_bHasANULL;
 
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCaseStatement::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
+qbuDBCaseStatement::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false), 
+	m_bHasANULL(false)
 {
 
 }
@@ -69,19 +71,49 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 	bool bValid = m_pPrivate->isValid();
 	if (bValid) {
 
-		retVal = "CASE " + m_pPrivate->m_strCaseMainExpr + " ";
+		if (!m_pPrivate->m_bHasANULL) {
+			retVal = "CASE " + m_pPrivate->m_strCaseMainExpr + " ";
 
-		foreach(qbuPrivate::CasePair pair,m_pPrivate->m_lstCasePairs) {
-			retVal.append(QString(" WHEN %1 THEN %2 ")
-				.arg(pair.first)
-				.arg(pair.second));
+			foreach(qbuPrivate::CasePair pair, m_pPrivate->m_lstCasePairs) {
+				retVal.append(QString(" WHEN %1 THEN %2 ")
+					.arg(pair.first)
+					.arg(pair.second));
+			}
+
+			if (!m_pPrivate->m_strElse.isEmpty()) {
+				retVal.append(QString(" ELSE %1 ").arg(m_pPrivate->m_strElse));
+			}
+
+			retVal.append(" END");
+		}
+		else {
+
+			// Construct case as follows: CASE WHEN X IS NULL THEN 'x' WHEN X=SomeVal THEN 'y' WHEN X=SomeOtherVal THEN 'z' END
+			retVal = "CASE ";
+
+			foreach(qbuPrivate::CasePair pair, m_pPrivate->m_lstCasePairs) {
+
+				if (!pair.first.contains("NULL", Qt::CaseInsensitive)) {
+					retVal.append(QString(" WHEN %3=%1 THEN %2 ")
+						.arg(pair.first)
+						.arg(pair.second)
+						.arg(m_pPrivate->m_strCaseMainExpr));
+				}
+				else {
+					retVal.append(QString(" WHEN %3 %1 THEN %2 ")
+						.arg(pair.first)
+						.arg(pair.second)
+						.arg(m_pPrivate->m_strCaseMainExpr));
+				}
+			}
+
+			if (!m_pPrivate->m_strElse.isEmpty()) {
+				retVal.append(QString(" ELSE %1 ").arg(m_pPrivate->m_strElse));
+			}
+
+			retVal.append(" END");
 		}
 
-		if (!m_pPrivate->m_strElse.isEmpty()) {
-			retVal.append(QString(" ELSE %1 ").arg(m_pPrivate->m_strElse));
-		}
-
-		retVal.append(" END");
 	}
 
 	if (bOK != nullptr) {
@@ -162,6 +194,7 @@ void qbuDBCaseStatement::copy( const qbuDBCaseStatement & other )
 	m_pPrivate->m_strCaseMainExpr = other.m_pPrivate->m_strCaseMainExpr;
 	m_pPrivate->m_lstCasePairs = other.m_pPrivate->m_lstCasePairs;
 	m_pPrivate->m_strElse = other.m_pPrivate->m_strElse;
+	m_pPrivate->m_bHasANULL = other.m_pPrivate->m_bHasANULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -227,6 +260,15 @@ bool qbuDBCaseStatement::addElse(QString strText, bool bAutoQuote /*= true*/)
 		m_pPrivate->m_strElse = strText;
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBCaseStatement::addNULLCase(QString strText, bool bAutoQuote /*= true*/)
+{
+	m_pPrivate->m_bHasANULL = true;
+
+	return addCase("IS NULL", strText, bAutoQuote);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
