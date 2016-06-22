@@ -110,7 +110,7 @@ bool qbuCreateTableQueryEx::generateCreateAndInsertQueriesFromSelect(qbuSelectQu
 		if (retVal) {
 			strInsertData = QString("INSERT INTO %1 (%2) %3;")
 				.arg(strTableName)
-				.arg(m_pPrivate->getColumnNames(this).join(','))
+				.arg(m_pPrivate->getColumnNames(this).join(","))
 				.arg(strSQL);
 		}
 	}
