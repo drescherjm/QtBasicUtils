@@ -22,15 +22,15 @@ public:
 	qbuPrivate();
 
 public:
-	qbuDBColumnDefList			m_lstSelect;
-	qbuDBColumnDefList			m_lstFrom;
-	QStringList					m_lstJOIN;
-	qbuDBColumnDefList			m_lstGroupBy;
-	qbuDBColumnDefList			m_lstOrderBy;
-	QString						m_strWhereClause;
-	QString						m_strHavingClause;
+	qbuDBColumnDefList				m_lstSelect;
+	qbuDBColumnDefList				m_lstFrom;
+	QStringList						m_lstJOIN;
+	qbuDBColumnDefList				m_lstGroupBy;
+	qbuDBColumnDefList				m_lstOrderBy;
+	QString							m_strWhereClause;
+	QString							m_strHavingClause;
 	qbuSelectQuery::SelectOption	m_SelectOption;
-	quint32						m_nLimit;
+	quint32							m_nLimit;
 public:
 	QString		generateCSVList(QStringList lst);
 	QString		generateCSVList(QStringList lst, QStringList lstAliases);
@@ -584,6 +584,56 @@ bool qbuSelectQuery::setRecordLimit(quint32 nLimit)
 {
 	m_pPrivate->m_nLimit = nLimit;
 	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int qbuSelectQuery::lookupSelectFieldIndex(QString strColName, Qt::CaseSensitivity cs) const
+{
+	int retVal = -1;
+
+	int nIndex = 0;
+	foreach(const auto& colDef, m_pPrivate->m_lstSelect) {
+		if (colDef.getNameOrAlias().compare(strColName, cs) == 0) {
+			retVal = nIndex;
+			break;
+		}
+		nIndex++;
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, QString strField, 
+	QString strAlias /*= QString()*/, QString strTableAlias /*= QString()*/)
+{
+	bool retVal = (m_pPrivate != nullptr);
+	if (retVal) {
+
+		qbuDBColDef col = qbuDBColDef(strField, strAlias).addTableAlias(strTableAlias);
+		retVal = addSelectFieldAtIndex(nIndex,col);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, qbuDBExpression & expression, QString strAlias /*= QString()*/)
+{
+	return addSelectFieldAtIndex(nIndex,expression.toString(), strAlias);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, const qbuDBColDef & colDef)
+{
+	bool retVal = (m_pPrivate != nullptr);
+	if (retVal) {
+		m_pPrivate->m_lstSelect.insert(nIndex, colDef);
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

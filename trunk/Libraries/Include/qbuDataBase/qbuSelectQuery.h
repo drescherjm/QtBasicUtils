@@ -37,9 +37,14 @@ public:
 public:
 	bool	setRecordLimit(quint32 nLimit);
 	bool	setSelectOption(SelectOption option);
+	int		lookupSelectFieldIndex(QString strColName, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const;
 	bool	addSelectField(QString strField, QString strAlias = QString(), QString strTableAlias = QString());
 	bool	addSelectField(qbuDBExpression & expression, QString strAlias = QString());
 	bool	addSelectField(const qbuDBColDef & colDef);
+	bool	addSelectFieldAtIndex(int nIndex, QString strField, QString strAlias = QString(), QString strTableAlias = QString());
+	bool	addSelectFieldAtIndex(int nIndex, qbuDBExpression & expression, QString strAlias = QString());
+	bool	addSelectFieldAtIndex(int nIndex, const qbuDBColDef & colDef);
+	
 	bool	addSelectFields(const QStringList & lstFields, QString strTableAlias = QString());
 	bool	addFromField(QString strField, QString strAlias = QString());
 	bool	addFromField(qbuSelectQuery & nestedQuery, QString strAlias);
