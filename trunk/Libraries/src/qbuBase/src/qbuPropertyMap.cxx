@@ -31,83 +31,83 @@ qbuPropertyMap::qbuPropertyMap() : m_cs(Qt::CaseInsensitive)
 
 qbuPropertyMap::~qbuPropertyMap()
 {
-	destroy();
+    destroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::qbuPropertyMap(const qbuPropertyMap & other)
 {
-	copy(other);
+    copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap& qbuPropertyMap::operator =(const qbuPropertyMap & other)
 {
-	if ( &other != this ) {
-		destroy();
-		copy(other);
-	}
-	return (*this);
+    if ( &other != this ) {
+        destroy();
+        copy(other);
+    }
+    return (*this);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuPropertyMap::copy(const qbuPropertyMap & other)
 {
-	setObjectName(other.objectName());
-	setCaseSensitivity(other.m_cs);
+    setObjectName(other.objectName());
+    setCaseSensitivity(other.m_cs);
 
-	Map map = other.m_mapProps;
-	
-	iterator it= map.begin();
-	for(; it != map.end();++it) {
-		insert(**it);
-	}
+    Map map = other.m_mapProps;
+    
+    iterator it= map.begin();
+    for(; it != map.end();++it) {
+        insert(**it);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuPropertyMap::destroy()
 {
-	iterator it= begin();
-	for(; it != end();++it) {
-		delete *it;
-	}
-	m_mapProps.clear();
+    iterator it= begin();
+    for(; it != end();++it) {
+        delete *it;
+    }
+    m_mapProps.clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::iterator qbuPropertyMap::begin() 
 {
-	qbuPropertyMap::iterator retVal = m_mapProps.begin();
-	return retVal;
+    qbuPropertyMap::iterator retVal = m_mapProps.begin();
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::iterator qbuPropertyMap::end() 
 {
-	qbuPropertyMap::iterator retVal = m_mapProps.end();
-	return retVal;
+    qbuPropertyMap::iterator retVal = m_mapProps.end();
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::const_iterator qbuPropertyMap::begin() const
 {
-	qbuPropertyMap::const_iterator retVal = m_mapProps.begin();
-	return retVal;
+    qbuPropertyMap::const_iterator retVal = m_mapProps.begin();
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::const_iterator qbuPropertyMap::end() const
 {
-	qbuPropertyMap::const_iterator retVal = m_mapProps.end();
-	return retVal;
+    qbuPropertyMap::const_iterator retVal = m_mapProps.end();
+    return retVal;
 }
 
 
@@ -115,7 +115,7 @@ qbuPropertyMap::const_iterator qbuPropertyMap::end() const
 
 qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty & prop)
 {
-	return insert(new qbuProperty(prop));
+    return insert(new qbuProperty(prop));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -128,21 +128,21 @@ qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty & prop)
 
 qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty* pProp)
 {
-	iterator retVal = m_mapProps.end();
-	if (pProp != NULL) {
-		QString strName = CleanUpName(pProp->objectName());
-		pProp->setObjectName(strName);
+    iterator retVal = m_mapProps.end();
+    if (pProp != NULL) {
+        QString strName = CleanUpName(pProp->objectName());
+        pProp->setObjectName(strName);
 
-		// Remove the old if found otherwise there would be a memory leak.
-		RemoveProperty(strName); 
+        // Remove the old if found otherwise there would be a memory leak.
+        RemoveProperty(strName); 
 
-		retVal = m_mapProps.insert(strName,pProp);
-		if (retVal != m_mapProps.end()) {
-			Modify();
-			propertyInserted(pProp);
-		}
-	}
-	return retVal;
+        retVal = m_mapProps.insert(strName,pProp);
+        if (retVal != m_mapProps.end()) {
+            Modify();
+            propertyInserted(pProp);
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -154,35 +154,35 @@ qbuPropertyMap::iterator qbuPropertyMap::insert(qbuProperty* pProp)
 
 QString qbuPropertyMap::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 {
-	QString name = objectName();
+    QString name = objectName();
 
-	if (name.isEmpty()) {
-		name = "doc";
-	}
-	
-	QVariant::Type ty = QVariant::UserType;
+    if (name.isEmpty()) {
+        name = "doc";
+    }
+    
+    QVariant::Type ty = QVariant::UserType;
 
-	QString retVal;
-	
-	if (bMakeRoot) {
-		retVal= QString("<%1 ty=\"%2\">\n")
-			.arg(name)
-			.arg(ty);
-	}
+    QString retVal;
+    
+    if (bMakeRoot) {
+        retVal= QString("<%1 ty=\"%2\">\n")
+            .arg(name)
+            .arg(ty);
+    }
 
-	indent = indent.GetNextIndent();
+    indent = indent.GetNextIndent();
 
-	iterator it = begin();
-	
-	for (;it != end();++it) {
-		retVal += (*it)->toXML(indent);
-	}
+    iterator it = begin();
+    
+    for (;it != end();++it) {
+        retVal += (*it)->toXML(indent);
+    }
 
-	if (bMakeRoot) {
-		retVal += QString("</%1>\n").arg(name);
-	}
-	
-	return retVal;
+    if (bMakeRoot) {
+        retVal += QString("</%1>\n").arg(name);
+    }
+    
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -193,32 +193,32 @@ QString qbuPropertyMap::toXML( bool bMakeRoot /*= true*/, qbuITKIndent indent )
 
 QString qbuPropertyMap::CleanUpName( QString strName ) const
 {
-	strName = strName.simplified();
+    strName = strName.simplified();
 
-	strName.replace(" ","_");
-	if (m_cs == Qt::CaseInsensitive) {
-		strName = strName.toUpper();
-	}
+    strName.replace(" ","_");
+    if (m_cs == Qt::CaseInsensitive) {
+        strName = strName.toUpper();
+    }
 
-	return strName;
+    return strName;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::iterator qbuPropertyMap::find( QString strName ) 
 {
-	strName = CleanUpName(strName);
-	qbuPropertyMap::iterator retVal = m_mapProps.find(strName);
-	return retVal;
+    strName = CleanUpName(strName);
+    qbuPropertyMap::iterator retVal = m_mapProps.find(strName);
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuPropertyMap::const_iterator qbuPropertyMap::find( QString strName ) const
 {
-	strName = CleanUpName(strName);
-	qbuPropertyMap::const_iterator retVal = m_mapProps.find(strName);
-	return retVal;
+    strName = CleanUpName(strName);
+    qbuPropertyMap::const_iterator retVal = m_mapProps.find(strName);
+    return retVal;
 }
 
 
@@ -227,9 +227,9 @@ qbuPropertyMap::const_iterator qbuPropertyMap::find( QString strName ) const
 
 void qbuPropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
 {
-	if (m_mapProps.isEmpty()) {
-		m_cs = cs;
-	}
+    if (m_mapProps.isEmpty()) {
+        m_cs = cs;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -244,32 +244,32 @@ void qbuPropertyMap::setCaseSensitivity(Qt::CaseSensitivity cs )
  */
 
 bool qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & other, QString strNewName/*=""*/, 
-	bool bOverWriteExisting /*=true*/)
+    bool bOverWriteExisting /*=true*/)
 {
-	
-	if (strNewName.isEmpty()) {
-		strNewName = strOldName;
-	}
+    
+    if (strNewName.isEmpty()) {
+        strNewName = strOldName;
+    }
 
-	qbuPropertyMap::const_iterator it = other.find(strOldName);
+    qbuPropertyMap::const_iterator it = other.find(strOldName);
 
-	bool retVal = (it != other.end() );
+    bool retVal = (it != other.end() );
 
-	if (retVal) {
-		qbuProperty prop = **it;
-		
-		if (!strNewName.isEmpty()) {
-			prop.setObjectName(strNewName);
-			strOldName = strNewName;
-		}
+    if (retVal) {
+        qbuProperty prop = **it;
+        
+        if (!strNewName.isEmpty()) {
+            prop.setObjectName(strNewName);
+            strOldName = strNewName;
+        }
 
-		retVal = ((bOverWriteExisting) || !hasField(strOldName));
-		if ( retVal ) {
-			insert(prop);
-		}
-		
-	}
-	return retVal;
+        retVal = ((bOverWriteExisting) || !hasField(strOldName));
+        if ( retVal ) {
+            insert(prop);
+        }
+        
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -281,67 +281,67 @@ bool qbuPropertyMap::CopyProperty( QString strOldName, const qbuPropertyMap & ot
 
 void qbuPropertyMap::MoveProperty( QString strOldName, qbuPropertyMap & other, QString strNewName/*=""*/ )
 {
-	if (strNewName.isEmpty()) {
-		strNewName = strOldName;
-	}
+    if (strNewName.isEmpty()) {
+        strNewName = strOldName;
+    }
 
-	qbuPropertyMap::iterator it = other.find(strOldName);
-	if ( it != other.end()) {
-		qbuProperty prop = **it;
+    qbuPropertyMap::iterator it = other.find(strOldName);
+    if ( it != other.end()) {
+        qbuProperty prop = **it;
 
-		if (!strNewName.isEmpty()) {
-			prop.setObjectName(strNewName);
-		}
+        if (!strNewName.isEmpty()) {
+            prop.setObjectName(strNewName);
+        }
 
-		insert(prop);
+        insert(prop);
 
-		other.m_mapProps.erase(it);
-	}
+        other.m_mapProps.erase(it);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::RenameProperty(QString strOldName,QString strNewName)
 {
-	bool retVal = ((!strOldName.isEmpty()) && (!strNewName.isEmpty()));
+    bool retVal = ((!strOldName.isEmpty()) && (!strNewName.isEmpty()));
 
-	if (retVal) {
-		iterator it = find(strOldName);
+    if (retVal) {
+        iterator it = find(strOldName);
 
-		retVal = (it != end());
-		if (retVal) {
-			retVal = find(strNewName) == end();
-			if (retVal) {
-				qbuProperty* pProp = *it;
-				m_mapProps.erase(it);
-				pProp->setObjectName(strNewName);
-				retVal = (insert(pProp) != end());
-				if (!retVal) {
-					/**
-					 *	\warning This should never get here
-					 *  \todo Add critical logging	
-					 */			
-				}
-			}
-		}
+        retVal = (it != end());
+        if (retVal) {
+            retVal = find(strNewName) == end();
+            if (retVal) {
+                qbuProperty* pProp = *it;
+                m_mapProps.erase(it);
+                pProp->setObjectName(strNewName);
+                retVal = (insert(pProp) != end());
+                if (!retVal) {
+                    /**
+                     *	\warning This should never get here
+                     *  \todo Add critical logging	
+                     */			
+                }
+            }
+        }
 
-	}
-	
-	return retVal;
+    }
+    
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::RemoveProperty(QString strName)
 {
-	bool retVal;
-	iterator it = find(strName);
-	retVal = (it != end());
-	if (retVal) {
-		delete *it;
-		m_mapProps.erase(it);
-	}
-	return retVal;
+    bool retVal;
+    iterator it = find(strName);
+    retVal = (it != end());
+    if (retVal) {
+        delete *it;
+        m_mapProps.erase(it);
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -356,42 +356,42 @@ bool qbuPropertyMap::RemoveProperty(QString strName)
 
 int qbuPropertyMap::RemoveProperties( QStringList lstProperties )
 {
-	int retVal = 0;
-	iterator it = begin();
-	for(; it != end();++it) {
-		qbuProperty* pProp = *it;
-		if (pProp != NULL) {
-			QString strName = pProp->objectName();
-			if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
-				it = m_mapProps.erase(it);
-				retVal++;
-			}
-		}
-	}
-	return retVal;
+    int retVal = 0;
+    iterator it = begin();
+    for(; it != end();++it) {
+        qbuProperty* pProp = *it;
+        if (pProp != NULL) {
+            QString strName = pProp->objectName();
+            if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
+                it = m_mapProps.erase(it);
+                retVal++;
+            }
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuPropertyMap::addProperties(qbuPropertyMap * pOther)
 {
-	if (pOther != NULL) {
-		iterator it = pOther->begin();
-		for(;it != pOther->end();++it) {
-			insert(**it);
-		}
-	}
+    if (pOther != NULL) {
+        iterator it = pOther->begin();
+        for(;it != pOther->end();++it) {
+            insert(**it);
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuPropertyMap::addProperties( const qbuPropertyMap* other )
 {
-	qbuPropertyMap::const_iterator it = other->begin();
-	if ( it != other->end()) {
-		qbuProperty prop = **it;
-		insert(prop);
-	}
+    qbuPropertyMap::const_iterator it = other->begin();
+    if ( it != other->end()) {
+        qbuProperty prop = **it;
+        insert(prop);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -401,42 +401,42 @@ void qbuPropertyMap::addProperties( const qbuPropertyMap* other )
 
 static void printDomElem(QDomElement & e)
 {
-	std::cout << "Parse Begin" << std::endl;
-	std::cout << e.tagName().toStdString() << std::endl; // the node really is an element.
-	if(e.hasAttribute("tyID")) {
-				QString strAttr = e.attribute("tyID");
-				if (!strAttr.isEmpty()) {
-					std::cout << strAttr.toStdString() << std::endl;
-				}
-	}
-	if(e.hasAttribute("tyName")) {
-				QString strAttr = e.attribute("tyName");
-				if (!strAttr.isEmpty()) {
-					std::cout << strAttr.toStdString() << std::endl;
-				}
-	}
+    std::cout << "Parse Begin" << std::endl;
+    std::cout << e.tagName().toStdString() << std::endl; // the node really is an element.
+    if(e.hasAttribute("tyID")) {
+                QString strAttr = e.attribute("tyID");
+                if (!strAttr.isEmpty()) {
+                    std::cout << strAttr.toStdString() << std::endl;
+                }
+    }
+    if(e.hasAttribute("tyName")) {
+                QString strAttr = e.attribute("tyName");
+                if (!strAttr.isEmpty()) {
+                    std::cout << strAttr.toStdString() << std::endl;
+                }
+    }
 
-	std::cout << e.text().toStdString() << std::endl;
+    std::cout << e.text().toStdString() << std::endl;
 
-	std::cout << e.prefix().toStdString() << std::endl;
+    std::cout << e.prefix().toStdString() << std::endl;
 
-		QString str;
-			QTextStream stream(&str);
+        QString str;
+            QTextStream stream(&str);
 
-				e.save(stream,0);
-					
-				std::cout << str.toStdString() << std::endl;
-				std::cout << "Parse End." << std::endl << std::endl;
+                e.save(stream,0);
+                    
+                std::cout << str.toStdString() << std::endl;
+                std::cout << "Parse End." << std::endl << std::endl;
 }
 #endif //0
 
 QDebug operator<<(QDebug dbg, const QDomNode& node)
 {
-	QString s;
-	QTextStream str(&s, QIODevice::WriteOnly);
-	node.save(str, 2);
-	dbg << qPrintable(s);
-	return dbg;
+    QString s;
+    QTextStream str(&s, QIODevice::WriteOnly);
+    node.save(str, 2);
+    dbg << qPrintable(s);
+    return dbg;
 }
 
 
@@ -444,106 +444,106 @@ QDebug operator<<(QDebug dbg, const QDomNode& node)
 
 bool qbuPropertyMap::fromXML( QString strXML )
 {
-	bool retVal;
+    bool retVal;
 
-	QDomDocument doc;
+    QDomDocument doc;
 // 	QXmlInputSource source;
 // 	source.setData(strXML);
 // 	QXmlSimpleReader reader;
 // 	doc.setContent(&source, &reader);
-		
-	doc.setContent(strXML);
+        
+    doc.setContent(strXML);
 
-	QDomElement docElem = doc.documentElement();
+    QDomElement docElem = doc.documentElement();
 
 #ifdef DEBUG_XML_DUMPS
-	qDebug() << docElem;
+    qDebug() << docElem;
 #endif // DEBUG_XML_DUMPS
 
-	QDomNode n = docElem.firstChild();
+    QDomNode n = docElem.firstChild();
 
-	retVal = !n.isNull();
+    retVal = !n.isNull();
 
-	if (retVal) {
+    if (retVal) {
 
 #ifdef DEBUG_XML_DUMPS
-		qDebug() << n;
+        qDebug() << n;
 #endif //def DEBUG_XML_DUMPS
-		
-		QDomElement e = n.toElement();
-		retVal = !e.isNull();
-		if (retVal) {
-			retVal = fromXML(e);
-		}
-	}
+        
+        QDomElement e = n.toElement();
+        retVal = !e.isNull();
+        if (retVal) {
+            retVal = fromXML(e);
+        }
+    }
 
-	return retVal;
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::fromXML(QDomElement & domElem)
 {
-	bool retVal;
-	QDomNode n = domElem;
-	retVal = !n.isNull();
+    bool retVal;
+    QDomNode n = domElem;
+    retVal = !n.isNull();
 
-	while(!n.isNull()) {
-		QDomElement e = n.toElement(); // try to convert the node to an element.
-		if(!e.isNull()) {
-			
-			qbuProperty prop;
-			if (prop.fromXML(e)) {
-				insert(prop);
-			}
-			else
-			{
-				retVal = false;
-			}
+    while(!n.isNull()) {
+        QDomElement e = n.toElement(); // try to convert the node to an element.
+        if(!e.isNull()) {
+            
+            qbuProperty prop;
+            if (prop.fromXML(e)) {
+                insert(prop);
+            }
+            else
+            {
+                retVal = false;
+            }
 
-		}
+        }
 
-		n = n.nextSibling();
-	}
+        n = n.nextSibling();
+    }
 
-	return retVal;
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::Load( QString strFile )
 {
-	QFile file(strFile);
-	bool retVal = file.open(QFile::ReadOnly|QFile::Text);
-	if (retVal) {
-		QString strXML;
-		QTextStream stream(&file);
-		strXML = stream.readAll();
+    QFile file(strFile);
+    bool retVal = file.open(QFile::ReadOnly|QFile::Text);
+    if (retVal) {
+        QString strXML;
+        QTextStream stream(&file);
+        strXML = stream.readAll();
 
-		retVal = fromXML(strXML);
-		if (retVal) {
-			ForceUnmodified();
-		}
-	}
-	return retVal;
+        retVal = fromXML(strXML);
+        if (retVal) {
+            ForceUnmodified();
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::Save( QString strFile )
 {
-	QString strXML = toXML(true);
-	bool retVal = !strXML.isEmpty();
-	if (retVal) {
-		QFile file(strFile);
-		retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);
-		if (retVal) {
-			QTextStream stream(&file);
-			stream << strXML;
-			ForceUnmodified();
-		}
-	}
-	return retVal;
+    QString strXML = toXML(true);
+    bool retVal = !strXML.isEmpty();
+    if (retVal) {
+        QFile file(strFile);
+        retVal = file.open(QFile::WriteOnly|QFile::Text|QFile::Truncate);
+        if (retVal) {
+            QTextStream stream(&file);
+            stream << strXML;
+            ForceUnmodified();
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -551,13 +551,13 @@ bool qbuPropertyMap::Save( QString strFile )
 void qbuPropertyMap::Print( std::ostream & st, qbuITKIndent indent )
 {
 
-	QString strName = metaObject()->className();
-	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
-		.arg(indent.getIndent())
-		.arg(strName)
-		.arg(toXML(false,indent));
+    QString strName = metaObject()->className();
+    QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+        .arg(indent.getIndent())
+        .arg(strName)
+        .arg(toXML(false,indent));
 
-	st << qPrintable(strTemp) << std::endl;
+    st << qPrintable(strTemp) << std::endl;
 
 }
 
@@ -566,13 +566,13 @@ void qbuPropertyMap::Print( std::ostream & st, qbuITKIndent indent )
 void qbuPropertyMap::Print( QTextStream & st, qbuITKIndent indent )
 {
 
-	QString strName = metaObject()->className();
-	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
-		.arg(indent.getIndent())
-		.arg(strName)
-		.arg(toXML(false,indent));
+    QString strName = metaObject()->className();
+    QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+        .arg(indent.getIndent())
+        .arg(strName)
+        .arg(toXML(false,indent));
 
-	st << strTemp << endl;
+    st << strTemp << endl;
 
 }
 
@@ -580,24 +580,24 @@ void qbuPropertyMap::Print( QTextStream & st, qbuITKIndent indent )
 
 bool qbuPropertyMap::operator==( const qbuPropertyMap & other ) const
 {
-	bool retVal = (other.size() == size());
-	if (retVal) {
-		const_iterator it1 = begin();
-		const_iterator it2 = other.begin();
-		for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
-			qbuProperty* p1 = *it1;
-			qbuProperty* p2 = *it2;
-			retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
-		}
-	}
-	return retVal;
+    bool retVal = (other.size() == size());
+    if (retVal) {
+        const_iterator it1 = begin();
+        const_iterator it2 = other.begin();
+        for(; it1 != end() && it2 != other.end() && retVal;++it1,++it2) {
+            qbuProperty* p1 = *it1;
+            qbuProperty* p2 = *it2;
+            retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int qbuPropertyMap::size() const
 {
-	return m_mapProps.count();
+    return m_mapProps.count();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -615,26 +615,26 @@ int qbuPropertyMap::size() const
 
 bool qbuPropertyMap::EqualSubset( QStringList lstPropNames, const qbuPropertyMap & other )
 {
-	bool retVal = !lstPropNames.empty();
-	if (retVal) {
-		qbuProperty prop1,prop2;
-		const_iterator it1, it2;
-		foreach(QString strName,lstPropNames) {
-			it1 = find(strName);
-			it2 = other.find(strName);
-			retVal = (( it1 != end()) && (it2 != other.end()));
-			if (retVal) {
-				qbuProperty* p1 = *it1;
-				qbuProperty* p2 = *it2;
+    bool retVal = !lstPropNames.empty();
+    if (retVal) {
+        qbuProperty prop1,prop2;
+        const_iterator it1, it2;
+        foreach(QString strName,lstPropNames) {
+            it1 = find(strName);
+            it2 = other.find(strName);
+            retVal = (( it1 != end()) && (it2 != other.end()));
+            if (retVal) {
+                qbuProperty* p1 = *it1;
+                qbuProperty* p2 = *it2;
 
-				retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
-			}
-			if (!retVal) {
-				break;
-			}
-		}
-	}
-	return retVal;
+                retVal = ((p1 != NULL) && (p2 != NULL) && (*p1 == *p2));
+            }
+            if (!retVal) {
+                break;
+            }
+        }
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -653,38 +653,55 @@ void qbuPropertyMap::propertyInserted( qbuProperty * pProp )
 
 QStringList qbuPropertyMap::getPropertyList() const
 {
-	QStringList retVal;
-	
-	const_iterator it = begin();
+    QStringList retVal;
+    
+    const_iterator it = begin();
 
-	for( ; it != end(); ++it) {
-		retVal << it.key();
-	}
+    for( ; it != end(); ++it) {
+        retVal << it.key();
+    }
 
-	return retVal;
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::hasField( QString strFieldName ) const
 {
-	return (find(strFieldName) != end());
+    return (find(strFieldName) != end());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 unsigned int qbuPropertyMap::CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other)
 {
-	unsigned int retVal = 0;
+    unsigned int retVal = 0;
 
-	const QStringList& lst = lstPropNames;
-	foreach(QString str, lst) {
-		if (CopyProperty(str, other)) {
-			retVal++;
-		}
-	}
+    const QStringList& lst = lstPropNames;
+    foreach(QString str, lst) {
+        if (CopyProperty(str, other)) {
+            retVal++;
+        }
+    }
 
-	return retVal;
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuPropertyMap::hasFields(const QStringList & lstFields) const
+{
+    bool retVal = true;
+
+    foreach (QString strField, lstFields) {
+        retVal = hasField(strField);
+
+        if (!retVal) {
+            break;
+        }
+    }
+
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

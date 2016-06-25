@@ -18,70 +18,71 @@
 
 class qbuPropertyMap : public qbuUserProperty
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	qbuPropertyMap();
-	virtual ~qbuPropertyMap();
-	qbuPropertyMap(const qbuPropertyMap & other);
-	qbuPropertyMap& operator=(const qbuPropertyMap & other);
-	bool operator==(const qbuPropertyMap & other) const;
+    qbuPropertyMap();
+    virtual ~qbuPropertyMap();
+    qbuPropertyMap(const qbuPropertyMap & other);
+    qbuPropertyMap& operator=(const qbuPropertyMap & other);
+    bool operator==(const qbuPropertyMap & other) const;
 public:
-	typedef QMap<QString,qbuProperty*> Map;
-	typedef Map::iterator iterator;
-	typedef Map::const_iterator const_iterator;
+    typedef QMap<QString,qbuProperty*> Map;
+    typedef Map::iterator iterator;
+    typedef Map::const_iterator const_iterator;
 
-	iterator		insert(qbuProperty* pProp);
-	iterator		insert(qbuProperty & prop);
-	iterator		begin();
-	iterator		end();
-	const_iterator	begin() const;
-	const_iterator	end() const;
-	iterator		find(QString strName);
-	const_iterator	find(QString strName) const;
-	void			clear();
-	bool			empty() const;
-	int				size() const;
+    iterator		insert(qbuProperty* pProp);
+    iterator		insert(qbuProperty & prop);
+    iterator		begin();
+    iterator		end();
+    const_iterator	begin() const;
+    const_iterator	end() const;
+    iterator		find(QString strName);
+    const_iterator	find(QString strName) const;
+    void			clear();
+    bool			empty() const;
+    int				size() const;
 public:
-	void			setCaseSensitivity ( Qt::CaseSensitivity cs );
-	QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
-	bool			fromXML(QString strXML);
-	bool			fromXML(QDomElement & domElem);
-	unsigned int	CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other);
-	bool			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
-	void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");
-	bool			EqualSubset(QStringList lstPropNames, const qbuPropertyMap & other);
-	bool			RemoveProperty(QString strName);
-	bool			RenameProperty(QString strOldName,QString strNewName);
-	
-	bool			Load(QString strFile);
-	bool			Save(QString strFile);
-	void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
-	void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
-	bool			hasField(QString strFieldName) const;
-	QStringList		getPropertyList() const;
-
-public:
-	template<typename DataType>
-	bool			getField(QString strFieldName, DataType & nOutVal);
-	template<typename DataType>
-	bool			setField(QString strFieldName, DataType nInVal);
+    void			setCaseSensitivity ( Qt::CaseSensitivity cs );
+    QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
+    bool			fromXML(QString strXML);
+    bool			fromXML(QDomElement & domElem);
+    unsigned int	CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other);
+    bool			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
+    void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");
+    bool			EqualSubset(QStringList lstPropNames, const qbuPropertyMap & other);
+    bool			RemoveProperty(QString strName);
+    bool			RenameProperty(QString strOldName,QString strNewName);
+    
+    bool			Load(QString strFile);
+    bool			Save(QString strFile);
+    void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
+    void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());
+    bool			hasField(QString strFieldName) const;
+    bool            hasFields(const QStringList & lstFields) const;
+    QStringList		getPropertyList() const;
 
 public:
-	virtual	void	addProperties(qbuPropertyMap * other);	
-	virtual void	addProperties(const qbuPropertyMap* other);
-	virtual	int		RemoveProperties(QStringList lstProperties);
+    template<typename DataType>
+    bool			getField(QString strFieldName, DataType & nOutVal);
+    template<typename DataType>
+    bool			setField(QString strFieldName, DataType nInVal);
 
-protected:
-	virtual void	propertyInserted(qbuProperty * pProp);
+public:
+    virtual	void	addProperties(qbuPropertyMap * other);	
+    virtual void	addProperties(const qbuPropertyMap* other);
+    virtual	int		RemoveProperties(QStringList lstProperties);
 
 protected:
-	Map				m_mapProps;
-	Qt::CaseSensitivity m_cs;
+    virtual void	propertyInserted(qbuProperty * pProp);
+
 protected:
-	QString			CleanUpName(QString strName) const;
+    Map				m_mapProps;
+    Qt::CaseSensitivity m_cs;
+protected:
+    QString			CleanUpName(QString strName) const;
 private:
-	void			copy( const qbuPropertyMap & other );
-	void			destroy();
+    void			copy( const qbuPropertyMap & other );
+    void			destroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -93,14 +94,14 @@ private:
 
 inline void qbuPropertyMap::clear()
 {
-	destroy();
+    destroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 inline bool qbuPropertyMap::empty() const
 {
-	return m_mapProps.empty();
+    return m_mapProps.empty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -109,16 +110,16 @@ inline bool qbuPropertyMap::empty() const
 template<typename DataType>
 bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
 {
-	bool retVal;
-	const_iterator it = find(strFieldName);
-	retVal = (it != end());
-	if (retVal) {
-		qbuProperty* pProp =*it;
-		QVariant vt = (*it)->GetData();
-		retVal = vt.canConvert<DataType>();
-		nOutVal = vt.value<DataType>();
-	}
-	return retVal;
+    bool retVal;
+    const_iterator it = find(strFieldName);
+    retVal = (it != end());
+    if (retVal) {
+        qbuProperty* pProp =*it;
+        QVariant vt = (*it)->GetData();
+        retVal = vt.canConvert<DataType>();
+        nOutVal = vt.value<DataType>();
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -126,12 +127,12 @@ bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
 template<typename DataType>
 bool qbuPropertyMap::setField( QString strFieldName, DataType nInVal )
 {
-	bool retVal;
-	qbuProperty prop;
-	prop.setObjectName(strFieldName);
-	prop.SetData(nInVal);
-	retVal = (insert(prop) != end());
-	return retVal;
+    bool retVal;
+    qbuProperty prop;
+    prop.setObjectName(strFieldName);
+    prop.SetData(nInVal);
+    retVal = (insert(prop) != end());
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
