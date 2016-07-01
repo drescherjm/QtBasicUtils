@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUUSERPROPERY_H__
-#define __QBUUSERPROPERY_H__
+#ifndef QBUUSERPROPERY_H
+#define QBUUSERPROPERY_H
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,4 +37,4 @@ Q_DECLARE_METATYPE(qbuUserProperty*);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUUSERPROPERY_H__
+#endif // QBUUSERPROPERY_H
