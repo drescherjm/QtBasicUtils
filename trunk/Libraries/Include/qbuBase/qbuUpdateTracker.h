@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUUPDATETRACKER_H__
-#define __QBUUPDATETRACKER_H__
+#ifndef QBUUPDATETRACKER_H
+#define QBUUPDATETRACKER_H
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -51,4 +51,4 @@ inline bool qbuUpdateTracker::ForceUnmodified()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUUPDATETRACKER_H__
+#endif // QBUUPDATETRACKER_H
