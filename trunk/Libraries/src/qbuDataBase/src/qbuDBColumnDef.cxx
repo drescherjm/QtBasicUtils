@@ -65,6 +65,7 @@ qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
 {
 	m_strName = expr.toString();
 	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+    m_options = OP_IS_EXPRESSION;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
