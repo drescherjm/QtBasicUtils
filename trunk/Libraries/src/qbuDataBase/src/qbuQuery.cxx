@@ -56,6 +56,11 @@ bool qbuQuery::genExpr(QString & strExpr, qbuPropertyMap* pProps, QString strFie
 		retVal = (it != pProps->end());
 
 		if (retVal) {
+
+			if (!strTableAlias.trimmed().isEmpty()) {
+				strField = QString("%1.%2").arg(strTableAlias.trimmed()).arg(strField);
+			}
+
 			qbuProperty* pProp = *it;
 			const QVariant& vt = pProp->GetData();
 			retVal = vt.canConvert(QVariant::String);
