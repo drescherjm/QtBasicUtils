@@ -49,7 +49,7 @@ public:
 	bool	exportData(T*, QList< std::shared_ptr<T> > & lst, qbuDBExpression expr = qbuDBExpression());
 
 protected:
-	virtual bool				renameTable(QString strNewName,bool bAutoIncrementOnFailure);
+	virtual bool				renameTable(QString & strNewName,bool bAutoIncrementOnFailure);
 	virtual bool				createTable(int nSchema)=0;
 	virtual bool				internalCreateTable(QString strTableName, QString strTableSQL);
 	virtual	bool				addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());

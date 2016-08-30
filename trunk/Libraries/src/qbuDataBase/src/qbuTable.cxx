@@ -206,7 +206,7 @@ bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strC
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::renameTable(QString strNewName, bool bAutoIncrementOnFailure)
+bool qbuTable::renameTable(QString & strNewName, bool bAutoIncrementOnFailure)
 {
 	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
