@@ -206,7 +206,7 @@ bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strC
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::renameTable(QString strNewName)
+bool qbuTable::renameTable(QString strNewName, bool bAutoIncrementOnFailure)
 {
 	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
@@ -218,6 +218,23 @@ bool qbuTable::renameTable(QString strNewName)
 		qbuSimpleQuery	query(m_pDB);
 
 		retVal = query.exec(strSQL);
+
+		if (!retVal && bAutoIncrementOnFailure) {
+			for (int i = 1; i < 100; i++) {
+				strSQL = QString("ALTER TABLE %1 RENAME TO %2_v%3")
+					.arg(getTableName())
+					.arg(strNewName)
+					.arg(i, 2, 10, QChar('0'));
+
+				retVal = query.exec(strSQL);
+				if (retVal) {
+					break;
+				}
+
+			}
+
+		}
+
 		if (retVal)
 		{
 			QString strMsg = QString("The table %1 was renamed to %2").arg(getTableName()).arg(strNewName);
