@@ -219,17 +219,24 @@ bool qbuTable::renameTable(QString strNewName, bool bAutoIncrementOnFailure)
 
 		retVal = query.exec(strSQL);
 
-		if (!retVal && bAutoIncrementOnFailure) {
+		if (!retVal && bAutoIncrementOnFailure && m_pDB->tableExists(strNewName)) {
 			for (int i = 1; i < 100; i++) {
-				strSQL = QString("ALTER TABLE %1 RENAME TO %2_v%3")
-					.arg(getTableName())
-					.arg(strNewName)
+
+				QString strTmp = QString("%1_v%2").arg(strNewName)
 					.arg(i, 2, 10, QChar('0'));
 
-				retVal = query.exec(strSQL);
-				if (retVal) {
-					break;
+				if (!m_pDB->tableExists(strTmp)) {
+					strSQL = QString("ALTER TABLE %1 RENAME TO %2")
+						.arg(getTableName())
+						.arg(strTmp);
+
+					retVal = query.exec(strSQL);
+					if (retVal) {
+						strNewName = strTmp;
+						break;
+					}
 				}
+
 
 			}
 
