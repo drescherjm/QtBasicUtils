@@ -206,7 +206,7 @@ bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strC
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::renameTable(QString & strNewName, bool bAutoIncrementOnFailure)
+bool qbuTable::renameTable(QString strNewName)
 {
 	bool retVal = (m_pDB != nullptr) && (m_pDB->isOpen());
 	if (retVal) {
@@ -218,29 +218,6 @@ bool qbuTable::renameTable(QString & strNewName, bool bAutoIncrementOnFailure)
 		qbuSimpleQuery	query(m_pDB);
 
 		retVal = query.exec(strSQL);
-
-		if (!retVal && bAutoIncrementOnFailure && m_pDB->tableExists(strNewName)) {
-			for (int i = 1; i < 100; i++) {
-
-				QString strTmp = QString("%1_v%2").arg(strNewName)
-					.arg(i, 2, 10, QChar('0'));
-
-				if (!m_pDB->tableExists(strTmp)) {
-					strSQL = QString("ALTER TABLE %1 RENAME TO %2")
-						.arg(getTableName())
-						.arg(strTmp);
-
-					retVal = query.exec(strSQL);
-					if (retVal) {
-						strNewName = strTmp;
-						break;
-					}
-				}
-
-
-			}
-
-		}
 
 		if (retVal)
 		{
@@ -435,9 +412,9 @@ QString qbuTable::getUniqueTempTableName(QString strBase, int nIndexStart/*=0*/)
 	QString retVal = strBase;
 	if (m_pDB->tableExists(retVal)) {
 		for (int i = nIndexStart; i < 100 && m_pDB->tableExists(retVal); ++i) {
-			retVal = QString("%1_%2")
+			retVal = QString("%1_v%2")
 				.arg(strBase)
-				.arg(i);
+				.arg(i, 2, 10, QChar('0'));
 		}
 	}
 	return retVal;
