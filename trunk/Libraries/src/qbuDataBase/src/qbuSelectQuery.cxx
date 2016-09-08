@@ -144,7 +144,9 @@ bool qbuSelectQuery::addSelectField(const qbuDBColDef & colDef)
 
 bool qbuSelectQuery::addSelectField(qbuDBExpression & expression, QString strAlias/*=QString()*/)
 {
-	return addSelectField(expression.toString(), strAlias);
+	expression.setEncloseInParentheses(true);
+	qbuDBColDef col = qbuDBColDef(expression.toString(), qbuDBColDef::OP_IS_EXPRESSION).addAlias(strAlias);
+	return addSelectField(col);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
