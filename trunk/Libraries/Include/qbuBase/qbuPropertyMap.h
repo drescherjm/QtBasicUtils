@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUPROPERTYMAP_H__
-#define __QBUPROPERTYMAP_H__
+#ifndef QBUPROPERTYMAP_H
+#define QBUPROPERTYMAP_H
 
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuUserPropery.h"
@@ -142,4 +142,4 @@ Q_DECLARE_METATYPE(qbuPropertyMap*)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUPROPERTYMAP_H__
+#endif // QBUPROPERTYMAP_H
