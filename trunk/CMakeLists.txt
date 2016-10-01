@@ -1,6 +1,6 @@
 project(QtBasicUtils)
 
-cmake_minimum_required (VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
