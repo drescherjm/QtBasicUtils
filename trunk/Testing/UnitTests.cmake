@@ -35,6 +35,11 @@ if (QBU_BUILD_DATABASE)
 	SET_TESTS_PROPERTIES(DBSingleQuote9_WF PROPERTIES WILL_FAIL TRUE)	
 	
 	ADD_TEST(DBSingleQuote10   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ " ")	
+	
+	ADD_TEST(DBSingleQuote11   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "(10+1)")	
+	
+	ADD_TEST(DBSingleQuote12   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "(-)")
+	ADD_TEST(DBSingleQuote13   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "(-1)")
 endif()
 
 ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Test" --S1='John Drescher')

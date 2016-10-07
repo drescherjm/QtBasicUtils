@@ -30,6 +30,35 @@ bool isSQLFunction(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool isAValidExpression(QString str)
+{
+	bool retVal = beginsAndEnds(str, '(', ')');
+
+	if (retVal) {
+		QString strTemp = str;
+
+		int nCount = strTemp.length() - 2;
+
+		retVal = (nCount > 0);
+
+		if (retVal) {
+
+			// Remove the '(' and ')' and any outer whitespace
+			strTemp = strTemp.mid(1, nCount).trimmed();
+
+			retVal = !strTemp.isEmpty();
+
+			if (retVal) {
+				retVal = strTemp.contains(QRegExp("[A-Za-z0-9]"));
+			}
+		}	
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QString singleQuoteIfNecissary(QString str)
 {
     QString retVal = str;
@@ -38,7 +67,7 @@ QString singleQuoteIfNecissary(QString str)
         QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
 
         if (!reg.exactMatch(str)) {
-            if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
+            if ( !isAValidExpression(str) && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
                 if (!isSQLFunction(str)) {
 
                     // BUG_FIX: Single quotes inside a string constant need to be doubled to escape them.
