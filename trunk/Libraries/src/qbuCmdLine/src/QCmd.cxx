@@ -1806,6 +1806,13 @@ QString QCmd::generateOptionString( QString strOptionName,int nOptionValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString QCmd::generateOptionStringForBool(QString strOptionName, bool bOptionValue)
+{
+	return QCmd::generateOptionString(strOptionName, bOptionValue ? "+" : "-");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QStringList QCmd::generateOptionStringList( QString strOptionName,QStringList lstOptionValue )
 {
 	QStringList retVal;

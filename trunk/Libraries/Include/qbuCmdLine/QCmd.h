@@ -205,6 +205,7 @@ protected:
 	void		setArguments(QArgList & lstArguments);
 public:
 
+	static QString		generateOptionStringForBool(QString strOptionName, bool bOptionValue);
 	static QString		generateOptionString(QString strOptionName,int nOptionValue);
 	static QString		generateOptionString(QString strOptionName,QString strOptionValue);
 
