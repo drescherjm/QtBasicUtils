@@ -11,6 +11,13 @@ qbuLogModelEngine::qbuLogModelEngine( QObject *parent /*= 0*/ ) : Superclass(par
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuLogModelEngine::~qbuLogModelEngine()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuLogModelEngine::initLoggerEngine()
 {
     return; // Should work out of the box!
@@ -57,16 +64,16 @@ void qbuLogModelEngine::writeFormatted( QxtLogger::LogLevel level, const QList<Q
 	foreach(QVariant vt, messages) {
 		if (bFirst) {
 
-			QStringList sl = vt.toString().split(":");
-			if (!sl.isEmpty()) {
-				strFile = sl.first();
-				sl.pop_front();
-				if (!sl.isEmpty()) {
-					nLineNumber = sl.front().toUInt();
-				}
+			QString strFileName = vt.toString();
 
+			int nIndex = strFileName.lastIndexOf(':');
+
+			strFile = strFileName.left(nIndex);
+
+			if (nIndex > 0) {
+				nLineNumber = strFileName.mid(++nIndex).toUInt();
 			}
-			
+
 			bFirst = false;
 		}
 		else
