@@ -1,0 +1,31 @@
+#pragma once
+
+#ifndef QBULOGGERMODEL_H
+#define QBULOGGERMODEL_H
+
+#include <QAbstractTableModel>
+#include <memory>
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class qbuLoggerModel : public QAbstractTableModel
+{
+    Q_OBJECT
+public:
+    explicit qbuLoggerModel(QObject* pParent);
+    virtual ~qbuLoggerModel();
+
+public:
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+private:
+    class qbuPrivate;
+    std::unique_ptr<qbuPrivate> m_pPrivate;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBULOGGERMODEL_H
