@@ -1,6 +1,12 @@
+#pragma once
+
+#ifndef QBULOGMODELENGINE_H
+#define QBULOGMODELENGINE_H
+
 #include <QObject>
 #include <QxtLoggerEngine>
 #include <qbuBase/qbuMacros.h>
+#include <QDateTime>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -10,9 +16,13 @@ public:
 	QBU_DECLARE_SUPERCLASS(QObject);
 	Q_OBJECT
 public:
-	explicit qbuLogModelEngine(QWidget *parent = 0);
+	explicit qbuLogModelEngine(QObject *parent = 0);
 private:
 	void	initialize();
+
+signals:
+	void	logMessage(QDateTime, QxtLogger::LogLevel level, QString strFileName, quint32 nLine, const QStringList& messages);
+
 protected:
 	 virtual void   writeFormatted(QxtLogger::LogLevel level, const QList<QVariant>& messages);
 	 virtual void	initLoggerEngine();
@@ -21,3 +31,5 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBULOGMODELENGINE_H

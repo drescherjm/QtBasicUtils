@@ -5,6 +5,7 @@
 
 #include <QAbstractTableModel>
 #include <memory>
+#include <QDateTime>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -20,6 +21,9 @@ public:
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+public slots:
+	void	logMessage(QDateTime dtMsg, quint32 nLevel, QString strFileName, quint32 nLine, const QStringList& messages);
 
 private:
     class qbuPrivate;

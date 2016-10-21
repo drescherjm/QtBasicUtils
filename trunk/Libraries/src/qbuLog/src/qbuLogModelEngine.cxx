@@ -4,7 +4,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuLogModelEngine::qbuLogModelEngine( QWidget *parent /*= 0*/ ) : Superclass(parent)
+qbuLogModelEngine::qbuLogModelEngine( QObject *parent /*= 0*/ ) : Superclass(parent)
 {
 	initialize();
 }
@@ -35,109 +35,51 @@ bool qbuLogModelEngine::isInitialized() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-static QString Titles[] = {"Date","Level", "File", "Message"};
-const int GRID_COLS = sizeof(Titles)/sizeof(Titles[0]);
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
 void qbuLogModelEngine::initialize()
 {
-	setColumnCount(GRID_COLS);
-	for(quint32 i=0; i < GRID_COLS;++i) {
-		QTableWidgetItem* pItem = new QTableWidgetItem;
-		pItem->setText(Titles[i]);
-		setHorizontalHeaderItem(i,pItem);
-	}
-	
 
-	QHeaderView* pHeader = horizontalHeader();
-	if (pHeader) {
-		pHeader->setStretchLastSection(true);
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuLogModelEngine::writeFormatted( QxtLogger::LogLevel level, const QList<QVariant>& messages )
 {
+	QDateTime dt = QDateTime::currentDateTime();
+	
+	QString strFile;
 
-	QString strToday = QDateTime::currentDateTime().toString(Qt::ISODate);
-	int nRow = rowCount();
+	QStringList lstMsg;
 
-	QString strMsg, strFile;
+	quint32 nLineNumber = 0;
 
-	int i=0;
+	bool bFirst = true;
 
 	foreach(QVariant vt, messages) {
-		if (i == 0) {
-			strFile = vt.toString();
-			i++;
+		if (bFirst) {
+
+			QStringList sl = vt.toString().split(":");
+			if (!sl.isEmpty()) {
+				strFile = sl.first();
+				sl.pop_front();
+				if (!sl.isEmpty()) {
+					nLineNumber = sl.front().toUInt();
+				}
+
+			}
+			
+			bFirst = false;
 		}
 		else
 		{
-			strMsg += vt.toString() + "\n\r";
+			lstMsg << vt.toString();
 		}
 		
 	}
 
-	if (!strMsg.isEmpty()) {
-		insertRow(nRow);
-		QTableWidgetItem* pItem = new QTableWidgetItem;
-		pItem->setText(strToday);
-		setItem(nRow,0,pItem);
-
-		pItem = new QTableWidgetItem;
-		pItem->setText(QxtLogger::logLevelToString(level));
-		setItem(nRow,1,pItem);
-		
-		switch(level) {
-		case QxtLogger::WarningLevel:
-		case QxtLogger::CriticalLevel:
-		case QxtLogger::FatalLevel:
-			pItem->setBackgroundColor(Qt::red);
-			break;
-		}
-		
-		pItem = new QTableWidgetItem;
-		pItem->setText(strFile);
-		pItem->setToolTip(strFile);
-		//pItem->setData(Qt::ToolTipRole,strFile);
-		setItem(nRow,2,pItem);
-
-		pItem = new QTableWidgetItem;
-		pItem->setText(strMsg.trimmed());
-		setItem(nRow,3,pItem);
-		resizeRowToContents(nRow);
+	if (!lstMsg.isEmpty()) {
+		emit logMessage(dt,level, strFile, nLineNumber, lstMsg);
 	}
 
-
-// 	foreach(QVariant vt, messages) {
-// 		if (!vt.isNull()) {
-// 			insertRow(nRow);
-// 			QTableWidgetItem* pItem = new QTableWidgetItem;
-// 			pItem->setText(strToday);
-// 			setItem(nRow,0,pItem);
-// 
-// 			pItem = new QTableWidgetItem;
-// 			pItem->setText(QxtLogger::logLevelToString(level));
-// 			setItem(nRow,1,pItem);
-// 
-// 			switch(level) {
-// 			case QxtLogger::WarningLevel:
-// 			case QxtLogger::CriticalLevel:
-// 			case QxtLogger::FatalLevel:
-// 				pItem->setBackgroundColor(Qt::red);
-// 				break;
-// 			}
-// 
-// 			pItem = new QTableWidgetItem;
-// 			pItem->setText(vt.toString());
-// 			setItem(nRow,2,pItem);
-// 
-// 			nRow++;
-// 		}
-// 
-// 	}
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////

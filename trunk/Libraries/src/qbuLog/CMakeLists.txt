@@ -2,6 +2,11 @@ myproject(qbuLog)
 
 init_lib_shared_static_option(OFF)
 
+set(Boost_ADDITIONAL_VERSIONS "1.62" "1.62.0" "1.60" "1.60.0")
+find_package( Boost REQUIRED )
+
+include_directories( ${Boost_INCLUDE_DIRS} )
+
 set (${LOCAL_PROJECT_NAME}_INSTALL_INCLUDE  ${CMAKE_INSTALL_PREFIX}/Include )
 set (${LOCAL_PROJECT_NAME}_INSTALL_LIB_PATH ${CMAKE_INSTALL_PREFIX}/lib )
 set (${LOCAL_PROJECT_NAME}_INSTALL_RELEASE_LIB ${LOCAL_PROJECT_NAME} )
