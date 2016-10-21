@@ -6,6 +6,7 @@
 #include <QHeaderView>
 #include <QColor>
 #include "qbuLog/qbuLoggerModel.h"
+#include "qbuLog/qbuLoggerWidget2FileNameDelagate.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +23,8 @@ void qbuLoggerWidget2::initialize()
 	qbuLoggerModel* pModel = new qbuLoggerModel(this);
 	setModel(pModel);
 
-
+	setItemDelegateForColumn(qbuLoggerModel::CT_FILENAME, new qbuLoggerWidget2FileNameDelagate(this));
+	
 	QHeaderView* pHeader = horizontalHeader();
 	if (pHeader) {
 		pHeader->setStretchLastSection(true);
@@ -49,6 +51,8 @@ QxtLoggerEngine* qbuLoggerWidget2::getLoggerEngine() const
 void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int end)
 {
 	Superclass::rowsInserted(parent, start, end);
+
+	openPersistentEditor(model()->index(end, qbuLoggerModel::CT_FILENAME, QModelIndex()));
 
 	resizeRowToContents(end);
 }

@@ -20,11 +20,19 @@ public:
     explicit qbuLoggerModel(QObject* pParent);
     virtual ~qbuLoggerModel();
 
+	enum Cols {
+		CT_DATE,
+		CT_LEVEL,
+		CT_FILENAME,
+		CT_MESSAGE
+	};
+
 public:
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;

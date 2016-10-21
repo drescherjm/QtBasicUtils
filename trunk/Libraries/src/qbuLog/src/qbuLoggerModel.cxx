@@ -35,12 +35,7 @@ public:
 	typedef FileNameMap::value_type				FileNameMapEntry;
     typedef std::deque<logData>					LogQueue;
 
-	enum Cols {
-		CT_DATE,
-		CT_LEVEL,
-		CT_FILENAME,
-		CT_MESSAGE
-	};
+
 
 public:
 
@@ -155,10 +150,10 @@ QVariant qbuLoggerModel::headerData(int section, Qt::Orientation orientation, in
 		else if (role == Qt::SizeHintRole) {
 			switch (section)
 			{
-			case qbuPrivate::CT_DATE:
+			case CT_DATE:
 				retVal = QSize(150, 0);
 				break;
-			case qbuPrivate::CT_LEVEL:
+			case CT_LEVEL:
 				retVal = QSize(75, 0);
 				break;
 			default:
@@ -182,28 +177,28 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 			logData& item = m_pPrivate->m_queue[index.row()];
 
 			switch (index.column()) {
-			case qbuPrivate::CT_DATE:
+			case CT_DATE:
 				retVal = item.m_dt;
 				break;
-			case qbuPrivate::CT_LEVEL:
+			case CT_LEVEL:
 				retVal = QxtLogger::logLevelToString(item.m_level);
 				break;
-			case qbuPrivate::CT_FILENAME:
+			case CT_FILENAME:
 				retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
 				break;
-			case  qbuPrivate::CT_MESSAGE:
+			case CT_MESSAGE:
 				retVal = item.m_strMsg.join("\n\r");
 				break;
 			}
 		}
 	}
 
-	if (role == Qt::ToolTipRole) {
+	if ((role == Qt::ToolTipRole) || (role == Qt::EditRole)) {
 
 		logData& item = m_pPrivate->m_queue[index.row()];
 
 		switch (index.column()) {
-		case qbuPrivate::CT_FILENAME:
+		case CT_FILENAME:
 			retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
 			break;
 		}
@@ -212,7 +207,7 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 	if (role == Qt::BackgroundColorRole) {
 		logData& item = m_pPrivate->m_queue[index.row()];
 
-		if (index.column() == qbuPrivate::CT_LEVEL) {
+		if (index.column() == CT_LEVEL) {
 			switch (item.m_level) {
 			case QxtLogger::CriticalLevel:
 			case QxtLogger::FatalLevel:
@@ -236,6 +231,17 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 QxtLoggerEngine* qbuLoggerModel::getLoggerEngine() const
 {
 	return m_pPrivate->m_pEngine;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Qt::ItemFlags qbuLoggerModel::flags(const QModelIndex &index) const
+{
+	if (index.column() == CT_FILENAME) {
+		return Qt::ItemIsEditable | Superclass::flags(index);
+	}
+	else
+		return Superclass::flags(index);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
