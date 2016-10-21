@@ -183,9 +183,9 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 			case CT_LEVEL:
 				retVal = QxtLogger::logLevelToString(item.m_level);
 				break;
-			case CT_FILENAME:
-				retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
-				break;
+// 			case CT_FILENAME:
+// 				retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
+// 				break;
 			case CT_MESSAGE:
 				retVal = item.m_strMsg.join("\n\r");
 				break;
