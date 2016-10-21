@@ -2,6 +2,7 @@
 #include "qbuLog\qbuLoggerModel.h"
 #include <QxtLogger>
 #include "qbuLog\qbuLog.h"
+#include "qbuLog\qbuLoggerWidget2.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,6 +19,11 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 	if (pHeader) {
 		pHeader->setStretchLastSection(true);
 	}
+
+	qbuLoggerWidget2* pWidget = new qbuLoggerWidget2(this);
+	qxtLog->addLoggerEngine("LogWidget2", pWidget->getLoggerEngine());
+
+	tabWidget->addTab(pWidget, QString("LogWidget"));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
