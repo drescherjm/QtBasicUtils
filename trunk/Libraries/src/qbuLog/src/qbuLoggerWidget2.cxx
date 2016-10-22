@@ -10,7 +10,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuLoggerWidget2::qbuLoggerWidget2( QWidget *parent /*= 0*/ ) : Superclass(parent)
+qbuLoggerWidget2::qbuLoggerWidget2(QWidget *parent /*= 0*/) : Superclass(parent), m_bFirst(true)
 {
 	initialize();
 }
@@ -53,6 +53,12 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
 	Superclass::rowsInserted(parent, start, end);
 
 	openPersistentEditor(model()->index(end, qbuLoggerModel::CT_FILENAME, QModelIndex()));
+
+	if (m_bFirst) {
+		resizeColumnToContents(qbuLoggerModel::CT_DATE);
+		resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
+		m_bFirst = false;
+	}
 
 	resizeRowToContents(end);
 }

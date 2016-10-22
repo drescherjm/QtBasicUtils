@@ -181,7 +181,10 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 				retVal = item.m_dt;
 				break;
 			case CT_LEVEL:
-				retVal = QxtLogger::logLevelToString(item.m_level);
+				{
+					QString str = QxtLogger::logLevelToString(item.m_level);
+					retVal = str.remove("Level", Qt::CaseInsensitive);
+				}
 				break;
 // 			case CT_FILENAME:
 // 				retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
@@ -191,6 +194,16 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 				break;
 			}
 		}
+	}
+	
+	if (role == Qt::TextAlignmentRole) {
+		logData& item = m_pPrivate->m_queue[index.row()];
+
+		switch (index.column()) {
+		case CT_LEVEL:
+			retVal = Qt::AlignCenter;
+		}
+
 	}
 
 	if ((role == Qt::ToolTipRole) || (role == Qt::EditRole)) {

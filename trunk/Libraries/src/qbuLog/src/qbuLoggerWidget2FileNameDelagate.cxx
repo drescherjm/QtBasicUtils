@@ -63,7 +63,7 @@ QSize qbuLoggerWidget2FileNameDelagate::sizeHint(const QStyleOptionViewItem &opt
 {
 	QSize retVal = Superclass::sizeHint(option, index);
 
-	retVal.setHeight(20);
+	retVal.setHeight(15);
 
 	return retVal;
 }
