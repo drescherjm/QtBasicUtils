@@ -5,12 +5,31 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QHBoxLayout>
+#include <QToolButton>
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+struct StaticLibInitializer
+{
+    void initialize()
+    {
+        Q_INIT_RESOURCE(qbuLog);
+    }
+
+    StaticLibInitializer()
+    {
+        initialize();
+    }
+};
+
+static StaticLibInitializer test;
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuLoggerWidget2FileNameDelagate::qbuLoggerWidget2FileNameDelagate(QWidget* pParent) : Superclass(pParent)
 {
-
+    //Q_INIT_RESOURCE(qbuLog);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +41,10 @@ QWidget * qbuLoggerWidget2FileNameDelagate::createEditor(QWidget *parent, const 
 
 	QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
 
-	QPushButton* pButton = new QPushButton("Copy",parent);
+    QToolButton* pButton = new QToolButton(/*"Copy",*/parent);
+    /*pButton->setSize(40, 40);*/
+
+    pButton->setIcon(QIcon(":/Images/clippy.png"));
 	
 	pLayout->addWidget(pButton);
 
@@ -35,7 +57,7 @@ QWidget * qbuLoggerWidget2FileNameDelagate::createEditor(QWidget *parent, const 
 
 void qbuLoggerWidget2FileNameDelagate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	QPushButton* pPushButton = editor->findChild<QPushButton*>();
+    QToolButton* pPushButton = editor->findChild<QToolButton*>();
 
 	if (pPushButton) {
 		pPushButton->setProperty("Data", index.model()->data(index, Qt::EditRole));
@@ -63,7 +85,7 @@ QSize qbuLoggerWidget2FileNameDelagate::sizeHint(const QStyleOptionViewItem &opt
 {
 	QSize retVal = Superclass::sizeHint(option, index);
 
-	retVal.setHeight(15);
+	retVal.setHeight(40);
 
 	return retVal;
 }
@@ -72,7 +94,7 @@ QSize qbuLoggerWidget2FileNameDelagate::sizeHint(const QStyleOptionViewItem &opt
 
 void qbuLoggerWidget2FileNameDelagate::buttonClicked(bool checked)
 {
-	QPushButton* pWidget = qobject_cast<QPushButton*>(sender());
+    QToolButton* pWidget = qobject_cast<QToolButton*>(sender());
 	if (pWidget) {
 		QString strFileName = pWidget->property("Data").toString();
 

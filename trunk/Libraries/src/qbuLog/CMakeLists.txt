@@ -48,6 +48,7 @@ set( ${LOCAL_PROJECT_NAME}_UIS
 
 # and finally an resource file
 set( ${LOCAL_PROJECT_NAME}_RCS
+	./rc/qbuLog.qrc
 )
 
 set( ${LOCAL_PROJECT_NAME}_INT_HDRS
@@ -93,7 +94,6 @@ include_directories(
 	${PROJECT_BINARY_DIR}/.. 
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
-
 
 add_library(${LOCAL_PROJECT_NAME} 
 	${${LOCAL_PROJECT_NAME}_SRCS} 

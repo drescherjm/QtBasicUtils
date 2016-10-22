@@ -65,6 +65,7 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
     if (m_bFirst) {
 		resizeColumnToContents(qbuLoggerModel::CT_DATE);
 		resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
+        resizeColumnToContents(qbuLoggerModel::CT_FILENAME);
 
         int nWidth = columnWidth(qbuLoggerModel::CT_DATE) * 0.80;
 
