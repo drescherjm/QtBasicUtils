@@ -22,6 +22,10 @@ void qbuLoggerWidget2::initialize()
 	qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(model());
 
     if (pModel == nullptr) {
+        pModel = dynamic_cast<qbuLoggerModel*>(model());
+    }
+
+    if (pModel == nullptr) {
         pModel = new qbuLoggerModel(this);
 	    setModel(pModel);
     }
@@ -36,6 +40,14 @@ void qbuLoggerWidget2::initialize()
 	if (pHeader) {
 		pHeader->setStretchLastSection(true);
 	}
+
+    int nRows = model()->rowCount();
+
+    for (int i = 0; i < nRows; ++i) {
+        openPersistentEditor(model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
+        resizeRowToContents(i);
+    }
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -59,9 +71,11 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
 {
 	Superclass::rowsInserted(parent, start, end);
 
-	openPersistentEditor(model()->index(end, qbuLoggerModel::CT_FILENAME, QModelIndex()));
-    resizeRowToContents(end);
-	
+    for (int i = start; i <= end; ++i) {
+        openPersistentEditor(model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
+        resizeRowToContents(i);
+    }
+    	
     if (m_bFirst) {
 		resizeColumnToContents(qbuLoggerModel::CT_DATE);
 		resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
