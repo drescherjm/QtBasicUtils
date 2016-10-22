@@ -73,7 +73,11 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
 
     for (int i = start; i <= end; ++i) {
         openPersistentEditor(model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
-        resizeRowToContents(i);
+        //resizeRowToContents(i);
+        QSize sz = sizeHintForIndex(model()->index(i, qbuLoggerModel::CT_MESSAGE));
+        int nMinHeight = qMax(verticalHeader()->sectionSizeHint(end), 40); // 40 = Min size of the File Icon column
+
+        verticalHeader()->resizeSection(end, qMax(sz.height()+3, nMinHeight)); // 3 = space for borders + grid
     }
     	
     if (m_bFirst) {

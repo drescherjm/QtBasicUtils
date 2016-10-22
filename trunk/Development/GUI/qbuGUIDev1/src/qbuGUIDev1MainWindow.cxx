@@ -41,7 +41,7 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 
 void qbuGUIDev1MainWindow::on_actionTestLog0_triggered()
 {
-	QLOG_INFO() << "This is a test!";
+    QLOG_INFO() << "This is a test!" << "Lets add multiple rows. " << "How about a very long row! Test Test Test Test Test! What will happen? I am not sure.";
 	QLOG_INFO() << "This is test2.";
 
 	QLOG_WARN() << "Lets see a warning.";
