@@ -62,6 +62,7 @@
      <string>Log</string>
     </property>
     <addaction name="actionTestLog0"/>
+    <addaction name="actionToggleRandomData"/>
    </widget>
    <addaction name="menuWidgets"/>
   </widget>
@@ -69,6 +70,11 @@
   <action name="actionTestLog0">
    <property name="text">
     <string>TestLog0</string>
+   </property>
+  </action>
+  <action name="actionToggleRandomData">
+   <property name="text">
+    <string>Toggle Random Data Generation</string>
    </property>
   </action>
  </widget>

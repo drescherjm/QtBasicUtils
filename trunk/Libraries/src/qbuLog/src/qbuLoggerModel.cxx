@@ -109,7 +109,7 @@ bool qbuLoggerModel::qbuPrivate::calculateRowsToRemove(LogQueue::const_iterator 
 {
     bool retVal = reachedRecordLimit();
     if (retVal) {
-        //quint32 nRemove = m_nRecordLimit * 0.10;
+        nRemove = m_nRecordLimit * 0.10f;
 
         retVal = (nRemove > 0);
         if (retVal) {
@@ -132,6 +132,8 @@ quint32 qbuLoggerModel::qbuPrivate::resizeQueue(qbuLoggerModel* pPublic)
         pPublic->beginRemoveRows(QModelIndex(), 0, retVal - 1);
 
         m_queue.erase(start, finish);
+
+        size_t nSize = m_queue.size();
 
         pPublic->endRemoveRows();
     }
@@ -174,6 +176,7 @@ void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName
 	endInsertRows();
 
     if (m_pPrivate->reachedRecordLimit()) {
+        nIndex++;
         beginInsertRows(QModelIndex(), nIndex, nIndex);
 
         data.m_dt = QDateTime::currentDateTime();

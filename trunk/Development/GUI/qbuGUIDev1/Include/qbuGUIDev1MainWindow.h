@@ -18,6 +18,11 @@ public:
 
 public slots:
 	void	on_actionTestLog0_triggered();
+    void    on_actionToggleRandomData_triggered();
+
+    void    generateLogDataTimer();
+private:
+
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
