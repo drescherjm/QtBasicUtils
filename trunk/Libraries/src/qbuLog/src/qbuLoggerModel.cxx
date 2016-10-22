@@ -38,15 +38,29 @@ public:
 
 
 public:
-
 	quint32 getFileNameIndex(const QString & strFileName);
 	QString lookupFileNameFromIndex(quint32 nIndex) const;
+
+
+    bool        reachedRecordLimit() const;
+    bool        calculateRowsToRemove(LogQueue::const_iterator & start, LogQueue::const_iterator & finish, 
+        quint32 & nRemove) const;
+    quint32     resizeQueue(qbuLoggerModel* pPublic);
 
 public:
     LogQueue				m_queue;
 	qbuLogModelEngine*		m_pEngine;
 	FileNameMap				m_mapFileNames;
+    quint32                 m_nRecordLimit;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuLoggerModel::qbuPrivate::qbuPrivate() : m_pEngine{ new qbuLogModelEngine },
+m_nRecordLimit{100 * 1024}
+{
+    // NOTE: Allocate but don't free the logger engine. QxtLog will take ownership!
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,9 +98,45 @@ QString qbuLoggerModel::qbuPrivate::lookupFileNameFromIndex(quint32 nIndex) cons
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuLoggerModel::qbuPrivate::qbuPrivate() : m_pEngine{new qbuLogModelEngine}
+bool qbuLoggerModel::qbuPrivate::reachedRecordLimit() const
 {
-	// NOTE: Allocate but don't free the logger engine. QxtLog will take ownership!
+    return ((m_nRecordLimit > 0) && (m_queue.size() > m_nRecordLimit));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuLoggerModel::qbuPrivate::calculateRowsToRemove(LogQueue::const_iterator & start, LogQueue::const_iterator & finish, quint32 & nRemove) const
+{
+    bool retVal = reachedRecordLimit();
+    if (retVal) {
+        //quint32 nRemove = m_nRecordLimit * 0.10;
+
+        retVal = (nRemove > 0);
+        if (retVal) {
+            start = m_queue.begin();
+            finish = m_queue.begin() + nRemove;
+        }
+    }
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+quint32 qbuLoggerModel::qbuPrivate::resizeQueue(qbuLoggerModel* pPublic)
+{
+    quint32 retVal{};
+
+    LogQueue::const_iterator start, finish;
+
+    if (calculateRowsToRemove(start, finish, retVal)) {
+        pPublic->beginRemoveRows(QModelIndex(), 0, retVal - 1);
+
+        m_queue.erase(start, finish);
+
+        pPublic->endRemoveRows();
+    }
+
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -122,6 +172,24 @@ void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName
 	m_pPrivate->m_queue.emplace_back(data);
 	
 	endInsertRows();
+
+    if (m_pPrivate->reachedRecordLimit()) {
+        beginInsertRows(QModelIndex(), nIndex, nIndex);
+
+        data.m_dt = QDateTime::currentDateTime();
+        data.m_level = QxtLogger::InfoLevel;
+        data.m_nFileLineNumber = __LINE__;
+        data.m_strMsg = QStringList() << "The logger model has reached its record limit." 
+            << "The queue will be reduced by removing the first 10% of the records.";
+        data.m_nFileIndex = m_pPrivate->getFileNameIndex(__FILE__);
+
+        m_pPrivate->m_queue.emplace_back(data);
+
+        endInsertRows();
+
+        m_pPrivate->resizeQueue(this);
+
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +266,7 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 			}
 		}
 	}
-	
+    else
 	if (role == Qt::TextAlignmentRole) {
 		logData& item = m_pPrivate->m_queue[index.row()];
 
@@ -208,7 +276,7 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 		}
 
 	}
-
+    else
 	if ((role == Qt::ToolTipRole) || (role == Qt::EditRole)) {
 
 		logData& item = m_pPrivate->m_queue[index.row()];
@@ -224,27 +292,23 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
             break;
 		}
 	}
+    else
+        if (role == Qt::BackgroundColorRole) {
+            logData& item = m_pPrivate->m_queue[index.row()];
 
-	if (role == Qt::BackgroundColorRole) {
-		logData& item = m_pPrivate->m_queue[index.row()];
+            if (index.column() == CT_LEVEL) {
+                switch (item.m_level) {
+                case QxtLogger::CriticalLevel:
+                case QxtLogger::FatalLevel:
+                    retVal = QVariant(QColor(Qt::red));
+                    break;
+                case QxtLogger::WarningLevel:
+                    retVal = QVariant(QColor("Orange"));
+                    break;
+                }
+            }
 
-		if (index.column() == CT_LEVEL) {
-			switch (item.m_level) {
-			case QxtLogger::CriticalLevel:
-			case QxtLogger::FatalLevel:
-                retVal = QVariant(QColor(Qt::red));
-                break;
-			case QxtLogger::WarningLevel:
-				retVal = QVariant(QColor("Orange"));
-				break;
-			}
-		}
-
-	}
-
-// 	else {
-// 		retVal = Superclass::data(index, role);
-// 	}
+        }
 
 	return retVal;
 }
@@ -265,6 +329,13 @@ Qt::ItemFlags qbuLoggerModel::flags(const QModelIndex &index) const
 	}
 	else
 		return Superclass::flags(index);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerModel::setRecordLimit(quint32 nLimit)
+{
+    m_pPrivate->m_nRecordLimit = nLimit;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
