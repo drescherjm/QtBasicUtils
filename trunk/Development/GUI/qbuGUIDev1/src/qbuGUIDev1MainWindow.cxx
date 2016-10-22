@@ -20,7 +20,11 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 		pHeader->setStretchLastSection(true);
 	}
 
-	qbuLoggerWidget2* pWidget = new qbuLoggerWidget2(this);
+    pModel = new qbuLoggerModel(this);
+    qbuLoggerWidget2* pWidget = new qbuLoggerWidget2(this);
+    pWidget->setModel(pModel);
+    pWidget->initialize();
+
 	qxtLog->addLoggerEngine("LogWidget2", pWidget->getLoggerEngine());
 
 	tabWidget->addTab(pWidget, QString("LogWidget"));
@@ -34,6 +38,7 @@ void qbuGUIDev1MainWindow::on_actionTestLog0_triggered()
 	QLOG_INFO() << "This is test2.";
 
 	QLOG_WARN() << "Lets see a warning.";
+    QLOG_CRIT() << "Testing..";
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

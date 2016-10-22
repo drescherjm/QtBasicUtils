@@ -224,8 +224,10 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 			switch (item.m_level) {
 			case QxtLogger::CriticalLevel:
 			case QxtLogger::FatalLevel:
+                retVal = QVariant(QColor(Qt::red));
+                break;
 			case QxtLogger::WarningLevel:
-				retVal = QVariant(QColor(Qt::red));
+				retVal = QVariant(QColor("Orange"));
 				break;
 			}
 		}

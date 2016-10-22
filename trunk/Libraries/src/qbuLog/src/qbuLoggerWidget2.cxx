@@ -12,19 +12,23 @@
 
 qbuLoggerWidget2::qbuLoggerWidget2(QWidget *parent /*= 0*/) : Superclass(parent), m_bFirst(true)
 {
-	initialize();
+	//initialize();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuLoggerWidget2::initialize()
 {
-	
-	qbuLoggerModel* pModel = new qbuLoggerModel(this);
-	setModel(pModel);
+	qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(model());
+
+    if (pModel == nullptr) {
+        pModel = new qbuLoggerModel(this);
+	    setModel(pModel);
+    }
+  
 
 	setItemDelegateForColumn(qbuLoggerModel::CT_FILENAME, new qbuLoggerWidget2FileNameDelagate(this));
-	
+		
 	QHeaderView* pHeader = horizontalHeader();
 	if (pHeader) {
 		pHeader->setStretchLastSection(true);
@@ -53,14 +57,20 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
 	Superclass::rowsInserted(parent, start, end);
 
 	openPersistentEditor(model()->index(end, qbuLoggerModel::CT_FILENAME, QModelIndex()));
-
-	if (m_bFirst) {
+    resizeRowToContents(end);
+	
+    if (m_bFirst) {
 		resizeColumnToContents(qbuLoggerModel::CT_DATE);
 		resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
+
+        int nWidth = columnWidth(qbuLoggerModel::CT_DATE) * 0.80;
+
+        setColumnWidth(qbuLoggerModel::CT_DATE, nWidth);
+
 		m_bFirst = false;
 	}
 
-	resizeRowToContents(end);
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

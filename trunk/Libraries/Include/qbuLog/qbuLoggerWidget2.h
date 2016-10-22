@@ -17,8 +17,10 @@ public:
 public:
 	explicit qbuLoggerWidget2(QWidget *parent = 0);
 
+public:
+    void	initialize();
+
 protected:
-	void	initialize();
 	void	rowsInserted(const QModelIndex &parent, int start, int end);
 
 public:
