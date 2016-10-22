@@ -161,6 +161,9 @@ QVariant qbuLoggerModel::headerData(int section, Qt::Orientation orientation, in
 			}
 		}
 	}
+    else {
+        retVal = Superclass::headerData(section, orientation, role);
+    }
 
 	return retVal;
 }
@@ -212,8 +215,13 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 
 		switch (index.column()) {
 		case CT_FILENAME:
-			retVal = QString("%1:%2").arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex)).arg(item.m_nFileLineNumber);
+			retVal = QString("<p style='white-space:pre'>Copy to the clipboard:<br>%1:%2")
+                .arg(m_pPrivate->lookupFileNameFromIndex(item.m_nFileIndex))
+                .arg(item.m_nFileLineNumber);
 			break;
+        case CT_MESSAGE:
+            retVal = item.m_strMsg.join("<br>");
+            break;
 		}
 	}
 

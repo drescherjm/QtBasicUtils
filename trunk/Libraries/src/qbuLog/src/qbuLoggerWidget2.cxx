@@ -26,8 +26,11 @@ void qbuLoggerWidget2::initialize()
 	    setModel(pModel);
     }
   
+    setSelectionBehavior(QAbstractItemView::SelectRows);
 
 	setItemDelegateForColumn(qbuLoggerModel::CT_FILENAME, new qbuLoggerWidget2FileNameDelagate(this));
+
+    //verticalHeader()->setVisible(true);
 		
 	QHeaderView* pHeader = horizontalHeader();
 	if (pHeader) {
