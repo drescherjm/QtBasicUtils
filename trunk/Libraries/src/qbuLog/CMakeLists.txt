@@ -44,6 +44,7 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 
 # some .ui files
 set( ${LOCAL_PROJECT_NAME}_UIS
+	./rc/qbuLoggerWidget2.ui
 )
 
 # and finally an resource file
