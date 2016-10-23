@@ -222,10 +222,10 @@ QVariant qbuLoggerModel::headerData(int section, Qt::Orientation orientation, in
 			switch (section)
 			{
 			case CT_DATE:
-				retVal = QSize(150, 0);
+				retVal = QSize(100, 20);
 				break;
 			case CT_LEVEL:
-				retVal = QSize(75, 0);
+				retVal = QSize(75, 20);
 				break;
 			default:
 				break;
@@ -252,7 +252,7 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 
 			switch (index.column()) {
 			case CT_DATE:
-				retVal = item.m_dt;
+				retVal = item.m_dt.toString("yyyy-MM-dd\nhh:mm:ss");
 				break;
 			case CT_LEVEL:
 				{
