@@ -3,16 +3,19 @@
 #ifndef QBULOGGERWIDGET2_H
 #define QBULOGGERWIDGET2_H
 
-#include <QTableView>
-#include <QxtLoggerEngine>
+#include <QWidget>
+#include "qbuLog/ui_qbuLoggerWidget2.h"
 #include <qbuBase/qbuMacros.h>
+
+class QxtLoggerEngine;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class /*qbuLog_EXPORT*/ qbuLoggerWidget2 : public QTableView
+class /*qbuLog_EXPORT*/ qbuLoggerWidget2 : public QWidget,
+    public Ui::qbuLoggerWidget2
 {
 public:
-	QBU_DECLARE_SUPERCLASS(QTableView);
+    QBU_DECLARE_SUPERCLASS(QWidget);
 	Q_OBJECT
 public:
 	explicit qbuLoggerWidget2(QWidget *parent = 0);
