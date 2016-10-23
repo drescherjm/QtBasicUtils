@@ -1,4 +1,4 @@
-#pragma once
+#pragma once    
 
 #ifndef QBULOGGERWIDGET2_H
 #define QBULOGGERWIDGET2_H
@@ -22,6 +22,9 @@ public:
 
 protected:
 	void	rowsInserted(const QModelIndex &parent, int start, int end);
+
+protected slots:
+    void    updateRowHeights(int nStartingRow, int nEndingRow);
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;

@@ -45,8 +45,10 @@ void qbuLoggerWidget2::initialize()
 
     for (int i = 0; i < nRows; ++i) {
         openPersistentEditor(model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
-        resizeRowToContents(i);
+        //resizeRowToContents(i);
     }
+
+    emit updateRowHeights(0, nRows);
 
 }
 
@@ -71,28 +73,34 @@ void qbuLoggerWidget2::rowsInserted(const QModelIndex &parent, int start, int en
 {
 	Superclass::rowsInserted(parent, start, end);
 
-    for (int i = start; i <= end; ++i) {
+    emit updateRowHeights(start, end);
+	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget2::updateRowHeights(int nStartingRow, int nEndingRow)
+{
+    for (int i = nStartingRow; i <= nEndingRow; ++i) {
         openPersistentEditor(model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
         //resizeRowToContents(i);
         QSize sz = sizeHintForIndex(model()->index(i, qbuLoggerModel::CT_MESSAGE));
-        int nMinHeight = qMax(verticalHeader()->sectionSizeHint(end), 40); // 40 = Min size of the File Icon column
+        int nMinHeight = qMax(verticalHeader()->sectionSizeHint(nEndingRow), 40); // 40 = Min size of the File Icon column
 
-        verticalHeader()->resizeSection(end, qMax(sz.height()+3, nMinHeight)); // 3 = space for borders + grid
+        verticalHeader()->resizeSection(i, qMax(sz.height() + 3, nMinHeight)); // 3 = space for borders + grid
     }
-    	
+
     if (m_bFirst) {
-		resizeColumnToContents(qbuLoggerModel::CT_DATE);
-		resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
+        resizeColumnToContents(qbuLoggerModel::CT_DATE);
+        resizeColumnToContents(qbuLoggerModel::CT_LEVEL);
         resizeColumnToContents(qbuLoggerModel::CT_FILENAME);
 
         int nWidth = columnWidth(qbuLoggerModel::CT_DATE) * 0.80;
 
         setColumnWidth(qbuLoggerModel::CT_DATE, nWidth);
 
-		m_bFirst = false;
-	}
-
-	
+        m_bFirst = false;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
