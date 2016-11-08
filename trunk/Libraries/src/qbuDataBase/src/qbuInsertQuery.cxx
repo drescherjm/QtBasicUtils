@@ -105,7 +105,12 @@ bool qbuInsertQuery::create(qbuPropertyMap* pData, qbuTable* pTable,
 			}
 			else
 			{
-				QLOG_CRIT() << QBULOG_DATABASE_TYPE << QString("An insert query for table %1 failed to prepare. Data will not make it to the database").arg(pTable->getTableName());
+				QLOG_CRIT() << QBULOG_DATABASE_TYPE
+					<< QString("In %1 an insert query for table %2 failed to prepare. The following database error occurred: %3. <br>"
+					"Data will not make it to the database.")
+					.arg(__FUNCTION__)
+					.arg(pTable->getTableName())
+					.arg(lastError().text());
 			}
 		}
 
@@ -129,7 +134,7 @@ bool qbuInsertQuery::create(qbuSelectQuery* pQuery, qbuTable* pTable,
 				.arg(lastError().text());
 
 #ifdef QBU_HAVE_EXCEPTIONS
-			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuInsertQuery::create");
+			throw qbuException(__FILE__, __LINE__, qPrintable(strError),__FUNCTION__);
 #else
 			qDebug() << qPrintable(strError);
 #endif //def QBU_HAVE_EXCEPTIONS
