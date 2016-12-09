@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef QBUDBEXPRESSION_H
-#define QBUDBEXPRESSION_H
+#ifndef QBUDBCONDITION_H
+#define QBUDBCONDITION_H
 
 #include "qbuBase/qbuObject.h"
 
@@ -55,5 +55,4 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // QBUDBEXPRESSION_H
-
+#endif // QBUDBCONDITION_H
