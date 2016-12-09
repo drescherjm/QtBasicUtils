@@ -37,6 +37,8 @@ qbuLoggerWidget2FileNameDelagate::qbuLoggerWidget2FileNameDelagate(QWidget* pPar
 QWidget * qbuLoggerWidget2FileNameDelagate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 
+    static  QIcon g_icon(":/Images/clippy.png");
+
 	QWidget* pWidget = new QWidget(parent);
 
 	QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
@@ -44,7 +46,9 @@ QWidget * qbuLoggerWidget2FileNameDelagate::createEditor(QWidget *parent, const 
     QToolButton* pButton = new QToolButton(/*"Copy",*/parent);
     /*pButton->setSize(40, 40);*/
 
-    pButton->setIcon(QIcon(":/Images/clippy.png"));
+    pButton->setIcon(g_icon);
+
+    //pButton->setIcon(QIcon(":/Images/clippy.png"));
 	
 	pLayout->addWidget(pButton);
 
