@@ -196,7 +196,7 @@ bool qbuDeleteQuery::appendWhereExpression( QString strExpression )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDeleteQuery::appendWhereExpression( const qbuDBExpression & expr )
+bool qbuDeleteQuery::appendWhereExpression( const qbuDBCondition & expr )
 {
 	QString strExpr;
 	bool retVal;

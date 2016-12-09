@@ -6,7 +6,7 @@
 #include "qbuDataBase/qbuDataBaseLibraryDefines.h"
 #include "qbuDataBase/qbuSimpleQuery.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
-#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDBCondition.h"
 
 class qbuPropertyMap;
 
@@ -30,7 +30,7 @@ public:
 	};
 public:
 	virtual 	bool	appendWhereExpression(QString strExpression);
-	virtual		bool	appendWhereExpression(const qbuDBExpression & expr);
+	virtual		bool	appendWhereExpression(const qbuDBCondition & expr);
 	virtual		bool	appendWhereExpressions(const QStringList & lstWhereFields, qbuPropertyMap* pProps, WhereExprCode code = WE_FAIL_ON_MISSING_FIELDS, 
 		QString strTableAlias=QString());
 public:

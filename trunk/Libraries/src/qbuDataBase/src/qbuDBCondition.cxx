@@ -1,12 +1,12 @@
 #include "qbuDatabasePCH.h"
 
-#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDBCondition.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuDBExpression::qbuPrivate
+class qbuDBCondition::qbuPrivate
 {
 public:
 	qbuPrivate();
@@ -22,28 +22,28 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
+qbuDBCondition::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::qbuPrivate::isValid()
+bool qbuDBCondition::qbuPrivate::isValid()
 {
 	return !m_strExpression.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::qbuPrivate::isEmpty()
+bool qbuDBCondition::qbuPrivate::isEmpty()
 {
 	return m_strExpression.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuDBExpression::qbuPrivate::init( QString strField0, QString strField1, QString strOperator, bool bEnclose )
+void qbuDBCondition::qbuPrivate::init( QString strField0, QString strField1, QString strOperator, bool bEnclose )
 {
 	if ( (!strField0.isEmpty()) && (!strField1.isEmpty()) ) {
 		m_strExpression = QString("%1 %2 %3").arg(strField0).arg(strOperator).arg(strField1);
@@ -71,7 +71,7 @@ void qbuDBExpression::qbuPrivate::init( QString strField0, QString strField1, QS
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString qbuDBExpression::toString( bool *bOK ) const
+QString qbuDBCondition::toString( bool *bOK ) const
 {
 	QString retVal;
 
@@ -94,21 +94,21 @@ QString qbuDBExpression::toString( bool *bOK ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression()
+qbuDBCondition::qbuDBCondition()
 {
 	m_pPrivate = new qbuPrivate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBExpression & other ) : m_pPrivate (new qbuPrivate)
+qbuDBCondition::qbuDBCondition( const qbuDBCondition & other ) : m_pPrivate (new qbuPrivate)
 {
 	copy(other);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( QString strExpression, bool bEnclose ) : m_pPrivate (new qbuPrivate)
+qbuDBCondition::qbuDBCondition( QString strExpression, bool bEnclose ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->m_strExpression = strExpression;
 	m_pPrivate->m_bEncloseInParentheses = bEnclose;
@@ -116,7 +116,7 @@ qbuDBExpression::qbuDBExpression( QString strExpression, bool bEnclose ) : m_pPr
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( QString strField0, QString strField1, QString strOperator, bool 
+qbuDBCondition::qbuDBCondition( QString strField0, QString strField1, QString strOperator, bool 
 	bEnclose )  : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(strField0,strField1,strOperator,bEnclose);
@@ -124,21 +124,21 @@ qbuDBExpression::qbuDBExpression( QString strField0, QString strField1, QString 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
+qbuDBCondition::qbuDBCondition( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),strField1,strOperator,bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
+qbuDBCondition::qbuDBCondition( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),colDef1.getFullName(),strOperator,bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression(const qbuDBColDef & colDef0, NullExpr nullExpr) : m_pPrivate(new qbuPrivate)
+qbuDBCondition::qbuDBCondition(const qbuDBColDef & colDef0, NullExpr nullExpr) : m_pPrivate(new qbuPrivate)
 {
 	switch (nullExpr) {
 	case IS_NULL:
@@ -152,14 +152,14 @@ qbuDBExpression::qbuDBExpression(const qbuDBColDef & colDef0, NullExpr nullExpr)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::~qbuDBExpression()
+qbuDBCondition::~qbuDBCondition()
 {
 	delete m_pPrivate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::setEncloseInParentheses( bool bEnclose )
+bool qbuDBCondition::setEncloseInParentheses( bool bEnclose )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -170,7 +170,7 @@ bool qbuDBExpression::setEncloseInParentheses( bool bEnclose )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuDBExpression::copy( const qbuDBExpression & other )
+void qbuDBCondition::copy( const qbuDBCondition & other )
 {
 	m_pPrivate->m_bEncloseInParentheses = false;
 	m_pPrivate->m_strExpression = other.toString();
@@ -178,21 +178,21 @@ void qbuDBExpression::copy( const qbuDBExpression & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression qbuDBExpression::AND(const qbuDBExpression & other, bool bEnclose) const
+qbuDBCondition qbuDBCondition::AND(const qbuDBCondition & other, bool bEnclose) const
 {
-	return qbuDBExpression(toString(),other.toString(),"AND",bEnclose);
+	return qbuDBCondition(toString(),other.toString(),"AND",bEnclose);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression qbuDBExpression::AND( QString strTable0, QString strTable1, const QStringList & lstFields, QString strOperator, bool bEnclose /*= false */ ) const
+qbuDBCondition qbuDBCondition::AND( QString strTable0, QString strTable1, const QStringList & lstFields, QString strOperator, bool bEnclose /*= false */ ) const
 {
-	qbuDBExpression retVal(*this);
+	qbuDBCondition retVal(*this);
 
 	foreach(QString str,lstFields) {
 		qbuDBColDef colDef(str);
 
-		qbuDBExpression expr(colDef.addTableAlias(strTable0),colDef.addTableAlias(strTable1),strOperator,bEnclose);
+		qbuDBCondition expr(colDef.addTableAlias(strTable0),colDef.addTableAlias(strTable1),strOperator,bEnclose);
 
 		retVal = retVal.AND(expr,false);
 	}
@@ -202,12 +202,12 @@ qbuDBExpression qbuDBExpression::AND( QString strTable0, QString strTable1, cons
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression qbuDBExpression::AND( const QStringList & lstExpressions, bool bEnclose /*= false */ ) const
+qbuDBCondition qbuDBCondition::AND( const QStringList & lstExpressions, bool bEnclose /*= false */ ) const
 {
-	qbuDBExpression retVal(*this);
+	qbuDBCondition retVal(*this);
 
 	foreach(QString str,lstExpressions) {
-		qbuDBExpression expr(str,false);
+		qbuDBCondition expr(str,false);
 
 		retVal = retVal.AND(expr,false);
 	}
@@ -219,19 +219,19 @@ qbuDBExpression qbuDBExpression::AND( const QStringList & lstExpressions, bool b
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression qbuDBExpression::OR(const qbuDBExpression & other, bool bEnclose) const
+qbuDBCondition qbuDBCondition::OR(const qbuDBCondition & other, bool bEnclose) const
 {
-	return qbuDBExpression(toString(),other.toString(),"OR",bEnclose);
+	return qbuDBCondition(toString(),other.toString(),"OR",bEnclose);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression qbuDBExpression::OR( const QStringList & lstExpressions, bool bEnclose /*= false */ ) const
+qbuDBCondition qbuDBCondition::OR( const QStringList & lstExpressions, bool bEnclose /*= false */ ) const
 {
-	qbuDBExpression retVal(*this);
+	qbuDBCondition retVal(*this);
 
 	foreach(QString str,lstExpressions) {
-		qbuDBExpression expr(str,false);
+		qbuDBCondition expr(str,false);
 
 		retVal = retVal.OR(expr,false);
 	}
@@ -243,14 +243,14 @@ qbuDBExpression qbuDBExpression::OR( const QStringList & lstExpressions, bool bE
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::isValid() const
+bool qbuDBCondition::isValid() const
 {
 	return (m_pPrivate != nullptr) ? m_pPrivate->isValid() : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression& qbuDBExpression::operator=( const qbuDBExpression & other )
+qbuDBCondition& qbuDBCondition::operator=( const qbuDBCondition & other )
 {
 	if ( &other != this ) {
 		copy(other);
@@ -260,7 +260,7 @@ qbuDBExpression& qbuDBExpression::operator=( const qbuDBExpression & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBExpression::isEmpty() const
+bool qbuDBCondition::isEmpty() const
 {
 	return (m_pPrivate != nullptr) ? m_pPrivate->isEmpty() : false;
 }

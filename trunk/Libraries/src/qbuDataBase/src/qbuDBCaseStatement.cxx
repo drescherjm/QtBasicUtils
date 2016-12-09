@@ -160,9 +160,9 @@ qbuDBCaseStatement::qbuDBCaseStatement(QString strCaseStatement, bool bEnclose) 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #if _MSC_VER > 1600
-qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBExpression & mainExpr) : m_pPrivate{ std::make_unique<qbuPrivate>() }
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBCondition & mainExpr) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 #else
-qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBExpression & mainExpr) : m_pPrivate ( new qbuPrivate )
+qbuDBCaseStatement::qbuDBCaseStatement(const qbuDBCondition & mainExpr) : m_pPrivate ( new qbuPrivate )
 #endif
 {
 	m_pPrivate->m_strCaseMainExpr = mainExpr.toString();

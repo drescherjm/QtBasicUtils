@@ -6,18 +6,18 @@
 #include "qbuDataBase/qbuDatabaseLibraryDefines.h"
 #include "qbuBase/qbuObject.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
-#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDBCondition.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuDataBase_EXPORT qbuDBCaseStatement : public qbuDBExpression
+class qbuDataBase_EXPORT qbuDBCaseStatement : public qbuDBCondition
 {
-	QBU_DECLARE_SUPERCLASS(qbuDBExpression);
+	QBU_DECLARE_SUPERCLASS(qbuDBCondition);
 public:
 	qbuDBCaseStatement();
 	qbuDBCaseStatement( const qbuDBCaseStatement & other );
 	qbuDBCaseStatement( QString strCaseStatement, bool bEnclose );
-	qbuDBCaseStatement( const qbuDBExpression & mainExpr );
+	qbuDBCaseStatement( const qbuDBCondition & mainExpr );
 	~qbuDBCaseStatement();
 
 	qbuDBCaseStatement& operator=(const qbuDBCaseStatement & other);

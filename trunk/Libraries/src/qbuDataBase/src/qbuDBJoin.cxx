@@ -92,7 +92,7 @@ QString qbuDBJoin::qbuPrivate::toString()
 	}
 	else
 	{
-		qbuDBExpression expr = qbuDBExpression().AND(m_lstExpressions);
+		qbuDBCondition expr = qbuDBCondition().AND(m_lstExpressions);
 
 		QString strExpr = expr.toString();
 
@@ -215,7 +215,7 @@ QString qbuDBJoin::toString( bool *bOK/*=nullptr*/ ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuDBJoin::appendExpression( const qbuDBExpression & dbExpression )
+bool qbuDBJoin::appendExpression( const qbuDBCondition & dbExpression )
 {
 	bool retVal = (m_pPrivate != nullptr);
 	if (retVal) {
@@ -244,7 +244,7 @@ void qbuDBJoin::copy( const qbuDBJoin & other )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBJoin qbuDBJoin::addExpression( const qbuDBExpression & dbExpression ) const
+qbuDBJoin qbuDBJoin::addExpression( const qbuDBCondition & dbExpression ) const
 {
 	qbuDBJoin retVal(*this);
 

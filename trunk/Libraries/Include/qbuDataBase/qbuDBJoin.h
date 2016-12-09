@@ -5,7 +5,7 @@
 
 #include "qbuBase/qbuObject.h"
 #include "qbuDataBase/qbuDBConstants.h"
-#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDBCondition.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,10 @@ public:
 	bool		setUSINGFields(const QStringList & lstFields);
 
 public:
-	bool		appendExpression(const qbuDBExpression & dbExpression);
+	bool		appendExpression(const qbuDBCondition & dbExpression);
 
 public:
-	qbuDBJoin	addExpression(const qbuDBExpression & dbExpression) const;
+	qbuDBJoin	addExpression(const qbuDBCondition & dbExpression) const;
 	qbuDBJoin	addJoinFlag(qbudb::JoinFlag jf) const;
 	qbuDBJoin	addJoinSource(QString strSource, QString strAlias=QString()) const;
 	qbuDBJoin	addAllowEmptyExpression(bool bAllow) const;

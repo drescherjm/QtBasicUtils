@@ -69,7 +69,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuDBSettingsTableBase.cxx
 	./src/qbuDBSettingInfo.cxx
 	./src/qbuSimpleQuery.cxx
-	./src/qbuDBExpression.cxx
+	./src/qbuDBCondition.cxx
 	./src/qbuDBJoin.cxx
 	./src/qbuDeleteQuery.cxx
 	./src/qbuDBView.cxx
@@ -101,7 +101,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingsTableBase.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBSettingInfo.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSimpleQuery.h
-	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBExpression.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBCondition.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBJoin.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDeleteQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBView.h

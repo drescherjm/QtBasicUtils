@@ -43,10 +43,10 @@ public:
 	virtual int		countDistinct(QStringList lstFields = QStringList(), qbuPropertyMap* pPropMap = nullptr);
 
 	template< typename T>
-	bool	exportData(T*, QList< QSharedPointer<T> > & lst, qbuDBExpression expr = qbuDBExpression());
+	bool	exportData(T*, QList< QSharedPointer<T> > & lst, qbuDBCondition expr = qbuDBCondition());
 
 	template< typename T>
-	bool	exportData(T*, QList< std::shared_ptr<T> > & lst, qbuDBExpression expr = qbuDBExpression());
+	bool	exportData(T*, QList< std::shared_ptr<T> > & lst, qbuDBCondition expr = qbuDBCondition());
 
 protected:
 	virtual bool				renameTable(QString strNewName);
@@ -72,7 +72,7 @@ protected:
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst, qbuDBExpression expr)
+bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst, qbuDBCondition expr)
 {
 
 	qbuStringList lstWhereFields = pInfo->getDBFieldNames();
@@ -112,7 +112,7 @@ bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst, qbuDBExpre
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst, qbuDBExpression expr)
+bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst, qbuDBCondition expr)
 {
 
 	qbuStringList lstWhereFields = pInfo->getDBFieldNames();

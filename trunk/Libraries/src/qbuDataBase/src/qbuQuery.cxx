@@ -141,7 +141,7 @@ bool qbuQuery::appendWhereExpression(QString strExpression)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuQuery::appendWhereExpression(const qbuDBExpression & expr)
+bool qbuQuery::appendWhereExpression(const qbuDBCondition & expr)
 {
 	QString strExpr;
 	bool retVal;

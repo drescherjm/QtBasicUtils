@@ -39,10 +39,10 @@ public:
 	bool	setSelectOption(SelectOption option);
 	int		lookupSelectFieldIndex(QString strColName, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const;
 	bool	addSelectField(QString strField, QString strAlias = QString(), QString strTableAlias = QString());
-	bool	addSelectField(qbuDBExpression & expression, QString strAlias = QString());
+	bool	addSelectField(qbuDBCondition & expression, QString strAlias = QString());
 	bool	addSelectField(const qbuDBColDef & colDef);
 	bool	addSelectFieldAtIndex(int nIndex, QString strField, QString strAlias = QString(), QString strTableAlias = QString());
-	bool	addSelectFieldAtIndex(int nIndex, qbuDBExpression & expression, QString strAlias = QString());
+	bool	addSelectFieldAtIndex(int nIndex, qbuDBCondition & expression, QString strAlias = QString());
 	bool	addSelectFieldAtIndex(int nIndex, const qbuDBColDef & colDef);
 	
 	bool	addSelectFields(const QStringList & lstFields, QString strTableAlias = QString());
@@ -51,7 +51,7 @@ public:
 	bool	addJoin(const qbuDBJoin & DBJoin);
 	bool	setWhereClause(QString strWhere);
 	bool	appendWhereExpression(QString strExpression);
-	bool	appendWhereExpression(const qbuDBExpression & expr);
+	bool	appendWhereExpression(const qbuDBCondition & expr);
 
 	bool	addOrderByField(QString strField, QString strTableAlias = QString(), OrderByOption orderBy = QBU_ASC);
 	bool	addGroupByField(QString strField, QString strTableAlias = QString());

@@ -6,7 +6,7 @@
 //#include "qbuDatabaseLibraryDefines.h"
 #include "qbuQuery.h"
 #include "qbuDBColumnDef.h"
-#include "qbuDBExpression.h"
+#include "qbuDBCondition.h"
 
 class qbuPropertyMap;
 class qbuDatabase;
@@ -38,7 +38,7 @@ public:
 	bool	addFromField(qbuDeleteQuery & nestedQuery,QString strAlias);
 	bool	setWhereClause(QString strWhere);
 	bool	appendWhereExpression(QString strExpression);
-	bool	appendWhereExpression(const qbuDBExpression & expr);
+	bool	appendWhereExpression(const qbuDBCondition & expr);
 
 	bool	go();
 

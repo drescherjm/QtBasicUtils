@@ -142,7 +142,7 @@ bool qbuSelectQuery::addSelectField(const qbuDBColDef & colDef)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addSelectField(qbuDBExpression & expression, QString strAlias/*=QString()*/)
+bool qbuSelectQuery::addSelectField(qbuDBCondition & expression, QString strAlias/*=QString()*/)
 {
 	expression.setEncloseInParentheses(true);
 	qbuDBColDef col = qbuDBColDef(expression.toString(), qbuDBColDef::OP_IS_EXPRESSION).addAlias(strAlias);
@@ -303,7 +303,7 @@ bool qbuSelectQuery::appendWhereExpression(QString strExpression)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::appendWhereExpression(const qbuDBExpression & expr)
+bool qbuSelectQuery::appendWhereExpression(const qbuDBCondition & expr)
 {
 	QString strExpr;
 	bool retVal;
@@ -622,7 +622,7 @@ bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, QString strField,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, qbuDBExpression & expression, QString strAlias /*= QString()*/)
+bool qbuSelectQuery::addSelectFieldAtIndex(int nIndex, qbuDBCondition & expression, QString strAlias /*= QString()*/)
 {
 	return addSelectFieldAtIndex(nIndex,expression.toString(), strAlias);
 }

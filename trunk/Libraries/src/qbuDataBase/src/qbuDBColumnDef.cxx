@@ -2,7 +2,7 @@
 
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDBCondition.h"
 #include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ qbuDBColDef::qbuDBColDef(const qbuDBColDef & other)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
+qbuDBColDef::qbuDBColDef(const qbuDBCondition & expr, QString strAlias)
 {
 	m_strName = expr.toString();
 	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
