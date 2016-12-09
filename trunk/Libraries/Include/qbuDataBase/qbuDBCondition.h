@@ -4,8 +4,9 @@
 #define QBUDBCONDITION_H
 
 #include "qbuBase/qbuObject.h"
+#include "qbuDataBase/qbuDBColumnDef.h"
 
-struct qbuDBColDef;
+class  qbuDBExpression;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,7 +39,7 @@ public:
 	qbuDBCondition OR( const qbuDBCondition & other, bool bEnclose = false ) const;
 	qbuDBCondition OR( const QStringList & lstExpressions, bool bEnclose = false ) const;
 
-	//qbuDBCondition IN(const qbuDBCondition & other, QStringList slValues, bool bEnclose = true) const;
+	qbuDBCondition IN(const qbuDBExpression & expr, QStringList slValues, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
 
 public:
 	virtual QString toString(bool *bOK=nullptr) const;

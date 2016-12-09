@@ -80,6 +80,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuData.cxx
 	./src/qbuCreateTableQueryEx.cxx
 	./src/qbuCTSQLColumn.cxx
+	./src/qbuDBExpression.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -108,6 +109,7 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBCaseStatement.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuUpdateQuery.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCreateTableQueryEx.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDBExpression.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

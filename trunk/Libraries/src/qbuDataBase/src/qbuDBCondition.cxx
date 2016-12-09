@@ -2,6 +2,8 @@
 
 #include "qbuDataBase/qbuDBCondition.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
+#include "qbuDataBase/qbuDBExpression.h"
+#include "qbuDataBase/qbuDatabaseFunctions.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -17,7 +19,7 @@ public:
 	bool	isEmpty();
 public:
 	bool			m_bEncloseInParentheses;
-	QString			m_strExpression;
+	QString			m_strCondition;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -31,14 +33,14 @@ qbuDBCondition::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false)
 
 bool qbuDBCondition::qbuPrivate::isValid()
 {
-	return !m_strExpression.isEmpty();
+	return !m_strCondition.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDBCondition::qbuPrivate::isEmpty()
 {
-	return m_strExpression.isEmpty();
+	return m_strCondition.isEmpty();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -46,20 +48,20 @@ bool qbuDBCondition::qbuPrivate::isEmpty()
 void qbuDBCondition::qbuPrivate::init( QString strField0, QString strField1, QString strOperator, bool bEnclose )
 {
 	if ( (!strField0.isEmpty()) && (!strField1.isEmpty()) ) {
-		m_strExpression = QString("%1 %2 %3").arg(strField0).arg(strOperator).arg(strField1);
+		m_strCondition = QString("%1 %2 %3").arg(strField0).arg(strOperator).arg(strField1);
 		m_bEncloseInParentheses = bEnclose;
 	}
 	else
 	if ( !strField0.isEmpty() ) {
 		if ( (strOperator.compare("AND",Qt::CaseInsensitive) == 0) || (strOperator.compare("OR",Qt::CaseInsensitive) == 0) ) {
-			m_strExpression = strField0;
+			m_strCondition = strField0;
 			m_bEncloseInParentheses = false;
 		}
 	}
 	else
 	if ( !strField1.isEmpty() ) {
 		if ( (strOperator.compare("AND",Qt::CaseInsensitive) == 0) || (strOperator.compare("OR",Qt::CaseInsensitive) == 0) ) {
-			m_strExpression = strField1;
+			m_strCondition = strField1;
 			m_bEncloseInParentheses = false;
 		}
 // 		else if (strOperator.indexOf("NULL") >= 0) {
@@ -78,7 +80,7 @@ QString qbuDBCondition::toString( bool *bOK ) const
 	bool bValid = m_pPrivate->isValid();
 	if (bValid) {
 
-		retVal = m_pPrivate->m_strExpression;
+		retVal = m_pPrivate->m_strCondition;
 
 		if (m_pPrivate->m_bEncloseInParentheses) {
 			retVal = QString(" ( %1 ) ").arg(retVal);
@@ -110,7 +112,7 @@ qbuDBCondition::qbuDBCondition( const qbuDBCondition & other ) : m_pPrivate (new
 
 qbuDBCondition::qbuDBCondition( QString strExpression, bool bEnclose ) : m_pPrivate (new qbuPrivate)
 {
-	m_pPrivate->m_strExpression = strExpression;
+	m_pPrivate->m_strCondition = strExpression;
 	m_pPrivate->m_bEncloseInParentheses = bEnclose;
 }
 
@@ -173,7 +175,7 @@ bool qbuDBCondition::setEncloseInParentheses( bool bEnclose )
 void qbuDBCondition::copy( const qbuDBCondition & other )
 {
 	m_pPrivate->m_bEncloseInParentheses = false;
-	m_pPrivate->m_strExpression = other.toString();
+	m_pPrivate->m_strCondition = other.toString();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -263,6 +265,41 @@ qbuDBCondition& qbuDBCondition::operator=( const qbuDBCondition & other )
 bool qbuDBCondition::isEmpty() const
 {
 	return (m_pPrivate != nullptr) ? m_pPrivate->isEmpty() : false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QStringList slValues, 
+	qbuDBColDef::Option op /*= qbuDBColDef::OP_AUTO_QUOTE*/, 
+	bool bEnclose /*= true*/) const
+{
+	
+
+	QString strCondition = expr.toString() + " IN ( ";
+
+	bool bFirst = true;
+	foreach(QString strVal, slValues) {
+		if (!bFirst) {
+			strCondition.append(", ");
+		}
+		else {
+			bFirst = false;
+		}
+
+		if (op == qbuDBColDef::OP_AUTO_QUOTE) {
+			strCondition.append(singleQuoteIfNecissary(strVal));
+		}
+		else {
+			strCondition.append(strVal);
+		}
+		
+	}
+
+	strCondition.append(" ) ");
+
+	qbuDBCondition retVal(strCondition, bEnclose);
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
