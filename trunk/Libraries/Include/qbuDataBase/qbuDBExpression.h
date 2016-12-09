@@ -38,6 +38,8 @@ public:
 	qbuDBExpression OR( const qbuDBExpression & other, bool bEnclose = false ) const;
 	qbuDBExpression OR( const QStringList & lstExpressions, bool bEnclose = false ) const;
 
+	//qbuDBExpression IN(const qbuDBExpression & other, QStringList slValues, bool bEnclose = true) const;
+
 public:
 	virtual QString toString(bool *bOK=nullptr) const;
 
