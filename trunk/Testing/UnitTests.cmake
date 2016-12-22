@@ -40,6 +40,8 @@ if (QBU_BUILD_DATABASE)
 	
 	ADD_TEST(DBSingleQuote12   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "(-)")
 	ADD_TEST(DBSingleQuote13   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "(-1)")
+	
+	ADD_TEST(DBSingleQuote14   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "brca(-)")
 endif()
 
 ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Test" --S1='John Drescher')

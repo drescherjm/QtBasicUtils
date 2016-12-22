@@ -21,15 +21,6 @@ bool beginsAndEnds(QString str,QChar delimStart,QChar delimEnd)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool isSQLFunction(QString str)
-{
-    QRegExp regExp("\\s*[a-z_]+\\(.*\\)\\s*",Qt::CaseInsensitive);
-    
-    return regExp.exactMatch ( str );
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
 bool isAValidExpression(QString str)
 {
 	bool retVal = beginsAndEnds(str, '(', ')');
@@ -54,6 +45,25 @@ bool isAValidExpression(QString str)
 		}	
 	}
 
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool isSQLFunction(QString str)
+{
+	QRegExp regExp("\\s*[a-z_]+\\(.*\\)\\s*", Qt::CaseInsensitive);
+
+	bool retVal = regExp.exactMatch(str);
+	if (retVal) {
+		int nBegin = str.indexOf('(');
+		int nEnd = str.lastIndexOf(')');
+
+		retVal = ((nEnd > nBegin) && (nBegin > 0));
+		if (retVal) {
+			retVal = isAValidExpression(str.mid(nBegin, nEnd - nBegin));
+		}
+	}
 	return retVal;
 }
 
