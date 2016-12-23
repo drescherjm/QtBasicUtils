@@ -50,6 +50,44 @@ bool isAValidExpression(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool isValidFunctionParamaters(QString str)
+{
+	bool retVal = beginsAndEnds(str, '(', ')');
+
+	if (retVal) {
+		QString strTemp = str;
+
+		int nCount = strTemp.length() - 2;
+
+		retVal = (nCount > 0);
+
+		if (retVal) {
+
+			// Remove the '(' and ')' and any outer whitespace
+			strTemp = strTemp.mid(1, nCount).trimmed();
+
+			retVal = !strTemp.isEmpty();
+
+			if (retVal) {
+				retVal = strTemp.contains(QRegExp("[A-Za-z0-9]"));
+
+				if (!retVal) {
+					// Support count(*) ...
+					retVal = (strTemp.compare("*") == 0);
+				}
+
+			}
+		}
+		else {
+			retVal = true;
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool isSQLFunction(QString str)
 {
 	QRegExp regExp("\\s*[a-z_]+\\(.*\\)\\s*", Qt::CaseInsensitive);
@@ -61,7 +99,10 @@ bool isSQLFunction(QString str)
 
 		retVal = ((nEnd > nBegin) && (nBegin > 0));
 		if (retVal) {
-			retVal = isAValidExpression(str.mid(nBegin, nEnd - nBegin));
+
+			QString strTemp = str.mid(nBegin, ++nEnd - nBegin);
+
+			retVal = isValidFunctionParamaters(strTemp);
 		}
 	}
 	return retVal;

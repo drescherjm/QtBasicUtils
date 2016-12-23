@@ -42,6 +42,16 @@ if (QBU_BUILD_DATABASE)
 	ADD_TEST(DBSingleQuote13   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "(-1)")
 	
 	ADD_TEST(DBSingleQuote14   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "brca(-)")
+	
+	ADD_TEST(DBSingleQuote15   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "max(a)")
+	ADD_TEST(DBSingleQuote16   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "count(*)")
+	
+	ADD_TEST(DBSingleQuote17   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "like(X,Y)")
+	
+	ADD_TEST(DBSingleQuote18   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "sqlite_version()")
+	
+	ADD_TEST(DBSingleQuote19   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "brca(-1)")
+	
 endif()
 
 ADD_TEST(StringOpts0		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +STRINGOPT2 --S0="Test" --S1='John Drescher')
