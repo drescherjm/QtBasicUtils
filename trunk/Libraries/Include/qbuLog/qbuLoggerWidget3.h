@@ -1,27 +1,35 @@
 #pragma once
 
-#ifndef QBULOGGERWIDGET2_H
-#define QBULOGGERWIDGET2_H
+#ifndef QBULOGGERWIDGET3_H
+#define QBULOGGERWIDGET3_H
 
 #include <QWidget>
-#include "qbuLog/ui_qbuLoggerWidget2.h"
+#include <memory>
 #include <qbuBase/qbuMacros.h>
 
+/////////////////////////////////////////////////////////////////////////////////////////
+// 
+// namespace Ui {
+//     class qbuLoggerWidget2;
+// }
+
 class QxtLoggerEngine;
+class QAbstractItemModel;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class /*qbuLog_EXPORT*/ qbuLoggerWidget2 : public QWidget,
-    public Ui::qbuLoggerWidget2
+class /*qbuLog_EXPORT*/ qbuLoggerWidget3 : public QWidget
 {
 public:
     QBU_DECLARE_SUPERCLASS(QWidget);
 	Q_OBJECT
 public:
-	explicit qbuLoggerWidget2(QWidget *parent = 0);
+	explicit    qbuLoggerWidget3(QWidget *parent = 0);
+    virtual     ~qbuLoggerWidget3();
 
 public:
     void	initialize();
+    void    setModel(QAbstractItemModel *model);
 
 protected:
 	void	rowsInserted(const QModelIndex &parent, int start, int end);
@@ -29,10 +37,15 @@ protected:
 public:
 	QxtLoggerEngine* getLoggerEngine() const;
 
+// private:
+// 	bool	            m_bFirst;
+//     Ui::qbuLoggerWidget2 *ui;
+
 private:
-	bool	m_bFirst;
+    class qbuPrivate;
+    std::unique_ptr<qbuPrivate> m_pPrivate;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // QBULOGGERWIDGET2_H
+#endif // QBULOGGERWIDGET3_H

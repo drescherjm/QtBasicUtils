@@ -8,6 +8,7 @@
 #include <time.inl>
 #include <array>
 #include <random>
+#include "qbuLog\qbuLoggerWidget3.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,7 +35,17 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 
 	qxtLog->addLoggerEngine("LogWidget2", pWidget->getLoggerEngine());
 
-	tabWidget->addTab(pWidget, QString("LogWidget"));
+	tabWidget->addTab(pWidget, QString("LogWidget2"));
+
+    pModel = new qbuLoggerModel(this);
+    pModel->setRecordLimit(100);
+    qbuLoggerWidget3* pWidget3 = new qbuLoggerWidget3(this);
+    pWidget3->setModel(pModel);
+    pWidget3->initialize();
+
+    qxtLog->addLoggerEngine("LogWidget3", pWidget3->getLoggerEngine());
+
+    tabWidget->addTab(pWidget3, QString("LogWidget3"));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
