@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class QxtLoggerEngine;
-class QAbstractItemModel;
+class qbuLoggerModel;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -25,7 +25,7 @@ public:
 
 public:
     void	initialize();
-    void    setModel(QAbstractItemModel *model);
+    void    setLoggerModel(qbuLoggerModel* pModel);
 
 protected slots:
     void    updateRowHeights(int nStartingRow, int nEndingRow);

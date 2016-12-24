@@ -8,6 +8,7 @@
 #include "qbuLog/qbuLoggerModel.h"
 #include "qbuLog/qbuLoggerWidget2FileNameDelagate.h"
 #include "qbuLog/ui_qbuLoggerWidget2.h"
+#include <QSortFilterProxyModel>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,11 +20,12 @@ public:
 public:
     Ui::qbuLoggerWidget2    ui;
     bool                    m_bFirst;
+    qbuLoggerModel*         m_pLoggerModel;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{true}
+qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{ true }, m_pLoggerModel{}
 {
 
 }
@@ -44,12 +46,18 @@ qbuLoggerWidget3::~qbuLoggerWidget3()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuLoggerWidget3::setModel(QAbstractItemModel *model)
+void qbuLoggerWidget3::setLoggerModel(qbuLoggerModel* pModel)
 {
+    m_pPrivate->m_pLoggerModel = pModel;
+
     QTableView* pTableView = m_pPrivate->ui.tableView;
 
     if (pTableView) {
-        pTableView->setModel(model);
+
+        QSortFilterProxyModel* pSortModel = new QSortFilterProxyModel(this);
+        pSortModel->setSourceModel(pModel);
+
+        pTableView->setModel(pSortModel);
     }
 }
 
@@ -60,16 +68,23 @@ void qbuLoggerWidget3::initialize()
     QTableView* pTableView = m_pPrivate->ui.tableView;
 
     if (pTableView) {
-        qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(pTableView->model());
 
-        if (pModel == nullptr) {
-            pModel = dynamic_cast<qbuLoggerModel*>(pTableView->model());
+        if (m_pPrivate->m_pLoggerModel == nullptr) {
+            setLoggerModel(new qbuLoggerModel(this));
         }
 
-        if (pModel == nullptr) {
-            pModel = new qbuLoggerModel(this);
-            pTableView->setModel(pModel);
-        }
+//         qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(pTableView->model());
+// 
+//         if (pModel == nullptr) {
+//             pModel = dynamic_cast<qbuLoggerModel*>(pTableView->model());
+//         }
+// 
+//         if (pModel == nullptr) {
+//             pModel = new qbuLoggerModel(this);
+//             pTableView->setModel(pModel);
+//         }
+
+        QAbstractItemModel* pModel = pTableView->model();
 
         connect(pModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SLOT(rowsInserted(const QModelIndex&, int, int)));
 
@@ -96,11 +111,11 @@ void qbuLoggerWidget3::initialize()
 QxtLoggerEngine* qbuLoggerWidget3::getLoggerEngine() const
 {
 	QxtLoggerEngine* retVal = nullptr;
+    
+   // qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(m_pPrivate->ui.tableView->model());
 
-    qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(m_pPrivate->ui.tableView->model());
-
-	if (pModel) {
-		retVal = pModel->getLoggerEngine();
+	if (m_pPrivate->m_pLoggerModel) {
+        retVal = m_pPrivate->m_pLoggerModel->getLoggerEngine();
 	}
 
 	return retVal;

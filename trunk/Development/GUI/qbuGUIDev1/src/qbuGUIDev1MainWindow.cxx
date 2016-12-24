@@ -40,7 +40,7 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
     pModel = new qbuLoggerModel(this);
     pModel->setRecordLimit(100);
     qbuLoggerWidget3* pWidget3 = new qbuLoggerWidget3(this);
-    pWidget3->setModel(pModel);
+    pWidget3->setLoggerModel(pModel);
     pWidget3->initialize();
 
     qxtLog->addLoggerEngine("LogWidget3", pWidget3->getLoggerEngine());
