@@ -56,7 +56,7 @@ void qbuLoggerWidget3::setLoggerModel(qbuLoggerModel* pModel)
 
         QSortFilterProxyModel* pSortModel = new QSortFilterProxyModel(this);
         pSortModel->setSourceModel(pModel);
-
+        pSortModel->setSortRole(Qt::UserRole);
         pTableView->setModel(pSortModel);
     }
 }

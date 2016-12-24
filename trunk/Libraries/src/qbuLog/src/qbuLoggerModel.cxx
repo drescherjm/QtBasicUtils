@@ -244,7 +244,20 @@ QVariant qbuLoggerModel::headerData(int section, Qt::Orientation orientation, in
 QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::DisplayRole*/) const
 {
 	QVariant retVal;
-	
+    if (role == Qt::UserRole) {
+        if (index.column() == CT_LEVEL) {
+            if ((index.row() < m_pPrivate->m_queue.size()) && (index.column() < GRID_COLS)) {
+
+                logData& item = m_pPrivate->m_queue[index.row()];
+
+                retVal = item.m_level;
+            }
+        }
+        else {
+            retVal = data(index, Qt::DisplayRole);
+        }
+    }
+    else
 	if (role == Qt::DisplayRole) {
 		if ((index.row() < m_pPrivate->m_queue.size()) && (index.column() < GRID_COLS)) {
 
