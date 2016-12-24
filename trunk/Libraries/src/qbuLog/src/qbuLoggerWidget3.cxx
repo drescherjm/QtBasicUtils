@@ -33,12 +33,6 @@ qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{true}
 qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent), m_pPrivate{std::make_unique<qbuPrivate>()}
 {
     m_pPrivate->ui.setupUi(this);
-
-    QTableView* pTableView = m_pPrivate->ui.tableView;
-
-    if (pTableView) {
- //       connect(pTableView, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SLOT(rowsInserted(const QModelIndex&, int, int)));
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
