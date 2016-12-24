@@ -73,17 +73,6 @@ void qbuLoggerWidget3::initialize()
             setLoggerModel(new qbuLoggerModel(this));
         }
 
-//         qbuLoggerModel* pModel = qobject_cast<qbuLoggerModel*>(pTableView->model());
-// 
-//         if (pModel == nullptr) {
-//             pModel = dynamic_cast<qbuLoggerModel*>(pTableView->model());
-//         }
-// 
-//         if (pModel == nullptr) {
-//             pModel = new qbuLoggerModel(this);
-//             pTableView->setModel(pModel);
-//         }
-
         QAbstractItemModel* pModel = pTableView->model();
 
         connect(pModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SLOT(rowsInserted(const QModelIndex&, int, int)));
@@ -100,9 +89,10 @@ void qbuLoggerWidget3::initialize()
         int nRows = pTableView->model()->rowCount();
 
         for (int i = 0; i < nRows; ++i) {
-            pTableView->openPersistentEditor(pTableView->model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
-            pTableView->resizeRowToContents(i);
+            pTableView->openPersistentEditor(pModel->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
         }
+
+        emit updateRowHeights(0, nRows);
     }
 }
 
