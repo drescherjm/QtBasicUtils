@@ -8,10 +8,6 @@
 #include <qbuBase/qbuMacros.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////
-// 
-// namespace Ui {
-//     class qbuLoggerWidget2;
-// }
 
 class QxtLoggerEngine;
 class QAbstractItemModel;
@@ -31,15 +27,12 @@ public:
     void	initialize();
     void    setModel(QAbstractItemModel *model);
 
-protected:
-	void	rowsInserted(const QModelIndex &parent, int start, int end);
+protected slots:
+    void    updateRowHeights(int nStartingRow, int nEndingRow);
+    void	rowsInserted(const QModelIndex &parent, int start, int end);
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;
-
-// private:
-// 	bool	            m_bFirst;
-//     Ui::qbuLoggerWidget2 *ui;
 
 private:
     class qbuPrivate;

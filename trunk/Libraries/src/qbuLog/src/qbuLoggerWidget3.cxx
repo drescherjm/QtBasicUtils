@@ -37,7 +37,7 @@ qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent)
     QTableView* pTableView = m_pPrivate->ui.tableView;
 
     if (pTableView) {
-        connect(pTableView, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SIGNAL(rowsInserted(const QModelIndex&, int, int)));
+ //       connect(pTableView, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SLOT(rowsInserted(const QModelIndex&, int, int)));
     }
 }
 
@@ -77,11 +77,12 @@ void qbuLoggerWidget3::initialize()
             pTableView->setModel(pModel);
         }
 
+        connect(pModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), SLOT(rowsInserted(const QModelIndex&, int, int)));
+
         pTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
         pTableView->setItemDelegateForColumn(qbuLoggerModel::CT_FILENAME, new qbuLoggerWidget2FileNameDelagate(this));
-
-
+        
         QHeaderView* pHeader = pTableView->horizontalHeader();
         if (pHeader) {
             pHeader->setStretchLastSection(true);
@@ -115,16 +116,23 @@ QxtLoggerEngine* qbuLoggerWidget3::getLoggerEngine() const
 
 void qbuLoggerWidget3::rowsInserted(const QModelIndex &parent, int start, int end)
 {
+    emit updateRowHeights(start, end);    
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::updateRowHeights(int nStartingRow, int nEndingRow)
+{
     QTableView* pTableView = m_pPrivate->ui.tableView;
 
     if (pTableView) {
-        for (int i = start; i <= end; ++i) {
+        for (int i = nStartingRow; i <= nEndingRow; ++i) {
             pTableView->openPersistentEditor(pTableView->model()->index(i, qbuLoggerModel::CT_FILENAME, QModelIndex()));
             //resizeRowToContents(i);
             QSize sz = pTableView->sizeHintForIndex(pTableView->model()->index(i, qbuLoggerModel::CT_MESSAGE));
-            int nMinHeight = qMax(pTableView->verticalHeader()->sectionSizeHint(end), 40); // 40 = Min size of the File Icon column
+            int nMinHeight = qMax(pTableView->verticalHeader()->sectionSizeHint(nEndingRow), 40); // 40 = Min size of the File Icon column
 
-            pTableView->verticalHeader()->resizeSection(end, qMax(sz.height() + 3, nMinHeight)); // 3 = space for borders + grid
+            pTableView->verticalHeader()->resizeSection(i, qMax(sz.height() + 3, nMinHeight)); // 3 = space for borders + grid
         }
 
         if (m_pPrivate->m_bFirst) {
@@ -135,11 +143,10 @@ void qbuLoggerWidget3::rowsInserted(const QModelIndex &parent, int start, int en
             int nWidth = pTableView->columnWidth(qbuLoggerModel::CT_DATE) * 0.80;
 
             pTableView->setColumnWidth(qbuLoggerModel::CT_DATE, nWidth);
-       
+
             m_pPrivate->m_bFirst = false;
         }
     }
-    
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
