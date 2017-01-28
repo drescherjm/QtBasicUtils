@@ -40,6 +40,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuLineEditInterface.cxx
 	./src/qbuTextEdit.cxx
 	./src/qbuTextEditInterface.cxx
+	./src/qbuDateTimeEditor.cxx
+	./src/qbuDateTimeEditorInterface.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -62,6 +64,8 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuLineEditInterface.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuTextEdit.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuTextEditInterface.h	
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDateTimeEditor.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuDateTimeEditorInterface.h	
 )
 
 # some .ui files

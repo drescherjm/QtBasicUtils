@@ -20,16 +20,14 @@
  * THE SOFTWARE.                                                                *
  *******************************************************************************/
 
-#include "dateTimeEditor.h"
-#include <QApplication>
-#include <QKeyEvent>
-#include <QMouseEvent>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QStyleOption>
+#include "qbuWidgetsPCH.h"
+#include "qbuWidgets/qbuDateTimeEditor.h"
 
+QBU_BEGIN_NAMESPACE
 
-DateTimeEditor::DateTimeEditor(QWidget* parent) : QWidget(parent)
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDateTimeEditor::qbuDateTimeEditor(QWidget* parent) : QWidget(parent)
 {  
   setFocusPolicy(Qt::StrongFocus);
   
@@ -68,7 +66,7 @@ DateTimeEditor::DateTimeEditor(QWidget* parent) : QWidget(parent)
 }
 
 
-void DateTimeEditor::setDateTime(const QDateTime& dateTime)
+void qbuDateTimeEditor::setDateTime(const QDateTime& dateTime)
 {
   m_dateTime = dateTime;
   
@@ -97,7 +95,7 @@ void DateTimeEditor::setDateTime(const QDateTime& dateTime)
 }
 
 
-QSize DateTimeEditor::sizeHint() const
+QSize qbuDateTimeEditor::sizeHint() const
 {
   const QSize charSize = getCharSize();
   const int h = qMax(charSize.height(), 14) + 2*5;
@@ -106,13 +104,13 @@ QSize DateTimeEditor::sizeHint() const
 }
 
 
-QSize DateTimeEditor::minimumSizeHint() const
+QSize qbuDateTimeEditor::minimumSizeHint() const
 {
   return sizeHint();
 }
 
 
-void DateTimeEditor::paintEvent(QPaintEvent* /*event*/)
+void qbuDateTimeEditor::paintEvent(QPaintEvent* /*event*/)
 {
   QPainter painter(this);
   
@@ -177,7 +175,7 @@ void DateTimeEditor::paintEvent(QPaintEvent* /*event*/)
 }
 
 
-void DateTimeEditor::mousePressEvent(QMouseEvent* event)
+void qbuDateTimeEditor::mousePressEvent(QMouseEvent* event)
 {
   const int p = getNearestEditablePosition(event->pos());
   if (p >= 0)
@@ -194,7 +192,7 @@ void DateTimeEditor::mousePressEvent(QMouseEvent* event)
 }
 
 
-void DateTimeEditor::wheelEvent(QWheelEvent* event)
+void qbuDateTimeEditor::wheelEvent(QWheelEvent* event)
 {
   if (m_selectedPosition == -1) return;
   
@@ -209,7 +207,7 @@ void DateTimeEditor::wheelEvent(QWheelEvent* event)
 }
 
 
-void DateTimeEditor::keyPressEvent(QKeyEvent* event)
+void qbuDateTimeEditor::keyPressEvent(QKeyEvent* event)
 {
   switch (event->key())
   {
@@ -237,13 +235,13 @@ void DateTimeEditor::keyPressEvent(QKeyEvent* event)
 }
 
 
-void DateTimeEditor::focusInEvent(QFocusEvent*)
+void qbuDateTimeEditor::focusInEvent(QFocusEvent*)
 {
   selectFirstPosition();
 }
 
 
-void DateTimeEditor::focusOutEvent(QFocusEvent*)
+void qbuDateTimeEditor::focusOutEvent(QFocusEvent*)
 {
   m_selectedPosition = -1;
   m_selectedGroup = NONE;
@@ -251,7 +249,7 @@ void DateTimeEditor::focusOutEvent(QFocusEvent*)
 }
 
 
-bool DateTimeEditor::focusNextPrevChild(bool next)
+bool qbuDateTimeEditor::focusNextPrevChild(bool next)
 {
   bool found = next ? selectNextPosition() : selectPrevPosition();
   
@@ -260,7 +258,7 @@ bool DateTimeEditor::focusNextPrevChild(bool next)
 }
 
 
-const QSize& DateTimeEditor::getCharSize() const
+const QSize& qbuDateTimeEditor::getCharSize() const
 {
   if (m_font != font() || m_charSize.isEmpty())
   {
@@ -282,14 +280,14 @@ const QSize& DateTimeEditor::getCharSize() const
 }
 
 
-QRect DateTimeEditor::getCharacterRect(int position) const
+QRect qbuDateTimeEditor::getCharacterRect(int position) const
 {
   const QSize& s = getCharSize();
   return QRect(QPoint(position * s.width() + 4, 5), s);
 }
 
 
-void DateTimeEditor::addCharacter(DateTimeEditor::Group group, const QString& availableCharacters)
+void qbuDateTimeEditor::addCharacter(qbuDateTimeEditor::Group group, const QString& availableCharacters)
 {
   CharacterInfo c;
   c.m_position = m_characters.size();
@@ -301,7 +299,7 @@ void DateTimeEditor::addCharacter(DateTimeEditor::Group group, const QString& av
 }
 
 
-void DateTimeEditor::addFixedCharacter(const QChar& character)
+void qbuDateTimeEditor::addFixedCharacter(const QChar& character)
 {
   CharacterInfo c;
   c.m_position = m_characters.size();
@@ -312,7 +310,7 @@ void DateTimeEditor::addFixedCharacter(const QChar& character)
 }
 
 
-void DateTimeEditor::addGroup(DateTimeEditor::Group group, int minValue, int maxValue, const QChar& placeholder)
+void qbuDateTimeEditor::addGroup(qbuDateTimeEditor::Group group, int minValue, int maxValue, const QChar& placeholder)
 {
   GroupInfo g;
   g.group = group;
@@ -325,7 +323,7 @@ void DateTimeEditor::addGroup(DateTimeEditor::Group group, int minValue, int max
 }
 
 
-int DateTimeEditor::getNearestEditablePosition(const QPoint& pos) const
+int qbuDateTimeEditor::getNearestEditablePosition(const QPoint& pos) const
 {
   int minDist = -1;
   int bestPosition = -1;
@@ -376,7 +374,7 @@ int DateTimeEditor::getNearestEditablePosition(const QPoint& pos) const
 }
 
 
-bool DateTimeEditor::selectFirstPosition()
+bool qbuDateTimeEditor::selectFirstPosition()
 {
   bool found = false;
   
@@ -400,7 +398,7 @@ bool DateTimeEditor::selectFirstPosition()
 }
 
 
-bool DateTimeEditor::selectPrevPosition()
+bool qbuDateTimeEditor::selectPrevPosition()
 {
   bool found = false;
   
@@ -429,7 +427,7 @@ bool DateTimeEditor::selectPrevPosition()
 }
 
 
-bool DateTimeEditor::selectNextPosition()
+bool qbuDateTimeEditor::selectNextPosition()
 {
   bool found = false;
   if (m_selectedPosition >= 0)
@@ -457,7 +455,7 @@ bool DateTimeEditor::selectNextPosition()
 }
 
 
-void DateTimeEditor::editSelectedCharacterDelta(int delta)
+void qbuDateTimeEditor::editSelectedCharacterDelta(int delta)
 {
   if (m_selectedPosition < 0 || m_selectedGroup == NONE)
   {
@@ -485,7 +483,7 @@ void DateTimeEditor::editSelectedCharacterDelta(int delta)
 }
 
 
-bool DateTimeEditor::editSelectedCharacter(const QString& keyText)
+bool qbuDateTimeEditor::editSelectedCharacter(const QString& keyText)
 {
   if (m_selectedPosition < 0 || keyText.size() != 1)
   {
@@ -508,7 +506,7 @@ bool DateTimeEditor::editSelectedCharacter(const QString& keyText)
 }
 
 
-void DateTimeEditor::validate()
+void qbuDateTimeEditor::validate()
 {
   for (GroupInfo& g : m_groups)
   {
@@ -607,7 +605,7 @@ void DateTimeEditor::validate()
 }
 
 
-void DateTimeEditor::setNumber(Group group, int value)
+void qbuDateTimeEditor::setNumber(Group group, int value)
 {
   const auto& g = m_groups[group];
   
@@ -642,7 +640,7 @@ void DateTimeEditor::setNumber(Group group, int value)
 }
 
 
-int DateTimeEditor::getNumber(Group group) const
+int qbuDateTimeEditor::getNumber(Group group) const
 {
   const auto& g = m_groups[group];
   int value = 0;
@@ -662,13 +660,13 @@ int DateTimeEditor::getNumber(Group group) const
 }
 
 
-void DateTimeEditor::markInvalid(Group group)
+void qbuDateTimeEditor::markInvalid(Group group)
 {
   m_groups[group].invalid = true;
 }
 
 
-void DateTimeEditor::initStyleOption(QStyleOptionFrame *option) const
+void qbuDateTimeEditor::initStyleOption(QStyleOptionFrame *option) const
 {
   if (!option) return;
   
@@ -684,3 +682,8 @@ void DateTimeEditor::initStyleOption(QStyleOptionFrame *option) const
   }
   //option->features = QStyleOptionFrame::None;
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QBU_END_NAMESPACE
