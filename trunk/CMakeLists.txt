@@ -125,8 +125,8 @@ configure_file (
 
 install (FILES
 	${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-	${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibraryDepends.cmake
-	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake
+#	${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibraryDepends.cmake
+#	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake
 	DESTINATION lib
 )
 
@@ -140,5 +140,5 @@ if(BUILD_DOCUMENTATION)
 add_subdirectory(doxygen)
 endif(BUILD_DOCUMENTATION)
 
-dump_all_variables_starting_with( ${PROJECT_NAME} )
+#dump_all_variables_starting_with( ${PROJECT_NAME} )
 #dump_all_variables()
