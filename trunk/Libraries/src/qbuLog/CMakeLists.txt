@@ -129,12 +129,12 @@ endif()
 
 #########################################################################################
 
-install (FILES
-	${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	${LOCAL_PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
-	DESTINATION lib
-)
+# install (FILES
+	# ${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
+	# ${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
+	# ${LOCAL_PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
+	# DESTINATION lib
+# )
 
 #########################################################################################
 

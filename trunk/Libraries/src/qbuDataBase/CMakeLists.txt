@@ -212,12 +212,12 @@ GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME}
 
 #########################################################################################
 
-install (FILES
-	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	${PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
-	DESTINATION lib
-)
+# install (FILES
+	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
+	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
+	# ${PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
+	# DESTINATION lib
+# )
 
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)
 
