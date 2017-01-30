@@ -43,7 +43,7 @@ namespace qbu {
         Q_OBJECT
 
       public:
-        qbuDateTimeEditor(QWidget* parent = nullptr);
+        explicit qbuDateTimeEditor(QWidget* parent = nullptr);
     
         const QDateTime& getDateTime() const { return m_dateTime; }
         void setDateTime(const QDateTime& dateTime);

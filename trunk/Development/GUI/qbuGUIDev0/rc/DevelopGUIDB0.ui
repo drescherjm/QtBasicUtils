@@ -42,6 +42,30 @@
     </spacer>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="qbu::qbuDateTimeEditor" name="qbu::qbuDateTimeEditor">
+       <property name="text" stdset="0">
+        <string>qbuDateTimeEditor</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="qbu::qbuGroupBox" name="qbu::qbuGroupBox">
      <property name="title">
       <string>qbuGroupBox</string>
@@ -152,6 +176,11 @@
    <class>qbu::qbuTextEdit</class>
    <extends>QTextEdit</extends>
    <header>qbuWidgets/qbuTextEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qbu::qbuDateTimeEditor</class>
+   <extends>QWidget</extends>
+   <header>qbuWidgets/qbuDateTimeEditor.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
