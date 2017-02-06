@@ -99,7 +99,7 @@ QSize qbuDateTimeEditor::sizeHint() const
 {
   const QSize charSize = getCharSize();
   const int h = qMax(charSize.height(), 14) + 2*5;
-  const int w = m_characters.size() * charSize.width() + 2*5;
+  const int w = (m_characters.size() + 2 ) * charSize.width() + 2*5;
   return QSize(w, h);
 }
 
