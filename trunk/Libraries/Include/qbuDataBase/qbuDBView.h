@@ -25,19 +25,20 @@ public:
 
 public:
 	virtual bool		upgradeDBView(int nOldSchema, int nNewSchema, bool bForceUpdate=false);
-//	virtual qbuInfo*		createInfoClass() const =0;
+
 	virtual bool		verifySchema();
 	virtual QString		getDBViewName() const =0;
 	virtual const QStringList&	getFieldList() const;
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
 protected:
-	virtual bool				dropView();
-	virtual bool				renameDBView(QString strNewName);
-	virtual bool				createDBView(int nSchema)=0;
-	virtual bool				internalCreateDBView(QString strDBViewName, QString strDBViewSQL, bool bTempView=false);
+	virtual bool	    dropView();
+	virtual bool		renameDBView(QString strNewName);
+	virtual bool		createDBView(int nSchema)=0;
+	virtual bool		internalCreateDBView(QString strDBViewName, QString strDBViewSQL, bool bTempView=false);
 
-	virtual	bool				isValidField(QString strName);
+	virtual	bool		isValidField(QString strName);
+    virtual bool        viewNeedsUpdate(int nNewSchema, bool bForceUpdate);
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
 };

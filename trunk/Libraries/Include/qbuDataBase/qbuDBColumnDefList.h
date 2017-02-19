@@ -20,7 +20,7 @@
 class qbuDBColumnDefList : public QList<qbuDBColDef>
 {
 public:
-	QString toString();
+	QString toString(size_t nWordWrapAt=0);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
