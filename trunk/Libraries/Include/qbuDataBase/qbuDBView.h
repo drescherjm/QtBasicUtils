@@ -38,7 +38,8 @@ protected:
 	virtual bool		internalCreateDBView(QString strDBViewName, QString strDBViewSQL, bool bTempView=false);
 
 	virtual	bool		isValidField(QString strName);
-    virtual bool        viewNeedsUpdate(int nNewSchema, bool bForceUpdate);
+    virtual bool        viewNeedsUpdate(int nOldSchema, int nNewSchema, bool bForceUpdate);
+
 protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
 };
