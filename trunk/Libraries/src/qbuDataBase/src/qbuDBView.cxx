@@ -31,9 +31,9 @@ bool qbuDBView::upgradeDBView( int nOldSchema, int nNewSchema, bool bForceUpdate
 {
 	bool retVal = m_pDB->viewExists(getDBViewName()) ;
 	if (retVal) {
-		if (bForceUpdate) {
-			retVal = !dropView();
-		}
+        if (viewNeedsUpdate(nNewSchema, bForceUpdate)) {
+            retVal = !dropView();
+        }
 	}
 	if (!retVal) {
 		retVal = createDBView( nNewSchema );
@@ -192,6 +192,14 @@ bool qbuDBView::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFie
 		}
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBView::viewNeedsUpdate(int nNewSchema, bool bForceUpdate)
+{
+    Q_UNUSED(nNewSchema);
+    return bForceUpdate;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

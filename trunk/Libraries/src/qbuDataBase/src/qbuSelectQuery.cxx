@@ -417,7 +417,7 @@ bool qbuSelectQuery::addOrderByField(const qbuDBColDef & colDef, OrderByOption o
 bool qbuSelectQuery::generateSQL(QString & strSQL)
 {
 	bool retVal;
-	QString strSelect = m_pPrivate->m_lstSelect.toString();
+	QString strSelect = m_pPrivate->m_lstSelect.toString(80);
 	retVal = !strSelect.isEmpty();
 	if (retVal) {
 		QString strFrom = m_pPrivate->m_lstFrom.toString();
