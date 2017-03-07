@@ -65,6 +65,7 @@ qbuDateTimeEditor::qbuDateTimeEditor(QWidget* parent) : QWidget(parent)
   validate();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::setDateTime(const QDateTime& dateTime)
 {
@@ -94,6 +95,7 @@ void qbuDateTimeEditor::setDateTime(const QDateTime& dateTime)
   update();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QSize qbuDateTimeEditor::sizeHint() const
 {
@@ -103,12 +105,14 @@ QSize qbuDateTimeEditor::sizeHint() const
   return QSize(w, h);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QSize qbuDateTimeEditor::minimumSizeHint() const
 {
   return sizeHint();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::paintEvent(QPaintEvent* /*event*/)
 {
@@ -174,6 +178,7 @@ void qbuDateTimeEditor::paintEvent(QPaintEvent* /*event*/)
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::mousePressEvent(QMouseEvent* event)
 {
@@ -191,6 +196,7 @@ void qbuDateTimeEditor::mousePressEvent(QMouseEvent* event)
   update();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::wheelEvent(QWheelEvent* event)
 {
@@ -206,6 +212,7 @@ void qbuDateTimeEditor::wheelEvent(QWheelEvent* event)
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::keyPressEvent(QKeyEvent* event)
 {
@@ -234,12 +241,14 @@ void qbuDateTimeEditor::keyPressEvent(QKeyEvent* event)
   }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::focusInEvent(QFocusEvent*)
 {
   selectFirstPosition();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::focusOutEvent(QFocusEvent*)
 {
@@ -248,6 +257,7 @@ void qbuDateTimeEditor::focusOutEvent(QFocusEvent*)
   update();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDateTimeEditor::focusNextPrevChild(bool next)
 {
@@ -257,6 +267,7 @@ bool qbuDateTimeEditor::focusNextPrevChild(bool next)
   return found;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 const QSize& qbuDateTimeEditor::getCharSize() const
 {
@@ -279,6 +290,7 @@ const QSize& qbuDateTimeEditor::getCharSize() const
   return m_charSize;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 QRect qbuDateTimeEditor::getCharacterRect(int position) const
 {
@@ -286,6 +298,7 @@ QRect qbuDateTimeEditor::getCharacterRect(int position) const
   return QRect(QPoint(position * s.width() + 4, 5), s);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::addCharacter(qbuDateTimeEditor::Group group, const QString& availableCharacters)
 {
@@ -298,6 +311,7 @@ void qbuDateTimeEditor::addCharacter(qbuDateTimeEditor::Group group, const QStri
   m_groups[c.m_group].positions << c.m_position;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::addFixedCharacter(const QChar& character)
 {
@@ -309,6 +323,7 @@ void qbuDateTimeEditor::addFixedCharacter(const QChar& character)
   m_groups[c.m_group].positions << c.m_position;    
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::addGroup(qbuDateTimeEditor::Group group, int minValue, int maxValue, const QChar& placeholder)
 {
@@ -322,6 +337,7 @@ void qbuDateTimeEditor::addGroup(qbuDateTimeEditor::Group group, int minValue, i
   m_groups.insert(group, g);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int qbuDateTimeEditor::getNearestEditablePosition(const QPoint& pos) const
 {
@@ -373,6 +389,7 @@ int qbuDateTimeEditor::getNearestEditablePosition(const QPoint& pos) const
   return bestPosition;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDateTimeEditor::selectFirstPosition()
 {
@@ -397,6 +414,7 @@ bool qbuDateTimeEditor::selectFirstPosition()
   return found;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDateTimeEditor::selectPrevPosition()
 {
@@ -426,6 +444,7 @@ bool qbuDateTimeEditor::selectPrevPosition()
   return found;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDateTimeEditor::selectNextPosition()
 {
@@ -454,6 +473,7 @@ bool qbuDateTimeEditor::selectNextPosition()
   return found;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::editSelectedCharacterDelta(int delta)
 {
@@ -482,6 +502,7 @@ void qbuDateTimeEditor::editSelectedCharacterDelta(int delta)
   update();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuDateTimeEditor::editSelectedCharacter(const QString& keyText)
 {
@@ -505,6 +526,7 @@ bool qbuDateTimeEditor::editSelectedCharacter(const QString& keyText)
   return true;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::validate()
 {
@@ -604,6 +626,7 @@ void qbuDateTimeEditor::validate()
   update();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::setNumber(Group group, int value)
 {
@@ -639,6 +662,7 @@ void qbuDateTimeEditor::setNumber(Group group, int value)
   m_groups[group].setValue(getNumber(group));
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int qbuDateTimeEditor::getNumber(Group group) const
 {
@@ -659,12 +683,14 @@ int qbuDateTimeEditor::getNumber(Group group) const
   return value;   
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::markInvalid(Group group)
 {
   m_groups[group].invalid = true;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDateTimeEditor::initStyleOption(QStyleOptionFrame *option) const
 {

@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QKeyEvent>
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuTableFilterLineEdit::qbuTableFilterLineEdit(QWidget* parent, QList<qbuTableFilterLineEdit*>* filters, int columnnum) : QLineEdit(parent), filterList(filters), columnNumber(columnnum)
 {
     setPlaceholderText(tr("Filter"));
@@ -26,6 +28,8 @@ qbuTableFilterLineEdit::qbuTableFilterLineEdit(QWidget* parent, QList<qbuTableFi
     connect(this, SIGNAL(editingFinished()), this, SLOT(delayedSignalTimerTriggered()));
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuTableFilterLineEdit::delayedSignalTimerTriggered()
 {
     // Stop the timer first to avoid triggering in intervals
@@ -34,6 +38,8 @@ void qbuTableFilterLineEdit::delayedSignalTimerTriggered()
     // Emit the delayed signal using the current value
     emit delayedTextChanged(text());
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuTableFilterLineEdit::keyReleaseEvent(QKeyEvent* event)
 {
@@ -53,6 +59,8 @@ void qbuTableFilterLineEdit::keyReleaseEvent(QKeyEvent* event)
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuTableFilterLineEdit::clear()
 {
     // When programatically clearing the line edit's value make sure the effects are applied immediately, i.e.
@@ -61,6 +69,8 @@ void qbuTableFilterLineEdit::clear()
     delayedSignalTimerTriggered();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuTableFilterLineEdit::setText(const QString& text)
 {
     // When programatically setting the line edit's value make sure the effects are applied immediately, i.e.
@@ -68,3 +78,5 @@ void qbuTableFilterLineEdit::setText(const QString& text)
     QLineEdit::setText(text);
     delayedSignalTimerTriggered();
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
