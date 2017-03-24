@@ -7,16 +7,17 @@
 #include <qbuBase/qbuMacros.h>
 #include <memory>
 #include "qbuBase/qbuBaseLibraryDefines.h"
+#include "qbuBase/qbuButtonSignalBase.h"
 
 class QAbstractButton;
-class qbuButtonSignalBase;
+//class qbuButtonSignalBase;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuBase_EXPORT qbuButtonSignalGroup : public QObject
+class qbuBase_EXPORT qbuButtonSignalGroup : public qbuButtonSignalBase
 {
 	Q_OBJECT
-	QBU_DECLARE_SUPERCLASS(QObject)
+	QBU_DECLARE_SUPERCLASS(qbuButtonSignalBase)
 public:
 	explicit qbuButtonSignalGroup(QObject* pParent);
 	~qbuButtonSignalGroup();
@@ -32,12 +33,15 @@ public:
 	bool	addButton(qbuButtonSignalBase* pButtonSignal);
 	void	setMode(SignalGroupMode md);
 
+public:
+	virtual bool isChecked();
+
 signals:
 	void	some_toggled(bool bChecked);
 
 protected slots:
 	void	buttonToggledInt(bool bChecked);
-
+	
 private:
 	class qbuPrivate;
 	std::unique_ptr<qbuPrivate> m_pPrivate;

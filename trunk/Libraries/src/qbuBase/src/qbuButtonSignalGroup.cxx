@@ -30,7 +30,7 @@ qbuButtonSignalGroup::qbuPrivate::qbuPrivate() : m_md(qbuButtonSignalGroup::BSG_
 qbuButtonSignalGroup::qbuButtonSignalGroup(QObject* pParent) : Superclass(pParent), 
 	m_pPrivate(new qbuPrivate)
 {
-
+	connect(this, SIGNAL(some_toggled(bool)), this, SIGNAL(toggled(bool)));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +154,33 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 void qbuButtonSignalGroup::setMode(SignalGroupMode md)
 {
 	m_pPrivate->m_md = md;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuButtonSignalGroup::isChecked()
+{
+	bool retVal = false;
+	switch (m_pPrivate->m_md) {
+	case BSG_OR:
+		foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+			retVal = pButtonSignal->isChecked();
+			if (retVal) {
+				break;
+			}
+		}
+		break;
+	case BSG_AND:
+		retVal = true;
+		foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+			retVal = pButtonSignal->isChecked();
+			if (!retVal) {
+				break;
+			}
+		}
+		break;
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
