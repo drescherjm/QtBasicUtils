@@ -303,3 +303,39 @@ qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QStringList slVa
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, QString slLow, QString slHigh, qbuDBColDef::Option op /*= qbuDBColDef::OP_AUTO_QUOTE*/, bool bEnclose /*= true*/) const
+{
+	QString strCondition = expr.toString() + " BETWEEN ";
+		
+	if (op == qbuDBColDef::OP_AUTO_QUOTE) {
+		strCondition.append(singleQuoteIfNecissary(slLow));
+	}
+	else {
+		strCondition.append(slLow);
+	}
+
+	strCondition.append(" AND ");
+
+	if (op == qbuDBColDef::OP_AUTO_QUOTE) {
+		strCondition.append(singleQuoteIfNecissary(slHigh));
+	}
+	else {
+		strCondition.append(slHigh);
+	}
+
+	strCondition.append(' ');
+
+	qbuDBCondition retVal(strCondition, bEnclose);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, int nLow, int nHigh, bool bEnclose /*= true*/) const
+{
+	return BETWEEN(expr, QString::number(nLow), QString::number(nHigh), qbuDBColDef::OP_NO_CODE, bEnclose);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

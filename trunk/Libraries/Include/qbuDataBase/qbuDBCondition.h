@@ -40,6 +40,8 @@ public:
 	qbuDBCondition OR( const QStringList & lstExpressions, bool bEnclose = false ) const;
 
 	qbuDBCondition IN(const qbuDBExpression & expr, QStringList slValues, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
+	qbuDBCondition BETWEEN(const qbuDBExpression & expr, QString slLow, QString slHigh, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
+	qbuDBCondition BETWEEN(const qbuDBExpression & expr, int nLow, int nHigh, bool bEnclose = true) const;
 
 public:
 	virtual QString toString(bool *bOK=nullptr) const;
