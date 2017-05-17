@@ -5,7 +5,6 @@
 #include "qbuDataBase/qbuDBExpression.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class qbuDBCondition::qbuPrivate
