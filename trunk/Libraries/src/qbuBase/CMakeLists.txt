@@ -35,6 +35,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuButtonSignalGroup.cxx
 	./src/qbuButtonSignalBase.cxx
 	./src/qbuButtonSignal.cxx
+	./src/qbuThread.cxx
+	./src/qbuThreadedQObjectDeleter.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -48,6 +50,8 @@ set( ${LOCAL_PROJECT_NAME}_EXT_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuSleeperThread.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuException.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuErrorBase.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuThread.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuThreadedQObjectDeleter.h
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 

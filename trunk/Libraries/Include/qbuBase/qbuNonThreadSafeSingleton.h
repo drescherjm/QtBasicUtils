@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUNONTHREADSAFESINGLETON_H__
-#define __QBUNONTHREADSAFESINGLETON_H__
+#ifndef QBUNONTHREADSAFESINGLETON_H
+#define QBUNONTHREADSAFESINGLETON_H
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //	
@@ -24,4 +24,4 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUNONTHREADSAFESINGLETON_H__
+#endif // QBUNONTHREADSAFESINGLETON_H

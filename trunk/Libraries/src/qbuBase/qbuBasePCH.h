@@ -1,6 +1,10 @@
+//c++
+#include <iostream>
+
 // Qt
 
 #include <QDomDocument>
 #include <QTextStream>
 #include <QFile>
-#include <iostream>
+#include <QDebug>
+#include <QThread>
