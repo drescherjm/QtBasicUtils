@@ -33,10 +33,13 @@ class QThread;
 // Deletes an object living in a thread upon thread's termination.
 
 class qbuBase_EXPORT qbuThreadedQObjectDeleter : public QObject {
-    Q_OBJECT
+private:
     QPointer<QObject> m_object;
     qbuThreadedQObjectDeleter(QObject * object, QThread * thread);
     ~qbuThreadedQObjectDeleter();
+public:
+    QObject* getObjectPtr();
+
 public:
     static void addDeleter(QObject * object, QThread * thread);
 };
