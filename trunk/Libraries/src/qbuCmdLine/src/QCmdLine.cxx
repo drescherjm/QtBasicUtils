@@ -215,7 +215,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-		QString QCmdLine::GetSyntax()
+		QString QCmdLine::GetSyntax(bool bShort)
 	{
 		QString retVal;
 		QCmd* pCmd;
@@ -224,7 +224,7 @@
 		for (it = m_pPrivate->m_listCmds.begin(); it != m_pPrivate->m_listCmds.end();++it) {
 			pCmd = *it;
 			retVal += m_pPrivate->m_strProgName + (" ");
-			retVal += pCmd->GetSyntax();
+			retVal += pCmd->GetSyntax(bShort);
 			retVal += ("\n ");
 		}
 		return retVal;

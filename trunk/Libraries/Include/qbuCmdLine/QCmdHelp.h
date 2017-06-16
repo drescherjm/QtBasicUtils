@@ -16,6 +16,10 @@ public:
 	virtual int Execute();
 protected:
 	QCmdLine*	GetCmdLine();
+
+public:
+	static QString g_strOPTBrief;
+
 private:
 	QCmdLine*	m_pCmdLine;
 };

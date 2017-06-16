@@ -172,7 +172,7 @@ public:
 public:
 	virtual		int		Parse();
 	virtual		int		Execute();
-	virtual		QString GetSyntax();
+	virtual		QString GetSyntax(bool bShort=false);
 	virtual		QString	GetName();
 	virtual		QString	GetDescription();
 	virtual		QString	GetLongDescription();

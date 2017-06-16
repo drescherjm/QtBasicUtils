@@ -25,7 +25,7 @@ public:
 	QCmdLine( QTextStream & args );
 public:
 	int			Parse();
-	QString		GetSyntax();
+	QString		GetSyntax(bool bShort=false);
 	int			AddCmd( QCmd* pCmd );
 	QCmdList	getAvailableCommands();
 	void		setAvailableCommands(QCmdList & lstCommands);
