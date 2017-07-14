@@ -73,7 +73,7 @@ int qbuStringList::removeAll( QString strRemove,Qt::CaseSensitivity cs )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuStringList::removeAll(QStringList & strlstRemove, Qt::CaseSensitivity cs)
+int qbuStringList::removeAll(const QStringList & strlstRemove, Qt::CaseSensitivity cs)
 {
 	int retVal = 0;
 

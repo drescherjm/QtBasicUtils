@@ -70,7 +70,8 @@ public:
 public:
     virtual	void	addProperties(qbuPropertyMap * other);	
     virtual void	addProperties(const qbuPropertyMap* other);
-    virtual	int		RemoveProperties(QStringList lstProperties);
+	virtual	int		RemoveProperties(const QStringList & lstToRemove);
+	virtual	int		RemoveAllPropertiesBut(const QStringList & lstToKeep);
 
 protected:
     virtual void	propertyInserted(qbuProperty * pProp);

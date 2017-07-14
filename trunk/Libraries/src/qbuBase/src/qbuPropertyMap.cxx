@@ -12,6 +12,7 @@
 #include "qbuBase/qbuProperyMapXMLHelper.h"
 #include <QXmlSimpleReader>
 #include <QDebug>
+#include "qbuBase/qbuStringList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -354,7 +355,7 @@ bool qbuPropertyMap::RemoveProperty(QString strName)
  *	The number of properties removed.
  */
 
-int qbuPropertyMap::RemoveProperties( QStringList lstProperties )
+int qbuPropertyMap::RemoveProperties( const QStringList & lstProperties )
 {
     int retVal = 0;
     iterator it = begin();
@@ -702,6 +703,17 @@ bool qbuPropertyMap::hasFields(const QStringList & lstFields) const
     }
 
     return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int qbuPropertyMap::RemoveAllPropertiesBut(const QStringList & lstToKeep)
+{
+	qbuStringList lstRemaining = getPropertyList();
+	lstRemaining.removeAll(lstToKeep, Qt::CaseInsensitive);
+
+	return RemoveProperties(lstRemaining);
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
