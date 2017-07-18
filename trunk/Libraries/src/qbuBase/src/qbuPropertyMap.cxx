@@ -359,15 +359,17 @@ int qbuPropertyMap::RemoveProperties( const QStringList & lstProperties )
 {
     int retVal = 0;
     iterator it = begin();
-    for(; it != end();++it) {
+    while(it != end()) {
         qbuProperty* pProp = *it;
         if (pProp != NULL) {
             QString strName = pProp->objectName();
             if (lstProperties.contains(strName,Qt::CaseInsensitive)) {
                 it = m_mapProps.erase(it);
                 retVal++;
+				continue;
             }
         }
+		++it;
     }
     return retVal;
 }
