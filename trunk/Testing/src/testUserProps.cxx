@@ -467,6 +467,30 @@ static bool test9()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+static bool test10()
+{
+    qbuPropertyMap map;
+    add_John(&map);
+
+    int nVal = map.RemoveProperties(QStringList() << "Name" << "DOB");
+
+    return (nVal == 2) && (!map.hasField("Name")) && (!map.hasField("DOB"));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+static bool test11()
+{
+    qbuPropertyMap map;
+    add_John(&map);
+
+    int nVal = map.RemoveAllPropertiesBut(QStringList() << "Age" << "Sex");
+
+    return (nVal == 2) && (!map.hasField("Name")) && (!map.hasField("DOB"));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int QCmdTestUserProps::Execute()
 {
 	int nTest;
@@ -506,6 +530,12 @@ int QCmdTestUserProps::Execute()
 	case 9:
 		bVal = test9();
 		break;
+    case 10:
+        bVal = test10();
+        break;
+    case 11:
+        bVal = test11();
+        break;
 	default:
 		bVal = false;
 	}
