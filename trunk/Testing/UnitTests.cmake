@@ -175,7 +175,7 @@ ADD_TEST(UserProp7	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 7)
 ADD_TEST(UserProp8_PropMap_operator=			${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 8)	
 ADD_TEST(UserProp9_PropList_operator=	  		${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 9)	
 ADD_TEST(UserProp10	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 10)	
-
+ADD_TEST(UserProp11	     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +UT  +USERPROP 11)	
 
 
 
