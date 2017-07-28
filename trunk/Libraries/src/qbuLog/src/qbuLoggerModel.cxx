@@ -1,12 +1,10 @@
 #include "qbuLogPCH.h"
 #include "qbuLog/qbuLoggerModel.h"
-#include <QDateTime>
+
 #include <qxtlogger.h>
-#include <deque>
+
 #include "qbuLog/qbuLogModelEngine.h"
 #include <boost/bimap/bimap.hpp>
-#include <QSize>
-#include <QColor>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,11 +15,23 @@ const int GRID_COLS = sizeof(Titles) / sizeof(Titles[0]);
 
 struct logData
 {
-    QDateTime               m_dt;
-    QxtLogger::LogLevel     m_level;
-    quint32                 m_nFileIndex;
-    quint32                 m_nFileLineNumber;
+	QDateTime               m_dt;
+	QxtLogger::LogLevel     m_level;
+	quint32                 m_nFileIndex;
+	quint32                 m_nFileLineNumber;
 	QStringList             m_strMsg;
+};
+
+
+typedef std::deque<logData>		LogQueue;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+struct BufferUpdates
+{
+	LogQueue				m_holdQueue;
+	QDateTime				m_dtLastSync;
+	QTimer					m_timer;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -33,9 +43,7 @@ public:
 public:
 	typedef boost::bimaps::bimap<QString, int>	FileNameMap;
 	typedef FileNameMap::value_type				FileNameMapEntry;
-    typedef std::deque<logData>					LogQueue;
-
-
+    
 
 public:
 	quint32 getFileNameIndex(const QString & strFileName);
@@ -47,17 +55,23 @@ public:
         quint32 & nRemove) const;
     quint32     resizeQueue(qbuLoggerModel* pPublic);
 
+
+	bool		isTimerStarted();
+	void		startTimerIfNeeded(qbuLoggerModel* pPublic, int nIndex, QDateTime & dtMsg);
+	void		setupTimer(qbuLoggerModel* pPublic);
+
 public:
     LogQueue				m_queue;
 	qbuLogModelEngine*		m_pEngine;
 	FileNameMap				m_mapFileNames;
     quint32                 m_nRecordLimit;
+	BufferUpdates			m_buffer;					
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuLoggerModel::qbuPrivate::qbuPrivate() : m_pEngine{ new qbuLogModelEngine },
-m_nRecordLimit{100 * 1024}
+m_nRecordLimit{ 100 * 1024 }
 {
     // NOTE: Allocate but don't free the logger engine. QxtLog will take ownership!
 }
@@ -143,10 +157,41 @@ quint32 qbuLoggerModel::qbuPrivate::resizeQueue(qbuLoggerModel* pPublic)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuLoggerModel::qbuPrivate::isTimerStarted()
+{
+	return m_buffer.m_timer.isActive();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerModel::qbuPrivate::startTimerIfNeeded(qbuLoggerModel* pPublic,int nIndex, QDateTime & dtMsg)
+{
+	if (!isTimerStarted()) {
+		m_buffer.m_dtLastSync = dtMsg;
+		m_buffer.m_timer.start();
+	}
+	else if (m_buffer.m_dtLastSync.secsTo(dtMsg) > 10) {
+		pPublic->synchronize();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerModel::qbuPrivate::setupTimer(qbuLoggerModel* pPublic)
+{
+	m_buffer.m_timer.setInterval(10 * 1000);
+	m_buffer.m_timer.setSingleShot(true);
+	QObject::connect(&m_buffer.m_timer, SIGNAL(timeout()), pPublic, SLOT(synchronize()));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuLoggerModel::qbuLoggerModel(QObject* pParent) : m_pPrivate(std::make_unique<qbuPrivate>())
 {
 	connect(m_pPrivate->m_pEngine, SIGNAL(logMessage(QDateTime, quint32, QString, quint32, const QStringList&)),
 		this, SLOT(logMessage(QDateTime, quint32, QString, quint32, const QStringList&)));
+
+	m_pPrivate->setupTimer(this);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -161,9 +206,7 @@ qbuLoggerModel::~qbuLoggerModel()
 void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName, quint32 nLine, const QStringList& messages)
 {
 	int nIndex = m_pPrivate->m_queue.size();
-
-	beginInsertRows(QModelIndex(), nIndex, nIndex);
-
+	
 	logData data;
 	data.m_dt = dt;
 	data.m_level = static_cast<QxtLogger::LogLevel>(level);
@@ -171,28 +214,57 @@ void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName
 	data.m_strMsg = messages;
 	data.m_nFileIndex = m_pPrivate->getFileNameIndex(strFileName);
 
-	m_pPrivate->m_queue.emplace_back(data);
+	m_pPrivate->m_buffer.m_holdQueue.emplace_back(data);
+
+	m_pPrivate->startTimerIfNeeded(this,nIndex, dt);
 	
-	endInsertRows();
 
-    if (m_pPrivate->reachedRecordLimit()) {
-        nIndex++;
-        beginInsertRows(QModelIndex(), nIndex, nIndex);
+//     if (m_pPrivate->reachedRecordLimit()) {
+// 		synchronize();
+// 
+//         nIndex++;
+//         beginInsertRows(QModelIndex(), nIndex, nIndex);
+// 
+//         data.m_dt = QDateTime::currentDateTime();
+// 		dt = data.m_dt;
+//         data.m_level = QxtLogger::InfoLevel;
+//         data.m_nFileLineNumber = __LINE__;
+//         data.m_strMsg = QStringList() << "The logger model has reached its record limit." 
+//             << "The queue will be reduced by removing the first 10% of the records.";
+//         data.m_nFileIndex = m_pPrivate->getFileNameIndex(__FILE__);
+// 
+//         m_pPrivate->m_queue.emplace_back(data);
+// 
+//         endInsertRows();
+// 
+//         m_pPrivate->resizeQueue(this);
+// 
+// 		m_pPrivate->m_buffer.m_nLastIndex = std::max<int>(m_pPrivate->m_queue.size() - 1, 0);
+// 		m_pPrivate->m_buffer.m_dtLastSync = dt;
+// 
+//     }
+}
 
-        data.m_dt = QDateTime::currentDateTime();
-        data.m_level = QxtLogger::InfoLevel;
-        data.m_nFileLineNumber = __LINE__;
-        data.m_strMsg = QStringList() << "The logger model has reached its record limit." 
-            << "The queue will be reduced by removing the first 10% of the records.";
-        data.m_nFileIndex = m_pPrivate->getFileNameIndex(__FILE__);
+/////////////////////////////////////////////////////////////////////////////////////////
 
-        m_pPrivate->m_queue.emplace_back(data);
+void qbuLoggerModel::synchronize()
+{
+	int nQueueSize = m_pPrivate->m_buffer.m_holdQueue.size();
+	if (nQueueSize > 0) {
 
-        endInsertRows();
+		int nIndex = m_pPrivate->m_queue.size();
+		int nQueueIndex = nIndex + nQueueSize - 1;
+		
+		beginInsertRows(QModelIndex(), nIndex, nQueueIndex);
 
-        m_pPrivate->resizeQueue(this);
+		std::move(begin(m_pPrivate->m_buffer.m_holdQueue), end(m_pPrivate->m_buffer.m_holdQueue), 
+			std::back_inserter(m_pPrivate->m_queue));
 
-    }
+		m_pPrivate->m_buffer.m_dtLastSync = m_pPrivate->m_queue[nQueueIndex].m_dt;
+
+		endInsertRows();
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -352,6 +424,47 @@ Qt::ItemFlags qbuLoggerModel::flags(const QModelIndex &index) const
 void qbuLoggerModel::setRecordLimit(quint32 nLimit)
 {
     m_pPrivate->m_nRecordLimit = nLimit;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerModel::handleRecordLimit()
+{
+    if (m_pPrivate->reachedRecordLimit() && m_pPrivate->m_buffer.m_holdQueue.empty()) {
+
+		logData data;
+
+		int nIndex = m_pPrivate->m_queue.size();
+        beginInsertRows(QModelIndex(), nIndex, nIndex);
+
+        data.m_dt = QDateTime::currentDateTime();
+		QDateTime dt = data.m_dt;
+        data.m_level = QxtLogger::InfoLevel;
+        data.m_nFileLineNumber = __LINE__;
+        data.m_strMsg = QStringList() << "The logger model has reached its record limit." 
+            << "The queue will be reduced by removing the first 10% of the records.";
+        data.m_nFileIndex = m_pPrivate->getFileNameIndex(__FILE__);
+
+        m_pPrivate->m_queue.emplace_back(data);
+
+        endInsertRows();
+
+        m_pPrivate->resizeQueue(this);
+		m_pPrivate->m_buffer.m_dtLastSync = dt;
+
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerModel::setUpdateDelay(quint8 nSeconds)
+{
+	if (nSeconds > 0) {
+		m_pPrivate->m_buffer.m_timer.setInterval(1000 * nSeconds);
+	}
+	else {
+		m_pPrivate->m_buffer.m_timer.setInterval(250);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
