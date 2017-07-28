@@ -37,7 +37,7 @@ public:
 public:
 	QxtLoggerEngine* getLoggerEngine() const;
     void setRecordLimit(quint32);
-	void setUpdateDelay(quint8 nSeconds);
+	void setUpdateDelay(quint8 nSeconds = 5);
 
 public slots:
 	void	logMessage(QDateTime dtMsg, quint32 nLevel, QString strFileName, quint32 nLine, const QStringList& messages);

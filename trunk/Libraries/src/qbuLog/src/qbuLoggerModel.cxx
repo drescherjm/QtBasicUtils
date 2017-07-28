@@ -22,7 +22,6 @@ struct logData
 	QStringList             m_strMsg;
 };
 
-
 typedef std::deque<logData>		LogQueue;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -65,13 +64,14 @@ public:
 	qbuLogModelEngine*		m_pEngine;
 	FileNameMap				m_mapFileNames;
     quint32                 m_nRecordLimit;
-	BufferUpdates			m_buffer;					
+	BufferUpdates			m_buffer;		
+	uint8_t					m_nUpdateDelay;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuLoggerModel::qbuPrivate::qbuPrivate() : m_pEngine{ new qbuLogModelEngine },
-m_nRecordLimit{ 100 * 1024 }
+m_nRecordLimit{ 100 * 1024 }, m_nUpdateDelay{5}
 {
     // NOTE: Allocate but don't free the logger engine. QxtLog will take ownership!
 }
@@ -170,7 +170,7 @@ void qbuLoggerModel::qbuPrivate::startTimerIfNeeded(qbuLoggerModel* pPublic,int 
 		m_buffer.m_dtLastSync = dtMsg;
 		m_buffer.m_timer.start();
 	}
-	else if (m_buffer.m_dtLastSync.secsTo(dtMsg) > 10) {
+	else if (m_buffer.m_dtLastSync.secsTo(dtMsg) > m_nUpdateDelay) {
 		pPublic->synchronize();
 	}
 }
@@ -179,7 +179,7 @@ void qbuLoggerModel::qbuPrivate::startTimerIfNeeded(qbuLoggerModel* pPublic,int 
 
 void qbuLoggerModel::qbuPrivate::setupTimer(qbuLoggerModel* pPublic)
 {
-	m_buffer.m_timer.setInterval(10 * 1000);
+	m_buffer.m_timer.setInterval(m_nUpdateDelay * 1000);
 	m_buffer.m_timer.setSingleShot(true);
 	QObject::connect(&m_buffer.m_timer, SIGNAL(timeout()), pPublic, SLOT(synchronize()));
 }
@@ -218,31 +218,6 @@ void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName
 
 	m_pPrivate->startTimerIfNeeded(this,nIndex, dt);
 	
-
-//     if (m_pPrivate->reachedRecordLimit()) {
-// 		synchronize();
-// 
-//         nIndex++;
-//         beginInsertRows(QModelIndex(), nIndex, nIndex);
-// 
-//         data.m_dt = QDateTime::currentDateTime();
-// 		dt = data.m_dt;
-//         data.m_level = QxtLogger::InfoLevel;
-//         data.m_nFileLineNumber = __LINE__;
-//         data.m_strMsg = QStringList() << "The logger model has reached its record limit." 
-//             << "The queue will be reduced by removing the first 10% of the records.";
-//         data.m_nFileIndex = m_pPrivate->getFileNameIndex(__FILE__);
-// 
-//         m_pPrivate->m_queue.emplace_back(data);
-// 
-//         endInsertRows();
-// 
-//         m_pPrivate->resizeQueue(this);
-// 
-// 		m_pPrivate->m_buffer.m_nLastIndex = std::max<int>(m_pPrivate->m_queue.size() - 1, 0);
-// 		m_pPrivate->m_buffer.m_dtLastSync = dt;
-// 
-//     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -460,9 +435,11 @@ void qbuLoggerModel::handleRecordLimit()
 void qbuLoggerModel::setUpdateDelay(quint8 nSeconds)
 {
 	if (nSeconds > 0) {
+		m_pPrivate->m_nUpdateDelay = nSeconds;
 		m_pPrivate->m_buffer.m_timer.setInterval(1000 * nSeconds);
 	}
 	else {
+		m_pPrivate->m_nUpdateDelay = 1;
 		m_pPrivate->m_buffer.m_timer.setInterval(250);
 	}
 }
