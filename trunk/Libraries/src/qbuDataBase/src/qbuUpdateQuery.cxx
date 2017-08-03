@@ -280,12 +280,12 @@ bool qbuUpdateQuery::addSetExpression( QString strExpression )
 		retVal = (!strExpression.isEmpty());
 		if (retVal) {
 
-			if ( (strExpression.startsWith('(')) && (strExpression.endsWith(')'))) {
-				strExpression.chop(1);
-				strExpression.remove(0,1);
-			}
+// 			if ( (strExpression.startsWith('(')) && (strExpression.endsWith(')'))) {
+// 				strExpression.chop(1);
+// 				strExpression.remove(0,1);
+// 			}
 
-			m_pPrivate->m_lstSet.push_back(strExpression);
+			m_pPrivate->m_lstSet.push_back(removeOuterParenthesis(strExpression));
 		}
 	}
 	return retVal;

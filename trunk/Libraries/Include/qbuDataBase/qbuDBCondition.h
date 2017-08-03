@@ -44,6 +44,9 @@ public:
 	qbuDBCondition BETWEEN(const qbuDBExpression & expr, int nLow, int nHigh, bool bEnclose = true) const;
 
 public:
+	static qbuDBCondition NOT(const qbuDBCondition & other);
+
+public:
 	virtual QString toString(bool *bOK=nullptr) const;
 
 	virtual bool	isValid() const;

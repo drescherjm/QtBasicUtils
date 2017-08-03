@@ -338,3 +338,12 @@ qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, int nLow, i
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBCondition qbuDBCondition::NOT(const qbuDBCondition & other)
+{
+	QString strExpr = removeOuterParenthesis(other.toString().trimmed());
+	
+	return qbuDBCondition(QString("NOT(%1)").arg(strExpr));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

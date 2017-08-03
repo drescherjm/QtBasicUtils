@@ -222,3 +222,14 @@ extern QString toQueryValue(const QVariant & vt)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString removeOuterParenthesis(QString strExpr)
+{
+	if (strExpr.startsWith('(') && strExpr.endsWith(')')) {
+		strExpr.chop(1);
+		strExpr.remove(0, 1);
+	}
+	return strExpr;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
