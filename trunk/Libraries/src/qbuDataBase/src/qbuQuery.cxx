@@ -2,6 +2,7 @@
 #include "qbuDataBase/qbuQuery.h"
 #include "qbuBase/qbuPropertyMap.h"
 #include "qbuLog/qbuLog.h"
+#include "qbuBase/qbuStringList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,3 +199,21 @@ bool qbuQuery::appendWhereExpressions(const QStringList & lstWhereFields, qbuPro
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuQuery::appendWhereExpressions(qbuPropertyMap* pProps, const QStringList & lstRequired, 
+	const QStringList & lstOptional /*= QStringList()*/, QString strTableAlias /*= QString()*/)
+{
+	bool retVal = appendWhereExpressions(lstRequired, pProps, qbuQuery::WE_FAIL_ON_MISSING_FIELDS);
+
+	if (!lstOptional.isEmpty()) {
+
+		// If a field is required no need to add a second condition..
+		qbuStringList sl = lstOptional;
+		sl.removeAll(lstRequired, Qt::CaseInsensitive);
+
+		retVal = appendWhereExpressions(sl, pProps, qbuQuery::WE_IGNORE_MISSING_FIELDS);
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
