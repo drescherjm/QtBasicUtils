@@ -26,6 +26,12 @@ public:
 	virtual bool	isValid() const;
 	virtual bool	isEmpty() const;
 
+public:
+	static qbuDBExpression date(QString strCol, QString strTableAlias = QString());
+	static qbuDBExpression datetime(QString strCol, QString strTableAlias = QString());
+	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
+	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
+
 private:
 	void	copy(const qbuDBExpression & other);
 

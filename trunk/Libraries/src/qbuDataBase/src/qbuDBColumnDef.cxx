@@ -4,6 +4,7 @@
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 #include "qbuDataBase/qbuDBCondition.h"
 #include "qbuLog/qbuLog.h"
+#include "qbuDataBase/qbuDBExpression.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +67,22 @@ qbuDBColDef::qbuDBColDef(const qbuDBCondition & expr, QString strAlias)
 	m_strName = expr.toString();
 	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
     m_options = OP_IS_EXPRESSION;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBColDef::qbuDBColDef()
+{
+	m_options = OP_NO_CODE;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
+{
+	m_strName = expr.toString();
+	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+	m_options = OP_IS_EXPRESSION;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

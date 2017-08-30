@@ -79,3 +79,55 @@ qbuDBExpression& qbuDBExpression::operator=(const qbuDBExpression & other)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression qbuDBExpression::date(QString strCol, QString strTableAlias /*= QString()*/)
+{
+	return unary_function("date", strCol, strTableAlias);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression qbuDBExpression::datetime(QString strCol, QString strTableAlias /*= QString()*/)
+{
+	return unary_function("datetime", strCol, strTableAlias);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression qbuDBExpression::unary_function(QString strFunction, QString strCol, QString strTableAlias /*= QString()*/)
+{
+	qbuDBExpression retVal;
+	
+	if ((!strFunction.isEmpty()) && (!strCol.isEmpty())){
+		QString strColDef;
+		if (strTableAlias.isEmpty()) {
+			strColDef = QString("%1(%2)").arg(strFunction).arg(strCol);
+		}
+		else {
+			strColDef = QString("%1(%2.%3)").arg(strFunction).arg(strTableAlias).arg(strCol);
+		}
+
+		retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression qbuDBExpression::unary_function(QString strFunction, const qbuDBColDef & colDef)
+{
+	qbuDBExpression retVal;
+
+	if (!strFunction.isEmpty()){
+		QString strColDef = QString("%1(%2)").arg(strFunction).arg(colDef.getFullString());
+		
+		retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

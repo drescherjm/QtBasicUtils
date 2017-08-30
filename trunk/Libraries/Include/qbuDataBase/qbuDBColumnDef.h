@@ -8,6 +8,7 @@
 #include <QFlags>
 
 class qbuDBCondition;
+class qbuDBExpression;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,7 +20,8 @@ class qbuDBCondition;
 */
 
 struct qbuDBColDef : public QObject
-{
+{	
+	friend class qbuDBExpression;
 	Q_OBJECT
 public:
 	enum Option {
@@ -32,6 +34,7 @@ public:
 	Q_DECLARE_FLAGS(Options, Option);
 
 public:
+	qbuDBColDef(const qbuDBExpression & expr, QString strAlias);
 	qbuDBColDef(const qbuDBCondition & expr, QString strAlias);
 	qbuDBColDef(QString strField, QString strAlias);
 	qbuDBColDef(QString strField, Options op = OP_AUTO_QUOTE);
@@ -68,6 +71,7 @@ public:
 	bool	hasAlias() const;
 
 private:
+	qbuDBColDef();
 	void	copy(const qbuDBColDef & other);
 	void	addNameInt(QString strName);
 public:
