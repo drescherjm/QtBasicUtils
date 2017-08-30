@@ -131,3 +131,25 @@ qbuDBExpression qbuDBExpression::unary_function(QString strFunction, const qbuDB
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression qbuDBExpression::CAST(QString strCol, QString strTableAlias /*= QString()*/, QString castAs /*= QString("INT")*/)
+{
+	qbuDBExpression retVal;
+
+	if ( (!strCol.isEmpty()) && (!castAs.isEmpty())) {
+		QString strColDef;
+		if (strTableAlias.isEmpty()) {
+			strColDef = QString("CAST(%1 AS %2)").arg(strCol).arg(castAs);
+		}
+		else {
+			strColDef = QString("CAST(%1.%2 AS %3)").arg(strTableAlias).arg(strCol).arg(castAs);
+		}
+
+		retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
