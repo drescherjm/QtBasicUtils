@@ -8,3 +8,4 @@
 #include <QFile>
 #include <QDebug>
 #include <QThread>
+#include <QApplication>
