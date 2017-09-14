@@ -638,11 +638,16 @@ bool qbuDatabase::verifyCoverage( qbuStringList & lstSucceeded, qbuStringList & 
 		}
 
 		if (!retVal) {
-			QLOG_WARN() << "Verify coverage test failed\n"
+
+			QString strMsg;
+
+			strMsg << "Verify coverage test failed\n"
 				<< "Tables that failed verify: " << lstFailed.toCSVString() << "\n"
 				<< "Tables that were not in the database but verified in code: " << lstExtra.toCSVString() << "\n"
 				<< "Temp tables that were in the db but not verified: " << lstTemp.toCSVString() << "\n"
-				<< "Regular tables that were in the db but not verified: " << lstTables.toCSVString() << "\n";
+				<< "Regular tables that were in the db but not verified: " << lstTables.toCSVString() << "\n" << "\n";
+			
+			QLOG_WARN() << QBULOG_DATABASE_TYPE << strMsg;
 		}
 	}
 	return retVal;
