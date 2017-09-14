@@ -642,7 +642,7 @@ bool qbuDatabase::verifyCoverage( qbuStringList & lstSucceeded, qbuStringList & 
 				<< "Tables that failed verify: " << lstFailed.toCSVString() << "\n"
 				<< "Tables that were not in the database but verified in code: " << lstExtra.toCSVString() << "\n"
 				<< "Temp tables that were in the db but not verified: " << lstTemp.toCSVString() << "\n"
-				<< "Regular tables that were in the db but not verified: " << lstTables.toCSVString();
+				<< "Regular tables that were in the db but not verified: " << lstTables.toCSVString() << "\n";
 		}
 	}
 	return retVal;
