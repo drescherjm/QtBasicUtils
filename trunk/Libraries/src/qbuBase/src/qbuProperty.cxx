@@ -9,7 +9,7 @@
 #include <QDomDocument>
 #include "qbuBase/qbuPropertyTypeNameAlias.h"
 
-
+//#define QBU_USE_UNOPTIMIZED_XML_ESCAPING
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -318,13 +318,60 @@ bool qbuProperty::operator==( const qbuProperty & other ) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#ifdef QBU_USE_UNOPTIMIZED_XML_ESCAPING
 QString qbuProperty::handleXMLEscaping(QString strValue)
 {
-	return strValue.replace("&", "&amp;")
-		.replace("<", "&lt;")
-		.replace(">", "&gt;")
-		.replace("\"", "&quot;")
-		.replace("'", "&apos;");
+    return strValue.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&apos;");
 }
+#else // def QBU_USE_UNOPTIMIZED_XML_ESCAPING
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuProperty::handleXMLEscaping(QString strValue)
+{
+    QString retVal;
+
+    int nLength = strValue.length();
+
+    if ( nLength < 2048) {
+        retVal = strValue.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\"", "&quot;")
+            .replace("'", "&apos;");
+    }
+    else {
+        retVal.reserve(1.01 * nLength);
+
+        for (auto ch : strValue) {
+            switch (ch.toLatin1())
+            {
+            case '<':
+                retVal.append("&lt;");
+                break;
+            case '>':
+                retVal.append("&gt;");
+                break;
+            case '\"':
+                retVal.append("&quot;");
+                break;
+            case '\'':
+                retVal.append("&apos;");
+                break;
+            default:
+               retVal.append(ch);
+               break;
+            }
+        }
+    }
+
+    return retVal;
+}
+
+#endif //def QBU_USE_UNOPTIMIZED_XML_ESCAPING
 
 /////////////////////////////////////////////////////////////////////////////////////////

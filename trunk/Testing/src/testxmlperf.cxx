@@ -15,17 +15,19 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 enum GenerateType {
-    Session,
+	Session,
+	ProjectExamCompletion,
+	Ratings,
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 struct QCmdTestXMLPerformance::qbuPrivate
 {
-    bool test_exportXML(qbuProperty & prop);
-    QString generate(GenerateType gt, uint32_t nLines);
-    QString generateLine(GenerateType gt);
-    bool test0();
+	bool test_exportXML(qbuProperty & prop);
+	QString generate(GenerateType gt, uint32_t nLines);
+	QString generateLine(GenerateType gt);
+	bool test0();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -67,33 +69,47 @@ bool QCmdTestXMLPerformance::qbuPrivate::test_exportXML(qbuProperty & prop)
 
 QString QCmdTestXMLPerformance::qbuPrivate::generate(GenerateType gt, uint32_t nLines)
 {
-    QString retVal;
+	QString retVal;
 
-    for (uint32_t nLine = 0; nLine < nLines; ++nLine) {
-        retVal += generateLine(gt);
-    }
+	for (uint32_t nLine = 0; nLine < nLines; ++nLine) {
+		retVal += generateLine(gt);
+	}
 
-    return retVal;
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QString QCmdTestXMLPerformance::qbuPrivate::generateLine(GenerateType gt)
 {
-    QString retVal;
+	QString retVal;
 
-    switch (gt)
-    {
-    case Session:
-        retVal = R"(INSERT OR IGNORE INTO Session (PROJECTID, READERID, SCORINGSYSTEMID, SESSIONBEGINDATE, SESSIONID) VALUES ( 101, 500, 13, '2016-02-24T12:59:41.993', 1 );)";
-        break;
-    default:
-        break;
-    }
+	switch (gt)
+	{
+	case Session:
+		retVal = R"(INSERT OR IGNORE INTO Session (PROJECTID, READERID, SCORINGSYSTEMID, SESSIONBEGINDATE, SESSIONID) VALUES ( 101, 500, 13, '2016-02-24T12:59:41.993', 1 );)";
+		break;
+	case ProjectExamCompletion:
+		retVal = R"(INSERT OR IGNORE INTO ReaderExamCompletion (COMPLETED, EXAMID, PATIENTID, PROJECTID, PROJECTMODEID, READEREXAMCOMPLETIONBEGINDATE, READEREXAMCOMPLETIONENDDATE, READEREXAMCOMPLETIONLASTEDITDATE, READEREXAMCOMPLETIONLASTEDITSCORINGSYSTEM, READEREXAMCOMPLETIONNUMBEROFEDITS, READERID, READINGTYPEID, SCORINGSYSTEMID, SESSIONID, SHOW) VALUES ( 1, 1, 3414, 101, 1, '2017-10-24T13:14:04.905', '2017-10-24T13:14:22.488', '2017-09-20T15:05:02.331', 53, 1, 104, 20, 52, 8929, 1 );)";
+		break;
+	case Ratings:
+        switch (rand() % 2)
+        {
+        case 0:
+            retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 1, 25, 617, 101, 4, 'Lesion 2: "I think this may be a lymph node"', '2017-02-16T14:32:01.328', 1, '2017-02-16T14:57:47.303', 62, 998, 193, 0, -1, 6, 13, 7445 ); )";
+            break;
+        case 1:
+            retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 3, 25, 1219, 101, 4, 'Lesion 1: ? area of dense tissue', '2016-10-26T08:46:03.059', 1, '2016-09-23T10:11:45.801', 62, 998, 193, 0, -1, 6, 52, 9461 );)";
+            break;
+        }
+		break;
+	default:
+		break;
+	}
 
-    retVal += '\n';
+	retVal += '\n';
 
-    return retVal;
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -101,26 +117,40 @@ QString QCmdTestXMLPerformance::qbuPrivate::generateLine(GenerateType gt)
 bool QCmdTestXMLPerformance::qbuPrivate::test0()
 {
 
-    QString strSQL = generate(Session, 100000);
+	QString strSQL = generate(Session, 20000);
 
-    qbuProperty prop;
-    prop.setObjectName("SQL");
-    prop.SetData(strSQL);
+	strSQL += generate(ProjectExamCompletion, 100000);
+	strSQL += generate(Ratings, 250000);
 
-    auto start = std::chrono::system_clock::now();
+	qbuProperty prop;
+	prop.setObjectName("SQL");
+	prop.SetData(strSQL);
 
-    QString strXML = prop.toXML();
+	auto start = std::chrono::system_clock::now();
 
-    auto end = std::chrono::system_clock::now();
+	QString strXML = prop.toXML();
 
-    std::chrono::duration<double> elapsed_seconds = end - start;
+	auto end = std::chrono::system_clock::now();
 
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+	std::chrono::duration<double> elapsed_seconds = end - start;
 
-    std::cout << "finished computation at " << std::ctime(&end_time)
-        << "elapsed time: " << elapsed_seconds.count() << "s\n";
+	std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 
-    return true;
+	std::cout << "finished computation at " << std::ctime(&end_time)
+		<< "elapsed time: " << elapsed_seconds.count() << "s\n";
+
+
+	std::cout << "SQLSize " << strSQL.size() << "\n";
+	std::cout << "XMLSize " << strXML.size() << "\n";
+
+	qbuProperty prop1;
+	prop1.fromXML(strXML);
+
+    QString strSQL1 = prop1.GetData().toString();
+
+    bool retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
