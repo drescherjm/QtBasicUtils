@@ -19,6 +19,7 @@
 #include "testCommandLineInclude.h"
 #include "testSetVariable.h"
 #include "cmdTestFloatOpts.h"
+#include "testxmlperf.h"
 
 #ifdef QBU_BUILD_DATABASE
 
@@ -838,6 +839,8 @@ int main(int argc, char* argv[])
 		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
 		QCmdTestCmdLineFileInclude	cmdTestCmdLineFileInclude("CMDLINEINCLUDE","This tests the @ include that is used in the command line.");
 
+        QCmdTestXMLPerformance cmdTestXMLPerf("XMLPERF", "This command helps profile the performance of the toXML and fromXML.");
+
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
@@ -860,6 +863,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestInvalidOpt);
 		myCmdLine.AddCmd(&cmdTestCmdLineFileInclude);
 		myCmdLine.AddCmd(&cmdTestSETVariable);
+        myCmdLine.AddCmd(&cmdTestXMLPerf);
 
 		myCmdLine.AddCmd(&cmdFloatOpts);
 		

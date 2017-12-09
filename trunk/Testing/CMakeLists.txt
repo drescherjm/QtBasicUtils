@@ -15,6 +15,7 @@ set(TEST_SRCS
 	./src/testCommandLineInclude.cxx
 	./src/testSetVariable.cxx
 	./src/cmdTestFloatOpts.cxx
+	./src/testxmlperf.cxx
 )
 
 set(TEST_HDRS
@@ -24,6 +25,7 @@ set(TEST_HDRS
 	./Include/testCommandLineInclude.h
 	./Include/testSetVariable.h
 	./Include/cmdTestFloatOpts.h
+	./Include/testxmlperf.h
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
