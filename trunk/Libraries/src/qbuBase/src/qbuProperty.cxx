@@ -345,7 +345,8 @@ QString qbuProperty::handleXMLEscaping(QString strValue)
             .replace("'", "&apos;");
     }
     else {
-        retVal.reserve(1.01 * nLength);
+        int nNewSize = 1.08 * nLength;
+        retVal.reserve(nNewSize);
 
         for (auto ch : strValue) {
             switch (ch.toLatin1())
@@ -367,6 +368,10 @@ QString qbuProperty::handleXMLEscaping(QString strValue)
                break;
             }
         }
+
+//         if (retVal.length() > nNewSize) {
+//             std::cout << "Needed a larger array projected " << nNewSize << " actual " << retVal.length() << std::endl;
+//         }
     }
 
     return retVal;
