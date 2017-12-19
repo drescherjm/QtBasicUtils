@@ -18,7 +18,7 @@ enum GenerateType {
 	Session,
 	ProjectExamCompletion,
 	Ratings,
-    Update,
+	Update,
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -94,22 +94,22 @@ QString QCmdTestXMLPerformance::qbuPrivate::generateLine(GenerateType gt)
 		retVal = R"(INSERT OR IGNORE INTO ReaderExamCompletion (COMPLETED, EXAMID, PATIENTID, PROJECTID, PROJECTMODEID, READEREXAMCOMPLETIONBEGINDATE, READEREXAMCOMPLETIONENDDATE, READEREXAMCOMPLETIONLASTEDITDATE, READEREXAMCOMPLETIONLASTEDITSCORINGSYSTEM, READEREXAMCOMPLETIONNUMBEROFEDITS, READERID, READINGTYPEID, SCORINGSYSTEMID, SESSIONID, SHOW) VALUES ( 1, 1, 3414, 101, 1, '2017-10-24T13:14:04.905', '2017-10-24T13:14:22.488', '2017-09-20T15:05:02.331', 53, 1, 104, 20, 52, 8929, 1 );)";
 		break;
 	case Ratings:
-        switch (rand() % 3)
-        {
-        case 0:
-            retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 1, 25, 617, 101, 4, 'Lesion 2: "I think this may be a lymph node"', '2017-02-16T14:32:01.328', 1, '2017-02-16T14:57:47.303', 62, 998, 193, 0, -1, 6, 13, 7445 ); )";
-            break;
-        case 1:
-            retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 3, 25, 1219, 101, 4, 'Lesion 1: ? area of dense tissue', '2016-10-26T08:46:03.059', 1, '2016-09-23T10:11:45.801', 62, 998, 193, 0, -1, 6, 52, 9461 );)";
-            break;
-        case 2:
-            retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 1, 37, 6544, 101, 1, '8:00', '2017-01-17T16:41:09.071', 56, '2016-07-29T13:36:36.581', 42, 402, 52, 1, -1, 12, 16, 2625 ); )";
-            break;
-        }
+		switch (rand() % 3)
+		{
+		case 0:
+			retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 1, 25, 617, 101, 4, 'Lesion 2: "I think this may be a lymph node"', '2017-02-16T14:32:01.328', 1, '2017-02-16T14:57:47.303', 62, 998, 193, 0, -1, 6, 13, 7445 ); )";
+			break;
+		case 1:
+			retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 3, 25, 1219, 101, 4, 'Lesion 1: ? area of dense tissue', '2016-10-26T08:46:03.059', 1, '2016-09-23T10:11:45.801', 62, 998, 193, 0, -1, 6, 52, 9461 );)";
+			break;
+		case 2:
+			retVal = R"(INSERT OR IGNORE INTO Ratings (EDITS, EXAMID, FORMID, PATIENTID, PROJECTID, PROJECTMODEID, RATING, RATINGFIRSTEDITDATE, RATINGID, RATINGLASTEDITDATE, RATINGTYPEID, READERID, READERREPORTQUESTIONID, READINGID, RESULTID, RESULTSCOPETYPEID, SCORINGSYSTEMID, SESSIONID) VALUES ( 0, 1, 37, 6544, 101, 1, '8:00', '2017-01-17T16:41:09.071', 56, '2016-07-29T13:36:36.581', 42, 402, 52, 1, -1, 12, 16, 2625 ); )";
+			break;
+		}
 		break;
-    case Update:
-        retVal = R"(UPDATE CompletedExamBIRADS SET  ReaderID = 303 ,  ScoringSystemID = 54 ,  SessionID = 40 ,  RightBIRADSRating = '3 - 6M F/U' ,  LeftBIRADSRating = '1' ,  ImagingNotPerformed = 0 ,  CEBShow = 1 ,  CEBLastEditScoringSystemID = 54 ,  CEBEdits = 2 ,  CEBLastEditDate = '2017-11-03T14:11:35.106'  WHERE  ( ProjectID = 101 )  AND  ( ProjectModeID = 1 )  AND  ( ExamID = 1 )  AND  ( PatientID = 9267 )  AND  ( FormID = 37 )  AND  ( ReadingID = 1 )  AND  (  ( datetime(CEBLastEditDate) < datetime('2017-11-03T14:11:35') )  OR CEBLastEditDate is NULL ) ;)";
-        break;
+	case Update:
+		retVal = R"(UPDATE CompletedExamBIRADS SET  ReaderID = 303 ,  ScoringSystemID = 54 ,  SessionID = 40 ,  RightBIRADSRating = '3 - 6M F/U' ,  LeftBIRADSRating = '1' ,  ImagingNotPerformed = 0 ,  CEBShow = 1 ,  CEBLastEditScoringSystemID = 54 ,  CEBEdits = 2 ,  CEBLastEditDate = '2017-11-03T14:11:35.106'  WHERE  ( ProjectID = 101 )  AND  ( ProjectModeID = 1 )  AND  ( ExamID = 1 )  AND  ( PatientID = 9267 )  AND  ( FormID = 37 )  AND  ( ReadingID = 1 )  AND  (  ( datetime(CEBLastEditDate) < datetime('2017-11-03T14:11:35') )  OR CEBLastEditDate is NULL ) ;)";
+		break;
 	default:
 		break;
 	}
@@ -128,7 +128,7 @@ bool QCmdTestXMLPerformance::qbuPrivate::test0()
 
 	strSQL += generate(ProjectExamCompletion, 100000);
 	strSQL += generate(Ratings, 500000);
-    strSQL += generate(Update, 1000);
+	strSQL += generate(Update, 1000);
 
 	qbuProperty prop;
 	prop.setObjectName("SQL");
@@ -153,23 +153,23 @@ bool QCmdTestXMLPerformance::qbuPrivate::test0()
 
 	qbuProperty prop1;
 
-    auto start1 = std::chrono::system_clock::now();
+	auto start1 = std::chrono::system_clock::now();
 	prop1.fromXML(strXML);
-    auto end1 = std::chrono::system_clock::now();
+	auto end1 = std::chrono::system_clock::now();
 
-    {
-        std::chrono::duration<double> elapsed_seconds = end1 - start1;
-        std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+	{
+		std::chrono::duration<double> elapsed_seconds = end1 - start1;
+		std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 
-        std::cout << "finished computation at " << std::ctime(&end_time)
-            << "elapsed time (fromXML): " << elapsed_seconds.count() << "s\n";
-    }
+		std::cout << "finished computation at " << std::ctime(&end_time)
+			<< "elapsed time (fromXML): " << elapsed_seconds.count() << "s\n";
+	}
 
-    QString strSQL1 = prop1.GetData().toString();
+	QString strSQL1 = prop1.GetData().toString();
 
-    bool retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+	bool retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
 
-    return retVal;
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

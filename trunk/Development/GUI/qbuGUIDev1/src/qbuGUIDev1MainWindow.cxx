@@ -83,6 +83,32 @@ QxtLogger::LogLevel generateRandomLogLevel()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+QString generateInfoMessage()
+{
+	QString retVal;
+
+	int nVal = rand() % 4;
+	switch (nVal)
+	{
+	case 0:
+		retVal = "This is a test!";
+		break;
+	case 1:
+		retVal = "[DATABASE]\nINSERT OR REPLACE INTO Forms(FORMID, FORMINSERTDATE, FORMNAME, FORMOBJECTNAME, FORMTYPEID) \nVALUES(21, \'2017-12-17T23:12:41\', \'Patient and Exam Information\', \'rfProject101TechnologistPatientInfoWidget\', 2);";
+		break;
+	case 2:
+		retVal = "This is a test!";
+		break;
+	case 3:
+		retVal = "This is a test!";
+		break;
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuGUIDev1MainWindow::generateLogDataTimer()
 {
    // qxtLog->stream(static_cast<QxtLogger::LogLevel>(rand() % 7)) << "This is a test!";
@@ -91,7 +117,7 @@ void qbuGUIDev1MainWindow::generateLogDataTimer()
 
 	switch (level) {
 	case QxtLogger::InfoLevel:
-		QLOG_INFO() << "This is a test!";
+		QLOG_INFO() << generateInfoMessage();
 		break;
 	case QxtLogger::CriticalLevel:
 		QLOG_CRIT() << "Something really bad happened!" << "Should I be worried?";
@@ -132,7 +158,7 @@ void qbuGUIDev1MainWindow::on_actionToggleRandomData_triggered()
 
 	if (!pTimer) {
 		pTimer = new QTimer(this);
-		pTimer->setInterval(400);
+		pTimer->setInterval(40);
 		connect(pTimer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()));
 
 		std::srand(time(NULL));
