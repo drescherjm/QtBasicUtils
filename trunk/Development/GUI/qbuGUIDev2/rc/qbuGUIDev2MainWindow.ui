@@ -45,6 +45,7 @@
     </property>
     <addaction name="actionTestLog0"/>
     <addaction name="actionToggleRandomData"/>
+    <addaction name="actionToggle_Random_Data_Generation_Job"/>
    </widget>
    <addaction name="menuWidgets"/>
   </widget>
@@ -57,6 +58,11 @@
   <action name="actionToggleRandomData">
    <property name="text">
     <string>Toggle Random Data Generation</string>
+   </property>
+  </action>
+  <action name="actionToggle_Random_Data_Generation_Job">
+   <property name="text">
+    <string>Toggle Random Data Generation Job</string>
    </property>
   </action>
  </widget>

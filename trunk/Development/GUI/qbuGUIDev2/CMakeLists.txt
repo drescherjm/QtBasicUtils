@@ -21,6 +21,7 @@ include_directories(
 set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/main.cxx
 	./src/qbuGUIDev2MainWindow.cxx
+	./src/qbuGUIDev2LoggerJob.cxx
 #	./src/DevelopGUIDB1.cxx
 )
 
@@ -30,6 +31,7 @@ set( ${LOCAL_PROJECT_NAME}_HDRS
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
 	./Include/qbuGUIDev2MainWindow.h
+	./Include/qbuGUIDev2LoggerJob.h
 #	./Include/DevelopGUIDB1.h
 )
 

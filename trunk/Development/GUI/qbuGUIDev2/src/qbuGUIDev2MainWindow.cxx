@@ -10,6 +10,9 @@
 #include <random>
 #include "qbuLog\qbuLoggerWidget3.h"
 
+#include <QThreadPool>
+#include "qbuGUIDev2LoggerJob.h"
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuGUIDev2MainWindow::qbuGUIDev2MainWindow(QWidget *parent /*= 0*/, Qt::WindowFlags flags /*= 0*/) : Superclass(parent,flags)
@@ -157,6 +160,23 @@ void qbuGUIDev2MainWindow::on_actionToggleRandomData_triggered()
 			pTimer->start();
 		}
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuGUIDev2MainWindow::on_actionToggle_Random_Data_Generation_Job_triggered()
+{
+    if (QThreadPool::globalInstance()->activeThreadCount() < 1) {
+        qbuGUIDev2LoggerJob* pJob = new qbuGUIDev2LoggerJob;
+
+        connect(this, SIGNAL(stopJob()), pJob, SLOT(stopJob()), Qt::QueuedConnection);
+
+        QThreadPool::globalInstance()->start(pJob);
+
+    }
+    else {
+        emit stopJob();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

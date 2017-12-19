@@ -16,9 +16,13 @@ class qbuGUIDev2MainWindow : public QMainWindow, public Ui::qbuGUIDev2MainWindow
 public:
 	explicit qbuGUIDev2MainWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 
+signals:
+    void    stopJob();
+
 public slots:
 	void	on_actionTestLog0_triggered();
     void    on_actionToggleRandomData_triggered();
+    void    on_actionToggle_Random_Data_Generation_Job_triggered();
 
     void    generateLogDataTimer();
 private:
