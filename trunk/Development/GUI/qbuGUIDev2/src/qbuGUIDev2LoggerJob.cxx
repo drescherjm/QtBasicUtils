@@ -2,6 +2,7 @@
 #include <QEventLoop>
 #include <QxtLogger>
 #include "qbuLog\qbuLog.h"
+#include <QThread>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,15 +15,18 @@ std::atomic<bool> qbuGUIDev2LoggerJob::g_strStartTimer{ true };
 
 void qbuGUIDev2LoggerJob::stopJob()
 {
-    m_timer.stop();
+    if (m_pTimer) {
+        m_pTimer->stop();
+    }
+    emit quit();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob()
+qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob() : m_pTimer{}
 {
 
-    connect(&m_timer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()));
+    
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -30,9 +34,16 @@ qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob()
 void qbuGUIDev2LoggerJob::run()
 {
 
-    m_timer.start(500);
+    moveToThread(QThread::currentThread());
+
+    m_pTimer = new QTimer(this);
+
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()));
+    m_pTimer->start(500);
 
     QEventLoop loop;
+
+    connect(this, SIGNAL(quit()), &loop, SLOT(quit()));
 
     loop.exec();
 }

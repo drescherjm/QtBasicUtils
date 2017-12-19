@@ -23,10 +23,13 @@ public slots:
     void    stopJob();
     void    generateLogDataTimer();
 
+signals:
+    void    quit();
+
 public:
     static std::atomic<bool> g_strStartTimer;
 
-    QTimer  m_timer;
+    QTimer*  m_pTimer;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
