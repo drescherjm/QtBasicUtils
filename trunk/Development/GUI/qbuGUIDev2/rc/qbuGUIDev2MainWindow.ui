@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>qbuGUIDev1MainWindow</class>
- <widget class="QMainWindow" name="qbuGUIDev1MainWindow">
+ <class>qbuGUIDev2MainWindow</class>
+ <widget class="QMainWindow" name="qbuGUIDev2MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,26 +24,8 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>-1</number>
       </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>LogUsingModel</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QTableView" name="tableView">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>

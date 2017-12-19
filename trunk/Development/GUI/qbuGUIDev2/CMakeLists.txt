@@ -1,4 +1,4 @@
-myproject(qbuGUIDev1)
+myproject(qbuGUIDev2)
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	set (QT_MODULES ${QT_MODULES} Qt5::Designer )
@@ -20,7 +20,7 @@ include_directories(
 
 set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/main.cxx
-	./src/qbuGUIDev1MainWindow.cxx
+	./src/qbuGUIDev2MainWindow.cxx
 #	./src/DevelopGUIDB1.cxx
 )
 
@@ -29,7 +29,7 @@ set( ${LOCAL_PROJECT_NAME}_HDRS
 )
 
 set( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
-	./Include/qbuGUIDev1MainWindow.h
+	./Include/qbuGUIDev2MainWindow.h
 #	./Include/DevelopGUIDB1.h
 )
 
@@ -39,7 +39,7 @@ set( ${LOCAL_PROJECT_NAME}_RCS
 )
 
 set( ${LOCAL_PROJECT_NAME}_UIS
-	./rc/qbuGUIDev1MainWindow.ui
+	./rc/qbuGUIDev2MainWindow.ui
 #	./rc/DevelopGUIDB1.ui
 )
 

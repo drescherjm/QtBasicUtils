@@ -1,4 +1,4 @@
-#include "qbuGUIDev1MainWindow.h"
+#include "qbuGUIDev2MainWindow.h"
 #include "qbuLog\qbuLoggerModel.h"
 #include <QxtLogger>
 #include "qbuLog\qbuLog.h"
@@ -12,33 +12,12 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFlags flags /*= 0*/) : Superclass(parent,flags)
+qbuGUIDev2MainWindow::qbuGUIDev2MainWindow(QWidget *parent /*= 0*/, Qt::WindowFlags flags /*= 0*/) : Superclass(parent,flags)
 {
 	setupUi(this);
 
 	qbuLoggerModel* pModel = new qbuLoggerModel(this);
-	pModel->setRecordLimit(50);
-
-	qxtLog->addLoggerEngine("LogTableModel", pModel->getLoggerEngine());
-	tableView->setModel(pModel);
-
-	QHeaderView* pHeader = tableView->horizontalHeader();
-	if (pHeader) {
-		pHeader->setStretchLastSection(true);
-	}
-
-	pModel = new qbuLoggerModel(this);
-	pModel->setRecordLimit(100);
-	qbuLoggerWidget2* pWidget = new qbuLoggerWidget2(this);
-	pWidget->setModel(pModel);
-	pWidget->initialize();
-
-	qxtLog->addLoggerEngine("LogWidget2", pWidget->getLoggerEngine());
-
-	tabWidget->addTab(pWidget, QString("LogWidget2"));
-
-	pModel = new qbuLoggerModel(this);
-	pModel->setRecordLimit(100);
+	pModel->setRecordLimit(10000);
 	qbuLoggerWidget3* pWidget3 = new qbuLoggerWidget3(this);
 	pWidget3->setLoggerModel(pModel);
 	pWidget3->initialize();
@@ -50,7 +29,7 @@ qbuGUIDev1MainWindow::qbuGUIDev1MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuGUIDev1MainWindow::on_actionTestLog0_triggered()
+void qbuGUIDev2MainWindow::on_actionTestLog0_triggered()
 {
 	QLOG_INFO() << "This is a test!" << "Lets add multiple rows. " << "How about a very long row! Test Test Test Test Test! What will happen? I am not sure.";
 	QLOG_INFO() << "This is test2.";
@@ -109,50 +88,56 @@ QString generateInfoMessage()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuGUIDev1MainWindow::generateLogDataTimer()
+void qbuGUIDev2MainWindow::generateLogDataTimer()
 {
    // qxtLog->stream(static_cast<QxtLogger::LogLevel>(rand() % 7)) << "This is a test!";
 
 	QxtLogger::LogLevel level = generateRandomLogLevel();
 
+	static int i = 0;
+
+	i++;
+
+	QString strMsg = QString("%1: - ").arg(i);
+
 	switch (level) {
 	case QxtLogger::InfoLevel:
-		QLOG_INFO() << generateInfoMessage();
+		QLOG_INFO() << strMsg << generateInfoMessage();
 		break;
 	case QxtLogger::CriticalLevel:
-		QLOG_CRIT() << "Something really bad happened!" << "Should I be worried?";
+		QLOG_CRIT() << strMsg << "Something really bad happened!" << "Should I be worried?";
 		break;
 	case QxtLogger::WarningLevel:
-		QLOG_WARN() << "What is this warning about?";
+		QLOG_WARN() << strMsg << "What is this warning about?";
 		break;
 	case QxtLogger::TraceLevel:
-		QLOG_TRACE() << "John was debugging!";
+		QLOG_TRACE() << strMsg << "John was debugging!";
 		break;
 	case QxtLogger::ErrorLevel:
-		QLOG_ERROR() << "Some type of error occurred.";
+		QLOG_ERROR() << strMsg << "Some type of error occurred.";
 		break;
 	case QxtLogger::DebugLevel:
-		QLOG_DEBUG() << "John was debugging!" << "What is the difference between TRACE and DEBUG again?";
+		QLOG_DEBUG() << strMsg << "John was debugging!" << "What is the difference between TRACE and DEBUG again?";
 		break;
 	case QxtLogger::WriteLevel:
-		QLOG_WRITE() << "Lets write something" << "I don't understand the randomization here!";
+		QLOG_WRITE() << strMsg << "Lets write something" << "I don't understand the randomization here!";
 		break;
 	case QxtLogger::FatalLevel:
-		QLOG_FATAL() << "Should we exit the program?"
+		QLOG_FATAL() << strMsg << "Should we exit the program?"
 			<< "I don't know"
 			<< "Lets generate some more data instead."
 			<< "Why should I generate data if there is a FATAL error?"
 			<< "I don't know but keep going.";
 		break;
 	default:
-		qxtLog->log(level, QVariantList() << "What is this!" << "Level=" <<level);
+		qxtLog->log(level, QVariantList() << strMsg << "What is this!" << "Level=" <<level);
 	}
    
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuGUIDev1MainWindow::on_actionToggleRandomData_triggered()
+void qbuGUIDev2MainWindow::on_actionToggleRandomData_triggered()
 {
 	QTimer* pTimer = findChild<QTimer*>();
 

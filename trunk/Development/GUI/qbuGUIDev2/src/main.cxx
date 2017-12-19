@@ -1,5 +1,5 @@
 
-#include "qbuGUIDev1MainWindow.h"
+#include "qbuGUIDev2MainWindow.h"
 #include <QApplication>
 #include "qbuLog\qbuLog.h"
 #include <iostream>
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 #endif // QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	
 	QApplication app(argc, argv);
-	qbuGUIDev1MainWindow window;
+	qbuGUIDev2MainWindow window;
 	window.show();
 	
 	QLOG_INFO() << "Logging from " << __FUNCTION__;
