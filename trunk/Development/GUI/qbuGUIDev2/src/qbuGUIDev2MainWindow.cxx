@@ -17,7 +17,7 @@ qbuGUIDev2MainWindow::qbuGUIDev2MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 	setupUi(this);
 
 	qbuLoggerModel* pModel = new qbuLoggerModel(this);
-	pModel->setRecordLimit(10000);
+	pModel->setRecordLimit(1000);
 	qbuLoggerWidget3* pWidget3 = new qbuLoggerWidget3(this);
 	pWidget3->setLoggerModel(pModel);
 	pWidget3->initialize();

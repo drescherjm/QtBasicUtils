@@ -235,9 +235,13 @@ void qbuLoggerModel::synchronize()
 		std::move(begin(m_pPrivate->m_buffer.m_holdQueue), end(m_pPrivate->m_buffer.m_holdQueue), 
 			std::back_inserter(m_pPrivate->m_queue));
 
+        m_pPrivate->m_buffer.m_holdQueue.clear();
+
 		m_pPrivate->m_buffer.m_dtLastSync = m_pPrivate->m_queue[nQueueIndex].m_dt;
 
 		endInsertRows();
+
+        emit handleRecordLimit();
 	}
 
 }
