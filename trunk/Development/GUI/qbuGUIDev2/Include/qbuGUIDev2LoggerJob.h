@@ -15,6 +15,7 @@ class qbuGUIDev2LoggerJob : public QObject, public QRunnable
     Q_OBJECT
 public:
     qbuGUIDev2LoggerJob();
+	virtual ~qbuGUIDev2LoggerJob();
 
 public:
     void run();

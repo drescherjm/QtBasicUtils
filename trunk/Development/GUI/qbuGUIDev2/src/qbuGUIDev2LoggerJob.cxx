@@ -3,6 +3,7 @@
 #include <QxtLogger>
 #include "qbuLog\qbuLog.h"
 #include <QThread>
+#include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +32,13 @@ qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob() : m_pTimer{}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuGUIDev2LoggerJob::~qbuGUIDev2LoggerJob()
+{
+	std::cout << __FUNCTION__ << " ending." << std::endl;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuGUIDev2LoggerJob::run()
 {
 
@@ -43,9 +51,11 @@ void qbuGUIDev2LoggerJob::run()
 
     QEventLoop loop;
 
-    connect(this, SIGNAL(quit()), &loop, SLOT(quit()));
+    connect(this, SIGNAL(quit()), &loop, SLOT(quit()),Qt::QueuedConnection);
 
     loop.exec();
+
+	std::cout << __FUNCTION__ << " ending." << std::endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -94,5 +104,7 @@ void qbuGUIDev2LoggerJob::generateLogDataTimer()
         qxtLog->log(level, QVariantList() << strMsg << "What is this!" << "Level=" << level);
     }
 }
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////\
