@@ -169,7 +169,7 @@ void qbuGUIDev2MainWindow::on_actionToggle_Random_Data_Generation_Job_triggered(
     if (QThreadPool::globalInstance()->activeThreadCount() < 1) {
         qbuGUIDev2LoggerJob* pJob = new qbuGUIDev2LoggerJob;
 
-        connect(this, SIGNAL(stopJob()), pJob, SLOT(stopJob()), Qt::QueuedConnection);
+        connect(this, SIGNAL(stopJob()), pJob, SLOT(stopJob()), Qt::DirectConnection);
 
         QThreadPool::globalInstance()->start(pJob);
 

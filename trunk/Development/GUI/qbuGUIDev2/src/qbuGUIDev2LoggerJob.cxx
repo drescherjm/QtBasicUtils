@@ -16,9 +16,9 @@ std::atomic<bool> qbuGUIDev2LoggerJob::g_strStartTimer{ true };
 
 void qbuGUIDev2LoggerJob::stopJob()
 {
-    if (m_pTimer) {
-        m_pTimer->stop();
-    }
+//     if (m_pTimer) {
+//         m_pTimer->stop();
+//     }
     emit quit();
 }
 
@@ -42,20 +42,30 @@ qbuGUIDev2LoggerJob::~qbuGUIDev2LoggerJob()
 void qbuGUIDev2LoggerJob::run()
 {
 
-    moveToThread(QThread::currentThread());
+//     setParent(nullptr);
+// 
+//     moveToThread(nullptr);
+//     moveToThread(QThread::currentThread());
 
-    m_pTimer = new QTimer(this);
+    m_pTimer = new QTimer;
 
-    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()));
+    //connect(this, SIGNAL(signalStopJob()), this, SLOT(stopJob()), Qt::QueuedConnection);
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()), Qt::QueuedConnection);
     m_pTimer->start(500);
 
     QEventLoop loop;
 
-    connect(this, SIGNAL(quit()), &loop, SLOT(quit()),Qt::QueuedConnection);
+    connect(this, SIGNAL(quit()), &loop, SLOT(quit()));
 
     loop.exec();
 
 	std::cout << __FUNCTION__ << " ending." << std::endl;
+
+    m_pTimer->stop();
+
+    delete m_pTimer;
+    m_pTimer = nullptr;
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

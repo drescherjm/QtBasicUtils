@@ -20,7 +20,7 @@ public:
 public:
     void run();
 
-public slots:
+public slots :
     void    stopJob();
     void    generateLogDataTimer();
 
