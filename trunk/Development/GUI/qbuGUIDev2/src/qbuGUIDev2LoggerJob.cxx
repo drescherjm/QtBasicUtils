@@ -37,16 +37,8 @@ qbuGUIDev2LoggerJob::~qbuGUIDev2LoggerJob()
 void qbuGUIDev2LoggerJob::run()
 {
 
-//     setParent(nullptr);
-// 
-//     moveToThread(nullptr);
-//     moveToThread(QThread::currentThread());
-
     QTimer timer;
 
-    //m_pTimer = new QTimer;
-
-    //connect(this, SIGNAL(signalStopJob()), this, SLOT(stopJob()), Qt::QueuedConnection);
     connect(&timer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()), Qt::QueuedConnection);
     timer.start(500);
 
