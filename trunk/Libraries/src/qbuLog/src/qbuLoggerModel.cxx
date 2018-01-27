@@ -59,6 +59,8 @@ public:
 	void		startTimerIfNeeded(qbuLoggerModel* pPublic, int nIndex, QDateTime & dtMsg);
 	void		setupTimer(qbuLoggerModel* pPublic);
 
+    bool        getLogLevel(const QModelIndex & index, QxtLogger::LogLevel & level) const;
+ 
 public:
     LogQueue				m_queue;
 	qbuLogModelEngine*		m_pEngine;
@@ -182,6 +184,21 @@ void qbuLoggerModel::qbuPrivate::setupTimer(qbuLoggerModel* pPublic)
 	m_buffer.m_timer.setInterval(m_nUpdateDelay * 1000);
 	m_buffer.m_timer.setSingleShot(true);
 	QObject::connect(&m_buffer.m_timer, SIGNAL(timeout()), pPublic, SLOT(synchronize()));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuLoggerModel::qbuPrivate::getLogLevel(const QModelIndex & index, QxtLogger::LogLevel & level) const
+{
+    bool retVal{ ((index.row() < m_queue.size()) && (index.column() < GRID_COLS)) };
+    if (retVal) {
+
+        const logData& item = m_queue[index.row()];
+
+        level = item.m_level;
+
+    }
+    return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -446,6 +463,27 @@ void qbuLoggerModel::setUpdateDelay(quint8 nSeconds)
 		m_pPrivate->m_nUpdateDelay = 1;
 		m_pPrivate->m_buffer.m_timer.setInterval(250);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuLoggerModel::isWarning(const QModelIndex &index) const
+{
+
+    QxtLogger::LogLevel level = QxtLogger::AllLevels;
+
+    bool retVal{ m_pPrivate->getLogLevel(index, level) };
+    if (retVal) {
+        retVal = ((level & QxtLogger::WarningLevel) != 0);
+    }
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuLoggerModel::isCritical(const QModelIndex &index) const
+{
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
