@@ -467,23 +467,15 @@ void qbuLoggerModel::setUpdateDelay(quint8 nSeconds)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuLoggerModel::isWarning(const QModelIndex &index) const
+bool qbuLoggerModel::isLogLevel(const QModelIndex &index, uint32_t nLevel) const
 {
-
-    QxtLogger::LogLevel level = QxtLogger::AllLevels;
+    QxtLogger::LogLevel level = QxtLogger::NoLevels;
 
     bool retVal{ m_pPrivate->getLogLevel(index, level) };
     if (retVal) {
-        retVal = ((level & QxtLogger::WarningLevel) != 0);
+        retVal = ((level & nLevel) == nLevel);
     }
     return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-bool qbuLoggerModel::isCritical(const QModelIndex &index) const
-{
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

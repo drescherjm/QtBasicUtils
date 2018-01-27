@@ -34,8 +34,7 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-    bool    isWarning(const QModelIndex &index) const;
-    bool    isCritical(const QModelIndex &index) const;
+    bool    isLogLevel(const QModelIndex &index, uint32_t nLevel) const;
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;
