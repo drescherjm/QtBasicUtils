@@ -10,21 +10,16 @@
 QxtLogger::LogLevel generateRandomLogLevel();
 QString generateInfoMessage();
 
-std::atomic<bool> qbuGUIDev2LoggerJob::g_strStartTimer{ true };
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuGUIDev2LoggerJob::stopJob()
 {
-//     if (m_pTimer) {
-//         m_pTimer->stop();
-//     }
     emit quit();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob() : m_pTimer{}
+qbuGUIDev2LoggerJob::qbuGUIDev2LoggerJob() /*: m_pTimer{}*/
 {
 
     
@@ -47,11 +42,13 @@ void qbuGUIDev2LoggerJob::run()
 //     moveToThread(nullptr);
 //     moveToThread(QThread::currentThread());
 
-    m_pTimer = new QTimer;
+    QTimer timer;
+
+    //m_pTimer = new QTimer;
 
     //connect(this, SIGNAL(signalStopJob()), this, SLOT(stopJob()), Qt::QueuedConnection);
-    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()), Qt::QueuedConnection);
-    m_pTimer->start(500);
+    connect(&timer, SIGNAL(timeout()), this, SLOT(generateLogDataTimer()), Qt::QueuedConnection);
+    timer.start(500);
 
     QEventLoop loop;
 
@@ -61,10 +58,7 @@ void qbuGUIDev2LoggerJob::run()
 
 	std::cout << __FUNCTION__ << " ending." << std::endl;
 
-    m_pTimer->stop();
-
-    delete m_pTimer;
-    m_pTimer = nullptr;
+    timer.stop();
 
 }
 

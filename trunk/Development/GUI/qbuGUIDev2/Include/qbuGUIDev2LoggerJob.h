@@ -28,9 +28,9 @@ signals:
     void    quit();
 
 public:
-    static std::atomic<bool> g_strStartTimer;
+   // static std::atomic<bool> g_strStartTimer;
 
-    QTimer*  m_pTimer;
+    //QTimer*  m_pTimer;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
