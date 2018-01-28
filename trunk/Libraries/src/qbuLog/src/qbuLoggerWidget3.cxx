@@ -22,6 +22,8 @@ public:
     void            setupLogLevelModel(QStandardItemModel* pModel);
     void            setChecked(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel, bool bChecked);
     QModelIndex     getIndexForLevel(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel) const;
+
+    uint32_t        getMaskFromChecked(QStandardItemModel* pModel) const;
   
 public:
     Ui::qbuLoggerWidget2    ui;
@@ -116,6 +118,26 @@ QModelIndex qbuLoggerWidget3::qbuPrivate::getIndexForLevel(QStandardItemModel* p
             }
         }
     }
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+uint32_t qbuLoggerWidget3::qbuPrivate::getMaskFromChecked(QStandardItemModel* pModel) const
+{
+    uint32_t retVal{};
+
+    for (int nRow = 0; nRow < pModel->rowCount(); ++nRow) {
+
+        QModelIndex index = pModel->index(nRow, 0);
+
+        QVariant vt = pModel->data(index, Qt::CheckStateRole);
+
+        if (vt.canConvert<int>() && (vt.value<int>() == Qt::Checked)) {
+            retVal |= pModel->data(index, Qt::UserRole).toUInt();
+        }
+    }
+
     return retVal;
 }
 
