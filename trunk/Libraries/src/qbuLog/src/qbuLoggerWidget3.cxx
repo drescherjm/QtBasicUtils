@@ -14,6 +14,61 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+class LogFilter : public QSortFilterProxyModel
+{
+public:
+    LogFilter(QObject *parent = 0);
+public:
+    virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+   
+public:
+    void    setMask(uint32_t nMask);
+
+protected:
+    uint32_t    m_nMask;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+LogFilter::LogFilter(QObject *parent /*= 0*/) : QSortFilterProxyModel(parent), m_nMask{ QxtLogger::NoLevelsAllLevels }
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool LogFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+{
+    bool retVal = (m_nMask == QxtLogger::NoLevelsAllLevels);
+
+    if (!retVal) {
+        QModelIndex index = sourceModel()->index(source_row, qbuLoggerModel::CT_LEVEL, source_parent);
+
+        QVariant vt = sourceModel()->data(index, Qt::UserRole);
+
+        if (vt.canConvert<int>()) {
+            QxtLogger::LogLevel level = static_cast<QxtLogger::LogLevel>(vt.toUInt());
+
+            retVal = ((level & m_nMask) != 0);
+        }
+
+    }
+
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void LogFilter::setMask(uint32_t nMask)
+{
+    if (m_nMask != nMask) {
+        m_nMask = nMask;
+        invalidateFilter();
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 class qbuLoggerWidget3::qbuPrivate
 {
 public:
@@ -35,11 +90,12 @@ public:
     QStandardItemModel      m_modelJump;
     uint32_t                m_ShowMask;
     uint32_t                m_JumpMask;
+    LogFilter*              m_pLogFilter;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{ true }, m_pLoggerModel{}
+qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{ true }, m_pLoggerModel{}, m_pLogFilter{}
 {
 
 }
@@ -188,10 +244,10 @@ void qbuLoggerWidget3::setLoggerModel(qbuLoggerModel* pModel)
 
     if (pTableView) {
 
-        QSortFilterProxyModel* pSortModel = new QSortFilterProxyModel(this);
-        pSortModel->setSourceModel(pModel);
-        pSortModel->setSortRole(Qt::UserRole);
-        pTableView->setModel(pSortModel);
+        m_pPrivate->m_pLogFilter = new LogFilter(this);
+        m_pPrivate->m_pLogFilter->setSourceModel(pModel);
+        m_pPrivate->m_pLogFilter->setSortRole(Qt::UserRole);
+        pTableView->setModel(m_pPrivate->m_pLogFilter);
     }
 }
 
@@ -296,6 +352,11 @@ void qbuLoggerWidget3::on_pushButtonOptions_clicked()
         {
         case 0:
             m_pPrivate->updateMasks();
+
+            if (m_pPrivate->m_pLogFilter) {
+                m_pPrivate->m_pLogFilter->setMask(m_pPrivate->m_ShowMask);
+            }
+
             m_pPrivate->ui.pushButtonOptions->setText("Options");
             break;
         case 1:
