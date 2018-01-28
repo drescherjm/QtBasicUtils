@@ -24,6 +24,8 @@ public:
     QModelIndex     getIndexForLevel(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel) const;
 
     uint32_t        getMaskFromChecked(QStandardItemModel* pModel) const;
+
+    void            updateMasks();
   
 public:
     Ui::qbuLoggerWidget2    ui;
@@ -31,6 +33,8 @@ public:
     qbuLoggerModel*         m_pLoggerModel;
     QStandardItemModel      m_modelShow;
     QStandardItemModel      m_modelJump;
+    uint32_t                m_ShowMask;
+    uint32_t                m_JumpMask;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -143,6 +147,14 @@ uint32_t qbuLoggerWidget3::qbuPrivate::getMaskFromChecked(QStandardItemModel* pM
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void qbuLoggerWidget3::qbuPrivate::updateMasks()
+{
+    m_ShowMask = getMaskFromChecked(&m_modelShow);
+    m_JumpMask = getMaskFromChecked(&m_modelJump);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent), m_pPrivate{std::make_unique<qbuPrivate>()}
 {
     m_pPrivate->ui.setupUi(this);
@@ -155,6 +167,8 @@ qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent)
     for (auto nLogLevel : { QxtLogger::TraceLevel, QxtLogger::DebugLevel, QxtLogger::InfoLevel, QxtLogger::WriteLevel }) {
         m_pPrivate->setChecked(&m_pPrivate->m_modelJump, nLogLevel, false);
     }
+
+    m_pPrivate->updateMasks();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -277,6 +291,19 @@ void qbuLoggerWidget3::on_pushButtonOptions_clicked()
     if (pStacked) {
         int nIndex = (pStacked->currentIndex() + 1) % pStacked->count();
         pStacked->setCurrentIndex(nIndex);
+
+        switch (nIndex)
+        {
+        case 0:
+            m_pPrivate->updateMasks();
+            m_pPrivate->ui.pushButtonOptions->setText("Options");
+            break;
+        case 1:
+            m_pPrivate->ui.pushButtonOptions->setText("Log");
+            break;
+        default:
+            break;
+        }
     }
 }
 
