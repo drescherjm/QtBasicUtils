@@ -19,7 +19,9 @@ class qbuLoggerWidget3::qbuPrivate
 public:
     qbuPrivate();
 public:
-    void    setupLogLevelModel(QStandardItemModel* pModel);
+    void            setupLogLevelModel(QStandardItemModel* pModel);
+    void            setChecked(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel, bool bChecked);
+    QModelIndex     getIndexForLevel(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel) const;
   
 public:
     Ui::qbuLoggerWidget2    ui;
@@ -55,6 +57,42 @@ void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void qbuLoggerWidget3::qbuPrivate::setChecked(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel, bool bChecked)
+{
+    if (pModel != nullptr) {
+
+        QModelIndex index = getIndexForLevel(pModel, nLevel);
+        pModel->setData(index, bChecked ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole);
+
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QModelIndex qbuLoggerWidget3::qbuPrivate::getIndexForLevel(QStandardItemModel* pModel, QxtLogger::LogLevel nLevel) const
+{
+    QModelIndex retVal;
+
+    if (pModel != nullptr) {
+        for (int nRow = 0; nRow < pModel->rowCount(); ++nRow) {
+
+            retVal = pModel->index(nRow, 0);
+
+            QVariant vt = pModel->data(retVal, Qt::UserRole);
+
+            if (vt.canConvert<int>()) {
+                QxtLogger::LogLevel level = static_cast<QxtLogger::LogLevel>(vt.value<int>());
+                if (level == nLevel) {
+                    break;
+                }
+            }
+        }
+    }
+    return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent), m_pPrivate{std::make_unique<qbuPrivate>()}
 {
     m_pPrivate->ui.setupUi(this);
@@ -63,6 +101,10 @@ qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent)
     
     m_pPrivate->ui.listViewShow->setModel(&m_pPrivate->m_modelShow);
     m_pPrivate->ui.listViewJump->setModel(&m_pPrivate->m_modelJump);
+
+    for (auto nLogLevel : { QxtLogger::TraceLevel, QxtLogger::DebugLevel, QxtLogger::InfoLevel, QxtLogger::WriteLevel }) {
+        m_pPrivate->setChecked(&m_pPrivate->m_modelJump, nLogLevel, false);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
