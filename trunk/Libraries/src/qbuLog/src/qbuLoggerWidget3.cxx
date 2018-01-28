@@ -51,6 +51,34 @@ void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
         item->setData(Qt::Checked, Qt::CheckStateRole);
         item->setData(nLogLevel, Qt::UserRole);
+
+        switch (nLogLevel)
+        {
+        case QxtLogger::NoLevels:
+            break;
+        case QxtLogger::TraceLevel:
+            break;
+        case QxtLogger::DebugLevel:
+            break;
+        case QxtLogger::InfoLevel:
+            break;
+        case QxtLogger::WarningLevel:
+            item->setData(QVariant(QColor("Orange")), Qt::BackgroundColorRole);
+            break;
+        case QxtLogger::ErrorLevel:
+            break;
+        case QxtLogger::CriticalLevel:
+        case QxtLogger::FatalLevel:
+            item->setData(QVariant(QColor(Qt::red)), Qt::BackgroundColorRole);
+            break;
+        case QxtLogger::WriteLevel:
+            break;
+        case QxtLogger::NoLevelsAllLevels:
+            break;
+        default:
+            break;
+        }
+
         pModel->appendRow(item);
     }
 }
