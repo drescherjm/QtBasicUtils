@@ -5,10 +5,12 @@
 #include <QDateTime>
 #include <QHeaderView>
 #include <QColor>
+#include <QStandardItemModel>
 #include "qbuLog/qbuLoggerModel.h"
 #include "qbuLog/qbuLoggerWidget2FileNameDelagate.h"
 #include "qbuLog/ui_qbuLoggerWidget2.h"
 #include <QSortFilterProxyModel>
+#include "qbuLog/qbuLog.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,11 +18,15 @@ class qbuLoggerWidget3::qbuPrivate
 {
 public:
     qbuPrivate();
-
+public:
+    void    setupLogLevelModel(QStandardItemModel* pModel);
+  
 public:
     Ui::qbuLoggerWidget2    ui;
     bool                    m_bFirst;
     qbuLoggerModel*         m_pLoggerModel;
+    QStandardItemModel      m_modelShow;
+    QStandardItemModel      m_modelJump;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -32,9 +38,31 @@ qbuLoggerWidget3::qbuPrivate::qbuPrivate() : m_bFirst{ true }, m_pLoggerModel{}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel)
+{
+    pModel->setColumnCount(1);
+
+    for (auto nLogLevel : { QxtLogger::TraceLevel, QxtLogger::DebugLevel,QxtLogger::InfoLevel, QxtLogger::WarningLevel, 
+        QxtLogger::ErrorLevel, QxtLogger::CriticalLevel, QxtLogger::FatalLevel, QxtLogger::WriteLevel }) {
+
+        QStandardItem* item = new QStandardItem(QxtLogger::logLevelToString(nLogLevel));
+        item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        item->setData(Qt::Checked, Qt::CheckStateRole);
+        item->setData(nLogLevel, Qt::UserRole);
+        pModel->appendRow(item);
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent), m_pPrivate{std::make_unique<qbuPrivate>()}
 {
     m_pPrivate->ui.setupUi(this);
+    m_pPrivate->setupLogLevelModel(&m_pPrivate->m_modelShow);
+    m_pPrivate->setupLogLevelModel(&m_pPrivate->m_modelJump);
+    
+    m_pPrivate->ui.listViewShow->setModel(&m_pPrivate->m_modelShow);
+    m_pPrivate->ui.listViewJump->setModel(&m_pPrivate->m_modelJump);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +173,18 @@ void qbuLoggerWidget3::updateRowHeights(int nStartingRow, int nEndingRow)
 
             m_pPrivate->m_bFirst = false;
         }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::on_pushButtonOptions_clicked()
+{
+    auto pStacked = m_pPrivate->ui.stackedWidget;
+
+    if (pStacked) {
+        int nIndex = (pStacked->currentIndex() + 1) % pStacked->count();
+        pStacked->setCurrentIndex(nIndex);
     }
 }
 
