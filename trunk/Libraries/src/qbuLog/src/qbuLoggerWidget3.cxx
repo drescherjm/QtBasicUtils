@@ -30,7 +30,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-LogFilter::LogFilter(QObject *parent /*= 0*/) : QSortFilterProxyModel(parent), m_nMask{ QxtLogger::NoLevelsAllLevels }
+LogFilter::LogFilter(QObject *parent /*= 0*/) : QSortFilterProxyModel(parent), m_nMask{ QxtLogger::AllLevels }
 {
 
 }
@@ -39,7 +39,7 @@ LogFilter::LogFilter(QObject *parent /*= 0*/) : QSortFilterProxyModel(parent), m
 
 bool LogFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    bool retVal = (m_nMask == QxtLogger::NoLevelsAllLevels);
+    bool retVal = (m_nMask == QxtLogger::AllLevels);
 
     if (!retVal) {
         QModelIndex index = sourceModel()->index(source_row, qbuLoggerModel::CT_LEVEL, source_parent);
@@ -135,7 +135,7 @@ void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel
             break;
         case QxtLogger::WriteLevel:
             break;
-        case QxtLogger::NoLevelsAllLevels:
+        case QxtLogger::AllLevels:
             break;
         default:
             break;
