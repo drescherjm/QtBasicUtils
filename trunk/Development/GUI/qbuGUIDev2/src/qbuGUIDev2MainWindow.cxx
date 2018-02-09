@@ -22,6 +22,7 @@ qbuGUIDev2MainWindow::qbuGUIDev2MainWindow(QWidget *parent /*= 0*/, Qt::WindowFl
 	qbuLoggerModel* pModel = new qbuLoggerModel(this);
 	pModel->setRecordLimit(1000);
 	qbuLoggerWidget3* pWidget3 = new qbuLoggerWidget3(this);
+
 	pWidget3->setLoggerModel(pModel);
 	pWidget3->initialize();
 
@@ -186,6 +187,22 @@ qbuGUIDev2MainWindow::~qbuGUIDev2MainWindow()
     emit stopJob();
 
     QThreadPool::globalInstance()->waitForDone(5000);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuGUIDev2MainWindow::on_actionHide_Filename_Column_triggered()
+{
+	qbuLoggerWidget3* pWidget = findChild<qbuLoggerWidget3*>();
+
+	if (pWidget) {
+		QStringList lst = pWidget->getVisibleColumns();
+
+		if (lst.contains("File", Qt::CaseInsensitive)) {
+			pWidget->hideColumnByName("File",!pWidget->isColumnHidden("File"));
+		}
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

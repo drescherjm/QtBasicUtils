@@ -24,6 +24,7 @@ public slots:
 	void	on_actionTestLog0_triggered();
     void    on_actionToggleRandomData_triggered();
     void    on_actionToggle_Random_Data_Generation_Job_triggered();
+	void	on_actionHide_Filename_Column_triggered();
 
     void    generateLogDataTimer();
 private:

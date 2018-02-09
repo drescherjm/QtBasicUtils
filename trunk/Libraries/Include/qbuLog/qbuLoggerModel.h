@@ -8,6 +8,8 @@
 #include <QDateTime>
 #include "qbuBase\qbuMacros.h"
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 class QxtLoggerEngine;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,8 @@ public:
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     bool    isLogLevel(const QModelIndex &index, uint32_t nLevel) const;
+
+	QString getColumnName(Cols col) const;
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;

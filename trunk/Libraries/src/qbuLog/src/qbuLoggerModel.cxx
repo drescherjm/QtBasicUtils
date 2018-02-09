@@ -479,3 +479,13 @@ bool qbuLoggerModel::isLogLevel(const QModelIndex &index, uint32_t nLevel) const
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+QString qbuLoggerModel::getColumnName(Cols col) const
+{
+	QVariant vt = headerData(col, Qt::Horizontal, Qt::DisplayRole);
+
+	return vt.toString();
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

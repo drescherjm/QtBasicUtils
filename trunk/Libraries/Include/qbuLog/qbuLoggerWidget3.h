@@ -27,6 +27,11 @@ public:
 public:
     void	initialize();
     void    setLoggerModel(qbuLoggerModel* pModel);
+	QStringList getVisibleColumns() const;
+	const QStringList& getAllColumns() const;
+
+	bool	hideColumnByName(QString strColumnName, bool bHide);
+	bool	isColumnHidden(QString strColumnName) const;
 
 protected slots:
     void    updateRowHeights(int nStartingRow, int nEndingRow);
