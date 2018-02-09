@@ -399,7 +399,7 @@ const QStringList& qbuLoggerWidget3::getAllColumns() const
 
 		QTableView* pTableView = m_pPrivate->ui.tableView;
 
-		if (pTableView) {
+		if (pTableView && (pTableView->model() != nullptr)) {
 
 			for (int i = 0; i < pTableView->model()->columnCount(); i++)
 			{
@@ -417,7 +417,7 @@ bool qbuLoggerWidget3::hideColumnByName(QString strColumnName, bool bHide)
 {
 	QTableView* pTableView = m_pPrivate->ui.tableView;
 
-	bool retVal = (pTableView != nullptr);
+	bool retVal = ((pTableView != nullptr) && (pTableView->model() != nullptr));
 	if (retVal) {
 		retVal = false;
 
@@ -444,18 +444,20 @@ bool qbuLoggerWidget3::isColumnHidden(QString strColumnName) const
 
 	bool retVal = (pTableView == nullptr);
 	if (!retVal) {
-		retVal = true;
-		
-		for (int i = 0; (i < pTableView->model()->columnCount()); i++) {
+		retVal = (pTableView->model() != nullptr);
 
-			QString strCol = pTableView->model()->headerData(i, Qt::Horizontal).toString();
+		if (retVal) {
+			for (int i = 0; (i < pTableView->model()->columnCount()); i++) {
 
-			retVal = (strCol.compare(strColumnName, Qt::CaseInsensitive) == 0);
-			if (retVal) {
-				retVal = pTableView->isColumnHidden(i);
-				break;
+				QString strCol = pTableView->model()->headerData(i, Qt::Horizontal).toString();
+
+				retVal = (strCol.compare(strColumnName, Qt::CaseInsensitive) == 0);
+				if (retVal) {
+					retVal = pTableView->isColumnHidden(i);
+					break;
+				}
+
 			}
-
 		}
 	}
 
