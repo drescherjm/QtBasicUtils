@@ -51,6 +51,8 @@ public:
 
 	virtual bool	isDatabaseAttached(QString strDatabaseFileName, QString & strDBAlias);
 
+	virtual bool	detachAll();
+
 	// Returns true if the database needs upgraded to a new schema.
 	virtual bool	needsUpgrade(int nSchema=-2);
 

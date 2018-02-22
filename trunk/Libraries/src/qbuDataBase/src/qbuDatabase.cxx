@@ -685,3 +685,17 @@ bool qbuDatabase::forceUpdateViews()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDatabase::detachAll()
+{
+	bool retVal = (m_pPrivate != nullptr);
+
+	if (retVal) {
+		for (auto& attached : m_pPrivate->m_setAttachedDBs) {
+			detachDatabaseByAlias(attached.m_strAlias);
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
