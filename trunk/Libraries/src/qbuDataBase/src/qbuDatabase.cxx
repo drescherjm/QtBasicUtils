@@ -691,9 +691,20 @@ bool qbuDatabase::detachAll()
 	bool retVal = (m_pPrivate != nullptr);
 
 	if (retVal) {
-		for (auto& attached : m_pPrivate->m_setAttachedDBs) {
-			detachDatabaseByAlias(attached.m_strAlias);
+
+		QStringList lstAttached;
+
+		for (int i = 0; (i < 100) && (m_pPrivate->m_setAttachedDBs.size() > 0); ++i) {
+
+			for (auto& attached : m_pPrivate->m_setAttachedDBs) {
+				lstAttached << attached.m_strName;
+			}
+
+			for (auto strAttached : lstAttached) {
+				detachDatabaseByName(strAttached);
+			}
 		}
+
 	}
 	return retVal;
 }
