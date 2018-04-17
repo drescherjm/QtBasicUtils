@@ -27,4 +27,14 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+#define IMPLEMENT_SA_GET_CONST(className,variableName, variableType, strColumName) \
+	bool className::get##variableName( variableType & _value ) const \
+																{ \
+		bool retVal; \
+		retVal = className::getField<variableType>(strColumName,_value); \
+		return retVal; \
+																}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #endif // QBUDATABASEMACROS_H

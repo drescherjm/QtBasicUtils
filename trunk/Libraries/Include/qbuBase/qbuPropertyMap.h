@@ -63,7 +63,7 @@ public:
 
 public:
     template<typename DataType>
-    bool			getField(QString strFieldName, DataType & nOutVal);
+    bool			getField(QString strFieldName, DataType & nOutVal) const;
     template<typename DataType>
     bool			setField(QString strFieldName, DataType nInVal);
 
@@ -109,7 +109,7 @@ inline bool qbuPropertyMap::empty() const
 
 
 template<typename DataType>
-bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal )
+bool qbuPropertyMap::getField( QString strFieldName, DataType & nOutVal ) const
 {
     bool retVal;
     const_iterator it = find(strFieldName);
