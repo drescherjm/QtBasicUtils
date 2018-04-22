@@ -268,6 +268,20 @@ bool qbuDBCondition::isEmpty() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<int> lstValues,
+    bool bEnclose /*= true*/) const
+{
+    QStringList sl;
+
+    for (auto nVal : lstValues) {
+        sl << QString::number(nVal);
+    }
+
+    return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QStringList slValues, 
 	qbuDBColDef::Option op /*= qbuDBColDef::OP_AUTO_QUOTE*/, 
 	bool bEnclose /*= true*/) const
