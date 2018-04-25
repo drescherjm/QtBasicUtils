@@ -9,7 +9,6 @@
 #include "qbuDataBase/qbuInfo.h"
 #include "qbuLog/qbuLog.h"
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuDBView::qbuDBView( std::shared_ptr<qbuDatabase> pDataBase ) : m_pDB(pDataBase)
