@@ -135,3 +135,29 @@ int qbuStringList::lastIndexOf( const QString & str, Qt::CaseSensitivity cs, int
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuStringList::insertAfter(const QString & strSearch, const QString & strInsert, Qt::CaseSensitivity cs, int from /*= 0*/)
+{
+	int nIndex = indexOf(strSearch, cs, from);
+
+	bool retVal = (nIndex >= 0);
+	if (retVal) {
+		Superclass::insert(++nIndex, strInsert);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuStringList::insertBefore(const QString & strSearch, const QString & strInsert, Qt::CaseSensitivity cs, int from /*= 0*/)
+{
+	int nIndex = indexOf(strSearch, cs, from);
+
+	bool retVal = (nIndex >= 0);
+	if (retVal) {
+		Superclass::insert(nIndex, strInsert);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
