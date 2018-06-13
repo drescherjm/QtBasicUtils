@@ -11,6 +11,7 @@
 #include "qdebug.h"
 #include <chrono>
 #include <ctime>
+//#include <QStringLiteral>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,6 +30,8 @@ struct QCmdTestXMLPerformance::qbuPrivate
 	QString generate(GenerateType gt, uint32_t nLines);
 	QString generateLine(GenerateType gt);
 	bool test0();
+	bool test1();
+	bool test2();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -168,6 +171,152 @@ bool QCmdTestXMLPerformance::qbuPrivate::test0()
 	QString strSQL1 = prop1.GetData().toString();
 
 	bool retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdTestXMLPerformance::qbuPrivate::test1()
+{
+
+	QString strSQL = generate(Session, 20000);
+
+	strSQL += generate(ProjectExamCompletion, 200000);
+	strSQL += generate(Ratings, 1000000);
+	strSQL += generate(Update, 5000);
+
+	qbuProperty prop;
+	prop.setObjectName("SQL");
+	prop.SetData(strSQL);
+
+	auto start = std::chrono::system_clock::now();
+
+	QString strXML = prop.toXML();
+
+	auto end = std::chrono::system_clock::now();
+
+	std::chrono::duration<double> elapsed_seconds = end - start;
+
+	std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+	std::cout << "finished computation at " << std::ctime(&end_time)
+		<< "elapsed time (toXML): " << elapsed_seconds.count() << "s\n";
+
+
+	std::cout << "SQLSize " << strSQL.size() << "\n";
+	std::cout << "XMLSize " << strXML.size() << "\n";
+
+	qbuProperty prop1;
+
+	auto start1 = std::chrono::system_clock::now();
+	prop1.fromXML(strXML);
+	auto end1 = std::chrono::system_clock::now();
+
+	{
+		std::chrono::duration<double> elapsed_seconds = end1 - start1;
+		std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+		std::cout << "finished computation at " << std::ctime(&end_time)
+			<< "elapsed time (fromXML): " << elapsed_seconds.count() << "s\n";
+	}
+
+	QString strSQL1 = prop1.GetData().toString();
+
+	bool retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+
+	return retVal;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdTestXMLPerformance::qbuPrivate::test2()
+{
+
+	const QString sqlTag{ QStringLiteral("SQLSTATEMENT") };
+
+	QString strSQL = generate(Session, 20000);
+
+	strSQL += generate(ProjectExamCompletion, 20000);
+	strSQL += generate(Ratings, 100000);
+	strSQL += generate(Update, 5000);
+
+	qbuPropertyMap props0;
+
+	{
+		qbuProperty prop;
+		prop.setObjectName("Name");
+		prop.SetData("2018-06-13-001.RADIMGWS85.WBUS_2015.FULL.sql");
+		props0.insert(prop);
+	}
+
+	{	qbuProperty prop;
+		prop.setObjectName("NetworkPeerID");
+		prop.SetData(static_cast<uint32_t>(54));
+		props0.insert(prop);
+	}
+
+	{	qbuProperty prop;
+		prop.setObjectName("ProjectID");
+		prop.SetData(static_cast<uint32_t>(101));
+		props0.insert(prop);
+	}
+
+	{	qbuProperty prop;
+		prop.setObjectName("ScoringSystemID");
+		prop.SetData(static_cast<uint32_t>(9));
+		props0.insert(prop);
+	}
+
+	{
+		qbuProperty prop;
+		prop.setObjectName(sqlTag);
+		prop.SetData(strSQL);
+		props0.insert(prop);
+	}
+
+	auto start = std::chrono::system_clock::now();
+	
+
+	QString strXML = props0.toXML();
+
+	auto end = std::chrono::system_clock::now();
+
+	std::chrono::duration<double> elapsed_seconds = end - start;
+
+	std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+	std::cout << "finished computation at " << std::ctime(&end_time)
+		<< "elapsed time (toXML): " << elapsed_seconds.count() << "s\n";
+
+
+	std::cout << "SQLSize " << strSQL.size() << "\n";
+	std::cout << "XMLSize " << strXML.size() << "\n";
+
+	qbuPropertyMap  props1;
+
+	auto start1 = std::chrono::system_clock::now();
+	props1.fromXML(strXML);
+	auto end1 = std::chrono::system_clock::now();
+
+	{
+		std::chrono::duration<double> elapsed_seconds = end1 - start1;
+		std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+		std::cout << "finished computation at " << std::ctime(&end_time)
+			<< "elapsed time (fromXML): " << elapsed_seconds.count() << "s\n";
+	}
+
+	QString strSQL1;
+	
+	bool retVal = props1.getField<QString>(sqlTag, strSQL1);
+
+	if (retVal) {
+		//	QString strSQL1 = prop1.GetData().toString();
+
+		retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+	}
 
 	return retVal;
 }
@@ -625,39 +774,12 @@ int  QCmdTestXMLPerformance::Execute()
 	case 0:
 		bVal = m_pPrivate->test0();
 		break;
-// 	case 1:
-// 		bVal = test1();
-// 		break;
-// 	case 2:
-// 		bVal = test2();
-// 		break;
-// 	case 3:
-// 		bVal = test3();
-// 		break;
-// 	case 4:
-// 		bVal = test4();
-// 		break;
-// 	case 5:
-// 		bVal = test5();
-// 		break;
-// 	case 6:
-// 		bVal = test6();
-// 		break;
-// 	case 7:
-// 		bVal = test7();
-// 		break;
-// 	case 8:
-// 		bVal = test8();
-// 		break;
-// 	case 9:
-// 		bVal = test9();
-// 		break;
-// 	case 10:
-// 		bVal = test10();
-// 		break;
-// 	case 11:
-// 		bVal = test11();
-// 		break;
+	case 1:
+		bVal = m_pPrivate->test1();
+		break;
+	case 2:
+		bVal = m_pPrivate->test2();
+		break;
 	default:
 		bVal = false;
 	}
