@@ -238,9 +238,9 @@ bool QCmdTestXMLPerformance::qbuPrivate::test2()
 
 	QString strSQL = generate(Session, 20000);
 
-	strSQL += generate(ProjectExamCompletion, 20000);
-	strSQL += generate(Ratings, 100000);
-	strSQL += generate(Update, 5000);
+	strSQL += generate(ProjectExamCompletion, 400000);
+	strSQL += generate(Ratings, 700000);
+	strSQL += generate(Update, 50000);
 
 	qbuPropertyMap props0;
 
