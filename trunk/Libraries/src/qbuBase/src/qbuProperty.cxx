@@ -9,6 +9,7 @@
 #include <QDomDocument>
 #include "qbuBase/qbuPropertyTypeNameAlias.h"
 
+
 //#define QBU_USE_UNOPTIMIZED_XML_ESCAPING
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +165,11 @@ bool qbuProperty::fromXML(QDomElement & docElem)
 			if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
 				
 				QString strText = docElem.text();
+
+				if (strText.isEmpty()) {
+					// Why is it empty?
+				}
+
 				switch(ty){
 					// This case fails so we do the conversion manually
 					case QVariant::Char:
@@ -203,6 +209,104 @@ bool qbuProperty::fromXML(QDomElement & docElem)
 						retVal = (pHlpr != NULL);
 						if (retVal) {
 							retVal = pHlpr->fromXML(this,docElem);
+						}
+					}
+				}
+		}
+	}
+
+	return retVal;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuProperty::fromXML2(QString strXML)
+{
+	pugi::xml_document doc;
+
+	pugi::xml_parse_result result = doc.load_string(strXML.toStdString().c_str());
+
+	bool retVal = result;
+	if (retVal) {
+		pugi::xml_node docElem = doc.first_child();
+		retVal = fromXML2(docElem);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuProperty::fromXML2(pugi::xml_node & xmlNode)
+{
+	bool retVal = xmlNode;
+	if (retVal) {
+
+		auto attrTY = xmlNode.attribute("tyID");
+		QString strTypeID;
+
+		if (attrTY) {
+			strTypeID = attrTY.value();
+		}
+
+		retVal = !strTypeID.isEmpty();
+		if (!retVal) {
+			// Assume the type is a QString if the xml did not specify the type.
+			strTypeID = QString("%1").arg(QVariant::String);
+			retVal = true;
+		}
+		if (retVal) {
+			QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
+			if ((ty != QVariant::UserType) && (ty != QVariant::Invalid)) {
+
+				QString strText = xmlNode.text().get();
+
+				switch (ty){
+					// This case fails so we do the conversion manually
+				case QVariant::Char:
+					if (!strText.isEmpty()) {
+						if (strText.startsWith("0x", Qt::CaseInsensitive)) {
+							strText.remove("0x", Qt::CaseInsensitive);
+							m_vt = QChar(strText.toInt(&retVal, 16));
+						}
+						else
+						{
+							m_vt = QChar(strText.toInt(&retVal, 10));
+						}
+
+						//m_vt = QChar(strText[0]);
+					}
+					else
+						m_vt = QChar();
+
+					break;
+				default:
+					m_vt = strText;
+					retVal = m_vt.canConvert(ty);
+					break;
+				}
+
+				if (retVal) {
+					m_vt.convert(ty);
+					setObjectName(xmlNode.name());
+				}
+			}
+			else
+				if (ty == QVariant::UserType) {
+
+					auto attrTypeName = xmlNode.attribute("tyName");
+					QString strTypeName;
+
+					if (attrTypeName) {
+						strTypeName = attrTypeName.value();
+					}
+					
+					retVal = !strTypeName.isEmpty();
+					if (retVal) {
+						qbuUserPropXMLHelper* pHlpr = qbuPropXMLHelper::instance()->GetXMLHelper(strTypeName);
+						retVal = (pHlpr != NULL);
+						if (retVal) {
+							retVal = pHlpr->fromXML2(this, xmlNode);
 						}
 					}
 				}

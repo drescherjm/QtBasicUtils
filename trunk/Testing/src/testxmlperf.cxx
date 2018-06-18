@@ -32,6 +32,7 @@ struct QCmdTestXMLPerformance::qbuPrivate
 	bool test0();
 	bool test1();
 	bool test2();
+	bool test5();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -228,7 +229,6 @@ bool QCmdTestXMLPerformance::qbuPrivate::test1()
 	return retVal;
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool QCmdTestXMLPerformance::qbuPrivate::test2()
@@ -316,6 +316,74 @@ bool QCmdTestXMLPerformance::qbuPrivate::test2()
 		//	QString strSQL1 = prop1.GetData().toString();
 
 		retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool QCmdTestXMLPerformance::qbuPrivate::test5()
+{
+
+	const QString sqlTag{ QStringLiteral("SQLSTATEMENT") };
+
+	QFile xmlFile("X:/Temp/message1.xml");
+
+	bool retVal = xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	if (retVal) {
+
+		QTextStream stream(&xmlFile);
+
+		QString strSQL = stream.readAll();
+
+		qbuPropertyMap props0;
+
+		props0.fromXML2(strSQL);
+
+		auto start = std::chrono::system_clock::now();
+
+
+		QString strXML = props0.toXML();
+
+		auto end = std::chrono::system_clock::now();
+
+		std::chrono::duration<double> elapsed_seconds = end - start;
+
+		std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+		std::cout << "finished computation at " << std::ctime(&end_time)
+			<< "elapsed time (toXML): " << elapsed_seconds.count() << "s\n";
+
+
+		std::cout << "SQLSize " << strSQL.size() << "\n";
+		std::cout << "XMLSize " << strXML.size() << "\n";
+
+		qbuPropertyMap  props1;
+
+		auto start1 = std::chrono::system_clock::now();
+		props1.fromXML2(strXML);
+		auto end1 = std::chrono::system_clock::now();
+
+		{
+			std::chrono::duration<double> elapsed_seconds = end1 - start1;
+			std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+			std::cout << "finished computation at " << std::ctime(&end_time)
+				<< "elapsed time (fromXML): " << elapsed_seconds.count() << "s\n";
+		}
+
+		QString strSQL1;
+
+		retVal = props1.getField<QString>(sqlTag, strSQL1);
+
+		if (retVal) {
+			//	QString strSQL1 = prop1.GetData().toString();
+
+			retVal = (strSQL.compare(strSQL1, Qt::CaseInsensitive) == 0);
+		}
+
 	}
 
 	return retVal;
@@ -779,6 +847,9 @@ int  QCmdTestXMLPerformance::Execute()
 		break;
 	case 2:
 		bVal = m_pPrivate->test2();
+		break;
+	case 5:
+		bVal = m_pPrivate->test5();
 		break;
 	default:
 		bVal = false;

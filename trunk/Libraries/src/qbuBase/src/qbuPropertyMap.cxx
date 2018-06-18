@@ -442,7 +442,6 @@ QDebug operator<<(QDebug dbg, const QDomNode& node)
     return dbg;
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 bool qbuPropertyMap::fromXML( QString strXML )
@@ -510,6 +509,86 @@ bool qbuPropertyMap::fromXML(QDomElement & domElem)
     }
 
     return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuPropertyMap::fromXML2(QString strXML)
+{
+	pugi::xml_document doc;
+
+	pugi::xml_parse_result result = doc.load_string(strXML.toStdString().c_str());
+
+	bool retVal = result;
+	if (retVal) {
+		pugi::xml_node docElem = doc.first_child();
+		retVal = fromXML2(docElem.first_child());
+	}
+	
+// #ifdef DEBUG_XML_DUMPS
+// 	qDebug() << docElem;
+// #endif // DEBUG_XML_DUMPS
+// 
+// 	QDomNode n = docElem.firstChild();
+// 
+// 	retVal = !n.isNull();
+// 
+// 	if (retVal) {
+// 
+// #ifdef DEBUG_XML_DUMPS
+// 		qDebug() << n;
+// #endif //def DEBUG_XML_DUMPS
+// 
+// 		QDomElement e = n.toElement();
+// 		retVal = !e.isNull();
+// 		if (retVal) {
+// 			retVal = fromXML(e);
+// 		}
+// 	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuPropertyMap::fromXML2(pugi::xml_node & domElem)
+{
+	bool retVal;
+	pugi::xml_node  n = domElem;
+	retVal = n;
+
+	while (n && retVal) {
+// 		QDomElement e = n.toElement(); // try to convert the node to an element.
+// 		if (!e.isNull()) {
+// 
+// 			qbuProperty prop;
+// 			if (prop.fromXML(e)) {
+// 				insert(prop);
+// 			}
+// 			else
+// 			{
+// 				retVal = false;
+// 			}
+// 
+// 		}
+// 
+// 		n = n.nextSibling();
+
+
+		if (n) {
+			qbuProperty prop;
+			if (prop.fromXML2(n)) {
+				insert(prop);
+			}
+			else {
+				retVal = false;
+			}
+		}
+
+		n = n.next_sibling();
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

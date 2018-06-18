@@ -15,6 +15,12 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+namespace pugi {
+	class xml_node;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  *	A qbuProperty is an extended QVariant that allows for importing and exporting to and 
  *  from XML. It's most useful with the two collection classes (qbuPropertyMap and qbuPropertyList) 
@@ -41,7 +47,9 @@ public:
 public:
 	QString		toXML(qbuITKIndent indent = qbuITKIndent());
 	bool		fromXML(QString strXML);
+	bool		fromXML2(QString strXML);
 	bool		fromXML(QDomElement & domElem);
+	bool		fromXML2(pugi::xml_node & xmlNode);
 	bool		Load(QString strFile);
 	bool		Save(QString strFile);
 	void		Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());

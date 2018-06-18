@@ -9,3 +9,8 @@
 #include <QDebug>
 #include <QThread>
 #include <QApplication>
+
+
+// qtbasicutils.
+
+#include "qbuBase/pugixml.hpp"

@@ -41,6 +41,13 @@ bool qbuUserPropXMLHelper::fromXML(qbuProperty* pProp,QDomElement & domElem)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuUserPropXMLHelper::fromXML2(qbuProperty* pProp, pugi::xml_node & domElem)
+{
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuUserPropXMLHelper::Initialize()
 {
 	qbuPropXMLHelper* pPropXMLHelper = qbuPropXMLHelper::instance();

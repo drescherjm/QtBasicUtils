@@ -38,6 +38,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuThread.cxx
 	./src/qbuThreadedQObjectDeleter.cxx
 	./src/qbuWaitCursor.cxx
+	./src/pugixml.cpp
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -81,7 +82,8 @@ set( ${LOCAL_PROJECT_NAME}_RCS
 )
 
 set( ${LOCAL_PROJECT_NAME}_INT_HDRS
-
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/pugiconfig.hpp
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/pugixml.hpp
 )
 
 #Add precompiled header support

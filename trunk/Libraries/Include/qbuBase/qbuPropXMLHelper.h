@@ -1,13 +1,19 @@
 #pragma once
 
-#ifndef __QBUPROPXMLHELPER_H__
-#define __QBUPROPXMLHELPER_H__
+#ifndef QBUPROPXMLHELPER_H
+#define QBUPROPXMLHELPER_H
 
 #include <QMap>
 #include <QMutex>
 #include <QDomElement>
 
 #include "qbuBase/qbuNonThreadSafeSingleton.h"
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+namespace pugi {
+	class xml_node;
+}
 
 class qbuProperty;
 class qbuUserProperty;
@@ -24,7 +30,8 @@ public:
 protected:
 	void	  Initialize();
 public:
-	virtual bool	fromXML(qbuProperty* pProp,QDomElement & domElem);
+	virtual bool	fromXML(qbuProperty* pProp, QDomElement & domElem);
+	virtual bool	fromXML2(qbuProperty* pProp, pugi::xml_node & domElem);
 	virtual qbuUserProperty* construct();
 public:
 	const char*		m_strClasName;
@@ -82,4 +89,4 @@ qbuUserProperty* qbuUserPropPtrHelper<T>::construct()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUPROPXMLHELPER_H__
+#endif // QBUPROPXMLHELPER_H

@@ -9,6 +9,12 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+namespace pugi {
+	class xml_node;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  * This class defines a map of Properties. The key to the map here is the name of the property  
  * which is added in qbuProperty::setObjectName.
@@ -45,7 +51,9 @@ public:
     void			setCaseSensitivity ( Qt::CaseSensitivity cs );
     QString			toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
     bool			fromXML(QString strXML);
+	bool			fromXML2(QString strXML);
     bool			fromXML(QDomElement & domElem);
+	bool			fromXML2(pugi::xml_node & domElem);
     unsigned int	CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other);
     bool			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
     void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");
