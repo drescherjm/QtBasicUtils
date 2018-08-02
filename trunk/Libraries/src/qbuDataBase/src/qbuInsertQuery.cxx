@@ -136,7 +136,8 @@ bool qbuInsertQuery::create(qbuSelectQuery* pQuery, qbuTable* pTable,
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError),__FUNCTION__);
 #else
-			qDebug() << qPrintable(strError);
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 		}
 

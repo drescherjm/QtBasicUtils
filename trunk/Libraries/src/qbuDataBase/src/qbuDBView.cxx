@@ -92,7 +92,7 @@ bool qbuDBView::renameDBView( QString strNewName )
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuDBView::renameDBView");
 #else
-			qDebug() << qPrintable(strError);
+			databaseError(strError);
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -155,7 +155,8 @@ bool qbuDBView::dropView()
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuDBView::dropView");
 #else
-			qDebug() << qPrintable(strError);
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -200,6 +201,15 @@ bool qbuDBView::viewNeedsUpdate(int nOldSchema, int nNewSchema, bool bForceUpdat
     Q_UNUSED(nNewSchema);
     Q_UNUSED(nOldSchema);
     return bForceUpdate;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuDBView::databaseError(QString strErrorMessage)
+{
+	if (m_pDB) {
+		m_pDB->emitDatabaseError(strErrorMessage);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

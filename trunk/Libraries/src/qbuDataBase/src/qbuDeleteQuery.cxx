@@ -148,7 +148,7 @@ bool qbuDeleteQuery::generateQuery()
 #ifdef SM_HAVE_EXCEPTIONS
 				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuDeleteQuery::generateQuery");
 #else
-				qDebug() << qPrintable(strError);
+				databaseError(strError);
 #endif //def SM_HAVE_EXCEPTIONS
 
 			}

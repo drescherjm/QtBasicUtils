@@ -56,6 +56,8 @@ protected:
 	virtual bool				insertInitialValues(int nSchema) = 0;
 	virtual QString				getTableName() const =0;
 	virtual	bool				isValidField(QString strName);
+	virtual	void				databaseError(QString strErrorMessage);
+
 public:
 	/**
 	 *	This generates a select query to insert values from a qbuPropertyMap derivative

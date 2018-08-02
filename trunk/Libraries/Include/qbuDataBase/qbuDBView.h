@@ -41,6 +41,9 @@ protected:
     virtual bool        viewNeedsUpdate(int nOldSchema, int nNewSchema, bool bForceUpdate);
 
 protected:
+	virtual	void	databaseError(QString strErrorMessage);
+	
+protected:
 	std::shared_ptr<qbuDatabase>		m_pDB;
 };
 

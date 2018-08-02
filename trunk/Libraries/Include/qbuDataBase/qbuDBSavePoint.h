@@ -49,6 +49,9 @@ private:
 	bool	criticalCanNotRelease(qbuQuery & query);
 	bool	releaseSavePoint(qbuQuery & query);
 	bool	rollbackSavePoint(qbuQuery & query);
+
+protected:
+	virtual	void	databaseError(QString strErrorMessage);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

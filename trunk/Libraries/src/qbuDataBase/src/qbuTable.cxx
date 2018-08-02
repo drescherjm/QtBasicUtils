@@ -49,6 +49,11 @@ bool qbuTable::upgradeTable(int nOldSchema, int nNewSchema)
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::upgradeTable");
+
+#else // def QBU_DB_USES_EXCEPTIONS
+
+				databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 			}
@@ -155,6 +160,10 @@ bool qbuTable::internalCreateTable(QString strTableName, QString strTableSQL)
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::internalCreateTable");
+#else // def QBU_DB_USES_EXCEPTIONS
+
+		databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -197,6 +206,11 @@ bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strC
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::addColumn");
+
+#else // def QBU_DB_USES_EXCEPTIONS
+
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -236,6 +250,11 @@ bool qbuTable::renameTable(QString strNewName)
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::renameTable");
+
+#else	// def QBU_DB_USES_EXCEPTIONS
+
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -418,6 +437,15 @@ QString qbuTable::getUniqueTempTableName(QString strBase, int nIndexStart/*=0*/)
 		}
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuTable::databaseError(QString strErrorMessage)
+{
+	if (m_pDB) {
+		m_pDB->emitDatabaseError(strErrorMessage);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

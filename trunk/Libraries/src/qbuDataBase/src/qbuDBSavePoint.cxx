@@ -68,7 +68,8 @@ qbuDBSavePoint::~qbuDBSavePoint()
 #ifdef QBU_DB_USES_EXCEPTIONS
 					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBSavePoint::~qbuDBSavePoint");
 #else
-					qDebug() << qPrintable(strMsg);
+					databaseError(strMsg);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 				}
@@ -126,7 +127,7 @@ bool qbuDBSavePoint::startSavePoint()
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBSavePoint::startSavePoint");
 #else
-			qDebug() << qPrintable(strError);
+			databaseError(strError);
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -219,6 +220,15 @@ bool qbuDBSavePoint::rollbackSavePoint(qbuQuery & query)
 		QLOG_CRIT() << QBULOG_DATABASE_TYPE << query.lastError().text();
 	}
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuDBSavePoint::databaseError(QString strErrorMessage)
+{
+	if (m_pDB) {
+		m_pDB->emitDatabaseError(strErrorMessage);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

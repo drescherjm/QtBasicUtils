@@ -33,7 +33,11 @@ public:
 	virtual ~qbuDatabase();
 
 	friend class qbuDBTransaction;
-	friend class qbuCreateViewQuery;
+	friend class qbuSimpleQuery;
+	friend class qbuDBSavePoint;
+	friend class qbuDBView;
+	friend class qbuTable;
+	friend class qbuTableSchema;
 
 public:
 	int				getDBSchemaVersion();
@@ -84,7 +88,6 @@ protected:
 	virtual bool	createSettingsTable();
 	virtual bool	setDBSchemaVersion(int nSchema);
 	virtual bool	verifyCoverage(qbuStringList & lstSucceeded, qbuStringList & lstFailed);
-
 
 protected:
 	qbuDatabase(const qbuDatabase &other);

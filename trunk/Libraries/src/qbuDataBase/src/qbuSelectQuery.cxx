@@ -211,6 +211,8 @@ bool qbuSelectQuery::generateQuery()
 
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
+				databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 			}

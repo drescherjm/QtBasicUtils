@@ -52,7 +52,8 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
 #else
-			getDataBase()->emitDatabaseError(strError);
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}

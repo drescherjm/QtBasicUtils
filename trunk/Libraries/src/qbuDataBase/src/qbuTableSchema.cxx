@@ -71,6 +71,10 @@ bool qbuTableSchema::analyzeTable()
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuSelectQuery::generateQuery");
+#else //def QBU_DB_USES_EXCEPTIONS
+			
+			databaseError(strError);
+
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
@@ -151,6 +155,15 @@ bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 	}
 
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuTableSchema::databaseError(QString strErrorMessage)
+{
+	if (m_pTable && m_pTable->m_pDB) {
+		m_pTable->m_pDB->emitDatabaseError(strErrorMessage);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

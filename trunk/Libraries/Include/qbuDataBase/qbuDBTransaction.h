@@ -34,6 +34,9 @@ private:
 	qbuDBTransaction& operator=(const qbuDBTransaction & noAssign );
 	qbuDBTransaction(const qbuDBTransaction & noCopy );
 	qbuDBTransaction();
+
+protected:
+	virtual	void	databaseError(QString strErrorMessage);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

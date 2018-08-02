@@ -47,6 +47,9 @@ public:
 
     std::shared_ptr<qbuDatabase> getDataBase();
 
+protected:
+	virtual	void	databaseError(QString strErrorMessage);
+
 private:
 	class qbuPrivate;
 	std::unique_ptr<qbuPrivate>	m_pPrivate;

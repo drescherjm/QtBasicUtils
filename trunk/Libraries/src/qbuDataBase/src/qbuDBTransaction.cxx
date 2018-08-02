@@ -21,7 +21,7 @@ qbuDBTransaction::qbuDBTransaction(std::shared_ptr<qbuDatabase> pDB) : m_pDB(pDB
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBTransaction::qbuDBTransaction");
 #else
-		m_pDB->emitDatabaseError(strError);
+			databaseError(strError);
 
 #endif //def QBU_DB_USES_EXCEPTIONS
 
@@ -64,7 +64,8 @@ qbuDBTransaction::~qbuDBTransaction()
 #ifdef QBU_DB_USES_EXCEPTIONS
 					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
-					m_pDB->emitDatabaseError(strMsg);
+					databaseError(strMsg);
+
 #endif //def SM_HAVE_EXCEPTIONS
 
 				}
@@ -87,7 +88,8 @@ qbuDBTransaction::~qbuDBTransaction()
 #ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
-				m_pDB->emitDatabaseError(strMsg);
+				databaseError(strMsg);
+
 #endif //def SM_HAVE_EXCEPTIONS
 
 			}
@@ -155,6 +157,15 @@ bool qbuDBTransaction::warningCanNotCommit()
 
 	return retVal;
 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuDBTransaction::databaseError(QString strErrorMessage)
+{
+	if (m_pDB) {
+		m_pDB->emitDatabaseError(strErrorMessage);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

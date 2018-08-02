@@ -24,6 +24,10 @@ public:
 public:
 	virtual	bool	analyzeTable();
 	virtual bool	verifyTable(qbuInfo* pInfo);
+
+protected:
+	virtual	void	databaseError(QString strErrorMessage);
+
 protected:
 	qbuTableColumnDefList	m_lstColumns;
 	qbuTable*				m_pTable;
