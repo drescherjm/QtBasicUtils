@@ -22,6 +22,7 @@ class qbuData;
 
 class qbuDatabase : public QObject, public QSqlDatabase, public std::enable_shared_from_this<qbuDatabase>
 {
+	Q_OBJECT
 	QBU_DECLARE_SUPERCLASS(QSqlDatabase);
 public:
 	qbuDatabase();
