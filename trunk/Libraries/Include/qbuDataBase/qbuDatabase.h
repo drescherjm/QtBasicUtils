@@ -77,7 +77,7 @@ signals:
 	void	dbError(QString strMsg);
 
 protected:
-	virtual	void	emitDatabaseError(QString strErroMessage);
+	virtual	void	emitDatabaseError(QString strErrorMessage);
 	virtual int		getApplicationSchemaVersion();
 	virtual bool	upgradeDB(int nOldSchema, int nNewSchema);
 	virtual bool	preUpgradeDB(int nOldSchema, int nNewSchema);
