@@ -67,13 +67,14 @@ public:
 	virtual bool	createTemporaryViews(qbuData* pData);
 
 protected:
-	
 	virtual int		getApplicationSchemaVersion();
 	virtual bool	upgradeDB(int nOldSchema, int nNewSchema);
 	virtual bool	preUpgradeDB(int nOldSchema, int nNewSchema);
 	virtual bool	createSettingsTable();
 	virtual bool	setDBSchemaVersion(int nSchema);
 	virtual bool	verifyCoverage(qbuStringList & lstSucceeded, qbuStringList & lstFailed);
+
+
 protected:
 	qbuDatabase(const qbuDatabase &other);
 	qbuDatabase &operator=(const qbuDatabase &other);

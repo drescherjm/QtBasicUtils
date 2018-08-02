@@ -89,11 +89,11 @@ bool qbuDBView::renameDBView( QString strNewName )
 				.arg(strNewName)
 				.arg(query.lastError().text());
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuDBView::renameDBView");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 	}
@@ -152,11 +152,11 @@ bool qbuDBView::dropView()
 				.arg(getDBViewName())
 				.arg(query.lastError().text());
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuDBView::dropView");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 	}

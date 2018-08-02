@@ -18,11 +18,11 @@ qbuDBTransaction::qbuDBTransaction(std::shared_ptr<qbuDatabase> pDB) : m_pDB(pDB
 			QString strError = QString("Could not start a transaction: %1").arg(m_pDB->lastError().text());
 			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBTransaction::qbuDBTransaction");
 #else
 			qDebug() << qPrintable(strError);
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 		else
@@ -60,7 +60,7 @@ qbuDBTransaction::~qbuDBTransaction()
 
 					m_pDB->rollback();
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
 					qDebug() << qPrintable(strError);
@@ -83,7 +83,7 @@ qbuDBTransaction::~qbuDBTransaction()
 
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strMsg;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
 				qDebug() << qPrintable(strError);

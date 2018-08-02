@@ -1,12 +1,12 @@
 myproject(qbuDataBase)
 
-option(USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
-option(USE_EXCEPTIONS "Use exceptions" ON)
+option(DB_USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
+option(DB_DB_USE_EXCEPTIONS "Use exceptions in database code" ON)
 
-conditional_define(USE_EXCEPTIONS QBU_HAVE_EXCEPTIONS)
+conditional_define(DB_USE_EXCEPTIONS QBU_DB_USES_EXCEPTIONS)
 
-if (USE_EXCEPTIONS)
-	set (${LOCAL_PROJECT_NAME}_DEFINES -DQBU_HAVE_EXCEPTIONS)
+if (DB_USE_EXCEPTIONS)
+	set (${LOCAL_PROJECT_NAME}_DEFINES -DQBU_DB_USES_EXCEPTIONS)
 endif()
 
 set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
@@ -28,9 +28,9 @@ else(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	include(${QT_USE_FILE})
 endif(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
-if(USE_BIND_FOR_INSERT)
-	add_definitions(-DUSE_BIND_FOR_INSERT)
-ENDIF(USE_BIND_FOR_INSERT)
+if(DB_USE_BIND_FOR_INSERT)
+	add_definitions(-DDB_USE_BIND_FOR_INSERT)
+ENDIF(DB_USE_BIND_FOR_INSERT)
 
 set(Boost_ADDITIONAL_VERSIONS "1.62" "1.62.0" "1.60" "1.60.0")
 find_package( Boost REQUIRED )

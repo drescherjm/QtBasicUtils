@@ -205,13 +205,13 @@ bool qbuSelectQuery::generateQuery()
 					.arg(strQuery)
 					.arg(lastError().text());
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuSelectQuery::generateQuery");
 #else
 
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 			}
 

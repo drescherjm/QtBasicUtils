@@ -47,9 +47,9 @@ bool qbuTable::upgradeTable(int nOldSchema, int nNewSchema)
 
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::upgradeTable");
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 			}
 		}
@@ -153,9 +153,9 @@ bool qbuTable::internalCreateTable(QString strTableName, QString strTableSQL)
 
 			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::internalCreateTable");
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 	}
@@ -195,9 +195,9 @@ bool qbuTable::addColumn(QString strCoumnName, QString strDataType, QString strC
 
 			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::addColumn");
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 	}
@@ -234,9 +234,9 @@ bool qbuTable::renameTable(QString strNewName)
 
 			QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuTable::renameTable");
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
 	}

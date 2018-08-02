@@ -150,11 +150,11 @@ bool qbuUpdateQuery::generateQuery()
 					.arg(strQuery)
 					.arg(lastError().text());
 
-#ifdef QBU_HAVE_EXCEPTIONS
+#ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuUpdateQuery::generateQuery");
 #else
 				qDebug() << qPrintable(strError);
-#endif //def QBU_HAVE_EXCEPTIONS
+#endif //def QBU_DB_USES_EXCEPTIONS
 
 			}
 
