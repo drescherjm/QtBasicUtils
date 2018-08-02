@@ -81,7 +81,7 @@ QString qbuDeleteQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDeleteQuery::qbuDeleteQuery( std::shared_ptr<QSqlDatabase> pDB ) : Superclass(pDB)
+qbuDeleteQuery::qbuDeleteQuery( std::shared_ptr<qbuDatabase> pDB ) : Superclass(pDB)
 {
 	m_pPrivate = new qbuPrivate();
 }

@@ -12,7 +12,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuInsertQuery::qbuInsertQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
+qbuInsertQuery::qbuInsertQuery(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB)
 {
 
 }

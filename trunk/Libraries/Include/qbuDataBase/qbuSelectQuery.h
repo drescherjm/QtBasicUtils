@@ -26,7 +26,7 @@ class qbuSelectQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuSelectQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuSelectQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuSelectQuery();
 public:
 	enum	SelectOption	{ QBU_SELECT_DEFAULT, QBU_SELECT_DISTINCT, QBU_SELECT_ALL };

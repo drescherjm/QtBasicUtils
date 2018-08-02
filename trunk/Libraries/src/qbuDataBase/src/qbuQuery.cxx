@@ -6,7 +6,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuQuery::qbuQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
+qbuQuery::qbuQuery(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB)
 {
 
 }

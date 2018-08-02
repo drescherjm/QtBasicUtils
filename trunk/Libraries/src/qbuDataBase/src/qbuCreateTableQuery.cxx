@@ -78,7 +78,7 @@ bool qbuCreateTableQuery::qbuPrivate::insertPrimaryKeys( QString & strQuery )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuCreateTableQuery::qbuCreateTableQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
+qbuCreateTableQuery::qbuCreateTableQuery(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB)
 {
 	m_pPrivate = new qbuPrivate();
 }

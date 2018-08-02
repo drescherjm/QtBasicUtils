@@ -4,23 +4,24 @@
 #include <QSqlQuery>
 #include "qbuLog/qbuLog.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDatabase.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 class qbuSimpleQuery::qbuPrivate
 {
 public:
-	qbuPrivate( std::shared_ptr<QSqlDatabase> pDatabase);
-	qbuPrivate(QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase);
+	qbuPrivate( std::shared_ptr<qbuDatabase> pDatabase);
+	qbuPrivate(QString strQuery,std::shared_ptr<qbuDatabase> pDatabase);
 
 public:
 	QSqlQuery	m_query;
-	std::shared_ptr<QSqlDatabase> m_pDB;
+	std::shared_ptr<qbuDatabase> m_pDB;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuPrivate::qbuPrivate(std::shared_ptr<QSqlDatabase> pDatabase) : m_pDB(pDatabase),
+qbuSimpleQuery::qbuPrivate::qbuPrivate(std::shared_ptr<qbuDatabase> pDatabase) : m_pDB(pDatabase),
 	m_query(*pDatabase)
 {
 
@@ -28,7 +29,7 @@ qbuSimpleQuery::qbuPrivate::qbuPrivate(std::shared_ptr<QSqlDatabase> pDatabase) 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuPrivate::qbuPrivate( QString strQuery,std::shared_ptr<QSqlDatabase> pDatabase ) : m_pDB(pDatabase),
+qbuSimpleQuery::qbuPrivate::qbuPrivate( QString strQuery,std::shared_ptr<qbuDatabase> pDatabase ) : m_pDB(pDatabase),
 	m_query(strQuery,*pDatabase)
 {
 
@@ -36,14 +37,14 @@ qbuSimpleQuery::qbuPrivate::qbuPrivate( QString strQuery,std::shared_ptr<QSqlDat
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuSimpleQuery( std::shared_ptr<QSqlDatabase> pDatabase) : m_pPrivate( new qbuPrivate(pDatabase) )
+qbuSimpleQuery::qbuSimpleQuery( std::shared_ptr<qbuDatabase> pDatabase) : m_pPrivate( new qbuPrivate(pDatabase) )
 {
 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSimpleQuery::qbuSimpleQuery( QString strQuery, std::shared_ptr<QSqlDatabase> pDB ) : m_pPrivate( new qbuPrivate(strQuery, pDB) )
+qbuSimpleQuery::qbuSimpleQuery( QString strQuery, std::shared_ptr<qbuDatabase> pDB ) : m_pPrivate( new qbuPrivate(strQuery, pDB) )
 {
 
 }
@@ -214,7 +215,7 @@ qbuSimpleQuery::operator const QSqlQuery&() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-std::shared_ptr<QSqlDatabase> qbuSimpleQuery::getDataBase()
+std::shared_ptr<qbuDatabase> qbuSimpleQuery::getDataBase()
 {
     return m_pPrivate->m_pDB;
 }

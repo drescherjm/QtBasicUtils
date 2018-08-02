@@ -86,7 +86,7 @@ QString qbuUpdateQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuUpdateQuery::qbuUpdateQuery( std::shared_ptr<QSqlDatabase> pDB ) : Superclass(pDB)
+qbuUpdateQuery::qbuUpdateQuery( std::shared_ptr<qbuDatabase> pDB ) : Superclass(pDB)
 {
 	m_pPrivate = new qbuPrivate();
 }

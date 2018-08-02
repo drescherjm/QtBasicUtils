@@ -25,7 +25,7 @@ class qbuUpdateQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuUpdateQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuUpdateQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuUpdateQuery();
 
 	enum UpdateExprCode {

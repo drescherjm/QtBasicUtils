@@ -13,7 +13,7 @@ class qbuDataBase_EXPORT qbuCreateTableQueryEx : public qbuCreateTableQuery
 {
 	QBU_DECLARE_SUPERCLASS(qbuCreateTableQuery);
 public:
-	qbuCreateTableQueryEx(std::shared_ptr<QSqlDatabase> pDB);
+	qbuCreateTableQueryEx(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuCreateTableQueryEx();
 public:
 	bool	createFromSelect(qbuSelectQuery & query);

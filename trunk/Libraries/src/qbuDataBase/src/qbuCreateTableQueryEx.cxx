@@ -35,7 +35,7 @@ QStringList qbuCreateTableQueryEx::qbuPrivate::getColumnNames(qbuCreateTableQuer
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuCreateTableQueryEx::qbuCreateTableQueryEx(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB), 
+qbuCreateTableQueryEx::qbuCreateTableQueryEx(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB), 
 m_pPrivate( new qbuPrivate )
 {
 

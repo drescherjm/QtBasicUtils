@@ -27,7 +27,7 @@ class /*qbuDatabase_EXPORT*/ qbuDeleteQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuDeleteQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuDeleteQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuDeleteQuery();
 public:
 	virtual	bool	generateSQL(QString & strSQL);

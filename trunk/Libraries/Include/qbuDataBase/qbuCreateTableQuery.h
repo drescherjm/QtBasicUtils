@@ -26,7 +26,7 @@ public:
 	typedef QList<qbuCTSQLColumn> sqlColumnList;
 
 public:
-	qbuCreateTableQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuCreateTableQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuCreateTableQuery();
 public:
 	virtual bool	addColumn(QString strCoumnName,QString strDataType,QString strConstraint=QString());

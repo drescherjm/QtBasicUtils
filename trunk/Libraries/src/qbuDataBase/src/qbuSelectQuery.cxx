@@ -103,7 +103,7 @@ QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuSelectQuery::qbuSelectQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB),
+qbuSelectQuery::qbuSelectQuery(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB),
 m_pPrivate(new qbuPrivate)
 {
 	setSelectOption(QBU_SELECT_DEFAULT);

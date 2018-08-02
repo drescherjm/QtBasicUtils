@@ -21,7 +21,7 @@ class qbuDataBase_EXPORT qbuQuery : public qbuSimpleQuery
 public:
 	typedef qbuSimpleQuery Superclass;
 public:
-	qbuQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuQuery(std::shared_ptr<qbuDatabase> pDB);
 
 	enum WhereExprCode {
 		WE_IGNORE_MISSING_FIELDS = 0,

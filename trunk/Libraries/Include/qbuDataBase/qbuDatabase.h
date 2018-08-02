@@ -28,6 +28,10 @@ public:
 	qbuDatabase(const Superclass &other);
 	qbuDatabase &operator=(const Superclass &other);
 	virtual ~qbuDatabase();
+
+	friend class qbuDBTransaction;
+	friend class qbuCreateViewQuery;
+
 public:
 	int				getDBSchemaVersion();
 	bool			tableExists(QString strTableName, Qt::CaseSensitivity cs = Qt::CaseInsensitive);
@@ -66,7 +70,11 @@ public:
 
 	virtual bool	createTemporaryViews(qbuData* pData);
 
+signals:
+	void	dbError(QString strMsg);
+
 protected:
+	virtual	void	emitDatabaseError(QString strErroMessage);
 	virtual int		getApplicationSchemaVersion();
 	virtual bool	upgradeDB(int nOldSchema, int nNewSchema);
 	virtual bool	preUpgradeDB(int nOldSchema, int nNewSchema);

@@ -25,7 +25,7 @@ class qbuInsertQuery : public qbuQuery
 {
 	QBU_DECLARE_SUPERCLASS(qbuQuery);
 public:
-	qbuInsertQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuInsertQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuInsertQuery();
 
 public:

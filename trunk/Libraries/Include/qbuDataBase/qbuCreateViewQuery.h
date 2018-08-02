@@ -21,7 +21,7 @@ class qbuCreateViewQuery : public qbuQuery
 public:
 	typedef qbuQuery Superclass;
 public:
-	qbuCreateViewQuery(std::shared_ptr<QSqlDatabase> pDB);
+	qbuCreateViewQuery(std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuCreateViewQuery();
 public:
 	bool	create(QString strViewName, QString strViewQuery, bool bTempView = false);

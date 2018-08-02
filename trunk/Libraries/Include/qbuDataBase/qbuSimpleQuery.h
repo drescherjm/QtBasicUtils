@@ -9,7 +9,7 @@
 #include <qsql.h>
 #include <memory>
 
-class QSqlDatabase;
+class qbuDatabase;
 class QSqlQuery;
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -23,8 +23,8 @@ class qbuSimpleQuery : public QObject
 public:
 	typedef QObject Superclass;
 public:
-	qbuSimpleQuery(std::shared_ptr<QSqlDatabase> pDB);
-	qbuSimpleQuery(QString strQuery, std::shared_ptr<QSqlDatabase> pDB);
+	qbuSimpleQuery(std::shared_ptr<qbuDatabase> pDB);
+	qbuSimpleQuery(QString strQuery, std::shared_ptr<qbuDatabase> pDB);
 	virtual ~qbuSimpleQuery();
 
 	operator const QSqlQuery&() const; 
@@ -45,7 +45,7 @@ public:
 	virtual void		bindValue(const QString & placeholder, const QVariant & val, QSql::ParamType paramType = QSql::In);
 	virtual	void		bindValue(int pos, const QVariant & val, QSql::ParamType paramType = QSql::In);
 
-    std::shared_ptr<QSqlDatabase> getDataBase();
+    std::shared_ptr<qbuDatabase> getDataBase();
 
 private:
 	class qbuPrivate;

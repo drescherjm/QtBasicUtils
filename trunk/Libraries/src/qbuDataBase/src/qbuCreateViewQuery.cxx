@@ -3,10 +3,11 @@
 #include "qbuDataBase/qbuCreateViewQuery.h"
 #include <QDebug>
 #include <QSqlError>
+#include "qbuDataBase/qbuDatabase.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuCreateViewQuery::qbuCreateViewQuery(std::shared_ptr<QSqlDatabase> pDB) : Superclass(pDB)
+qbuCreateViewQuery::qbuCreateViewQuery(std::shared_ptr<qbuDatabase> pDB) : Superclass(pDB)
 {
 	
 }
@@ -51,7 +52,7 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
 #else
-			qDebug() << qPrintable(strError);
+			getDataBase()->emitDatabaseError(strError);
 #endif //def QBU_DB_USES_EXCEPTIONS
 
 		}
