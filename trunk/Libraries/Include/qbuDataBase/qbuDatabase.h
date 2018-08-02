@@ -3,9 +3,11 @@
 #ifndef QBUDATABASE_H
 #define QBUDATABASE_H
 
-#include <QSqlDatabase>
 #include "qbuBase/qbuMacros.h"
 #include "qbuBase/qbuStringList.h"
+#include <QObject>
+#include <QSqlDatabase>
+#include <memory>
 
 class qbuDBSettingsTableBase;
 class qbuData;
