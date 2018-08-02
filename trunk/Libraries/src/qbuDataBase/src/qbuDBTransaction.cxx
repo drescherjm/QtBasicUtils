@@ -63,7 +63,7 @@ qbuDBTransaction::~qbuDBTransaction()
 #ifdef QBU_DB_USES_EXCEPTIONS
 					throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
-					qDebug() << qPrintable(strError);
+					qDebug() << qPrintable(strMsg);
 #endif //def SM_HAVE_EXCEPTIONS
 
 				}
@@ -86,7 +86,7 @@ qbuDBTransaction::~qbuDBTransaction()
 #ifdef QBU_DB_USES_EXCEPTIONS
 				throw qbuException(__FILE__, __LINE__, qPrintable(strMsg), "qbuDBTransaction::~qbuDBTransaction");
 #else
-				qDebug() << qPrintable(strError);
+				qDebug() << qPrintable(strMsg);
 #endif //def SM_HAVE_EXCEPTIONS
 
 			}
