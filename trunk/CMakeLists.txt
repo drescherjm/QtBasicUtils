@@ -59,6 +59,7 @@ if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
 	set (QT_LIBRARIES Qt5::Widgets Qt5::WinMain Qt5::Xml)
 	set (QT_MODULES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::WinMain Qt5::Xml)
+	set (QT_PLATFORM_MODULES Qt5::QWindowsIntegrationPlugin)
 	
 	find_qt5_packages()
 		
