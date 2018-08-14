@@ -71,9 +71,9 @@ public:
 	virtual bool	hasConnection();
 
 	virtual bool	verifyDBSchema();
-	virtual	std::shared_ptr<qbuDBSettingsTableBase>	getSettingsTable() =0;
+	virtual	std::shared_ptr<qbuDBSettingsTableBase>	getSettingsTable();
 
-	virtual	QString	getDefaultAttachName()=0;
+	virtual	QString	getDefaultAttachName();
 
 	virtual bool	createTemporaryViews(qbuData* pData);
 
