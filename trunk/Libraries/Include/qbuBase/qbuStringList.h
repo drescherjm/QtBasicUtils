@@ -30,7 +30,9 @@ public:
 	int			indexOf(const QString & str, Qt::CaseSensitivity cs, int from=0) const;
 	int			lastIndexOf( const QString & value, Qt::CaseSensitivity cs, int from = -1 ) const;
 	bool		insertAfter(const QString & strSearch, const QString & strInsert, Qt::CaseSensitivity cs, int from = 0);
+	bool		insertAfter(const QString & strSearch, const QStringList & lstInsert, Qt::CaseSensitivity cs, int from = 0);
 	bool		insertBefore(const QString & strSearch, const QString & strInsert, Qt::CaseSensitivity cs, int from= 0);
+	bool		insertBefore(const QString & strSearch, const QStringList & lstInsert, Qt::CaseSensitivity cs, int from = 0);
 	QString		toCSVString();
 	QString		toDelimitedString(QString delimiter=",");
 	QString		toDoubleDelimitedString(QString before, QString after);

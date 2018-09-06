@@ -25,10 +25,10 @@ struct qbuDBColDef : public QObject
 	Q_OBJECT
 public:
 	enum Option {
-		OP_NO_CODE = 0,
-		OP_AUTO_QUOTE = 1,
+		OP_NO_CODE       = 0,
+		OP_AUTO_QUOTE    = 1,
 		OP_IS_EXPRESSION = 2,
-		OP_DESCENDING = 4,
+		OP_DESCENDING    = 4,
 	};
 
 	Q_DECLARE_FLAGS(Options, Option);

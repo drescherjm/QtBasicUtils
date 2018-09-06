@@ -149,6 +149,21 @@ bool qbuStringList::insertAfter(const QString & strSearch, const QString & strIn
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuStringList::insertAfter(const QString & strSearch, const QStringList & lstInsert, Qt::CaseSensitivity cs, int from /*= 0*/)
+{
+	int nIndex = indexOf(strSearch, cs, from);
+
+	bool retVal = (nIndex >= 0);
+	if (retVal) {
+		for (const auto & strInsert : lstInsert) {
+			Superclass::insert(++nIndex, strInsert);
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool qbuStringList::insertBefore(const QString & strSearch, const QString & strInsert, Qt::CaseSensitivity cs, int from /*= 0*/)
 {
 	int nIndex = indexOf(strSearch, cs, from);
@@ -156,6 +171,21 @@ bool qbuStringList::insertBefore(const QString & strSearch, const QString & strI
 	bool retVal = (nIndex >= 0);
 	if (retVal) {
 		Superclass::insert(nIndex, strInsert);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuStringList::insertBefore(const QString & strSearch, const QStringList & lstInsert, Qt::CaseSensitivity cs, int from /*= 0*/)
+{
+	int nIndex = indexOf(strSearch, cs, from);
+
+	bool retVal = (nIndex >= 0);
+	if (retVal) {
+		for (auto it = lstInsert.rbegin(); it != lstInsert.rend();++it) {
+			Superclass::insert(nIndex, *it);
+		}
 	}
 	return retVal;
 }
