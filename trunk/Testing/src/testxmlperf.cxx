@@ -234,7 +234,11 @@ bool QCmdTestXMLPerformance::qbuPrivate::test1()
 bool QCmdTestXMLPerformance::qbuPrivate::test2()
 {
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)   
 	const QString sqlTag{ QStringLiteral("SQLSTATEMENT") };
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0) 
+	const QString sqlTag{ "SQLSTATEMENT" };
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0) 
 
 	QString strSQL = generate(Session, 20000);
 
@@ -326,7 +330,11 @@ bool QCmdTestXMLPerformance::qbuPrivate::test2()
 bool QCmdTestXMLPerformance::qbuPrivate::test5()
 {
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)   
 	const QString sqlTag{ QStringLiteral("SQLSTATEMENT") };
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0) 
+	const QString sqlTag{ "SQLSTATEMENT" };
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0) 
 
 	QFile xmlFile("X:/Temp/message1.xml");
 

@@ -183,9 +183,19 @@ bool qbuStringList::insertBefore(const QString & strSearch, const QStringList & 
 
 	bool retVal = (nIndex >= 0);
 	if (retVal) {
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)   
 		for (auto it = lstInsert.rbegin(); it != lstInsert.rend();++it) {
 			Superclass::insert(nIndex, *it);
 		}
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+
+		QListIterator<QString> it(lstInsert);
+		while (it.hasPrevious()) {
+			Superclass::insert(nIndex, it.previous());
+		}
+
+#endif //QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
 	}
 	return retVal;
 }
