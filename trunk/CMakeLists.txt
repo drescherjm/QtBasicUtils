@@ -1,7 +1,11 @@
 project(QtBasicUtils)
 
-cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.10 FATAL_ERROR)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+if( POLICY CMP0074 )
+  cmake_policy(SET CMP0074 NEW)
+endif()
 
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
 set (${PROJECT_NAME}_VERSION_MINOR 2)
