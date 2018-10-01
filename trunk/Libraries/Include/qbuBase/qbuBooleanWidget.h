@@ -1,11 +1,15 @@
-#include "rfGUILibraryDefines.h"
+#pragma once
+
+#ifndef QBUBOOLEANWIDGET_H
+#define QBUBOOLEANWIDGET_H
+
 #include <QWidget>
 
 class QCheckBox;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class rfGUI_EXPORT qbuBooleanWidget : public QWidget
+class qbuBooleanWidget : public QWidget
 {
     Q_OBJECT
     public:
@@ -22,3 +26,5 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUBOOLEANWIDGET_H

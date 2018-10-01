@@ -1,9 +1,13 @@
+#pragma once
+
+#ifndef QBUCHECKBOXDELEGATE_H
+#define QBUCHECKBOXDELEGATE_H
+
 #include <QItemDelegate>
-#include "rfGUILibraryDefines.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-class rfGUI_EXPORT qbuCheckBoxDelegate : public QItemDelegate
+class qbuCheckBoxDelegate : public QItemDelegate
 {
 	Q_OBJECT
 public:
@@ -30,3 +34,5 @@ protected slots:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // QBUCHECKBOXDELEGATE_H

@@ -1,7 +1,7 @@
 #include "qbuBasePCH.h"
 
 #include "qbuBase\qbuCheckBoxDelegate.h"
-#include "rfGUI/Include/rfBooleanWidget.h"
+#include "qbuBase\qbuBooleanWidget.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +21,7 @@ void qbuCheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
 QWidget *qbuCheckBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    rfBooleanWidget* retVal = new rfBooleanWidget(parent);
+	qbuBooleanWidget* retVal = new qbuBooleanWidget(parent);
 	QObject::connect(retVal, SIGNAL(toggled(bool)), this, SLOT(changed(bool)));
 	return retVal;
 }
@@ -32,7 +32,7 @@ void qbuCheckBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 {
 	bool bVal = index.model()->data(index, Qt::DisplayRole).toBool();
 
-    rfBooleanWidget* pWidget = qobject_cast<rfBooleanWidget*>(editor);
+	qbuBooleanWidget* pWidget = qobject_cast<qbuBooleanWidget*>(editor);
 
     if (pWidget) {
         // Yes toggle the value when setting since the editor is enabled on first click.
@@ -47,7 +47,7 @@ void qbuCheckBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 void qbuCheckBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    rfBooleanWidget* pWidget = qobject_cast<rfBooleanWidget*>(editor);
+	qbuBooleanWidget* pWidget = qobject_cast<qbuBooleanWidget*>(editor);
     if (pWidget) {
         model->setData(index, pWidget->isChecked() ? 1 : 0, Qt::EditRole);
     }
@@ -58,7 +58,7 @@ void qbuCheckBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *mode
 
 void qbuCheckBoxDelegate::changed(bool value)
 {
-    rfBooleanWidget *checkbox = qobject_cast<rfBooleanWidget*>(sender());
+	qbuBooleanWidget *checkbox = qobject_cast<qbuBooleanWidget*>(sender());
     emit commitData(checkbox);
     emit closeEditor(checkbox);
 }

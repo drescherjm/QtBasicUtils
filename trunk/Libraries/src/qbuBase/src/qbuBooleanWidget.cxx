@@ -1,5 +1,8 @@
-#include "rfGUIPCH.h"
-#include "rfGUI/Include/qbuBooleanWidget.h"
+#include "qbuBasePCH.h"
+#include "qbuBase/qbuBooleanWidget.h"
+
+#include <QCheckBox>
+#include <QHBoxLayout>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
