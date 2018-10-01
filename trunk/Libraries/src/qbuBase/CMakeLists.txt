@@ -39,6 +39,8 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/qbuThreadedQObjectDeleter.cxx
 	./src/qbuWaitCursor.cxx
 	./src/pugixml.cpp
+	./src/qbuCheckBoxDelegate.cxx
+	./src/qbuBooleanWidget.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -71,6 +73,8 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignalGroup.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignalBase.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignal.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBoxDelegate.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuBooleanWidget.h
 )
 
 # some .ui files
