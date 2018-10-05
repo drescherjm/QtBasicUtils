@@ -89,7 +89,15 @@ void qbuNonButtonCheckableSignal::buttonToggledInt(bool bChecked)
 
 void qbuNonButtonCheckableSignal::setChecked(bool bChecked)
 {
+	bool bChanged = (m_pPrivate->m_bChecked != bChecked);
+
 	m_pPrivate->m_bChecked = bChecked;
+
+	// Send toggled signal when changed and not connected to an object that signals.
+	if ( (m_pPrivate->m_pObject == nullptr) && bChanged) {
+		emit buttonToggledInt(bChecked);
+	}
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
