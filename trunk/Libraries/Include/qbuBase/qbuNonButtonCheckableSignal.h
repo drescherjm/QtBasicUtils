@@ -13,7 +13,7 @@ class qbuBase_EXPORT qbuNonButtonCheckableSignal : public qbuButtonSignalBase
 	Q_OBJECT
 	QBU_DECLARE_SUPERCLASS(qbuButtonSignalBase)
 public:
-	explicit qbuNonButtonCheckableSignal(QObject* pParent);
+	explicit qbuNonButtonCheckableSignal(QObject* pParent = nullptr);
 	~qbuNonButtonCheckableSignal();
 
 	enum ButtonMode {
