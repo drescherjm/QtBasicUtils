@@ -266,19 +266,35 @@ bool qbuDBCondition::isEmpty() const
 	return (m_pPrivate != nullptr) ? m_pPrivate->isEmpty() : false;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<int> lstValues,
-    bool bEnclose /*= true*/) const
-{
-    QStringList sl;
 
-    for (auto nVal : lstValues) {
-        sl << QString::number(nVal);
-    }
+///////////////////////////////////////////////////////////////////////////////////////
 
-    return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
-}
+// qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<uint16_t> lstValues,
+// 	bool bEnclose /*= true*/) const
+// {
+// 	QStringList sl;
+// 
+// 	for (auto nVal : lstValues) {
+// 		sl << QString::number(nVal);
+// 	}
+// 
+// 	return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+// qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<int> lstValues,
+//     bool bEnclose /*= true*/) const
+// {
+//     QStringList sl;
+// 
+//     for (auto nVal : lstValues) {
+//         sl << QString::number(nVal);
+//     }
+// 
+//     return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

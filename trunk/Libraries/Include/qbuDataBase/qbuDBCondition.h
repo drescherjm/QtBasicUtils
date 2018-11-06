@@ -40,7 +40,10 @@ public:
 	qbuDBCondition OR( const QStringList & lstExpressions, bool bEnclose = false ) const;
 
 	qbuDBCondition IN(const qbuDBExpression & expr, QStringList slValues, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
-    qbuDBCondition IN(const qbuDBExpression & expr, QList<int> lstValues, bool bEnclose = true) const;
+
+	template<typename T>
+    qbuDBCondition IN(const qbuDBExpression & expr, QList<T> lstValues, bool bEnclose = true) const;
+
 	qbuDBCondition BETWEEN(const qbuDBExpression & expr, QString slLow, QString slHigh, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
 	qbuDBCondition BETWEEN(const qbuDBExpression & expr, int nLow, int nHigh, bool bEnclose = true) const;
 
@@ -59,6 +62,21 @@ private:
 	class qbuPrivate;
 	qbuPrivate* m_pPrivate;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>
+qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<T> lstValues,
+	bool bEnclose /*= true*/) const
+{
+	QStringList sl;
+
+	for (auto nVal : lstValues) {
+		sl << QString::number(nVal);
+	}
+
+	return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
