@@ -5,6 +5,7 @@
 #include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuDataBase/qbuDBSettingInfo.h"
 #include "qbuDataBase/qbuCreateTableQuery.h"
+#include "qbuLog/qbuLog.h"
 //#include "qbuDataBase/qbuConstants.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -223,18 +224,19 @@ bool qbuDBSettingsTableBase::setSetupSchemaVersion( int nSchema )
 		retVal = query.exec(strQuery);
 		if(retVal)
 		{
-			qDebug() << "The Setup schema updated to" << nSchema;
+			QLOG_INFO() << "The Setup schema updated to" << nSchema;
 		}
 		else
 		{
-			qDebug() << "ERRROR: Failed to update the setup schema" << query.lastError();
+			QString strMsg = QString("ERRROR: Failed to update the setup schema %1").arg(query.lastError().text());
+			QLOG_WARN() << strMsg;
 
 		}
 
 	}
 	else
 	{
-		qDebug() << "ERROR: The database is not open." ;
+		QLOG_WARN() << "ERROR: The database is not open.";
 
 	}
 	return retVal;
