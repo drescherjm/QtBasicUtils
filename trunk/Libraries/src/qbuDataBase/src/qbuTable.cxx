@@ -362,22 +362,32 @@ bool qbuTable::fixKnownProblems()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuTable::count(QStringList lstFields /* = QStringList() */, 
+int qbuTable::count(QStringList lstWhereFields /* = QStringList() */, 
 	qbuPropertyMap* pPropMap /* = nullptr */, 
-	const qbuDBCondition & expr /* = qbuDBCondition() */)
+	const qbuDBCondition & expr /* = qbuDBCondition() */, 
+	const QStringList & lstSelectFields /* = QStringList() */)
 {
 	int retVal = -1;
 	qbuSelectQuery query(m_pDB);
 
+	QString strCountExpr;
+
+	if (lstSelectFields.isEmpty()) {
+		strCountExpr = "COUNT(*)";
+	}
+	else {
+		strCountExpr = QString(" COUNT(%1) ").arg(lstSelectFields.join(", "));
+	}
+
 	// Setup a typical Count(*) query
-	qbuDBColDef countval = qbuDBColDef("COUNT(*)", qbuDBColDef::OP_IS_EXPRESSION).addAlias("Count");
+	qbuDBColDef countval = qbuDBColDef(strCountExpr, qbuDBColDef::OP_IS_EXPRESSION).addAlias("Count");
 
 	query.addSelectField(countval);
 	query.addFromField(getTableName());
 
 	// Add where expressions if necessary..
 	if (pPropMap != nullptr) {
-		query.appendWhereExpressions(lstFields, pPropMap);
+		query.appendWhereExpressions(lstWhereFields, pPropMap);
 	}
 
 	if (!expr.isEmpty()) {
@@ -397,9 +407,10 @@ int qbuTable::count(QStringList lstFields /* = QStringList() */,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuTable::countDistinct(QStringList lstFields /* = QStringList() */, 
+int qbuTable::countDistinct(QStringList lstWhereFields /* = QStringList() */, 
 	qbuPropertyMap* pPropMap /* = nullptr */, 
-	const qbuDBCondition & expr /* = qbuDBCondition() */)
+	const qbuDBCondition & expr /* = qbuDBCondition() */, 
+	const QStringList & lstSelectFields /* = QStringList() */)
 {
 	int retVal = -1;
 	qbuSelectQuery query(m_pDB);
@@ -410,13 +421,20 @@ int qbuTable::countDistinct(QStringList lstFields /* = QStringList() */,
 	query.addSelectField(countval);
 
 	qbuSelectQuery nested(m_pDB);
-	nested.addSelectField("*");
+
+	if (lstSelectFields.isEmpty()) {
+		nested.addSelectField("*");
+	}
+	else {
+		nested.addSelectFields(lstWhereFields);
+	}
+
 	nested.setSelectOption(qbuSelectQuery::QBU_SELECT_DISTINCT);
 	nested.addFromField(getTableName());
 
 	// Add where expressions if necessary..
 	if (pPropMap != nullptr) {
-		nested.appendWhereExpressions(lstFields, pPropMap);
+		nested.appendWhereExpressions(lstWhereFields, pPropMap);
 	}
 
 	if (!expr.isEmpty()) {

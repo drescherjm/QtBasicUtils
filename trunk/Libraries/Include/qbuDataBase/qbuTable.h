@@ -39,13 +39,15 @@ public:
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo) const;
 	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
 
-	virtual int		count(QStringList lstFields = QStringList(), 
+	virtual int		count(QStringList lstWhereFields = QStringList(), 
 		qbuPropertyMap* pPropMap = nullptr,
-		const qbuDBCondition & expr = qbuDBCondition());
+		const qbuDBCondition & expr = qbuDBCondition(),
+		const QStringList & lstSelectFields = QStringList());
 
-	virtual int		countDistinct(QStringList lstFields = QStringList(), 
+	virtual int		countDistinct(QStringList lstWhereFields = QStringList(),
 		qbuPropertyMap* pPropMap = nullptr,
-		const qbuDBCondition & expr = qbuDBCondition());
+		const qbuDBCondition & expr = qbuDBCondition(),
+		const QStringList & lstSelectFields = QStringList());
 
 	template< typename T>
 	bool	exportData(T*, QList< QSharedPointer<T> > & lst, qbuDBCondition expr = qbuDBCondition());
