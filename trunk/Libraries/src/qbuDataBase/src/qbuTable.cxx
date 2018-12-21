@@ -362,7 +362,9 @@ bool qbuTable::fixKnownProblems()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuTable::count(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= nullptr*/)
+int qbuTable::count(QStringList lstFields /* = QStringList() */, 
+	qbuPropertyMap* pPropMap /* = nullptr */, 
+	const qbuDBCondition & expr /* = qbuDBCondition() */)
 {
 	int retVal = -1;
 	qbuSelectQuery query(m_pDB);
@@ -378,6 +380,10 @@ int qbuTable::count(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* p
 		query.appendWhereExpressions(lstFields, pPropMap);
 	}
 
+	if (!expr.isEmpty()) {
+		query.appendWhereExpression(expr);
+	}
+	
 	// Now get the value of the count.
 	if (query.generateQuery() && query.exec() && query.next()) {
 		qbuPropertyMap ret;
@@ -391,7 +397,9 @@ int qbuTable::count(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* p
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int qbuTable::countDistinct(QStringList lstFields /*= QStringList()*/, qbuPropertyMap* pPropMap /*= nullptr*/)
+int qbuTable::countDistinct(QStringList lstFields /* = QStringList() */, 
+	qbuPropertyMap* pPropMap /* = nullptr */, 
+	const qbuDBCondition & expr /* = qbuDBCondition() */)
 {
 	int retVal = -1;
 	qbuSelectQuery query(m_pDB);
@@ -409,6 +417,10 @@ int qbuTable::countDistinct(QStringList lstFields /*= QStringList()*/, qbuProper
 	// Add where expressions if necessary..
 	if (pPropMap != nullptr) {
 		nested.appendWhereExpressions(lstFields, pPropMap);
+	}
+
+	if (!expr.isEmpty()) {
+		query.appendWhereExpression(expr);
 	}
 
 	query.addFromField(nested, "T1");
