@@ -99,8 +99,9 @@ bool qbuTable::exportData(T* pInfo, QList< QSharedPointer<T> > & lst, qbuDBCondi
 			if (retVal) {
 				retVal = query.exec();
 				if (retVal) {
-					T record;
 					while (query.next() && retVal) {
+                        T record;
+
 						retVal = query.getRecord(&record);
 						if (retVal) {
 
@@ -139,8 +140,9 @@ bool qbuTable::exportData(T* pInfo, QList< std::shared_ptr<T> > & lst, qbuDBCond
 			if (retVal) {
 				retVal = query.exec();
 				if (retVal) {
-					T record;
 					while (query.next() && retVal) {
+                        T record;
+
 						retVal = query.getRecord(&record);
 						if (retVal) {
 
