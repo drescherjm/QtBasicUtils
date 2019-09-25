@@ -6,7 +6,12 @@
 #include <QObject>
 #include <QSQLError>
 #include <QSqlRecord>
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 #include <qsql.h>
+#else
+#include <QtSql/qtsqlglobal.h>
+#endif
 #include <memory>
 
 class qbuDatabase;
