@@ -41,6 +41,7 @@ set( ${LOCAL_PROJECT_NAME}_SRCS
 	./src/pugixml.cpp
 	./src/qbuCheckBoxDelegate.cxx
 	./src/qbuBooleanWidget.cxx
+	./src/qbuWidgetEnabledSignalEmitter.cxx
 )
 
 set( ${LOCAL_PROJECT_NAME}_EXT_HDRS 
@@ -75,6 +76,7 @@ set( ${LOCAL_PROJECT_NAME}_MOC_HDRS
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuButtonSignal.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuCheckBoxDelegate.h
 	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuBooleanWidget.h
+	${${LOCAL_PROJECT_NAME}_TREE_INCLUDE}/qbuWidgetEnabledSignalEmitter.h
 )
 
 # some .ui files

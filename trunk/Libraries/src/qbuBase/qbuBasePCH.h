@@ -11,6 +11,7 @@
 #include <QApplication>
 
 
+
 // qtbasicutils.
 
 #include "qbuBase/pugixml.hpp"
