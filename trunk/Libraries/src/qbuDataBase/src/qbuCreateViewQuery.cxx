@@ -44,10 +44,11 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 		}
 		else
 		{
-			QString strError = QString("%1 %2 %3")
+			QString strError = QString("%1 %2 %3 \n %4")
 				.arg("Failed to create view")
 				.arg(strViewName)
-				.arg(lastError().text());
+				.arg(lastError().text())
+				.arg(strViewQuery);
 
 #ifdef QBU_DB_USES_EXCEPTIONS
 			throw qbuException(__FILE__,__LINE__,qPrintable(strError),"qbuCreateViewQuery::create");
