@@ -9,11 +9,13 @@
 
 #include <QString>
 #include <QxtLogger>
+#include <cassert>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QString logFileName(QString strFile, int nLine);
 
+#define QLOG_WARN_ASSERT() assert(false); qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_WARN() qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_INFO() qxtLog->info() << logFileName(__FILE__,__LINE__)
 #define QLOG_CRIT() qxtLog->critical() << logFileName(__FILE__,__LINE__)
