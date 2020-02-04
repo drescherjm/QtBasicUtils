@@ -205,6 +205,11 @@ extern QString toQueryValue(QVariant & vt)
         }
         else
         {
+			if (isSQLFunction(str)) {
+				// I don't believe any functions should be in this data.
+				str.prepend("\'");
+				str.append("\'");
+			}
             retVal = singleQuoteIfNecissary(str);
         }
         
