@@ -147,6 +147,8 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 			emit some_toggled(bChecked);
 		}
 	}
+
+	emit clicked(bChecked);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

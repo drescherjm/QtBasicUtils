@@ -37,7 +37,8 @@ public:
 	virtual bool isChecked();
 
 signals:
-	void	some_toggled(bool bChecked);
+	void	some_toggled(bool bChecked); // Signal only when state changes 
+	void	clicked(bool bChecked);	     // Signal always.
 
 protected slots:
 	void	buttonToggledInt(bool bChecked);
