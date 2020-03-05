@@ -56,7 +56,7 @@ bool qbuCreateTableQueryEx::createFromSelect(qbuSelectQuery & query)
 
 	qbuDBColumnDefList* pFields = query.getSelectFields();
 	
-	retVal = (pFields != nullptr);
+	retVal = (pFields != nullptr) && (!pFields->isEmpty());
 	if (retVal) {
 		foreach(auto field, *pFields) {
 			QString strName = field.getNameOrAlias();
