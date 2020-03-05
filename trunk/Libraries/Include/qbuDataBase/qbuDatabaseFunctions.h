@@ -2,6 +2,9 @@
 #include <QVariant>
 
 //The following 2 functions will quote the string only if there are internal space characters.
+
+extern QString	singleQuoteIfNotQuoted(QString str);
+extern QString  doubleQuoteIfNotQuoted(QString str);
 extern QString	singleQuoteIfNecissary(QString str);
 extern QString	doubleQuoteIfNecissary(QString str);
 extern bool		isSingleQuoted(QString str);
