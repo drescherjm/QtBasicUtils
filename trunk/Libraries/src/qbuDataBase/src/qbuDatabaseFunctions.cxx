@@ -112,7 +112,7 @@ bool isSQLFunction(QString str)
 
 QString singleQuoteIfNotQuoted(QString str)
 {
-	QString retVal;
+	QString retVal = str;
 
 	if (str.isEmpty() || !str.startsWith('\'')) {
 		retVal.prepend("\'");
@@ -127,7 +127,7 @@ QString singleQuoteIfNotQuoted(QString str)
 
 QString doubleQuoteIfNotQuoted(QString str)
 {
-	QString retVal;
+	QString retVal = str;
 
 	if (str.isEmpty() || !str.startsWith('\"')) {
 		retVal.prepend("\"");
@@ -136,7 +136,6 @@ QString doubleQuoteIfNotQuoted(QString str)
 
 	return retVal;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
