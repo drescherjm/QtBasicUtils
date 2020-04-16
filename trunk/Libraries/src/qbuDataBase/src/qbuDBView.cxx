@@ -60,6 +60,18 @@ bool qbuDBView::internalCreateDBView( QString strDBViewName, QString strDBViewSQ
 	if (retVal) {
 		qbuCreateViewQuery viewQuery(m_pDB);
 		retVal = viewQuery.create(strDBViewName,strDBViewSQL,bTempView);
+		if (!retVal) {
+			QString strError = QString("Failed to create the following View %1: %2 \n The database error message was %3.")
+				.arg(strDBViewName)
+				.arg(strDBViewSQL)
+				.arg(viewQuery.lastError().text());
+
+#ifdef QBU_DB_USES_EXCEPTIONS
+			throw qbuException(__FILE__, __LINE__, qPrintable(strError), "qbuDBView::renameDBView");
+#else
+			databaseError(strError);
+#endif //def QBU_DB_USES_EXCEPTIONS
+		}
 	}
 	return retVal;
 }
