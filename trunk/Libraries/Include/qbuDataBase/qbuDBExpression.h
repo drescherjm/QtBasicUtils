@@ -32,6 +32,7 @@ public:
 	static qbuDBExpression datetime(QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
+	static qbuDBExpression function(QString strFunction, QStringList slCols, QString strTableAlias = QString());
 
 private:
 	void	copy(const qbuDBExpression & other);

@@ -116,6 +116,26 @@ qbuDBExpression qbuDBExpression::unary_function(QString strFunction, QString str
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBExpression qbuDBExpression::function(QString strFunction, QStringList lstCols, QString strTableAlias /*= QString()*/)
+{
+	qbuDBExpression retVal;
+
+	if ((!strFunction.isEmpty()) && (!lstCols.isEmpty())) {
+		QString strColDef;
+		if (!strTableAlias.isEmpty()) {
+			lstCols.prepend(QString("%1.").arg(strTableAlias));
+		}
+		strColDef = QString("%1( %2 )").arg(strFunction).arg(lstCols.join(','));
+		
+		retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBExpression qbuDBExpression::unary_function(QString strFunction, const qbuDBColDef & colDef)
 {
 	qbuDBExpression retVal;
