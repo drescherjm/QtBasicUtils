@@ -24,7 +24,8 @@ public:
 public:
 	virtual void setChecked(bool bChecked);
 	void	setMode(ButtonMode md);
-	bool	setObject(QObject* pTriggerObject, const char * method = SIGNAL(toggled(bool)));
+	bool	setObject(QObject* pTriggerObject, const char * method = SIGNAL(toggled(bool)),
+		Qt::ConnectionType atype = Qt::AutoConnection);
 
 public:
 	virtual bool isChecked();

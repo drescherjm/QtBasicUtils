@@ -59,13 +59,14 @@ bool qbuNonButtonCheckableSignal::isChecked()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuNonButtonCheckableSignal::setObject(QObject* pObject, const char * method /*= SIGNAL(toggled(bool))*/)
+bool qbuNonButtonCheckableSignal::setObject(QObject* pObject, const char * method /*= SIGNAL(toggled(bool))*/,
+	Qt::ConnectionType atype)
 {
 	bool retVal = ((m_pPrivate != nullptr) && (pObject != nullptr) && (method != nullptr));
 	if (retVal) {
 		m_pPrivate->m_pObject = pObject;
 
-		connect(pObject, method, SLOT(buttonToggledInt(bool)));
+		connect(pObject, method, SLOT(buttonToggledInt(bool)),atype);
 	}
 	return retVal;
 }
