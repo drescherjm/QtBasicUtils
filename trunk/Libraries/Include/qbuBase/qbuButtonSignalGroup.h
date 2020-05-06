@@ -25,6 +25,8 @@ public:
 	enum SignalGroupMode {
 		BSG_OR,
 		BSG_AND,
+		BSG_NOR,
+		BSG_NAND,
 	};
 
 public:

@@ -97,23 +97,25 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 	if (bChecked) {
 
 		if (m_pPrivate->m_md == BSG_OR) {
-			foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+			for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 				bChecked = pButtonSignal->isChecked();
 				if (bChecked) {
 					break;
 				}
 			}
 		}
-		else
-		{
+		else if (m_pPrivate->m_md == BSG_AND) {
 			// AND
 			// bChecked will be false if any ButtonSignal is not checked.
-			foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+			for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 				bChecked = pButtonSignal->isChecked();
 				if (!bChecked) {
 					break;
 				}
 			}
+		}
+		else {
+			bChecked = isChecked();
 		}
 
 		// Any button is checked
@@ -125,21 +127,23 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 	{
 	
 		if (m_pPrivate->m_md == BSG_OR) {
-			foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+			for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 				bChecked = pButtonSignal->isChecked();
 				if (bChecked) {
 					break;
 				}
 			}
 		}
-		else
-		{
-			foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+		else if (m_pPrivate->m_md == BSG_AND) {
+			for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 				bChecked = pButtonSignal->isChecked();
 				if (!bChecked) {
 					break;
 				}
 			}
+		}
+		else {
+			bChecked = isChecked();
 		}
 
 		// All buttons are unchecked
@@ -165,22 +169,43 @@ bool qbuButtonSignalGroup::isChecked()
 	bool retVal = false;
 	switch (m_pPrivate->m_md) {
 	case BSG_OR:
-		foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+		for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 			retVal = pButtonSignal->isChecked();
 			if (retVal) {
 				break;
 			}
 		}
 		break;
+	case BSG_NOR:
+		for(qbuButtonSignalBase * pButtonSignal : m_pPrivate->m_pButtons) {
+			retVal = !pButtonSignal->isChecked();
+			if (!retVal) {
+				break;
+			}
+		}
+		break;
 	case BSG_AND:
 		retVal = true;
-		foreach(qbuButtonSignalBase* pButtonSignal, m_pPrivate->m_pButtons) {
+		for(qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
 			retVal = pButtonSignal->isChecked();
 			if (!retVal) {
 				break;
 			}
 		}
 		break;
+	case BSG_NAND:
+
+		// Implement this as an inverted AND.
+		retVal = true;
+		for (qbuButtonSignalBase* pButtonSignal : m_pPrivate->m_pButtons) {
+			retVal = pButtonSignal->isChecked();
+			if (!retVal) {
+				break;
+			}
+		}
+		retVal = !retVal;
+		break;
+
 	}
 	return retVal;
 }
