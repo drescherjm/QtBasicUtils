@@ -62,6 +62,7 @@ public:
     bool			RenameProperty(QString strOldName,QString strNewName);
     
     bool			Load(QString strFile);
+    bool			Load2(QString strFile);
     bool			Save(QString strFile);
     void			Print(std::ostream & st, qbuITKIndent indent = qbuITKIndent());
     void			Print(QTextStream & st, qbuITKIndent indent = qbuITKIndent());

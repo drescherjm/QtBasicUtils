@@ -612,6 +612,25 @@ bool qbuPropertyMap::Load( QString strFile )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuPropertyMap::Load2(QString strFile)
+{
+	QFile file(strFile);
+	bool retVal = file.open(QFile::ReadOnly | QFile::Text);
+	if (retVal) {
+		QString strXML;
+		QTextStream stream(&file);
+		strXML = stream.readAll();
+
+		retVal = fromXML2(strXML);
+		if (retVal) {
+			ForceUnmodified();
+		}
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool qbuPropertyMap::Save( QString strFile )
 {
     QString strXML = toXML(true);
