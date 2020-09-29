@@ -402,6 +402,12 @@
 	int QCmdLine::ParseFile(QString strFileName,QStringList & strLstFile)
 	{
 		int retVal = QCmdParseError::STATUS_OK;
+
+		bool bUseMachineFile{ strFileName.startsWith('@') };
+
+		if (bUseMachineFile) {
+			strFileName = strFileName.mid(1);
+		}
 		
 		QFile sourceFile(strFileName);
 		if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -412,6 +418,34 @@
 		}
 		else
 			retVal = QCmdParseError::FILE_MUST_EXIST;
+
+
+		if (bUseMachineFile) {
+
+			//QString strHostName = QHostInfo::localHostName();
+
+			QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+			if (env.contains("COMPUTERNAME")) {
+
+				QString strHostName = env.value("COMPUTERNAME");
+
+				QFileInfo fi(strFileName);
+
+				//fi.completeBaseName()
+
+				QString strFileName = fi.path() + '/' + fi.completeBaseName() + '.' + strHostName + fi.suffix();
+
+
+				QFile sourceFile(strFileName);
+				if (sourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+					QTextStream in(&sourceFile);
+
+					ParseStream(in, strLstFile);
+				}
+			}
+		}
 
 		return retVal;
 	}

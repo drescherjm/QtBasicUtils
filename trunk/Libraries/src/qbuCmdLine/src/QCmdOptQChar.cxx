@@ -35,8 +35,13 @@ int QCmdOptQChar::ImportData( QString strValue )
 		}
 		else
 		{
-			retVal = sscanf(strTemp.toLatin1(),"%c",&m_nValue);
+			char ch;
+			retVal = sscanf(strTemp.toLatin1(),"%c",&ch);
+
 			if ( retVal == 1 ) {
+
+				m_nValue = ch;
+
 				if ( m_bIgnoreCase && m_nMinValue.isLetter() && m_nMaxValue.isLetter()) {
 					if ( m_nValue.toUpper() < m_nMinValue.toUpper() ) {
 						retVal = QCmdParseError::PARAM_TOO_SMALL;

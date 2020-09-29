@@ -6,3 +6,5 @@
 // Qt
 #include <QFile>
 #include <QTextStream>
+#include <QFileInfo>
+#include <QProcessEnvironment>
