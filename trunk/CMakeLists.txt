@@ -9,14 +9,22 @@ endif()
 
 #########################################################################################
 
+cmake_minimum_required (VERSION 3.10 FATAL_ERROR)
+
+cmake_policy(SET CMP0020 NEW)
+cmake_policy(SET CMP0074 NEW)
+
 project(QtBasicUtils)
 
-cmake_minimum_required (VERSION 3.10 FATAL_ERROR)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+# if( POLICY CMP0074 )
+  # cmake_policy(SET CMP0074 NEW)
+# endif()
 
-if( POLICY CMP0074 )
-  cmake_policy(SET CMP0074 NEW)
-endif()
+# if(POLICY CMP0020)
+  # cmake_policy(SET CMP0020 NEW)
+# endif()
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set (${PROJECT_NAME}_VERSION_MAJOR 2)
 set (${PROJECT_NAME}_VERSION_MINOR 3)
