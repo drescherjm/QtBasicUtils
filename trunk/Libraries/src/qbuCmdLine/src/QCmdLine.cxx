@@ -434,7 +434,7 @@
 
 				//fi.completeBaseName()
 
-				QString strFileName = fi.path() + '/' + fi.completeBaseName() + '.' + strHostName + fi.suffix();
+				QString strFileName = fi.path() + '/' + fi.completeBaseName() + '.' + strHostName + '.' + fi.suffix();
 
 
 				QFile sourceFile(strFileName);
