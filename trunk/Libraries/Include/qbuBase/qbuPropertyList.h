@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __QBUPROPERTYLIST_H__
-#define __QBUPROPERTYLIST_H__
+#ifndef QBUPROPERTYLIST_H
+#define QBUPROPERTYLIST_H
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,4 +79,4 @@ Q_DECLARE_METATYPE(qbuPropertyList*)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // __QBUPROPERTYLIST_H__
+#endif // QBUPROPERTYLIST_H
