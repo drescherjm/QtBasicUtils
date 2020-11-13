@@ -17,7 +17,7 @@ class qbuDBSettingsTableBase : public qbuTable
 	friend class qbuDatabase;
 	QBU_DECLARE_SUPERCLASS(qbuTable);
 public:
-	typedef qbuDBSettingInfo InfoClass;
+	using InfoClass = qbuDBSettingInfo;
 
 	enum Names {
 		SCHEMA_VERSION, 
