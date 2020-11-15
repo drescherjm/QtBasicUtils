@@ -40,6 +40,7 @@ public:
 	int		lookupSelectFieldIndex(QString strColName, Qt::CaseSensitivity cs = Qt::CaseInsensitive) const;
 	bool	addSelectField(QString strField, QString strAlias = QString(), QString strTableAlias = QString());
 	bool	addSelectField(qbuDBCondition & expression, QString strAlias = QString());
+	bool	addSelectField(qbuDBExpression& expression, QString strAlias = QString());
 	bool	addSelectField(const qbuDBColDef & colDef);
 	bool	addSelectFieldAtIndex(int nIndex, QString strField, QString strAlias = QString(), QString strTableAlias = QString());
 	bool	addSelectFieldAtIndex(int nIndex, qbuDBCondition & expression, QString strAlias = QString());

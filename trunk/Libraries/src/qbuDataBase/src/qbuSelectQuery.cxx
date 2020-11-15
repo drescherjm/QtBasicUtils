@@ -9,6 +9,8 @@
 
 
 #include "qbuLog/qbuLog.h"
+#include "qbuDataBase/qbuDBCondition.h"
+#include "qbuDataBase/qbuDBExpression.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -147,6 +149,15 @@ bool qbuSelectQuery::addSelectField(qbuDBCondition & expression, QString strAlia
 	expression.setEncloseInParentheses(true);
 	qbuDBColDef col = qbuDBColDef(expression.toString(), qbuDBColDef::OP_IS_EXPRESSION).addAlias(strAlias);
 	return addSelectField(col);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuSelectQuery::addSelectField(qbuDBExpression& expression, QString strAlias /*= QString()*/)
+{
+	auto condition{ qbuDBCondition(expression.toString(), true) };
+
+	return addSelectField(condition,strAlias);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
