@@ -647,7 +647,7 @@ bool qbuDatabase::verifyCoverage( qbuStringList & lstSucceeded, qbuStringList & 
 				 "Regular tables that were in the db but not verified: " + lstTables.toCSVString() + "\n"
 				 "Temp tables that were in the db but not verified: " + lstTemp.toCSVString() + "\n";
 			
-			QLOG_WARN() << QBULOG_DATABASE_TYPE << strMsg;
+			QLOG_WARN_ASSERT() << QBULOG_DATABASE_TYPE << strMsg;
 		}
 	}
 	return retVal;
