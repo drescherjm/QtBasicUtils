@@ -44,6 +44,12 @@ public:
 	template<typename T>
     qbuDBCondition IN(const qbuDBExpression & expr, QList<T> lstValues, bool bEnclose = true) const;
 
+
+	qbuDBCondition NOT_IN(const qbuDBExpression& expr, QStringList slValues, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
+
+	template<typename T>
+	qbuDBCondition NOT_IN(const qbuDBExpression& expr, QList<T> lstValues, bool bEnclose = true) const;
+
 	qbuDBCondition BETWEEN(const qbuDBExpression & expr, QString slLow, QString slHigh, qbuDBColDef::Option op = qbuDBColDef::OP_AUTO_QUOTE, bool bEnclose = true) const;
 	qbuDBCondition BETWEEN(const qbuDBExpression & expr, int nLow, int nHigh, bool bEnclose = true) const;
 
@@ -77,6 +83,23 @@ qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QList<T> lstValu
 
 	return IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
 }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>
+qbuDBCondition qbuDBCondition::NOT_IN(const qbuDBExpression& expr, QList<T> lstValues,
+	bool bEnclose /*= true*/) const
+{
+	QStringList sl;
+
+	for (auto nVal : lstValues) {
+		sl << QString::number(nVal);
+	}
+
+	return NOT_IN(expr, sl, qbuDBColDef::OP_NO_CODE, bEnclose);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

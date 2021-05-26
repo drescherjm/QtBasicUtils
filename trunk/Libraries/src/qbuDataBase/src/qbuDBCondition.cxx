@@ -333,6 +333,41 @@ qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QStringList slVa
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBCondition qbuDBCondition::NOT_IN(const qbuDBExpression& expr, QStringList slValues,
+	qbuDBColDef::Option op /*= qbuDBColDef::OP_AUTO_QUOTE*/,
+	bool bEnclose /*= true*/) const
+{
+
+
+	QString strCondition = expr.toString() + " NOT IN ( ";
+
+	bool bFirst = true;
+	for(const QString& strVal : slValues) {
+		if (!bFirst) {
+			strCondition.append(", ");
+		}
+		else {
+			bFirst = false;
+		}
+
+		if (op == qbuDBColDef::OP_AUTO_QUOTE) {
+			strCondition.append(singleQuoteIfNecissary(strVal));
+		}
+		else {
+			strCondition.append(strVal);
+		}
+
+	}
+
+	strCondition.append(" ) ");
+
+	qbuDBCondition retVal(strCondition, bEnclose);
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, QString slLow, QString slHigh, qbuDBColDef::Option op /*= qbuDBColDef::OP_AUTO_QUOTE*/, bool bEnclose /*= true*/) const
 {
 	QString strCondition = expr.toString() + " BETWEEN ";
