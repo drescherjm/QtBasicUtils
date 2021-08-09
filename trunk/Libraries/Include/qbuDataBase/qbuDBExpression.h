@@ -33,6 +33,7 @@ public:
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
 	static qbuDBExpression function(QString strFunction, QStringList slCols, QString strTableAlias = QString());
+	static qbuDBExpression fromExpressionString(QString strExpression); // This does not auto quote
 
 private:
 	void	copy(const qbuDBExpression & other);

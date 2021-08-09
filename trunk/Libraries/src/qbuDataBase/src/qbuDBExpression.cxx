@@ -136,6 +136,13 @@ qbuDBExpression qbuDBExpression::function(QString strFunction, QStringList lstCo
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBExpression qbuDBExpression::fromExpressionString(QString strExpression)
+{
+	return qbuDBExpression(qbuDBColDef(strExpression, qbuDBColDef::OP_IS_EXPRESSION));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBExpression qbuDBExpression::unary_function(QString strFunction, const qbuDBColDef & colDef)
 {
 	qbuDBExpression retVal;
