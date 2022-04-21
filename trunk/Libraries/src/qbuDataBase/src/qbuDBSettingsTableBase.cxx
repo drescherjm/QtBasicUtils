@@ -489,3 +489,38 @@ QString qbuDBSettingsTableBase::getReaderDefaultPIN()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuDBSettingsTableBase::setReaderDefaultPIN(QString strPin)
+{
+	bool retVal = m_pDB->isOpen();
+	if (retVal) {
+
+		QString strVar = getVariableName(READER_DEFAULT_PASSWORD);
+		retVal = !strVar.isEmpty();
+		if (retVal) {
+			QString strQuery = QString("REPLACE into %1 (Name, Value) VALUES ('%2', '%3')")
+				.arg(g_strTable)
+				.arg(strVar)
+				.arg(strPin);
+			qbuSimpleQuery query(m_pDB);
+			retVal = query.exec(strQuery);
+			if (retVal)
+			{
+				qDebug() << strVar << " updated to" << strPin;
+			}
+			else
+			{
+				qDebug() << "ERRROR: Failed to update " << strVar << " " << query.lastError();
+
+			}
+		}
+	}
+	else
+	{
+		qDebug() << "ERROR: The database is not open.";
+
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

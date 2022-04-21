@@ -52,6 +52,7 @@ public:
 	virtual	bool		setSetupSchemaVersion( int nSchema );
 
 	virtual QString		getReaderDefaultPIN();
+	virtual bool		setReaderDefaultPIN(QString strPin);
 	
 public:
 	bool	addSetting(qbuDBSettingInfo* pSettingInfo);
