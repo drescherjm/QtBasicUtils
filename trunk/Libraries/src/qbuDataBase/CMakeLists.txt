@@ -32,7 +32,7 @@ if(DB_USE_BIND_FOR_INSERT)
 	add_definitions(-DDB_USE_BIND_FOR_INSERT)
 ENDIF(DB_USE_BIND_FOR_INSERT)
 
-set(Boost_ADDITIONAL_VERSIONS "1.62" "1.62.0" "1.60" "1.60.0")
+set(Boost_ADDITIONAL_VERSIONS "1.65" "1.65.0" "1.64" "1.64.0")
 find_package( Boost REQUIRED )
 
 include_directories( ${Boost_INCLUDE_DIRS} )

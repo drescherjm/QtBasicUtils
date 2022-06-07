@@ -2,7 +2,7 @@ myproject(qbuLog)
 
 init_lib_shared_static_option(OFF)
 
-set(Boost_ADDITIONAL_VERSIONS "1.62" "1.62.0" "1.60" "1.60.0")
+set(Boost_ADDITIONAL_VERSIONS "1.65" "1.65.0" "1.60" "1.60.0")
 find_package( Boost REQUIRED )
 
 include_directories( ${Boost_INCLUDE_DIRS} )
