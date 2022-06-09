@@ -45,6 +45,8 @@ public:
     void setRecordLimit(quint32);
 	void setUpdateDelay(quint8 nSeconds = 5);
 
+	uint32_t	getMessageTypeCountsByLevel(uint32_t nLevel);
+
 public slots:
 	void	logMessage(QDateTime dtMsg, quint32 nLevel, QString strFileName, quint32 nLine, const QStringList& messages);
 	void	synchronize();

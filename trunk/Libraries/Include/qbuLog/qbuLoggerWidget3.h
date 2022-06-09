@@ -37,6 +37,10 @@ protected slots:
     void    updateRowHeights(int nStartingRow, int nEndingRow);
     void	rowsInserted(const QModelIndex &parent, int start, int end);
     void    on_pushButtonOptions_clicked();
+    void    on_pushButtonStats_clicked();
+    void    on_pushButtonLog_clicked();
+    void    on_toolButtonSearchDown_clicked();
+	void    on_toolButtonSearchUp_clicked();
 
 public:
 	QxtLoggerEngine* getLoggerEngine() const;

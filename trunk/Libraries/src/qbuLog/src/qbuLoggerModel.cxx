@@ -2,6 +2,7 @@
 #include "qbuLog/qbuLoggerModel.h"
 
 #include <qxtlogger.h>
+#include <map>
 
 #include "qbuLog/qbuLogModelEngine.h"
 #include <boost/bimap/bimap.hpp>
@@ -42,8 +43,9 @@ public:
 public:
 	typedef boost::bimaps::bimap<QString, int>	FileNameMap;
 	typedef FileNameMap::value_type				FileNameMapEntry;
-    
 
+	using TypeCountMap = std::map< uint32_t, uint32_t>;
+    
 public:
 	quint32 getFileNameIndex(const QString & strFileName);
 	QString lookupFileNameFromIndex(quint32 nIndex) const;
@@ -68,6 +70,7 @@ public:
     quint32                 m_nRecordLimit;
 	BufferUpdates			m_buffer;		
 	uint8_t					m_nUpdateDelay;
+	TypeCountMap			m_mapCounts;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -232,6 +235,8 @@ void qbuLoggerModel::logMessage(QDateTime dt, quint32 level, QString strFileName
 	data.m_nFileIndex = m_pPrivate->getFileNameIndex(strFileName);
 
 	m_pPrivate->m_buffer.m_holdQueue.emplace_back(data);
+
+	m_pPrivate->m_mapCounts[level]++;
 
 	m_pPrivate->startTimerIfNeeded(this,nIndex, dt);
 	
@@ -463,6 +468,20 @@ void qbuLoggerModel::setUpdateDelay(quint8 nSeconds)
 		m_pPrivate->m_nUpdateDelay = 1;
 		m_pPrivate->m_buffer.m_timer.setInterval(250);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+uint32_t qbuLoggerModel::getMessageTypeCountsByLevel(uint32_t nLevel)
+{
+	uint32_t retVal{};
+
+	auto it = m_pPrivate->m_mapCounts.find(nLevel);
+	if (it != m_pPrivate->m_mapCounts.end()) {
+		retVal = it->second;
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

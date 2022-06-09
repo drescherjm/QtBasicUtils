@@ -81,7 +81,9 @@ public:
     uint32_t        getMaskFromChecked(QStandardItemModel* pModel) const;
 
     void            updateMasks();
-  
+    void            setupStatsWidget(QTableWidget* pTableWidgetStats);
+    void            updateStats(QTableWidget* pTableWidgetStats);
+
 public:
     Ui::qbuLoggerWidget2    ui;
     bool                    m_bFirst;
@@ -143,6 +145,43 @@ void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel
 
         pModel->appendRow(item);
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::qbuPrivate::setupStatsWidget(QTableWidget* pTableWidgetStats)
+{
+    int nRow = 0;
+    for (auto nLogLevel : { QxtLogger::TraceLevel, QxtLogger::DebugLevel,QxtLogger::InfoLevel, QxtLogger::WarningLevel,
+          QxtLogger::ErrorLevel, QxtLogger::CriticalLevel, QxtLogger::FatalLevel, QxtLogger::WriteLevel }) {
+        pTableWidgetStats->insertRow(pTableWidgetStats->rowCount());
+        pTableWidgetStats->setItem(nRow++, 0, new QTableWidgetItem( QxtLogger::logLevelToString(nLogLevel)));
+    }
+
+    int nExtra = pTableWidgetStats->height() - pTableWidgetStats->horizontalHeader()->height() - 
+        pTableWidgetStats->viewport()->height();
+
+    int nHeight = pTableWidgetStats->horizontalHeader()->height()
+        + pTableWidgetStats->rowHeight(0) * pTableWidgetStats->rowCount() + 4;
+
+    int nParentHeight = pTableWidgetStats->parentWidget()->height();
+
+    pTableWidgetStats->setMinimumHeight(std::min(nHeight,nParentHeight));
+
+    auto pHeader = pTableWidgetStats->horizontalHeader();
+    pHeader->setSectionResizeMode(0, QHeaderView::Stretch);
+	pHeader->setSectionResizeMode(1, QHeaderView::Interactive);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::qbuPrivate::updateStats(QTableWidget* pTableWidgetStats)
+{
+	int nRow = 0;
+	for (auto nLogLevel : { QxtLogger::TraceLevel, QxtLogger::DebugLevel,QxtLogger::InfoLevel, QxtLogger::WarningLevel,
+		  QxtLogger::ErrorLevel, QxtLogger::CriticalLevel, QxtLogger::FatalLevel, QxtLogger::WriteLevel }) {
+		pTableWidgetStats->setItem(nRow++, 1, new QTableWidgetItem(QString::number(m_pLoggerModel->getMessageTypeCountsByLevel(nLogLevel))));
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +253,8 @@ void qbuLoggerWidget3::qbuPrivate::updateMasks()
 qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent), m_pPrivate{std::make_unique<qbuPrivate>()}
 {
     m_pPrivate->ui.setupUi(this);
+    adjustSize();
+
     m_pPrivate->setupLogLevelModel(&m_pPrivate->m_modelShow);
     m_pPrivate->setupLogLevelModel(&m_pPrivate->m_modelJump);
     
@@ -225,6 +266,8 @@ qbuLoggerWidget3::qbuLoggerWidget3(QWidget *parent /*= 0*/) : Superclass(parent)
     }
 
     m_pPrivate->updateMasks();
+
+    m_pPrivate->setupStatsWidget(m_pPrivate->ui.tableWidgetStats);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -345,27 +388,105 @@ void qbuLoggerWidget3::on_pushButtonOptions_clicked()
     auto pStacked = m_pPrivate->ui.stackedWidget;
 
     if (pStacked) {
-        int nIndex = (pStacked->currentIndex() + 1) % pStacked->count();
-        pStacked->setCurrentIndex(nIndex);
+        pStacked->setCurrentIndex(1);
+    }
+}
 
-        switch (nIndex)
-        {
-        case 0:
-            m_pPrivate->updateMasks();
+/////////////////////////////////////////////////////////////////////////////////////////
 
-            if (m_pPrivate->m_pLogFilter) {
-                m_pPrivate->m_pLogFilter->setMask(m_pPrivate->m_ShowMask);
+void qbuLoggerWidget3::on_pushButtonStats_clicked()
+{
+	auto pStacked = m_pPrivate->ui.stackedWidget;
+    if (pStacked) {
+		m_pPrivate->updateStats(m_pPrivate->ui.tableWidgetStats);
+        pStacked->setCurrentIndex(2);
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::on_pushButtonLog_clicked()
+{
+    auto pStacked = m_pPrivate->ui.stackedWidget;
+    if (pStacked) {
+        if (pStacked->currentIndex() == 1) {
+			m_pPrivate->updateMasks();
+
+			if (m_pPrivate->m_pLogFilter) {
+				m_pPrivate->m_pLogFilter->setMask(m_pPrivate->m_ShowMask);
+			}
+        }
+        pStacked->setCurrentIndex(0);
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::on_toolButtonSearchDown_clicked()
+{
+    auto pTableView = m_pPrivate->ui.tableView;
+
+	QItemSelectionModel* pSelected = pTableView->selectionModel();
+    if (pSelected) {
+        int nPos = -1;
+        if (pSelected->hasSelection()) {
+            QModelIndexList selection = pSelected->selectedRows(0);
+            if (!selection.isEmpty()) {
+                nPos = selection.first().row();
             }
+        }
 
-            m_pPrivate->ui.pushButtonOptions->setText("Options");
-            break;
-        case 1:
-            m_pPrivate->ui.pushButtonOptions->setText("Log");
-            break;
-        default:
-            break;
+        auto pModel = pTableView->model();
+
+        for (int nRow = nPos + 1; nRow < pModel->rowCount(); ++nRow) {
+
+            auto index = pModel->index(nRow, qbuLoggerModel::CT_LEVEL);
+            auto& vt = pModel->data(index, Qt::UserRole);
+            if (vt.canConvert<int>()) {
+                int nVal = vt.toInt();
+                if ((nVal & m_pPrivate->m_JumpMask) != 0) {
+                    pSelected->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                    pTableView->scrollTo(index, QAbstractItemView::EnsureVisible);
+                    return;
+                }
+            }
         }
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuLoggerWidget3::on_toolButtonSearchUp_clicked()
+{
+	auto pTableView = m_pPrivate->ui.tableView;
+
+	QItemSelectionModel* pSelected = pTableView->selectionModel();
+	if (pSelected) {
+        auto pModel = pTableView->model();
+        if (pModel && pModel->rowCount() > 0) {
+            int nPos = pModel->rowCount()+1;
+            if (pSelected->hasSelection()) {
+                QModelIndexList selection = pSelected->selectedRows(0);
+                if (!selection.isEmpty()) {
+                    nPos = selection.first().row();
+                }
+            }
+
+            for (int nRow = nPos - 1; nRow>=0; --nRow) {
+
+                auto index = pModel->index(nRow, qbuLoggerModel::CT_LEVEL);
+                auto& vt = pModel->data(index, Qt::UserRole);
+                if (vt.canConvert<int>()) {
+                    int nVal = vt.toInt();
+                    if ((nVal & m_pPrivate->m_JumpMask) != 0) {
+                        pSelected->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+                        pTableView->scrollTo(index, QAbstractItemView::EnsureVisible);
+                        return;
+                    }
+                }
+            }
+        }
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
