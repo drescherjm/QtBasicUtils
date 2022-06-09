@@ -36,8 +36,8 @@ public:
 	virtual bool	fixKnownProblems();
 	virtual const QStringList&	getRequiredFieldList() const;
 	virtual const QStringList&	getOptionalPrimaryKeyList() const;
-	virtual bool				verifyRequiredFields(qbuInfo * pInfo) const;
-	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst) const;
+	virtual bool				verifyRequiredFields(qbuInfo * pInfo, bool bWarn=true) const;
+	virtual bool				verifyRequiredFields(qbuInfo * pInfo, const QStringList & lst, bool bWarn=true) const;
 
 	virtual int		count(QStringList lstWhereFields = QStringList(), 
 		qbuPropertyMap* pPropMap = nullptr,

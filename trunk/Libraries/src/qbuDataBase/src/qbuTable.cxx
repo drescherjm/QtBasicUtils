@@ -308,14 +308,14 @@ const QStringList& qbuTable::getOptionalPrimaryKeyList() const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::verifyRequiredFields(qbuInfo * pInfo) const
+bool qbuTable::verifyRequiredFields(qbuInfo * pInfo, bool bWarn) const
 {
-	return verifyRequiredFields(pInfo, getRequiredFieldList());
+	return verifyRequiredFields(pInfo, getRequiredFieldList(),bWarn);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuTable::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFields) const
+bool qbuTable::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFields,bool bWarn) const
 {
 	bool retVal = (pInfo != nullptr);
 	if (retVal) {
@@ -329,7 +329,7 @@ bool qbuTable::verifyRequiredFields(qbuInfo * pInfo, const QStringList & lstFiel
 		}
 
 		retVal = lstMissingRequired.isEmpty();
-		if (!retVal) {
+		if (!retVal && bWarn) {
 
 			QString strMessage = QString("A query on table %1 will fail because the "
 				"following fields are not defined in the qbuInfo class (%2): %3")
