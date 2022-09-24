@@ -24,6 +24,11 @@ public:
 	inline qbuStringList(const qbuStringList &l) : QStringList(l) { }
 	inline qbuStringList(const QStringList &l) : QStringList(l) { }
 	inline qbuStringList(const QList<QString> &l) : QStringList(l) { }
+
+#ifdef Q_COMPILER_INITIALIZER_LISTS
+	inline qbuStringList(std::initializer_list<QString> args) : QStringList(args) { }
+#endif
+
 public:
 	int			removeAll(const QStringList & strlstRemove, Qt::CaseSensitivity cs);
 	int			removeAll(QString strRemove,Qt::CaseSensitivity cs);
