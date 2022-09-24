@@ -10,6 +10,7 @@ class qbuInfo;
 #include <QObject>
 #include <QStringList>
 #include <memory>
+#include <utility>
 #include "qbuInsertQuery.h"
 #include <QSharedPointer>
 
@@ -48,6 +49,9 @@ public:
 		qbuPropertyMap* pPropMap = nullptr,
 		const qbuDBCondition & expr = qbuDBCondition(),
 		const QStringList & lstSelectFields = QStringList());
+
+
+	std::pair<bool, QStringList>	getCurrentTableColumnNames(const QStringList& filter = {});
 
 	template< typename T>
 	bool	exportData(T*, QList< QSharedPointer<T> > & lst, qbuDBCondition expr = qbuDBCondition());

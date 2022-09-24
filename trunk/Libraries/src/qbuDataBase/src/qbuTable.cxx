@@ -456,6 +456,46 @@ int qbuTable::countDistinct(QStringList lstWhereFields /* = QStringList() */,
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+std::pair<bool, QStringList> qbuTable::getCurrentTableColumnNames(const QStringList& filter)
+{
+	// This uses a SQLITE pragma function pragma_table_info('tableName') to get
+	// the list of the columns in a database table.
+	// See the doc here: https://www.sqlite.org/pragma.html
+
+	std::pair<bool, QStringList> retVal;
+
+	bool bFilter = !filter.isEmpty();
+
+	qbuSelectQuery query(m_pDB);
+	query.addSelectField("name");
+	query.addFromField(QString("pragma_table_info('%1')").arg(getTableName()));
+
+	retVal.first = query.generateQuery() && query.exec();
+	if (retVal.first) {
+		while (query.next() && retVal.first) {
+			qbuPropertyMap ret;
+			retVal.first = query.getRecord(&ret); 
+			if (retVal.first) {
+				QString strRow;
+				retVal.first = ret.getField<QString>("name", strRow);
+				if (retVal.first) {
+					if (bFilter) {
+						// Ignore if the string is not in the filter
+						if (!filter.contains(strRow, Qt::CaseInsensitive)) {
+							continue;
+						}
+					}
+					retVal.second.push_back(strRow);
+				}
+			}
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 QString qbuTable::getUniqueTempTableName(QString strBase, int nIndexStart/*=0*/) const
 {
 	QString retVal = strBase;
