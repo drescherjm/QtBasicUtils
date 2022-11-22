@@ -1,9 +1,8 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuCreateViewQuery.h"
-#include <QDebug>
-#include <QSqlError>
 #include "qbuDataBase/qbuDatabase.h"
+#include "qbuDataBase/qbuSelectQuery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +58,18 @@ bool qbuCreateViewQuery::create( QString strViewName, QString strViewQuery, bool
 
 		}
 
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuCreateViewQuery::create(QString strViewName, qbuSelectQuery& query, bool bTempView /*= false*/)
+{
+	QString strSelectQuery;
+	bool retVal = query.generateSQL(strSelectQuery);
+	if (retVal) {
+		retVal = create(strViewName, strSelectQuery, bTempView);
 	}
 	return retVal;
 }
