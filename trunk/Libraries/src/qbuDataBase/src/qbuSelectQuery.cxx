@@ -366,7 +366,7 @@ bool qbuSelectQuery::addSelectFields(qbuSelectQuery& nestedQuery, QString strAli
 	
 	if (retVal) {
 		for (const auto& colDef : *pList) {
-			addSelectField(colDef.getNameOrAlias(), strAlias);
+			addSelectField(colDef.getNameOrAlias(), QString{}, strAlias);
 		}
 	}
 
