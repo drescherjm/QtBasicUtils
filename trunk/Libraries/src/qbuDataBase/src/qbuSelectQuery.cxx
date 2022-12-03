@@ -359,6 +359,22 @@ bool qbuSelectQuery::addSelectFields(const QStringList & lstFields, QString strT
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuSelectQuery::addSelectFields(qbuSelectQuery& nestedQuery, QString strAlias /*= QString()*/)
+{
+	qbuDBColumnDefList* pList = nestedQuery.getSelectFields();
+	bool retVal = (pList != nullptr);
+	
+	if (retVal) {
+		for (const auto& colDef : *pList) {
+			addSelectField(colDef.getNameOrAlias(), strAlias);
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool qbuSelectQuery::addGroupByField(QString strField, QString strTableAlias)
 {
 	bool retVal = (m_pPrivate != nullptr);

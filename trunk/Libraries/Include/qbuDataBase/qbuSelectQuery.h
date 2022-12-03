@@ -47,6 +47,7 @@ public:
 	bool	addSelectFieldAtIndex(int nIndex, const qbuDBColDef & colDef);
 	
 	bool	addSelectFields(const QStringList & lstFields, QString strTableAlias = QString());
+	bool	addSelectFields(qbuSelectQuery& nestedQuery, QString strAlias = QString());
 	bool	addFromField(QString strField, QString strAlias = QString());
 	bool	addFromField(qbuSelectQuery & nestedQuery, QString strAlias);
 	bool	addJoin(const qbuDBJoin & DBJoin);
