@@ -116,6 +116,26 @@ qbuDBExpression qbuDBExpression::unary_function(QString strFunction, QString str
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBExpression qbuDBExpression::COALESCE(QStringList lstCols, QString strTableAlias)
+{
+	qbuDBExpression retVal;
+
+	// Apply the table alias to all fields
+	if (!strTableAlias.isEmpty()) {
+		for (auto& col : lstCols) {
+			col = QString("[%1].[%2]").arg(strTableAlias).arg(col);
+		}
+	}
+
+	QString strColDef{ QString("COALESCE( %1 )").arg(lstCols.join(", ")) };
+
+	retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBExpression qbuDBExpression::function(QString strFunction, QStringList lstCols, QString strTableAlias /*= QString()*/)
 {
 	qbuDBExpression retVal;

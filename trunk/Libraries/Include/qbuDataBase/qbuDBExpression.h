@@ -32,6 +32,7 @@ public:
 	static qbuDBExpression datetime(QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
+	static qbuDBExpression COALESCE(QStringList lstCols, QString strTableAlias);
 	static qbuDBExpression function(QString strFunction, QStringList slCols, QString strTableAlias = QString());
 	static qbuDBExpression fromExpressionString(QString strExpression); // This does not auto quote
 
