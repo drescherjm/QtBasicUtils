@@ -23,6 +23,7 @@ public:
 	qbuDBCondition( const qbuDBCondition & other );
 	qbuDBCondition( QString strExpression, bool bEnclose = false );
 	qbuDBCondition( QString strField0, QString strField1, QString strOperator, bool bEnclose = true  );
+	qbuDBCondition(const qbuDBExpression& expr, QString strField1, QString strOperator, bool bEnclose = true);
 	qbuDBCondition( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose = true  );
 	qbuDBCondition( const qbuDBColDef & colDef0, const qbuDBColDef & colDef1, QString strOperator, bool bEnclose = true  );
 	qbuDBCondition( const qbuDBColDef & colDef0, NullExpr nullExpr);
