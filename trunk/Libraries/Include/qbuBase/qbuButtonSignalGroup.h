@@ -27,6 +27,7 @@ public:
 		BSG_AND,
 		BSG_NOR,
 		BSG_NAND,
+		BSG_XOR, // True if only 1 of the inputs is true
 	};
 
 public:
@@ -34,6 +35,7 @@ public:
 	bool	addButton(QAbstractButton* pAbstractButton, QObject* pTriggerObject, const char * method = SIGNAL(toggled(bool)));
 	bool	addButton(qbuButtonSignalBase* pButtonSignal);
 	void	setMode(SignalGroupMode md);
+	int		checkedCount();
 
 public:
 	virtual bool isChecked();
