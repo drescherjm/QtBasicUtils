@@ -14,27 +14,33 @@ class qbuDBExpression : public qbuObject
 	QBU_DECLARE_SUPERCLASS(qbuObject);
 public:
 	qbuDBExpression();
-	qbuDBExpression(const qbuDBExpression & other);
-	qbuDBExpression(const qbuDBColDef & colDef0);
+	qbuDBExpression(const qbuDBExpression& other);
+	qbuDBExpression(const qbuDBColDef& colDef0);
 	~qbuDBExpression();
 
-	qbuDBExpression& operator=(const qbuDBExpression & other);
+	qbuDBExpression& operator=(const qbuDBExpression& other);
 
 public:
-	virtual QString toString(bool *bOK = nullptr) const;
+	virtual QString toString(bool* bOK = nullptr) const;
 
 	virtual bool	isValid() const;
 	virtual bool	isEmpty() const;
 
 public:
 	static qbuDBExpression CAST(QString strCol, QString strTableAlias = QString(), QString castAs = QString("INT"));
-	static qbuDBExpression date(QString strCol, QString strTableAlias = QString());
-	static qbuDBExpression datetime(QString strCol, QString strTableAlias = QString());
-	static qbuDBExpression strftime(QString strFormat, QString strDateCol, QString strTableAlias = {}, QString strModifier = {});
+	static qbuDBExpression date(QString strCol, QString strTableAlias = {}, const QStringList& lstModifiers = {});
+	static qbuDBExpression datetime(QString strCol, QString strTableAlias = {}, const QStringList & lstModifiers = {});
+	static qbuDBExpression date_functions(QString strFunction, QString strCol, QString strTableAlias = {}, const QStringList& lstModifiers = {}, 
+		QString strFormat = {});
+	static qbuDBExpression date_functions(QString strFunction, const qbuDBExpression & expr, const QStringList& lstModifiers = {},
+		QString strFormat = {});
+	static qbuDBExpression strftime(QString strFormat, QString strDateCol, QString strTableAlias = {}, const QStringList& lstModifiers = {});
+	static qbuDBExpression strftime(QString strFormat, const qbuDBExpression & expr, const QStringList& lstModifiers = {});
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
 	static qbuDBExpression COALESCE(QStringList lstCols, QString strTableAlias);
-	static qbuDBExpression function(QString strFunction, QStringList slCols, QString strTableAlias = QString());
+	static qbuDBExpression COALESCE(QList<qbuDBColDef> lstCols);
+	static qbuDBExpression function(QString strFunction, QStringList slCols, QString strTableAlias = {});
 	static qbuDBExpression fromExpressionString(QString strExpression); // This does not auto quote
 
 private:

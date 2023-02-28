@@ -133,6 +133,14 @@ qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr, QString strField1, Q
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr0, const qbuDBExpression& expr1, QString strOperator, bool bEnclose /*= true */) : m_pPrivate(new qbuPrivate)
+{
+
+	m_pPrivate->init(QString("( %1 )").arg(expr0.toString()), QString("( %1 )").arg(expr1.toString()), strOperator, bEnclose);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBCondition::qbuDBCondition( const qbuDBColDef & colDef0, QString strField1, QString strOperator, bool bEnclose /*= true */ ) : m_pPrivate (new qbuPrivate)
 {
 	m_pPrivate->init(colDef0.getFullName(),strField1,strOperator,bEnclose);
