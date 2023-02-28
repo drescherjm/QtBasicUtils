@@ -94,6 +94,32 @@ qbuDBExpression qbuDBExpression::datetime(QString strCol, QString strTableAlias 
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBExpression qbuDBExpression::strftime(QString strFormat, QString strDateCol, QString strTableAlias /*= {}*/, QString strModifier /*= {}*/)
+{
+	qbuDBExpression retVal;
+
+	const QString strFunction{ "strftime" };
+
+	if ((!strFunction.isEmpty()) && (!strFormat.isEmpty()) && (!strDateCol.isEmpty())) {
+		if (!strTableAlias.isEmpty()) {
+			strDateCol = QString("%1.%2").arg(strTableAlias).arg(strDateCol);
+		}
+
+		if (!strModifier.trimmed().isEmpty()) {
+			strModifier.prepend(", ");
+		}
+
+		QString strColDef = QString(R"(%1( '%2', %3 %4 )").arg(strFunction).arg(strFormat).arg(strDateCol).arg(strModifier);
+
+		retVal = qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBExpression qbuDBExpression::unary_function(QString strFunction, QString strCol, QString strTableAlias /*= QString()*/)
 {
 	qbuDBExpression retVal;

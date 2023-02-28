@@ -30,6 +30,7 @@ public:
 	static qbuDBExpression CAST(QString strCol, QString strTableAlias = QString(), QString castAs = QString("INT"));
 	static qbuDBExpression date(QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression datetime(QString strCol, QString strTableAlias = QString());
+	static qbuDBExpression strftime(QString strFormat, QString strDateCol, QString strTableAlias = {}, QString strModifier = {});
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
 	static qbuDBExpression COALESCE(QStringList lstCols, QString strTableAlias);
