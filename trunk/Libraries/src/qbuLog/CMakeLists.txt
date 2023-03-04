@@ -108,7 +108,7 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
-target_include_directories(${LOCAL_PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${${PROJECT_NAME}_INCLUDE_DIRS}>)
+#target_include_directories(${LOCAL_PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${${PROJECT_NAME}_INCLUDE_DIRS}>)
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${QXT_LIBRARIES})
 
 #########################################################################################
