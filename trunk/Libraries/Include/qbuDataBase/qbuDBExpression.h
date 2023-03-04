@@ -6,6 +6,7 @@
 #include "qbuBase/qbuObject.h"
 
 struct qbuDBColDef;
+class qbuDBCondition;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -15,6 +16,7 @@ class qbuDBExpression : public qbuObject
 public:
 	qbuDBExpression();
 	qbuDBExpression(const qbuDBExpression& other);
+	qbuDBExpression(const qbuDBCondition& condition, bool bEnclose);
 	qbuDBExpression(const qbuDBColDef& colDef0);
 	~qbuDBExpression();
 

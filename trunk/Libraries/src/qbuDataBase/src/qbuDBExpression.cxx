@@ -4,6 +4,7 @@
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include <memory>
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "qbuDataBase/qbuDBCondition.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,6 +33,18 @@ qbuDBExpression::qbuDBExpression(const qbuDBExpression& other) : m_pPrivate{ std
 qbuDBExpression::qbuDBExpression(const qbuDBColDef& colDef0) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 {
 	m_pPrivate->m_strExpression = colDef0.getFullString();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuDBExpression::qbuDBExpression(const qbuDBCondition& condition, bool bEnclose /*= false*/)
+{
+	if (bEnclose) {
+		m_pPrivate->m_strExpression = QString(" ( %1 ) ").arg(condition.toString());
+	}
+	else {
+		m_pPrivate->m_strExpression = condition.toString();
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
