@@ -267,3 +267,21 @@ extern QString removeOuterParenthesis(QString strExpr)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+extern bool hasOuterParenthesis(QString str)
+{
+    str = str.trimmed();
+    return str.startsWith('(') && str.endsWith(')');
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString addOuterParenthesisIfNecissary(QString str)
+{
+    if (!hasOuterParenthesis(str)) {
+        str.prepend(" ( ").append(" ) ");
+    }
+    return str;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////

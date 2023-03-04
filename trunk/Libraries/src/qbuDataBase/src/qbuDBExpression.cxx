@@ -37,14 +37,11 @@ qbuDBExpression::qbuDBExpression(const qbuDBColDef& colDef0) : m_pPrivate{ std::
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuDBExpression::qbuDBExpression(const qbuDBCondition& condition, bool bEnclose /*= false*/)
+qbuDBExpression::qbuDBExpression(const qbuDBCondition& condition, bool bEnclose /*= false*/) : m_pPrivate{ std::make_unique<qbuPrivate>() }
 {
-	if (bEnclose) {
-		m_pPrivate->m_strExpression = QString(" ( %1 ) ").arg(condition.toString());
-	}
-	else {
-		m_pPrivate->m_strExpression = condition.toString();
-	}
+	QString strExpr = condition.toString();
+
+	m_pPrivate->m_strExpression = bEnclose ? addOuterParenthesisIfNecissary(strExpr) : strExpr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

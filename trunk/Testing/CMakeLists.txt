@@ -16,6 +16,7 @@ set(TEST_SRCS
 	./src/testSetVariable.cxx
 	./src/cmdTestFloatOpts.cxx
 	./src/testxmlperf.cxx
+	./src/testDBExpression.cxx
 )
 
 set(TEST_HDRS
@@ -26,6 +27,7 @@ set(TEST_HDRS
 	./Include/testSetVariable.h
 	./Include/cmdTestFloatOpts.h
 	./Include/testxmlperf.h
+	./Include/testDBExpression.h
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})

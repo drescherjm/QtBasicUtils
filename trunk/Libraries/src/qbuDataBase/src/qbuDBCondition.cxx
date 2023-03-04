@@ -128,7 +128,7 @@ qbuDBCondition::qbuDBCondition( QString strField0, QString strField1, QString st
 qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr, QString strField1, QString strOperator, bool bEnclose /*= true */) : m_pPrivate(new qbuPrivate)
 {
 
-	m_pPrivate->init(QString("( %1 )").arg(expr.toString()), strField1, strOperator, bEnclose);
+	m_pPrivate->init(addOuterParenthesisIfNecissary(expr.toString()), strField1, strOperator, bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr, QString strField1, Q
 qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr0, const qbuDBExpression& expr1, QString strOperator, bool bEnclose /*= true */) : m_pPrivate(new qbuPrivate)
 {
 
-	m_pPrivate->init(QString("( %1 )").arg(expr0.toString()), QString("( %1 )").arg(expr1.toString()), strOperator, bEnclose);
+	m_pPrivate->init(addOuterParenthesisIfNecissary(expr0.toString()), addOuterParenthesisIfNecissary(expr1.toString()), strOperator, bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -281,8 +281,6 @@ bool qbuDBCondition::isEmpty() const
 {
 	return (m_pPrivate != nullptr) ? m_pPrivate->isEmpty() : false;
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////
 

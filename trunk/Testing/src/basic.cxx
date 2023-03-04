@@ -20,6 +20,7 @@
 #include "testSetVariable.h"
 #include "cmdTestFloatOpts.h"
 #include "testxmlperf.h"
+#include "testDBExpression.h"
 
 #ifdef QBU_BUILD_DATABASE
 
@@ -836,6 +837,7 @@ int main(int argc, char* argv[])
 
 		CmdTestSetVar		cmdTestSETVariable("SET","This command tests command parsing of set commands.");
 
+
 		QCmdTestInvalidOpt  cmdTestInvalidOpt("INVALIDCMDOPT","This command tests invalid options.");
 		QCmdTestCmdLineFileInclude	cmdTestCmdLineFileInclude("CMDLINEINCLUDE","This tests the @ include that is used in the command line.");
 
@@ -872,6 +874,8 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestSingleQuote);
 		QCmdTestSingleQuote1	cmdTestSingleQuote1("DBSINGLEQUOTE_1", "Test the database singleQuoteIfNecissary() member for a single space.");
 		myCmdLine.AddCmd(&cmdTestSingleQuote1);
+		CmdTestDBExpression	cmdTestDBExpression("DBExpression", "This command tests the DBExpression class.");
+		myCmdLine.AddCmd(&cmdTestDBExpression);
 #endif // def QBU_BUILD_DATABASE
 
 		myCmdLine.AddCmd(&myHelp);

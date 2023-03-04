@@ -108,11 +108,15 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
+target_include_directories(${LOCAL_PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${${PROJECT_NAME}_INCLUDE_DIRS}>)
+target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${QXT_LIBRARIES})
+
 #########################################################################################
 
 if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
 	target_link_libraries ( 
 		${LOCAL_PROJECT_NAME} 
+		PUBLIC
 		${UPMC_EXTERNAL_LIBS} 
 		${QT_LIBRARIES} 
 		${QXT_LIBRARIES}

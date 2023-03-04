@@ -14,3 +14,7 @@ extern QString	toQueryValue(const QVariant & vt);
 extern QString	quoteSQLObjectNameIfNecissary(QString str);
 extern QString  removeOuterParenthesis(QString str);
 
+extern bool		hasOuterParenthesis(QString str);
+extern QString	addOuterParenthesisIfNecissary(QString str);
+
+
