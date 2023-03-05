@@ -38,6 +38,7 @@ public:
 		QString strFormat = {});
 	static qbuDBExpression strftime(QString strFormat, QString strDateCol, QString strTableAlias = {}, const QStringList& lstModifiers = {});
 	static qbuDBExpression strftime(QString strFormat, const qbuDBExpression & expr, const QStringList& lstModifiers = {});
+	static qbuDBExpression printf(QString strFormat, QList<qbuDBColDef> lstCols);
 	static qbuDBExpression unary_function(QString strFunction,QString strCol, QString strTableAlias = QString());
 	static qbuDBExpression unary_function(QString strFunction, const qbuDBColDef & colDef );
 	static qbuDBExpression COALESCE(QStringList lstCols, QString strTableAlias);

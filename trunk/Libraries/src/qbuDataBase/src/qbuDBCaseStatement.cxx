@@ -40,10 +40,7 @@ qbuDBCaseStatement::qbuPrivate::qbuPrivate() : m_bEncloseInParentheses(false),
 
 bool qbuDBCaseStatement::qbuPrivate::isValid()
 {
-	bool retVal = !m_strCaseMainExpr.isEmpty();
-	if (retVal) {
-		retVal = !m_lstCasePairs.isEmpty();
-	}
+	bool retVal = !m_lstCasePairs.isEmpty();
 	return retVal;
 }
 
@@ -74,7 +71,7 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 		if (!m_pPrivate->m_bHasANULL) {
 			retVal = "CASE " + m_pPrivate->m_strCaseMainExpr + " ";
 
-			foreach(qbuPrivate::CasePair pair, m_pPrivate->m_lstCasePairs) {
+			for(const qbuPrivate::CasePair& pair : m_pPrivate->m_lstCasePairs) {
 				retVal.append(QString(" WHEN %1 THEN %2 ")
 					.arg(pair.first)
 					.arg(pair.second));
@@ -91,7 +88,7 @@ QString qbuDBCaseStatement::toString( bool *bOK ) const
 			// Construct case as follows: CASE WHEN X IS NULL THEN 'x' WHEN X=SomeVal THEN 'y' WHEN X=SomeOtherVal THEN 'z' END
 			retVal = "CASE ";
 
-			foreach(qbuPrivate::CasePair pair, m_pPrivate->m_lstCasePairs) {
+			for(const qbuPrivate::CasePair& pair : m_pPrivate->m_lstCasePairs) {
 
 				if (!pair.first.contains("NULL", Qt::CaseInsensitive)) {
 					retVal.append(QString(" WHEN %3=%1 THEN %2 ")

@@ -27,6 +27,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 #include "qbuDataBase/qbuDatabaseFunctions.h"
+#include "testDBCaseStatement.h"
 
 class QCmdTestSingleQuote : public QCmd
 {
@@ -876,6 +877,8 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestSingleQuote1);
 		CmdTestDBExpression	cmdTestDBExpression("DBExpression", "This command tests the DBExpression class.");
 		myCmdLine.AddCmd(&cmdTestDBExpression);
+		CmdTestDBCaseStatement	cmdTestDBECaseStatement("DBCase", "This command tests the DBCaseStatement class.");
+		myCmdLine.AddCmd(&cmdTestDBECaseStatement);
 #endif // def QBU_BUILD_DATABASE
 
 		myCmdLine.AddCmd(&myHelp);

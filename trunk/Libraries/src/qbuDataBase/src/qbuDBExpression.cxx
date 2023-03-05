@@ -174,6 +174,20 @@ qbuDBExpression qbuDBExpression::strftime(QString strFormat, const qbuDBExpressi
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuDBExpression qbuDBExpression::printf(QString strFormat, QList<qbuDBColDef> lstCols)
+{
+	QStringList lst;
+	for (auto& col : lstCols) {
+		lst.append(col.getFullString());
+	}
+
+	QString strColDef{ QString(" printf( '%1', %2 ) ").arg(strFormat,lst.join(", ")) };
+	
+	return qbuDBExpression(qbuDBColDef(strColDef, qbuDBColDef::OP_IS_EXPRESSION));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuDBExpression qbuDBExpression::unary_function(QString strFunction, QString strCol, QString strTableAlias /*= QString()*/)
 {
 	qbuDBExpression retVal;
