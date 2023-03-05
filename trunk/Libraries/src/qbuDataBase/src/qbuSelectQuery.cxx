@@ -462,9 +462,7 @@ bool qbuSelectQuery::generateSQL(QString & strSQL)
 				break;
 			}
 			QString strQuery = QString("SELECT %1%2 \nFROM %3")
-				.arg(strSelectOption)
-				.arg(strSelect)
-				.arg(strFrom);
+				.arg(strSelectOption,strSelect,strFrom);
 
 			if (!m_pPrivate->m_lstJOIN.isEmpty()) {
 				foreach(QString str, m_pPrivate->m_lstJOIN) {
