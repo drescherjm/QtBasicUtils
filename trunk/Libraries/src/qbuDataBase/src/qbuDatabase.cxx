@@ -713,6 +713,7 @@ bool qbuDatabase::detachAll()
 
 void qbuDatabase::emitDatabaseError(QString strErrorMessage)
 {
+	appendLastError(strErrorMessage);
 	emit dbError(strErrorMessage);
 }
 

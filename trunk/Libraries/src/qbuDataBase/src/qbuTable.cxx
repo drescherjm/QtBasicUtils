@@ -107,6 +107,8 @@ bool qbuTable::insertData(qbuPropertyMap* pData, qbudb::InsertMode im /*= IM_NO_
 				
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << strError;
 
+				databaseError(strError);
+
 			}
 		}
 
@@ -513,6 +515,7 @@ QString qbuTable::getUniqueTempTableName(QString strBase, int nIndexStart/*=0*/)
 
 void qbuTable::databaseError(QString strErrorMessage)
 {
+	appendLastError(strErrorMessage);
 	if (m_pDB) {
 		m_pDB->emitDatabaseError(strErrorMessage);
 	}

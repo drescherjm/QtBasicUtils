@@ -3,10 +3,13 @@
 #ifndef QBUDATABASE_H
 #define QBUDATABASE_H
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #include "qbuBase/qbuMacros.h"
 #include "qbuBase/qbuStringList.h"
 #include <QObject>
 #include <QSqlDatabase>
+#include "qbuBase/qbuObject.h"
 #include <memory>
 
 class qbuDBSettingsTableBase;
@@ -22,7 +25,7 @@ class qbuData;
  *
  */
 
-class qbuDatabase : public QObject, public QSqlDatabase, public std::enable_shared_from_this<qbuDatabase>
+class qbuDatabase : public qbuObject, public QSqlDatabase, public std::enable_shared_from_this<qbuDatabase>
 {
 	Q_OBJECT
 	QBU_DECLARE_SUPERCLASS(QSqlDatabase);

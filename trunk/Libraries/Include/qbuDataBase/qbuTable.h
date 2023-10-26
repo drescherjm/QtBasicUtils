@@ -7,12 +7,12 @@ class qbuDatabase;
 class qbuPropertyMap;
 class qbuInfo;
 
-#include <QObject>
 #include <QStringList>
 #include <memory>
 #include <utility>
 #include "qbuInsertQuery.h"
 #include <QSharedPointer>
+#include "qbuBase/qbuObject.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +22,7 @@ class qbuInfo;
  *	\ingroup qbuDatabase
  */
 
-class qbuTable : public QObject
+class qbuTable : public qbuObject
 {
 	friend class qbuTableSchema;
 	friend class qbuInsertQuery;
