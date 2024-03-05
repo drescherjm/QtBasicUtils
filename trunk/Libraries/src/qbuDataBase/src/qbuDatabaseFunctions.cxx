@@ -147,7 +147,10 @@ QString singleQuoteIfNecissary(QString str)
         QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
 
         if (!reg.exactMatch(str)) {
-            if ( !isAValidExpression(str) && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
+            if ( !isAValidExpression(str) 
+                && !beginsAndEnds(str, '\'', '\'') 
+                && !beginsAndEnds(str, '\"', '\"')
+                && !beginsAndEnds(str, '[', ']')) {
                 if (!isSQLFunction(str)) {
 
                     // BUG_FIX: Single quotes inside a string constant need to be doubled to escape them.
@@ -170,7 +173,10 @@ QString doubleQuoteIfNecissary(QString str)
 {
     QString retVal = str;
     if (str.contains(QRegExp("\\s+"))) {
-        if ( !beginsAndEnds(str,'(',')') && !beginsAndEnds(str,'\'','\'') && !beginsAndEnds(str,'\"','\"')) {
+        if ( !beginsAndEnds(str,'(',')') 
+            && !beginsAndEnds(str,'\'','\'') 
+            && !beginsAndEnds(str,'\"','\"')
+            && !beginsAndEnds(str, '[', ']')) {
             if (!isSQLFunction(str)) {
                 retVal.prepend("\"");
                 retVal.append("\"");
@@ -179,6 +185,25 @@ QString doubleQuoteIfNecissary(QString str)
         
     }
     return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString addBracketsForIdentifierIfNecissary(QString str)
+{
+	QString retVal = str;
+	if (str.contains(QRegExp("\\s+"))) {
+		if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') 
+            && !beginsAndEnds(str, '\"', '\"')
+            && !beginsAndEnds(str, '[', ']')) {
+			if (!isSQLFunction(str)) {
+				retVal.prepend("[");
+				retVal.append("]");
+			}
+		}
+
+	}
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

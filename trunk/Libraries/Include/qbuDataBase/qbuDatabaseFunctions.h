@@ -7,6 +7,7 @@ extern QString	singleQuoteIfNotQuoted(QString str);
 extern QString  doubleQuoteIfNotQuoted(QString str);
 extern QString	singleQuoteIfNecissary(QString str);
 extern QString	doubleQuoteIfNecissary(QString str);
+extern QString	addBracketsForIdentifierIfNecissary(QString str);
 extern bool		isSingleQuoted(QString str);
 extern bool		isDoubleQuoted(QString str);
 extern QString	toQueryValue(QVariant & vt);
