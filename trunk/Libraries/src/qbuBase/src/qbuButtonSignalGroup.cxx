@@ -118,15 +118,19 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 			bChecked = isChecked();
 		}
 
-		if (m_pPrivate->m_md == BSG_XOR) {
-			// With every click XOR will toggle
+		switch (m_pPrivate->m_md)
+		{
+		case BSG_NAND:
+		case BSG_NOR:
+		case BSG_XOR:
 			emit some_toggled(bChecked);
-		}
-		else {
+			break;
+		default:
 			// Any button is checked
 			if (bChecked) {
 				emit some_toggled(bChecked);
 			}
+			break;
 		}
 	}
 	else
@@ -152,15 +156,30 @@ void qbuButtonSignalGroup::buttonToggledInt(bool bChecked)
 			bChecked = isChecked();
 		}
 
-		if (m_pPrivate->m_md == BSG_XOR) {
-			// With every click XOR will toggle
+// 		if (m_pPrivate->m_md == BSG_XOR) {
+// 			// With every click XOR will toggle
+// 			emit some_toggled(bChecked);
+// 		}
+// 		else {
+// 			// All buttons are unchecked
+// 			if (!bChecked) {
+// 				emit some_toggled(bChecked);
+// 			}
+// 		}
+
+		switch (m_pPrivate->m_md)
+		{
+		case BSG_NAND:
+		case BSG_NOR:
+		case BSG_XOR:
 			emit some_toggled(bChecked);
-		}
-		else {
-			// All buttons are unchecked
+			break;
+		default:
+			// Any button is checked
 			if (!bChecked) {
 				emit some_toggled(bChecked);
 			}
+			break;
 		}
 	}
 
