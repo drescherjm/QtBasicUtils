@@ -208,6 +208,14 @@ void qbuSimpleQuery::bindValue( int pos, const QVariant & val, QSql::ParamType p
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+int qbuSimpleQuery::numRowsAffected() const
+{
+	int retVal{ m_pPrivate->m_query.numRowsAffected() };
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuSimpleQuery::operator const QSqlQuery&() const
 {
 	return m_pPrivate->m_query;

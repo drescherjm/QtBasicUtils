@@ -50,6 +50,7 @@ public:
 	virtual	QVariant	value(int index) const;
 	virtual void		bindValue(const QString & placeholder, const QVariant & val, QSql::ParamType paramType = QSql::In);
 	virtual	void		bindValue(int pos, const QVariant & val, QSql::ParamType paramType = QSql::In);
+	virtual int			numRowsAffected() const;
 
     std::shared_ptr<qbuDatabase> getDataBase();
 
