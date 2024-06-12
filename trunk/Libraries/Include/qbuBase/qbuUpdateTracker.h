@@ -13,6 +13,7 @@ public:
 	virtual bool Modify();
 	virtual bool HasChanged();
 	virtual bool ForceUnmodified();
+	virtual void copyFrom(const qbuUpdateTracker& other);
 private:
 	bool	m_bChanged;
 };
@@ -22,6 +23,13 @@ private:
 inline qbuUpdateTracker::qbuUpdateTracker(bool bChanged) : m_bChanged(bChanged)
 {
 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+inline void qbuUpdateTracker::copyFrom(const qbuUpdateTracker& other)
+{
+	m_bChanged = other.m_bChanged;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
