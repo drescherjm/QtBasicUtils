@@ -80,9 +80,13 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SRC_INCLUDE_DIR} ${${PROJECT_
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
-	set (QT_LIBRARIES Qt5::Widgets Qt5::WinMain Qt5::Xml)
-	set (QT_MODULES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::WinMain Qt5::Xml)
-	set (QT_PLATFORM_MODULES Qt5::QWindowsIntegrationPlugin)
+	if ( NOT QT_VERSION_MAJOR )
+		set(QT_VERSION_MAJOR ${${PROJECT_NAME}_QT_VERSION})
+	endif()
+
+	set (QT_LIBRARIES Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WinMain Qt${QT_VERSION_MAJOR}::Xml)
+	set (QT_MODULES Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::WinMain Qt${QT_VERSION_MAJOR}::Xml)
+	set (QT_PLATFORM_MODULES Qt${QT_VERSION_MAJOR}::QWindowsIntegrationPlugin)
 	
 	find_qt5_packages()
 		
