@@ -21,9 +21,9 @@ public:
 	qbuPropertyList& operator=(const qbuPropertyList & other);
 	bool operator==( const qbuPropertyList & other ) const;
 public:
-	typedef QList<qbuProperty*> List;
-	typedef List::iterator iterator;
-	typedef List::const_iterator const_iterator;
+	using List =  QList<qbuProperty*>;
+	using iterator = List::iterator;
+	using const_iterator = List::const_iterator;
 
 	void			push_back(qbuProperty* pProp);
 	void			push_back(qbuProperty & prop);
@@ -45,6 +45,9 @@ public:
 	bool			Save(QString strFile);
 	void			Print(std::ostream & st,qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st,qbuITKIndent indent = qbuITKIndent());
+
+protected:
+	virtual void	propertyInserted(qbuProperty* pProp);
 
 protected:
 	List			m_lstProps;

@@ -115,6 +115,7 @@ void qbuPropertyList::push_back(qbuProperty* pProp)
 
 		m_lstProps.push_back(pProp);
 		Modify();
+		propertyInserted(pProp);
 	}
 }
 
@@ -135,6 +136,7 @@ void qbuPropertyList::push_front(qbuProperty* pProp)
 
 		m_lstProps.push_front(pProp);
 		Modify();
+		propertyInserted(pProp);
 	}
 }
 
@@ -176,6 +178,13 @@ QString qbuPropertyList::toXML( bool bMakeRoot /*= true*/,qbuITKIndent indent )
 	}
 
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuPropertyList::propertyInserted(qbuProperty* pProp)
+{
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
