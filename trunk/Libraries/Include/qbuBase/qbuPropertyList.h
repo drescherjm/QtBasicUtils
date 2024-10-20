@@ -25,6 +25,8 @@ public:
 	using iterator = List::iterator;
 	using const_iterator = List::const_iterator;
 
+public:
+	void			setCaseSensitivity(Qt::CaseSensitivity cs);
 	void			push_back(qbuProperty* pProp);
 	void			push_back(qbuProperty & prop);
 	void			push_back(qbuPropertyList * lst);
@@ -34,6 +36,8 @@ public:
 	iterator		end();
 	const_iterator	begin() const;
 	const_iterator	end() const;
+	iterator		find(QString strName);
+	const_iterator	find(QString strName) const;
 	void			clear();
 	int				size() const;
 	bool			empty() const;
@@ -51,8 +55,10 @@ protected:
 
 protected:
 	List			m_lstProps;
+	Qt::CaseSensitivity m_cs;
 protected:
-	QString			CleanUpName(QString strName);
+	QString			CleanUpName(QString strName) const;
+
 public:
 	static	int		m_nMetaID;
 private:

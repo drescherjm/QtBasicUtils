@@ -15,7 +15,7 @@ static qbuUserPropPtrHelper<qbuPropertyList> hlpr(qbuPropertyList::m_nMetaID);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-qbuPropertyList::qbuPropertyList() 
+qbuPropertyList::qbuPropertyList() : m_cs(Qt::CaseInsensitive)
 {
 }
 
@@ -49,6 +49,7 @@ qbuPropertyList& qbuPropertyList::operator =(const qbuPropertyList & other)
 void qbuPropertyList::copy(const qbuPropertyList & other)
 {
 	setObjectName(other.objectName());
+	setCaseSensitivity(other.m_cs);
 
 	List list = other.m_lstProps;
 
@@ -86,6 +87,40 @@ qbuPropertyList::iterator qbuPropertyList::end()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuPropertyList::iterator qbuPropertyList::find(QString strName)
+{
+	qbuPropertyList::iterator retVal = begin();
+	strName = CleanUpName(strName);
+	for (; retVal != end(); ++retVal) {
+		qbuProperty* pProp = *retVal;
+		const QString& strPropName = pProp->objectName();
+		if (strName.compare(strPropName, m_cs) == 0) {
+			break;
+		}
+	}
+	
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+qbuPropertyList::const_iterator qbuPropertyList::find(QString strName) const
+{
+	qbuPropertyList::const_iterator retVal = begin();
+	strName = CleanUpName(strName);
+	for (; retVal != end(); ++retVal) {
+		qbuProperty* pProp = *retVal;
+		const QString& strPropName = pProp->objectName();
+		if (strName.compare(strPropName, m_cs) == 0) {
+			break;
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 qbuPropertyList::const_iterator qbuPropertyList::begin() const
 {
 	return m_lstProps.begin();
@@ -96,6 +131,15 @@ qbuPropertyList::const_iterator qbuPropertyList::begin() const
 qbuPropertyList::const_iterator qbuPropertyList::end() const
 {
 	return m_lstProps.end();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuPropertyList::setCaseSensitivity(Qt::CaseSensitivity cs)
+{
+	if (m_lstProps.isEmpty()) {
+		m_cs = cs;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -193,11 +237,14 @@ void qbuPropertyList::propertyInserted(qbuProperty* pProp)
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString qbuPropertyList::CleanUpName(QString strName)
+QString qbuPropertyList::CleanUpName(QString strName) const
 {
 	strName = strName.simplified();
 
 	strName.replace(" ","_");
+	if (m_cs == Qt::CaseInsensitive) {
+		strName = strName.toUpper();
+	}
 
 	return strName;
 }
