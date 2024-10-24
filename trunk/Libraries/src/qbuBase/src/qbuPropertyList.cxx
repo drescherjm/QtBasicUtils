@@ -392,16 +392,33 @@ int qbuPropertyList::size() const
 
 void qbuPropertyList::Print( std::ostream & st,qbuITKIndent indent )
 {
-	QString str = toXML(true,indent);
-	st << qPrintable(str) << std::endl;
+// 	QString str = toXML(true,indent);
+// 	st << qPrintable(str) << std::endl;
+
+	QString strName = metaObject()->className();
+	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+		.arg(indent.getIndent())
+		.arg(strName)
+		.arg(toXML(false, indent));
+
+	st << qPrintable(strTemp) << std::endl;
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuPropertyList::Print( QTextStream & st, qbuITKIndent indent )
 {
-	QString str = toXML(true,indent);
-	st << str << endl;
+// 	QString str = toXML(true,indent);
+// 	st << str << endl;
+
+	QString strName = metaObject()->className();
+	QString strTemp = QString("%1<%2>\n%3%1</%2>\n")
+		.arg(indent.getIndent())
+		.arg(strName)
+		.arg(toXML(false, indent));
+
+	st << strTemp << endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
