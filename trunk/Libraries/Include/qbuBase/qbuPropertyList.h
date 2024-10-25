@@ -49,6 +49,8 @@ public:
 	bool			Save(QString strFile);
 	void			Print(std::ostream & st,qbuITKIndent indent = qbuITKIndent());
 	void			Print(QTextStream & st,qbuITKIndent indent = qbuITKIndent());
+	bool			hasField(QString strFieldName) const;
+	bool            hasFields(const QStringList& lstFields) const;
 
 protected:
 	virtual void	propertyInserted(qbuProperty* pProp);

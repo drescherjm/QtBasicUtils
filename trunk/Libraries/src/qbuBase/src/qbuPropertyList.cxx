@@ -423,6 +423,30 @@ void qbuPropertyList::Print( QTextStream & st, qbuITKIndent indent )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+bool qbuPropertyList::hasField(QString strFieldName) const
+{
+	return (find(strFieldName) != end());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuPropertyList::hasFields(const QStringList& lstFields) const
+{
+	bool retVal = true;
+
+	for(const QString& strField : lstFields) {
+		retVal = hasField(strField);
+
+		if (!retVal) {
+			break;
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 
 bool qbuPropertyList::operator==( const qbuPropertyList & other ) const
 {
