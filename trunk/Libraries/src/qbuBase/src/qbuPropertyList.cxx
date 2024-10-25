@@ -2,8 +2,7 @@
 
 #include "qbuBase/qbuPropertyList.h"
 #include "qbuBase/qbuPropXMLHelper.h"
-
-
+#include "qbuBase/qbuStringList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // The following is needed so that the UserPropPtr class can create objects of types it 
@@ -443,6 +442,67 @@ bool qbuPropertyList::hasFields(const QStringList& lstFields) const
 	}
 
 	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+bool qbuPropertyList::RemoveProperty(QString strName)
+{
+	bool retVal;
+	iterator it = find(strName);
+	retVal = (it != end());
+	if (retVal) {
+		delete* it;
+		m_lstProps.erase(it);
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int qbuPropertyList::RemoveProperties(const QStringList& lstToRemove)
+{
+	int retVal = 0;
+	iterator it = begin();
+	while (it != end()) {
+		qbuProperty* pProp = *it;
+		if (pProp != NULL) {
+			QString strName = pProp->objectName();
+			if (lstToRemove.contains(strName, Qt::CaseInsensitive)) {
+				it = m_lstProps.erase(it);
+				retVal++;
+				continue;
+			}
+		}
+		++it;
+	}
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int qbuPropertyList::RemoveAllPropertiesBut(const QStringList& lstToKeep)
+{
+	qbuStringList lstRemaining = getPropertyList();
+	lstRemaining.removeAll(lstToKeep, Qt::CaseInsensitive);
+
+	return RemoveProperties(lstRemaining);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+QStringList qbuPropertyList::getPropertyList() const
+{
+	QSet<QString> propNames;
+
+	const_iterator it = begin();
+
+	for (; it != end(); ++it) {
+		qbuProperty* pProp = *it;
+		propNames << pProp->objectName();
+	}
+
+	return propNames.toList();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

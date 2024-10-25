@@ -51,6 +51,10 @@ public:
 	void			Print(QTextStream & st,qbuITKIndent indent = qbuITKIndent());
 	bool			hasField(QString strFieldName) const;
 	bool            hasFields(const QStringList& lstFields) const;
+	bool			RemoveProperty(QString strName);
+	virtual	int		RemoveProperties(const QStringList& lstToRemove);
+	virtual	int		RemoveAllPropertiesBut(const QStringList& lstToKeep);
+	QStringList		getPropertyList() const;
 
 protected:
 	virtual void	propertyInserted(qbuProperty* pProp);
