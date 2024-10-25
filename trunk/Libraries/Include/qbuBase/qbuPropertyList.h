@@ -52,6 +52,9 @@ public:
 	bool			hasField(QString strFieldName) const;
 	bool            hasFields(const QStringList& lstFields) const;
 	bool			RemoveProperty(QString strName);
+
+	virtual	void	addProperties(qbuPropertyList* other);
+	virtual void	addProperties(const qbuPropertyList* other);
 	virtual	int		RemoveProperties(const QStringList& lstToRemove);
 	virtual	int		RemoveAllPropertiesBut(const QStringList& lstToKeep);
 	QStringList		getPropertyList() const;

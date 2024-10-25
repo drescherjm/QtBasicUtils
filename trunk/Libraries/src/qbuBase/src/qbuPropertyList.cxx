@@ -460,6 +460,29 @@ bool qbuPropertyList::RemoveProperty(QString strName)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void qbuPropertyList::addProperties(qbuPropertyList* pOther)
+{
+	if (pOther != NULL) {
+		iterator it = pOther->begin();
+		for (; it != pOther->end(); ++it) {
+			push_back(**it);
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+void qbuPropertyList::addProperties(const qbuPropertyList* other)
+{
+	qbuPropertyList::const_iterator it = other->begin();
+	if (it != other->end()) {
+		qbuProperty prop = **it;
+		push_back(prop);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 int qbuPropertyList::RemoveProperties(const QStringList& lstToRemove)
 {
 	int retVal = 0;
