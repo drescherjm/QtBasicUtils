@@ -127,6 +127,17 @@ qbuUserPropPtr::qbuUserPropPtr(SharedPtr & other)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+qbuUserPropPtr& qbuUserPropPtr::operator=(const qbuUserPropPtr& other)
+{
+	if (&other != this) {
+		destroy();
+		copy(other);
+	}
+	return (*this);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void qbuUserPropPtr::copy( const qbuUserPropPtr & other )
 {
 	m_pProp = other.m_pProp;
