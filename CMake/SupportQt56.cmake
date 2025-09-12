@@ -7,5 +7,4 @@ find_package(QT NAMES ${SELECT_QT_VERSION} REQUIRED)
 #Create a variable containing Qt5 or Qt6
 set(QT Qt${QT_VERSION_MAJOR})
 
-
 set(${PROJECT_NAME}_QT_VERSION ${QT_VERSION_MAJOR})

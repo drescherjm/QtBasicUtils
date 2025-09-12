@@ -1,5 +1,32 @@
 #include(vcpkg_common_functions)
 
+#message(FATAL_ERROR FEATURES=${FEATURES})
+
+if("qt5" IN_LIST FEATURES)
+	set(SELECT_QT_VERSION "Qt5")
+else()
+	set(SELECT_QT_VERSION "Qt6")
+endif()
+
+if("qt6" IN_LIST FEATURES OR EXISTS "${CURRENT_INSTALLED_DIR}/tools/Qt6/bin/qmake.exe")
+    set(QMAKE_EXECUTABLE "${CURRENT_INSTALLED_DIR}/tools/qt6/bin/qmake.exe")
+elseif(EXISTS "${CURRENT_INSTALLED_DIR}/tools/qt5/bin/qmake.exe")
+    set(QMAKE_EXECUTABLE "${CURRENT_INSTALLED_DIR}/tools/qt5/bin/qmake.exe")
+else()
+    message(FATAL_ERROR "Could not find qmake (Qt5 or Qt6 must be a dependency).")
+endif()
+
+message(STATUS "Using qmake: ${QMAKE_EXECUTABLE}")
+
+#find_package(QT NAMES ${SELECT_QT_VERSION} REQUIRED)
+
+message(FATAL_ERROR QMAKE=${QMAKE_EXECUTABLE})
+
+if (QT_VERSION_MAJOR EQUAL 6) 
+	get_target_property(target_qmake_path ${_QT56}::qmake LOCATION_RELEASE)
+	message( FATAL_ERROR target_qmake_path=${target_qmake_path})
+endif()
+
 set(QXT_VER_MAJOR 7)
 set(QXT_VER_MINOR 0)
 set(QXT_VER_PATCH 0-git)

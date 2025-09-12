@@ -1,7 +1,7 @@
 {
   "name": "qtbasicutils",
   "version-string": "0.1.0",
-  "dependencies": ["qxt"],
+  "dependencies": [],
   "features": {
     "qt5": {
       "description": "Use Qt5",
@@ -13,7 +13,13 @@
               "features": [
                 "qt5"
               ]
-          }
+          },
+		  {
+			  "name": "qxt",
+			  "features": [
+                "qt5"
+              ]
+		  }
       ]
     },
     "qt6": {
@@ -26,7 +32,13 @@
               "features": [
                 "qt6"
               ]
-          }
+          },
+		  {
+			  "name": "qxt",
+			  "features": [
+                "qt6"
+              ]
+		  }
       ]
     }
   }
