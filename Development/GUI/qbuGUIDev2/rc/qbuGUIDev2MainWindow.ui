@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>qbuGUIDev2MainWindow</class>
+ <widget class="QMainWindow" name="qbuGUIDev2MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>666</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>666</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuWidgets">
+    <property name="title">
+     <string>Log</string>
+    </property>
+    <addaction name="actionTestLog0"/>
+    <addaction name="actionToggleRandomData"/>
+    <addaction name="actionToggle_Random_Data_Generation_Job"/>
+    <addaction name="actionHide_Filename_Column"/>
+   </widget>
+   <addaction name="menuWidgets"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionTestLog0">
+   <property name="text">
+    <string>TestLog0</string>
+   </property>
+  </action>
+  <action name="actionToggleRandomData">
+   <property name="text">
+    <string>Toggle Random Data Generation</string>
+   </property>
+  </action>
+  <action name="actionToggle_Random_Data_Generation_Job">
+   <property name="text">
+    <string>Toggle Random Data Generation Job</string>
+   </property>
+  </action>
+  <action name="actionHide_Filename_Column">
+   <property name="text">
+    <string>Hide Filename Column</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
