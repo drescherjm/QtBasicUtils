@@ -1,7 +1,7 @@
 {
   "name": "qtbasicutils",
   "version-string": "0.1.0",
-  "dependencies": [],
+  "dependencies": ["qxt"],
   "features": {
     "qt5": {
       "description": "Use Qt5",

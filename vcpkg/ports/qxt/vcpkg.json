@@ -1,0 +1,20 @@
+{
+  "name": "qxt",
+  "version": "7.0.0-git",
+  "description": "LibQxt is an extension library for Qt providing a suite of cross-platform utility classes to add functionality not readily available in Qt.",
+  "homepage": "https://github.com/drescherjm/linuxdeployqt",
+  "features": {
+    "qt5": {
+      "description": "Use Qt5",
+      "dependencies": [
+          "qt5-base", "qt5-tools"
+      ]
+    },
+    "qt6": {
+      "description": "Use Qt6",
+      "dependencies": [
+          "qtbase", "qttools"
+      ]
+    }
+  }
+}
