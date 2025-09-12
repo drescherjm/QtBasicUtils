@@ -1,0 +1,6 @@
+[submodule "CMake/External"]
+	path = CMake/External
+	url = git@github.com:drescherjm/cmake-modules.git
+[submodule "CMake/CMakeGitVersioner"]
+	path = CMake/CMakeGitVersioner
+	url = git@github.com:symboxtra/cmake-GitVersioner.git

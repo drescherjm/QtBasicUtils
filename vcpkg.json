@@ -1,0 +1,34 @@
+{
+  "name": "my-test-qt-project",
+  "version-string": "0.1.0",
+  "dependencies": [],
+  "features": {
+    "qt5": {
+      "description": "Use Qt5",
+      "dependencies": [
+          "qt5-base", "qt5-tools",
+          {
+              "name": "linuxdeployqt",
+              "platform": "linux",
+              "features": [
+                "qt5"
+              ]
+          }
+      ]
+    },
+    "qt6": {
+      "description": "Use Qt6",
+      "dependencies": [
+          "qtbase", "qttools",
+          {
+              "name": "linuxdeployqt",
+              "platform": "linux",
+              "features": [
+                "qt6"
+              ]
+          }
+      ]
+    }
+  }
+}
+
