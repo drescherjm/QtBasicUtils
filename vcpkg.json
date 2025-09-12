@@ -1,5 +1,5 @@
 {
-  "name": "my-test-qt-project",
+  "name": "qtbasicutils",
   "version-string": "0.1.0",
   "dependencies": [],
   "features": {
