@@ -9,7 +9,7 @@ endif()
 
 #########################################################################################
 
-cmake_minimum_required (VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.20 FATAL_ERROR)
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0074 NEW)
@@ -17,14 +17,6 @@ cmake_policy(SET CMP0074 NEW)
 include(CMake/SupportSwitchingQtVersionAsAFeature.cmake)
 
 project(QtBasicUtils)
-
-# if( POLICY CMP0074 )
-  # cmake_policy(SET CMP0074 NEW)
-# endif()
-
-# if(POLICY CMP0020)
-  # cmake_policy(SET CMP0020 NEW)
-# endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -49,6 +41,7 @@ option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
 
 #########################################################################################
 
+include(CMake/SupportQt56.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetRuntime.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SiteConfig.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetCompilerVersion.cmake)
@@ -85,6 +78,8 @@ if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	if ( NOT QT_VERSION_MAJOR )
 		set(QT_VERSION_MAJOR ${${PROJECT_NAME}_QT_VERSION})
 	endif()
+	
+	message(STATUS QT_VERSION_MAJOR=${QT_VERSION_MAJOR})
 
 	set (QT_LIBRARIES Qt${QT_VERSION_MAJOR}::Widgets  Qt${QT_VERSION_MAJOR}::Xml)
 	set (QT_MODULES Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Xml)
