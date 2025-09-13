@@ -9,18 +9,14 @@ else()
 endif()
 
 if("qt6" IN_LIST FEATURES OR EXISTS "${CURRENT_INSTALLED_DIR}/tools/Qt6/bin/qmake.exe")
+	find_program(qmake_executable NAMES qmake PATHS "${CURRENT_HOST_INSTALLED_DIR}/tools/Qt6/bin" NO_DEFAULT_PATH)
     set(QMAKE_EXECUTABLE "${CURRENT_INSTALLED_DIR}/tools/qt6/bin/qmake.exe")
 elseif(EXISTS "${CURRENT_INSTALLED_DIR}/tools/qt5/bin/qmake.exe")
+	find_program(qmake_executable NAMES qmake PATHS "${CURRENT_HOST_INSTALLED_DIR}/tools/qt5/bin" NO_DEFAULT_PATH)
     set(QMAKE_EXECUTABLE "${CURRENT_INSTALLED_DIR}/tools/qt5/bin/qmake.exe")
 else()
     message(FATAL_ERROR "Could not find qmake (Qt5 or Qt6 must be a dependency).")
 endif()
-
-message(STATUS "Using qmake: ${QMAKE_EXECUTABLE}")
-
-#find_package(QT NAMES ${SELECT_QT_VERSION} REQUIRED)
-
-message(FATAL_ERROR QMAKE=${QMAKE_EXECUTABLE})
 
 if (QT_VERSION_MAJOR EQUAL 6) 
 	get_target_property(target_qmake_path ${_QT56}::qmake LOCATION_RELEASE)
@@ -72,6 +68,7 @@ configure_file("${CMAKE_CURRENT_LIST_DIR}/qxtversion.h.cmake" "${CURRENT_PACKAGE
 
 vcpkg_configure_qmake(
     SOURCE_PATH ${SOURCE_PATH}
+	QMAKE_PATH  ${QMAKE_EXECUTABLE}
     OPTIONS
         CONFIG+=${VCPKG_LIBRARY_LINKAGE}
 		QXT_MODULES=core
