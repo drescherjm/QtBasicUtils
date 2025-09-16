@@ -1,15 +1,15 @@
 myproject(qbuGUIDev1)
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
-	set (QT_MODULES ${QT_MODULES} Qt5::Designer )
+	set (QT_MODULES ${QT_MODULES} Qt${QT_VERSION_MAJOR}::Designer )
 	
 	find_qt5_packages()
 endif()
 
 set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
 set(QXT_USE_QXTCORE TRUE)
-find_package(Qxt REQUIRED)
-include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQxtRuntime.cmake)
+
+SupportQxt()
 
 include_directories(
 	Include 

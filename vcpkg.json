@@ -1,46 +1,49 @@
 {
   "name": "qtbasicutils",
   "version-string": "0.1.0",
-  "dependencies": [],
+  "dependencies": [
+    "boost-core"
+  ],
   "features": {
     "qt5": {
       "description": "Use Qt5",
       "dependencies": [
-          "qt5-base", "qt5-tools",
-          {
-              "name": "linuxdeployqt",
-              "platform": "linux",
-              "features": [
-                "qt5"
-              ]
-          },
-		  {
-			  "name": "qxt",
-			  "features": [
-                "qt5"
-              ]
-		  }
+        {
+          "name": "linuxdeployqt",
+          "features": [
+            "qt5"
+          ],
+          "platform": "linux"
+        },
+        "qt5-base",
+        "qt5-tools",
+        {
+          "name": "qxt",
+          "features": [
+            "qt5"
+          ]
+        }
       ]
     },
     "qt6": {
       "description": "Use Qt6",
       "dependencies": [
-          "qtbase", "qttools",
-          {
-              "name": "linuxdeployqt",
-              "platform": "linux",
-              "features": [
-                "qt6"
-              ]
-          },
-		  {
-			  "name": "qxt",
-			  "features": [
-                "qt6"
-              ]
-		  }
+        {
+          "name": "linuxdeployqt",
+          "features": [
+            "qt6"
+          ],
+          "platform": "linux"
+        },
+        "qtbase",
+        "qttools",
+        {
+          "name": "qxt",
+          "features": [
+            "qt6"
+          ]
+        }
       ]
     }
   }
 }
-
