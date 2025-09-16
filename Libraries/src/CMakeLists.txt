@@ -6,8 +6,11 @@ if (QBU_BUILD_LOG)
 	conditional_define(QBU_BUILD_LOG QBU_HAS_LOG)
 	set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
 	set(QXT_USE_QXTCORE TRUE)
-	find_package(Qxt REQUIRED)
-	include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQxtRuntime.cmake)
+	
+	SupportQxt()
+	
+	#find_package(Qxt REQUIRED)
+	#include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQxtRuntime.cmake)
 endif()
 
 add_subdirectory(qbuBase)

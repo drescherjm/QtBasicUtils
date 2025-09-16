@@ -42,6 +42,7 @@ option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
 #########################################################################################
 
 include(CMake/SupportQt56.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SupportQxt.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetRuntime.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SiteConfig.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetCompilerVersion.cmake)
@@ -75,9 +76,6 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SRC_INCLUDE_DIR} ${${PROJECT_
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
-	if ( NOT QT_VERSION_MAJOR )
-		set(QT_VERSION_MAJOR ${${PROJECT_NAME}_QT_VERSION})
-	endif()
 	
 	message(STATUS QT_VERSION_MAJOR=${QT_VERSION_MAJOR})
 
