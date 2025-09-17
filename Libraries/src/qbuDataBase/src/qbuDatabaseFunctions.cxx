@@ -88,20 +88,23 @@ bool isValidFunctionParamaters(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool isSQLFunction(QString str)
-{
-	QRegExp regExp("\\s*[a-z_]+\\(.*\\)\\s*", Qt::CaseInsensitive);
 
-	bool retVal = regExp.exactMatch(str);
+bool isSQLFunction(const QString& str)
+{
+	// Raw string literal avoids double escaping
+	static const QRegularExpression regExp(
+		R"(\s*[a-z_]+\(.+\)\s*)",
+		QRegularExpression::CaseInsensitiveOption
+	);
+
+	bool retVal = regExp.match(str).hasMatch();
 	if (retVal) {
 		int nBegin = str.indexOf('(');
 		int nEnd = str.lastIndexOf(')');
 
 		retVal = ((nEnd > nBegin) && (nBegin > 0));
 		if (retVal) {
-
 			QString strTemp = str.mid(nBegin, ++nEnd - nBegin);
-
 			retVal = isValidFunctionParamaters(strTemp);
 		}
 	}
@@ -139,92 +142,106 @@ QString doubleQuoteIfNotQuoted(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString singleQuoteIfNecissary(QString str)
-{
-    QString retVal = str;
-
-    if (!str.isEmpty()) {
-        QRegExp reg("\\d+|\\d+\\.\\d+|\\-\\d+\\.\\d+|\\-\\d+");
-
-        if (!reg.exactMatch(str)) {
-            if ( !isAValidExpression(str) 
-                && !beginsAndEnds(str, '\'', '\'') 
-                && !beginsAndEnds(str, '\"', '\"')
-                && !beginsAndEnds(str, '[', ']')) {
-                if (!isSQLFunction(str)) {
-
-                    // BUG_FIX: Single quotes inside a string constant need to be doubled to escape them.
-                    retVal.replace('\'', "\'\'");
-                    retVal.replace(QRegExp(";\\s\\n"), ";\n");
-
-                    retVal.prepend("\'");
-                    retVal.append("\'");
-                }
-            }
-        }
-    }
-
-    return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QString doubleQuoteIfNecissary(QString str)
-{
-    QString retVal = str;
-    if (str.contains(QRegExp("\\s+"))) {
-        if ( !beginsAndEnds(str,'(',')') 
-            && !beginsAndEnds(str,'\'','\'') 
-            && !beginsAndEnds(str,'\"','\"')
-            && !beginsAndEnds(str, '[', ']')) {
-            if (!isSQLFunction(str)) {
-                retVal.prepend("\"");
-                retVal.append("\"");
-            }
-        }
-        
-    }
-    return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-extern QString addBracketsForIdentifierIfNecissary(QString str)
+QString singleQuoteIfNecessary(QString str)
 {
 	QString retVal = str;
-	if (str.contains(QRegExp("\\s+"))) {
-		if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') 
-            && !beginsAndEnds(str, '\"', '\"')
-            && !beginsAndEnds(str, '[', ']')) {
-			if (!isSQLFunction(str)) {
-				retVal.prepend("[");
-				retVal.append("]");
+
+	if (!str.isEmpty()) {
+		
+		// Use QRegularExpression with raw string literal
+		
+		static const QRegularExpression reg(R"(\d+|\d+\.\d+|-\d+\.\d+|-\d+)");
+		if (!reg.match(str).hasMatch()) {
+			if (!isAValidExpression(str)
+				&& !beginsAndEnds(str, '\'', '\'')
+				&& !beginsAndEnds(str, '\"', '\"')
+				&& !beginsAndEnds(str, '[', ']')) {
+				if (!isSQLFunction(str)) {
+
+					// BUG_FIX: Escape single quotes inside the string
+					retVal.replace('\'', "''");
+
+					// Replace "; \n" with ";\n" using QRegularExpression
+					retVal.replace(QRegularExpression(R"(;\s\n)"), ";\n");
+
+					retVal.prepend('\'');
+					retVal.append('\'');
+				}
 			}
 		}
-
 	}
+
 	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-extern QString quoteSQLObjectNameIfNecissary(QString str)
+QString doubleQuoteIfNecessary(QString str)
 {
-    QString retVal = str;
-    if (str.contains(QRegExp("\\s+"))) {
-        if (!beginsAndEnds(str, '(', ')') && !beginsAndEnds(str, '\'', '\'') && !beginsAndEnds(str, '\"', '\"')) {
-            if (!isSQLFunction(str)) {
-                retVal.prepend("\"");
-                retVal.append("\"");
-            }
-        }
+	QString retVal = str;
 
-    }
-    else if ( !str.isEmpty() && (str[0].isDigit() || (str.contains('#') )) ) {
-        retVal.prepend("\"");
-        retVal.append("\"");
-    }
-    return retVal;
+	static const QRegularExpression whitespaceRegex(R"(\s+)");
+	if (whitespaceRegex.match(str).hasMatch()) {
+		if (!beginsAndEnds(str, '(', ')')
+			&& !beginsAndEnds(str, '\'', '\'')
+			&& !beginsAndEnds(str, '\"', '\"')
+			&& !beginsAndEnds(str, '[', ']')) {
+			if (!isSQLFunction(str)) {
+				retVal.prepend('\"');
+				retVal.append('\"');
+			}
+		}
+	}
+
+	return retVal;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString addBracketsForIdentifierIfNecessary(QString str)
+{
+	QString retVal = str;
+
+	static const QRegularExpression whitespaceRegex(R"(\s+)");
+	if (whitespaceRegex.match(str).hasMatch()) {
+		if (!beginsAndEnds(str, '(', ')')
+			&& !beginsAndEnds(str, '\'', '\'')
+			&& !beginsAndEnds(str, '\"', '\"')
+			&& !beginsAndEnds(str, '[', ']')) {
+			if (!isSQLFunction(str)) {
+				retVal.prepend('[');
+				retVal.append(']');
+			}
+		}
+	}
+
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+extern QString quoteSQLObjectNameIfNecessary(QString str)
+{
+	QString retVal = str;
+
+	static const QRegularExpression whitespaceRegex(R"(\s+)");
+	if (whitespaceRegex.match(str).hasMatch()) {
+		if (!beginsAndEnds(str, '(', ')')
+			&& !beginsAndEnds(str, '\'', '\'')
+			&& !beginsAndEnds(str, '\"', '\"')) {
+			if (!isSQLFunction(str)) {
+				retVal.prepend('\"');
+				retVal.append('\"');
+			}
+		}
+	}
+	else if (!str.isEmpty() && (str[0].isDigit() || str.contains('#'))) {
+		retVal.prepend('\"');
+		retVal.append('\"');
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
