@@ -5,6 +5,7 @@
 #include "qbuDataBase/qbuDBCondition.h"
 #include "qbuLog/qbuLog.h"
 #include "qbuDataBase/qbuDBExpression.h"
+#include <QRegularExpression>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,9 +39,9 @@ qbuDBColDef::qbuDBColDef(QString strFieldName, QString strAlias) :
 m_strName(quoteSQLObjectNameIfNecissary(strFieldName)),
 m_strAlias(quoteSQLObjectNameIfNecissary(strAlias))
 {
-	QRegExp reg("[TQV]+\\d+");
+	QRegularExpression reg("^[TQV]+\\d+$");
 
-	if (reg.exactMatch(strAlias)) {
+	if (reg.match(strAlias).hasMatch()) {
 		QString strMsg = QString("Suspicious use of the Alias parameter -n %1. It looks like a table alias instead.").arg(__FUNCTION__);
 		QLOG_WARN() << QBULOG_DATABASE_TYPE  << strMsg;
 	}

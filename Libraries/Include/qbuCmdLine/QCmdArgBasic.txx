@@ -55,16 +55,22 @@ int QCmdArgBasic<TYPE,fmt>::ImportData( QString strValue )
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-template <class TYPE,char fmt[]>
-QString QCmdArgBasic<TYPE,fmt>::GetSyntax()
+template <class TYPE, char fmt[]>
+QString QCmdArgBasic<TYPE, fmt>::GetSyntax()
 {
-	QString retVal;
 	QString tempStr = this->GetDescription() + " [";
 	tempStr += fmt;
-	tempStr += ("]");
-	retVal.sprintf(tempStr.toStdString().c_str(),this->m_nDefaultValue);
+	tempStr += "]";
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+	return QString::asprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
+#else
+	QString retVal;
+	retVal.sprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
 	return retVal;
+#endif
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE,char fmt[]>

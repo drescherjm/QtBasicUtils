@@ -1,5 +1,6 @@
-#ifndef __QCMDOPTBASICXX__
-#define __QCMDOPTBASICXX__
+#pragma once
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
 
@@ -61,7 +62,13 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 	QString tempStr = this->GetDescription() + " [";
 	tempStr += fmt;
 	tempStr += ("]");
-	retVal.sprintf(tempStr.toLatin1(),this->m_nDefaultValue);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+	retval =  QString::asprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
+#else
+	retVal.sprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
+#endif
+
 	return retVal;
 }
 
@@ -126,5 +133,3 @@ QCmdOptBasic<TYPE, fmt>* QCmdOptBasic<TYPE, fmt>::Clone()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-#endif //__QCMDOPTBASICXX__
