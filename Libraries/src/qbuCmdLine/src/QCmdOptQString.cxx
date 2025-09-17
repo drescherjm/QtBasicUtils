@@ -3,6 +3,7 @@
 #include "qbuCmdLine/QCmdOptQString.h"
 #include "qbuCmdLine/QCmdParseError.h"
 #include "qbuCmdLine/QCmdOptBasicBase.h"
+#include <QRegularExpression>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,14 +87,14 @@ QString QCmdOptQString::GetSyntax()
 QString QCmdOptQString::exportCommandString()
 {
 	QString retVal;
-	if (!isDefaultValue() ) {
-		if (m_nValue.contains(QRegExp("\\s+"))) {
+	if (!isDefaultValue()) {
+		QRegularExpression whitespaceRegex("\\s+");
+		if (m_nValue.contains(whitespaceRegex)) {
 			retVal = QString("%1\"%2\"")
 				.arg(exportOptionName())
 				.arg(m_nValue);
 		}
-		else
-		{			
+		else {
 			retVal = QString("%1%2")
 				.arg(exportOptionName())
 				.arg(m_nValue);

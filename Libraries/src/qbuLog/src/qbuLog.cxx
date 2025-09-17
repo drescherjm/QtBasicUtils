@@ -1,13 +1,13 @@
 #include "qbuLogPCH.h"
 #include "qbuLog/qbuLog.h"
-#include <QRegExp>
+#include <QRegularExpression>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString logFileName(QString strFile,int nLine )
+QString logFileName(QString strFile, int nLine)
 {
-	//strFile.remove("..\\");
-	strFile.remove(QRegExp("\\.\\.[/\\\\]")); // Removes ..\ or ../
+	QRegularExpression regex(R"(\.\.[/\\])"); // Matches "..\" or "../"
+	strFile.remove(regex);
 	return QString("%1:%2").arg(strFile).arg(nLine);
 }
 

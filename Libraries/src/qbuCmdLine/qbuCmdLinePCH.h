@@ -8,3 +8,4 @@
 #include <QTextStream>
 #include <QFileInfo>
 #include <QProcessEnvironment>
+#include <QRegularExpression>

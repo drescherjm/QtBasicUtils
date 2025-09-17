@@ -6,7 +6,7 @@ if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	find_qt5_packages()
 endif()
 
-set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
+set(QXT_FIND_COMPONENTS QxtCore QxtGui)
 set(QXT_USE_QXTCORE TRUE)
 
 SupportQxt()

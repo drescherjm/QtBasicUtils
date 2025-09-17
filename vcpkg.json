@@ -3,7 +3,8 @@
   "version-string": "0.1.0",
   "dependencies": [
     "boost-core",
-	"boost-multi-index"
+	"boost-multi-index",
+	"boost-bimap"
   ],
   "features": {
     "qt5": {

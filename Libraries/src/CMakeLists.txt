@@ -4,7 +4,7 @@ option (QBU_BUILD_WIDGETS				"Build Widgets Support" OFF)
 
 if (QBU_BUILD_LOG)
 	conditional_define(QBU_BUILD_LOG QBU_HAS_LOG)
-	set(QXT_FIND_COMPONENTS QxtCore, QxtGui)
+	set(QXT_FIND_COMPONENTS QxtCore QxtGui)
 	set(QXT_USE_QXTCORE TRUE)
 	
 	SupportQxt()
