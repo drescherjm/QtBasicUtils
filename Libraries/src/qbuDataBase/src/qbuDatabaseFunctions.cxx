@@ -1,7 +1,7 @@
 #include "qbuDataBasePCH.h"
 
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QVariant>
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ bool isAValidExpression(QString str)
 			retVal = !strTemp.isEmpty();
 
 			if (retVal) {
-				retVal = strTemp.contains(QRegExp("[A-Za-z0-9]"));
+				retVal = strTemp.contains(QRegularExpression("[A-Za-z0-9]"));
 			}
 		}	
 	}
@@ -69,7 +69,7 @@ bool isValidFunctionParamaters(QString str)
 			retVal = !strTemp.isEmpty();
 
 			if (retVal) {
-				retVal = strTemp.contains(QRegExp("[A-Za-z0-9]"));
+				retVal = strTemp.contains(QRegularExpression("[A-Za-z0-9]"));
 
 				if (!retVal) {
 					// Support count(*) ...

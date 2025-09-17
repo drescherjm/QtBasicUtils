@@ -64,7 +64,7 @@ QString QCmdOptBasic<TYPE,fmt>::GetSyntax()
 	tempStr += ("]");
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-	retval =  QString::asprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
+	retVal =  QString::asprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
 #else
 	retVal.sprintf(tempStr.toUtf8().constData(), this->m_nDefaultValue);
 #endif

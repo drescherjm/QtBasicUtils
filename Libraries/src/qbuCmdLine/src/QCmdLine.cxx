@@ -452,21 +452,44 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QStringList moveToNextQuote(QStringList & lst)
+// QStringList moveToNextQuote(QStringList & lst)
+// {
+// 	QStringList retVal;
+// 
+// 	while(!lst.isEmpty()) {
+// 		QString front = lst.first();
+// 
+// 		// Match ' or " but not \' or \"
+// 		// QRegExp("[^\\][\'\"]")
+// 		if (!front.contains(QRegularExpression("[^\\\\][\'\"]"))) {
+// 			retVal.push_back(front);
+// 			lst.pop_front();
+// 		}
+// 		else
+// 			break;
+// 	}
+// 
+// 	return retVal;
+// }
+
+QStringList moveToNextQuote(QStringList& lst)
 {
 	QStringList retVal;
 
-	while(!lst.isEmpty()) {
+	// Precompile the regex once (better performance than re-creating each loop)
+	static const QRegularExpression re("[^\\\\]['\"]");
+
+	while (!lst.isEmpty()) {
 		QString front = lst.first();
 
 		// Match ' or " but not \' or \"
-		// QRegExp("[^\\][\'\"]")
-		if (!front.contains(QRegExp("[^\\\\][\'\"]"))) {
+		if (!front.contains(re)) {
 			retVal.push_back(front);
 			lst.pop_front();
 		}
-		else
+		else {
 			break;
+		}
 	}
 
 	return retVal;
@@ -487,10 +510,10 @@ QString handleStartingDoubleQuote(QString strFront, QStringList & lst)
 {
 	bool bSingleQuote=false;
 	QString retVal;
-	int nIndex = strFront.indexOf(QRegExp("[\'\"]"),1);
+	int nIndex = strFront.indexOf(QRegularExpression("[\'\"]"),1);
 
 	while ( (nIndex >= 0) && (strFront[nIndex-1] == QChar('\\')) ) {
-		nIndex = strFront.indexOf(QRegExp("[\'\"]"),nIndex);
+		nIndex = strFront.indexOf(QRegularExpression("[\'\"]"),nIndex);
 	}
 
 	if (nIndex > 0) {
@@ -511,11 +534,11 @@ QStringList handleQuotes(QStringList & lst)
 		lst.pop_front();
 		if (lst.size() > 1) {
 
-			if (front.contains(QRegExp("[^\\\\][\'\"]"))) {
-				int nIndex = front.indexOf(QRegExp("[\'\"]"));
+			if (front.contains(QRegularExpression("[^\\\\][\'\"]"))) {
+				int nIndex = front.indexOf(QRegularExpression("[\'\"]"));
 
 				while ( (nIndex != 0) && (front[nIndex-1] == QChar('\\')) ) {
-					nIndex = front.indexOf(QRegExp("[\'\"]"),nIndex);
+					nIndex = front.indexOf(QRegularExpression("[\'\"]"),nIndex);
 				}
 				if (nIndex >= 0) {
 					QChar ch = front[nIndex];
@@ -539,66 +562,63 @@ QStringList handleQuotes(QStringList & lst)
 	
 	return retVal;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QStringList handleQuotes(QString str)
 {
-	QRegExp rx2("[\\s\'\"]");
+	// Precompile regexes once for efficiency
+	static const QRegularExpression rx2("[\\s'\"]");
+	static const QRegularExpression rxSpace("\\s");
+
 	QStringList list;
 
 	int nSingle = 0;
 	int nDouble = 0;
 
- 	int start = 0;
- 	int extra = 0;
- 	int end;
- 	while ((end = rx2.indexIn(str, start + extra)) != -1) {
+	int start = 0;
+	int extra = 0;
+	int end;
+
+	while ((end = rx2.match(str, start + extra).capturedStart()) != -1) {
 
 		// Just continue if the found item is escaped.
-		if (end > 0) {
-			if (str[end-1] == QChar('\\')) {
-				extra = end - start + 1;
-				continue;
-			}
+		if (end > 0 && str[end - 1] == QChar('\\')) {
+			extra = end - start + 1;
+			continue;
 		}
 
-		int matchedLen = rx2.matchedLength();
+		int matchedLen = rx2.match(str, start + extra).capturedLength();
 		if (start != end) {
-				
-			QString strMatch = str.mid(end,matchedLen);
-			if (strMatch.contains(QRegExp("\\s"))) {
+
+			QString strMatch = str.mid(end, matchedLen);
+			if (strMatch.contains(rxSpace)) {
 				if ((nDouble == 0) && (nSingle == 0)) {
 					list.append(str.mid(start, end - start));
 				}
-				else
-				{
+				else {
 					extra = end - start + 1;
 					continue;
 				}
-				
+
 			}
-			else
-				if ((nDouble == 0) && (nSingle == 0)) {
-					if (strMatch.contains("\"")) {
-						nDouble++;
-					}
-					else
-					{
-						nSingle++;
-					}
-					extra = end - start + 1;
-					continue;
+			else if ((nDouble == 0) && (nSingle == 0)) {
+				if (strMatch.contains("\""))
+					nDouble++;
+				else
+					nSingle++;
+				extra = end - start + 1;
+				continue;
+
 			}
-			else
-			{
+			else {
 				// We have hit a second quote.
 				if (nDouble == 1) {
 					if (strMatch.contains("\"")) {
-						nDouble=0;
+						nDouble = 0;
 						list.append(str.mid(start, end + matchedLen - start));
 					}
-					else
-					{
+					else {
 						// Ignore nested single quotes inside double quotes
 						extra = end - start + 1;
 						continue;
@@ -606,43 +626,40 @@ QStringList handleQuotes(QString str)
 				}
 				if (nSingle == 1) {
 					if (strMatch.contains("\'")) {
-						nSingle=0;
+						nSingle = 0;
 						list.append(str.mid(start, end + matchedLen - start));
 					}
-					else
-					{
+					else {
 						// Ignore nested double quotes inside single quotes
 						extra = end - start + 1;
 						continue;
 					}
 				}
 			}
-			 			
-			
+
 		}
-		else
-		{
-			// This means the match is at the beginning. 
-			QString strMatch = str.mid(end,matchedLen);
-			if (!strMatch.contains(QRegExp("\\s"))) {
+		else {
+			// Match at the beginning
+			QString strMatch = str.mid(end, matchedLen);
+			if (!strMatch.contains(rxSpace)) {
 				if ((nDouble == 0) && (nSingle == 0)) {
-					if (strMatch.contains("\"")) {
+					if (strMatch.contains("\""))
 						nDouble++;
-					}
 					else
-					{
 						nSingle++;
-					}
 					extra = end - start + 1;
 					continue;
 				}
 			}
 		}
+
 		start = end + matchedLen;
 		extra = (matchedLen == 0) ? 1 : 0;
- 	}
- 	if (start != str.size())
- 		list.append(str.mid(start));
+	}
+
+	if (start != str.size())
+		list.append(str.mid(start));
+
 	return list;
 }
 
