@@ -127,13 +127,25 @@ void qbuLoggerWidget3::qbuPrivate::setupLogLevelModel(QStandardItemModel* pModel
         case QxtLogger::InfoLevel:
             break;
         case QxtLogger::WarningLevel:
+
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
             item->setData(QVariant(QColor("Orange")), Qt::BackgroundColorRole);
+#else
+            // Replace Qt::BackgroundColorRole with Qt::BackgroundRole
+            item->setData(QVariant(QColor("Orange")), Qt::BackgroundRole);
+#endif
             break;
         case QxtLogger::ErrorLevel:
             break;
         case QxtLogger::CriticalLevel:
         case QxtLogger::FatalLevel:
-            item->setData(QVariant(QColor(Qt::red)), Qt::BackgroundColorRole);
+
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+			item->setData(QVariant(QColor(Qt::red)), Qt::BackgroundColorRole);
+#else
+			// Replace Qt::BackgroundColorRole with Qt::BackgroundRole
+			item->setData(QVariant(QColor(Qt::red)), Qt::BackgroundRole);
+#endif
             break;
         case QxtLogger::WriteLevel:
             break;
@@ -441,7 +453,7 @@ void qbuLoggerWidget3::on_toolButtonSearchDown_clicked()
         for (int nRow = nPos + 1; nRow < pModel->rowCount(); ++nRow) {
 
             auto index = pModel->index(nRow, qbuLoggerModel::CT_LEVEL);
-            auto& vt = pModel->data(index, Qt::UserRole);
+            const auto& vt = pModel->data(index, Qt::UserRole);
             if (vt.canConvert<int>()) {
                 int nVal = vt.toInt();
                 if ((nVal & m_pPrivate->m_JumpMask) != 0) {
@@ -475,7 +487,7 @@ void qbuLoggerWidget3::on_toolButtonSearchUp_clicked()
             for (int nRow = nPos - 1; nRow>=0; --nRow) {
 
                 auto index = pModel->index(nRow, qbuLoggerModel::CT_LEVEL);
-                auto& vt = pModel->data(index, Qt::UserRole);
+                const auto& vt = pModel->data(index, Qt::UserRole);
                 if (vt.canConvert<int>()) {
                     int nVal = vt.toInt();
                     if ((nVal & m_pPrivate->m_JumpMask) != 0) {

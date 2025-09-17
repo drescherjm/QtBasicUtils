@@ -69,7 +69,10 @@ bool qbuDatabase::qbuPrivate::detachDatabase( std::shared_ptr<qbuDatabase> pPubl
 {
 	bool retVal = (pPublic != nullptr);
 	if (retVal) {
-		setAttachedDB::index<tag>::type::iterator it = m_setAttachedDBs.get<tag>().find(strKey);
+
+		auto it = m_setAttachedDBs.get<tag>().find(strKey);
+
+		//setAttachedDB::index<tag>::type::iterator it = m_setAttachedDBs.get<tag>().find(strKey);
 		retVal = (it != m_setAttachedDBs.get<tag>().end());
 		if (retVal) {
 			retVal = (it->m_nCount > 0);

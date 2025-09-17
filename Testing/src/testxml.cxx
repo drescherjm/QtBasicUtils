@@ -347,6 +347,8 @@ static bool test8()
 
 static bool test9() 
 {
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QString xmlString("<original>      </original>");
 	QDomDocument doc;
 	doc.setContent(xmlString);
@@ -359,6 +361,7 @@ static bool test9()
 	doc.setContent(&source, &reader);
 	docElem = doc.documentElement();
 	qDebug() << "With QXmlSimpleReader \t- element contains" <<docElem.text() << "\tlength="<< docElem.text().length();
+#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 
 	return false;
 }

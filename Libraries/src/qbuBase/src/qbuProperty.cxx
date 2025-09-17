@@ -5,7 +5,6 @@
 #include "qbuBase/qbuPropXMLHelper.h"
 #include <QFile>
 #include <QTextStream>
-#include <QRegExp>
 #include <QDomDocument>
 #include "qbuBase/qbuPropertyTypeNameAlias.h"
 #include <cassert>
@@ -141,7 +140,10 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 bool qbuProperty::fromXML(QString strXML)
 {
 	QDomDocument doc;
-	bool retVal = doc.setContent(strXML);
+
+	auto res = doc.setContent(strXML);
+
+	bool retVal = (bool)res;
 	if (retVal) {
 		QDomElement docElem = doc.documentElement();
 		retVal = fromXML(docElem);

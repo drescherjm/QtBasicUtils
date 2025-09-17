@@ -654,7 +654,9 @@ protected:
 QCmdUnitTest::QCmdUnitTest( QString strName, QString strDescription,int nStrings ) :
 QCmd(strName,strDescription) 
 {
-	m_pUnitTesting = false;
+	if (m_pUnitTesting) {
+		*m_pUnitTesting = false;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -9,8 +9,7 @@
 #include <QDebug>
 #include <QThread>
 #include <QApplication>
-#include <QRegExp>
+#include <QRegularExpression>
 
 // qtbasicutils.
-
 #include "qbuBase/pugixml.hpp"

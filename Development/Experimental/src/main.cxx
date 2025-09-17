@@ -8,7 +8,7 @@
 #include <QTextStream>
 #include <QDomNamedNodeMap>
 #include <QtCore/QCoreApplication>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QDebug>
 
@@ -56,20 +56,26 @@ bool test_exportXML(qbuProperty & prop)
 
 void test_match_quotes(const QString& text, const QString& pattern)
 {
-	qDebug() << "testing " << text << " against " << pattern;
-	QRegExp rx(pattern);
+	qDebug() << "testing" << text << "against" << pattern;
+
+	QRegularExpression rx(pattern);
+	QRegularExpressionMatch match;
+
 	int pos = 0;
-
 	QStringList lst;
-	while ((pos = rx.indexIn(text, pos)) != -1) {
-		//qDebug() << rx.capturedTexts();
-		qDebug() << rx.cap(1);
 
-		lst << rx.cap(1);
-		pos += rx.matchedLength();
+	while (pos < text.length()) {
+		match = rx.match(text, pos);
+		if (!match.hasMatch())
+			break;
+
+		qDebug() << match.captured(1);
+		lst << match.captured(1);
+
+		pos = match.capturedEnd();
 	}
 
-	int x=1;
+	int x = 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +111,9 @@ int main(int argc, char* argv[])
 
 	QString strMsg0 = "'john drescher' test \"a string\" \"string \\\" escaped\" 1 2";
 
-	QStringList lst = strMsg0.split(QRegExp("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))"));
+	//QStringList lst = strMsg0.split(QRegExp("((?:[^\\s\"]+)|(?:\"(?:\\\\\"|[^\"])*\")|(?:[^\\s\']+)|(?:\'(?:\\\\\'|[^\'])*\'))"));
+
+	QStringList lst = strMsg0.split(QRegularExpression(R"(((?:[^\s"]+)|(?:"(?:\\\"|[^"])*")|(?:[^\s']+)|(?:'(?:\\\'|[^'])*'))"));
 
 
 	int id = qRegisterMetaType<qbuPropertyMap>();

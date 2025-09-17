@@ -95,18 +95,20 @@ int qbuStringList::removeAll(const QStringList & strlstRemove, Qt::CaseSensitivi
  *
  */
 
-int qbuStringList::indexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=0*/ ) const
+int qbuStringList::indexOf(const QString& str, Qt::CaseSensitivity cs, int from /*=0*/) const
 {
-	int retVal = -1;
 	if (cs == Qt::CaseInsensitive) {
-		QRegExp reg(str,cs);
-		retVal = Superclass::indexOf(reg,from);
+		QRegularExpression rx(QRegularExpression::escape(str), QRegularExpression::CaseInsensitiveOption);
+		for (int i = from; i < this->size(); ++i) {
+			if (rx.match(this->at(i)).hasMatch()) {
+				return i;
+			}
+		}
+		return -1;
 	}
-	else
-	{
-		retVal = Superclass::indexOf(str,from);
+	else {
+		return QStringList::indexOf(str, from);
 	}
-	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -120,18 +122,22 @@ int qbuStringList::indexOf( const QString & str, Qt::CaseSensitivity cs, int fro
  *
  */
 
-int qbuStringList::lastIndexOf( const QString & str, Qt::CaseSensitivity cs, int from/*=-1*/ ) const
+int qbuStringList::lastIndexOf(const QString& str, Qt::CaseSensitivity cs, int from /*=-1*/) const
 {
-	int retVal = -1;
 	if (cs == Qt::CaseInsensitive) {
-		QRegExp reg(str,cs);
-		retVal = Superclass::lastIndexOf(reg,from);
+		QRegularExpression rx(QRegularExpression::escape(str), QRegularExpression::CaseInsensitiveOption);
+
+		int start = (from == -1) ? this->size() - 1 : from;
+		for (int i = start; i >= 0; --i) {
+			if (rx.match(this->at(i)).hasMatch()) {
+				return i;
+			}
+		}
+		return -1;
 	}
-	else
-	{
-		retVal = Superclass::lastIndexOf(str,from);
+	else {
+		return QStringList::lastIndexOf(str, from);
 	}
-	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

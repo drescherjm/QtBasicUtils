@@ -382,7 +382,11 @@ QVariant qbuLoggerModel::data(const QModelIndex &index, int role /*= Qt::Display
 		}
 	}
     else
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
         if (role == Qt::BackgroundColorRole) {
+#else
+		if (role == Qt::BackgroundRole) {
+#endif
             logData& item = m_pPrivate->m_queue[index.row()];
 
             if (index.column() == CT_LEVEL) {
