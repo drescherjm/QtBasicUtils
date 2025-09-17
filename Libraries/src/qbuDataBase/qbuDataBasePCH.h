@@ -12,6 +12,7 @@
 #include <QStringList>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QRegularExpression>
 
 // qbu
 #include "qbuBase/qbuException.h"

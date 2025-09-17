@@ -722,14 +722,17 @@ void QCmd::qtutilsPrivate::refreshOptMap()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int QCmd::qtutilsPrivate::testOptionName( QString strName )
+int QCmd::qtutilsPrivate::testOptionName(QString strName)
 {
 	int retVal = QCmdParseError::STATUS_OK;
+
 	if (wasSuccessful(retVal)) {
-		if (strName.contains(QRegExp("[+-]"))) {
+		static const QRegularExpression plusMinusRegex(R"([+-])");
+		if (plusMinusRegex.match(strName).hasMatch()) {
 			retVal = QCmdParseError::INVALID_OPTION_NAME;
 		}
 	}
+
 	return retVal;
 }
 
@@ -1851,13 +1854,16 @@ QStringList QCmd::generateOptionStringList( QString strOptionName,QStringList ls
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QCmd::doubleQuoteIfNecissary( QString str )
+QString QCmd::doubleQuoteIfNecissary(QString str)
 {
 	QString retVal = str;
-	if (str.contains(QRegExp("\\s+"))) {
-		retVal.prepend("\"");
-		retVal.append("\"");
+
+	static const QRegularExpression whitespaceRegex(R"(\s+)");
+	if (whitespaceRegex.match(str).hasMatch()) {
+		retVal.prepend('\"');
+		retVal.append('\"');
 	}
+
 	return retVal;
 }
 

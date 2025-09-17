@@ -135,9 +135,17 @@ bool qbuTableSchema::verifyTable( qbuInfo* pInfo )
 				QLOG_CRIT() << QBULOG_DATABASE_TYPE << qPrintable(strError);
 			}
 			if (retVal) {
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+				QSet<QString> setRequired(m_pTable->getRequiredFieldList().begin(), m_pTable->getRequiredFieldList().end());
+				QSet<QString> infoFields(pInfo->getDBFieldNames().begin(), pInfo->getDBFieldNames().end());
+#else
 				QSet<QString> setRequired = m_pTable->getRequiredFieldList().toSet();
+				QSet<QString> infoFields = pInfo->getDBFieldNames().toSet();
+#endif
+
 				if (!setRequired.isEmpty()) {
-					setRequired.subtract(pInfo->getDBFieldNames().toSet());
+					setRequired.subtract(infoFields);
 
 					retVal = setRequired.isEmpty();
 					if (!retVal) {

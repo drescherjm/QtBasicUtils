@@ -98,7 +98,13 @@ void qbuLoggerWidget::writeFormatted( QxtLogger::LogLevel level, const QList<QVa
 		case QxtLogger::WarningLevel:
 		case QxtLogger::CriticalLevel:
 		case QxtLogger::FatalLevel:
-			pItem->setBackgroundColor(Qt::red);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+			pItem->setBackground(QBrush(Qt::red));
+#else
+            pItem->setBackgroundColor(Qt::red);
+#endif
+
 			break;
 		}
 		

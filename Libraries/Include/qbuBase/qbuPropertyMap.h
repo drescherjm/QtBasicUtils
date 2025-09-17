@@ -53,7 +53,7 @@ public:
     bool			fromXML(QString strXML);
 	bool			fromXML2(QString strXML);
     bool			fromXML(QDomElement & domElem);
-	bool			fromXML2(pugi::xml_node & domElem);
+	bool			fromXML2(const pugi::xml_node & domElem);
     unsigned int	CopyProperties(QStringList lstPropNames, const qbuPropertyMap & other);
     bool			CopyProperty(QString strOldName, const qbuPropertyMap & other, QString strNewName="", bool bOverWriteExisting=true);
     void			MoveProperty(QString strOldName, qbuPropertyMap & other, QString strNewName="");

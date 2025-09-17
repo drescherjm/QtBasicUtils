@@ -62,20 +62,36 @@ bool qbuSimpleQuery::exec()
 {
 	bool retVal =  m_pPrivate->m_query.exec();
 
-	QString query = m_pPrivate->m_query.lastQuery();
+	QString queryString = m_pPrivate->m_query.lastQuery();
 
-	if (query.contains("INSERT")) {
-		QString str = query;
-// 		QTextStream stream(&str);
-// 		QMapIterator<QString, QVariant> i(m_pPrivate->m_query.boundValues());
-// 		while (i.hasNext()) {
-// 			i.next();
-// 			stream << i.key().toAscii().data() << ": "
-// 				<< i.value().toString().toAscii().data() << endl;
-// 		}
+	if (queryString.contains("INSERT")) {
+		QString str = queryString;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6,6,0)
+		const auto& query = m_pPrivate->m_query;
+		int numBoundValues = query.boundValues().size();
 
-		QMapIterator<QString, QVariant> i(m_pPrivate->m_query.boundValues());
+		for(int i = 0; i < numBoundValues; ++i) {
+			QString var = query.boundValueName(i);
+			QVariant val = query.boundValue(i);
+			int idx = 0;
+			do {
+				idx = str.indexOf(QRegularExpression(QString("%1\\W").arg(var)), idx);
+				if (idx >= 0) {
+					str.replace(idx, var.length(), toQueryValue(val));
+				}
+			} while (idx >= 0);
+		}
+
+		QLOG_DATABASE() << str;
+
+#elif QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QLOG_DATABASE() << queryString;
+#else
+
+		const auto boundValues = m_pPrivate->m_query.boundValues();
+
+		QMapIterator<QString, QVariant> i(boundValues);
 		while (i.hasNext()) {
 			i.next();
 
@@ -94,10 +110,12 @@ bool qbuSimpleQuery::exec()
 		}
 
 		QLOG_DATABASE() << str;
+#endif
+
 	}
 	else
 	{
-		QLOG_DATABASE() << query;
+		QLOG_DATABASE() << queryString;
 	}
 
 	return retVal;

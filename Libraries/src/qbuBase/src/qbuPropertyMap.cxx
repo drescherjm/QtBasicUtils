@@ -552,7 +552,7 @@ bool qbuPropertyMap::fromXML2(QString strXML)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-bool qbuPropertyMap::fromXML2(pugi::xml_node & domElem)
+bool qbuPropertyMap::fromXML2(const pugi::xml_node & domElem)
 {
 	bool retVal;
 	pugi::xml_node  n = domElem;

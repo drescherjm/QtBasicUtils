@@ -520,13 +520,12 @@ QStringList qbuPropertyList::getPropertyList() const
 	QSet<QString> propNames;
 
 	const_iterator it = begin();
-
 	for (; it != end(); ++it) {
 		qbuProperty* pProp = *it;
 		propNames << pProp->objectName();
 	}
 
-	return propNames.toList();
+	return QStringList(propNames.begin(), propNames.end());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
