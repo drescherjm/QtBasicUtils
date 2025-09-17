@@ -2,7 +2,8 @@
   "name": "qtbasicutils",
   "version-string": "0.1.0",
   "dependencies": [
-    "boost-core"
+    "boost-core",
+	"boost-multi-index"
   ],
   "features": {
     "qt5": {
@@ -37,6 +38,7 @@
         },
         "qtbase",
         "qttools",
+		"qtscxml",
         {
           "name": "qxt",
           "features": [

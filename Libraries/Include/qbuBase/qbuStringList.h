@@ -22,7 +22,11 @@ public:
 	inline qbuStringList() { }
 	inline explicit qbuStringList(const QString &i) { append(i); }
 	inline qbuStringList(const qbuStringList &l) : QStringList(l) { }
+
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 	inline qbuStringList(const QStringList &l) : QStringList(l) { }
+#endif
+
 	inline qbuStringList(const QList<QString> &l) : QStringList(l) { }
 
 #ifdef Q_COMPILER_INITIALIZER_LISTS

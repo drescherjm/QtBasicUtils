@@ -18,6 +18,7 @@ PURPOSE.  See the above copyright notices for more information.
 #include <sstream>
 #include <QSharedData>
 #include <QTextStream>
+#include "qt_compatibility_helper.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -291,7 +292,7 @@ void qbuException::Print(QTextStream& os) const
 	qbuITKIndent indent;
 
 	// Print header
-	os << endl;
+	os << qt_endl;
 	os << indent << this->GetNameOfClass() << " (" << this << ")\n";
 
 	// Print self
@@ -303,20 +304,22 @@ void qbuException::Print(QTextStream& os) const
 
 		if (! data.m_Location.empty()) 
 		{
-			os << indent << "Location: \"" << QString::fromStdString(data.m_Location) << "\" " << endl;
+			os << indent << "Location: \"" << QString::fromStdString(data.m_Location) << "\" " << qt_endl;
 		}
 
 		if (! data.m_File.empty()) 
 		{
-			os << indent << "File: " << QString::fromStdString(data.m_File) << endl;
-			os << indent << "Line: " << data.m_Line << endl;
+			os << indent << "File: " << QString::fromStdString(data.m_File) << qt_endl;
+			os << indent << "Line: " << data.m_Line << qt_endl;
 		}
 
 		if (! data.m_Description.empty()) 
 		{
-			os << indent << "Description: " << QString::fromStdString(data.m_Description) << endl;  
+			os << indent << "Description: " << QString::fromStdString(data.m_Description) << qt_endl;  
 		}
 	}
 	// Print trailer
-	os << indent << endl;
+	os << indent << qt_endl;
 }  
+
+/////////////////////////////////////////////////////////////////////////////////////////

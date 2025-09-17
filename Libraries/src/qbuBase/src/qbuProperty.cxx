@@ -9,6 +9,7 @@
 #include <QDomDocument>
 #include "qbuBase/qbuPropertyTypeNameAlias.h"
 #include <cassert>
+#include "qt_compatibility_helper.h"
 
 
 //#define QBU_USE_UNOPTIMIZED_XML_ESCAPING
@@ -439,7 +440,7 @@ void qbuProperty::Print( std::ostream & st, qbuITKIndent indent )
 void qbuProperty::Print( QTextStream & st, qbuITKIndent indent )
 {
 	QString str = toXML(indent);
-	st << str << endl;
+	st << str << qt_endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

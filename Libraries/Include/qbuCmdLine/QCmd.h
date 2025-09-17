@@ -109,7 +109,8 @@ public:
 		double nMinValue = -std::numeric_limits<double>::max(), 
 		double nMaxValue = std::numeric_limits<double>::max());
 	int AddArg( QString strName, QString strDescription, QString strExplanation, bool bIgnoreCase=true, 
-		QChar chNameDefaultValue=0x0, QChar chNameMinVal=SCHAR_MIN, QChar chNameMaxVal=SCHAR_MAX);
+		QChar chNameDefaultValue = QChar{}, QChar chNameMinVal = std::numeric_limits<QChar>::min(), 
+		QChar chNameMaxVal = std::numeric_limits<QChar>::max());
 	int AddArg( QString strName, QString strDescription, QString strExplanation, QString strDefaultValue=(""), 
 		CMDSTRVERIFY pFnVerify=NULL);
 	int	AddArg(QString strName, QString strDescription, QString strExplanation,const  QStringList & strLstDefaultValue, 

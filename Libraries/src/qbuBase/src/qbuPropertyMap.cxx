@@ -13,6 +13,7 @@
 #include <QXmlSimpleReader>
 #include <QDebug>
 #include "qbuBase/qbuStringList.h"
+#include "qt_compatibility_helper.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -673,7 +674,7 @@ void qbuPropertyMap::Print( QTextStream & st, qbuITKIndent indent )
         .arg(strName)
         .arg(toXML(false,indent));
 
-    st << strTemp << endl;
+    st << strTemp << qt_endl;
 
 }
 

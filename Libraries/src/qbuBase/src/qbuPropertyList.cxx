@@ -3,6 +3,7 @@
 #include "qbuBase/qbuPropertyList.h"
 #include "qbuBase/qbuPropXMLHelper.h"
 #include "qbuBase/qbuStringList.h"
+#include "qt_compatibility_helper.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 // The following is needed so that the UserPropPtr class can create objects of types it 
@@ -417,7 +418,7 @@ void qbuPropertyList::Print( QTextStream & st, qbuITKIndent indent )
 		.arg(strName)
 		.arg(toXML(false, indent));
 
-	st << strTemp << endl;
+	st << strTemp << qt_endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

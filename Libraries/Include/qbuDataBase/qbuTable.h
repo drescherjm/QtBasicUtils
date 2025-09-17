@@ -13,6 +13,7 @@ class qbuInfo;
 #include "qbuInsertQuery.h"
 #include <QSharedPointer>
 #include "qbuBase/qbuObject.h"
+#include "qbuBase/qbuStringList.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

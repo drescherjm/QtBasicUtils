@@ -1,0 +1,13 @@
+{
+  "name": "qtstatemachine",
+  "version": "6.9.1",
+  "description": "The State Machine framework provides classes for creating and executing state graphs.",
+  "homepage": "https://www.qt.io/",
+  "license": null,
+  "dependencies": [
+    {
+      "name": "qtbase",
+      "default-features": false
+    }
+  ]
+}
