@@ -41,7 +41,7 @@ qbuDBExpression::qbuDBExpression(const qbuDBCondition& condition, bool bEnclose 
 {
 	QString strExpr = condition.toString();
 
-	m_pPrivate->m_strExpression = bEnclose ? addOuterParenthesisIfNecissary(strExpr) : strExpr;
+	m_pPrivate->m_strExpression = bEnclose ? addOuterParenthesisIfNecessary(strExpr) : strExpr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

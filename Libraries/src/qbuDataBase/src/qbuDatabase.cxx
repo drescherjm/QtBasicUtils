@@ -472,7 +472,7 @@ bool qbuDatabase::attachDatabase( QString strDatabaseFileName, QString strDBAlia
 	}
 	else
 	{
-		QString strQuery = QString("ATTACH DATABASE \"%1\" AS %2").arg(strDatabaseFileName).arg(doubleQuoteIfNecissary(strDBAlias));
+		QString strQuery = QString("ATTACH DATABASE \"%1\" AS %2").arg(strDatabaseFileName).arg(doubleQuoteIfNecessary(strDBAlias));
 		QSqlQuery query(*this);
 		retVal = query.exec(strQuery);
 		if (retVal && m_pPrivate) {

@@ -328,7 +328,7 @@ bool qbuDBJoin::setUSINGFields(const QStringList & lstFields)
 
 	if (retVal) {
 		foreach(QString str, lstFields) {
-			m_pPrivate->m_lstUsing << quoteSQLObjectNameIfNecissary(str);
+			m_pPrivate->m_lstUsing << quoteSQLObjectNameIfNecessary(str);
 		}
 	}
 

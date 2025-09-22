@@ -55,9 +55,9 @@ QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst)
 {
 	QString retVal;
 	QStringList::iterator it = lst.begin();
-	retVal.push_back(QString("%1").arg(doubleQuoteIfNecissary(*it)));
+	retVal.push_back(QString("%1").arg(doubleQuoteIfNecessary(*it)));
 	for (++it; it != lst.end(); ++it) {
-		retVal.push_back(QString(", %1").arg(doubleQuoteIfNecissary(*it)));
+		retVal.push_back(QString(", %1").arg(doubleQuoteIfNecessary(*it)));
 	}
 	return retVal;
 }
@@ -73,7 +73,7 @@ QString qbuSelectQuery::qbuPrivate::getNextAlias(QStringList lst, QStringList::i
 		QString str = *it;
 		if (!str.isEmpty()) {
 			retVal = " AS ";
-			retVal.append(doubleQuoteIfNecissary(str));
+			retVal.append(doubleQuoteIfNecessary(str));
 		}
 		it++;
 	}
@@ -93,11 +93,11 @@ QString qbuSelectQuery::qbuPrivate::generateCSVList(QStringList lst, QStringList
 	QStringList::iterator it = lst.begin();
 	QStringList::iterator itAlias = lstAliases.begin();
 	retVal.push_back(QString("%1%2")
-		.arg(doubleQuoteIfNecissary(*it))
+		.arg(doubleQuoteIfNecessary(*it))
 		.arg(getNextAlias(lstAliases, itAlias)));
 	for (++it; it != lst.end(); ++it) {
 		retVal.push_back(QString(", %1%2")
-			.arg(doubleQuoteIfNecissary(*it))
+			.arg(doubleQuoteIfNecessary(*it))
 			.arg(getNextAlias(lstAliases, itAlias)));
 	}
 	return retVal;

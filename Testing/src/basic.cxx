@@ -36,7 +36,7 @@ public:
 	virtual int Execute();
 protected:
 	bool	isQuoted(QString str);
-	QString quoteIfNecissary(QString str);
+	QString quoteIfNecessary(QString str);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ int QCmdTestSingleQuote::Execute()
 		QString str;
 		retVal = GetArg("string", str, QCmd::REMOVE_OUTER_QUOTES);
 
-		QString strOut = quoteIfNecissary(str);
+		QString strOut = quoteIfNecessary(str);
 
 		bool bIsQuoted = isQuoted(strOut);
 
@@ -82,9 +82,9 @@ bool QCmdTestSingleQuote::isQuoted(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QCmdTestSingleQuote::quoteIfNecissary(QString str)
+QString QCmdTestSingleQuote::quoteIfNecessary(QString str)
 {
-	return ::singleQuoteIfNecissary(str);
+	return ::singleQuoteIfNecessary(str);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ public:
 	virtual int Execute();
 protected:
 	bool	isQuoted(QString str);
-	QString quoteIfNecissary(QString str);
+	QString quoteIfNecessary(QString str);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +117,7 @@ int QCmdTestSingleQuote1::Execute()
 	
 	QString str = " ";
 
-	QString strOut = quoteIfNecissary(str);
+	QString strOut = quoteIfNecessary(str);
 
 	bool bIsQuoted = isQuoted(strOut);
 
@@ -137,9 +137,9 @@ bool QCmdTestSingleQuote1::isQuoted(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QCmdTestSingleQuote1::quoteIfNecissary(QString str)
+QString QCmdTestSingleQuote1::quoteIfNecessary(QString str)
 {
-	return ::singleQuoteIfNecissary(str);
+	return ::singleQuoteIfNecessary(str);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -873,9 +873,9 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdFloatOpts);
 		
 #ifdef QBU_BUILD_DATABASE
-		QCmdTestSingleQuote		cmdTestSingleQuote("DBSINGLEQUOTE", "Test the database singleQuoteIfNecissary() member");
+		QCmdTestSingleQuote		cmdTestSingleQuote("DBSINGLEQUOTE", "Test the database singleQuoteIfNecessary() member");
 		myCmdLine.AddCmd(&cmdTestSingleQuote);
-		QCmdTestSingleQuote1	cmdTestSingleQuote1("DBSINGLEQUOTE_1", "Test the database singleQuoteIfNecissary() member for a single space.");
+		QCmdTestSingleQuote1	cmdTestSingleQuote1("DBSINGLEQUOTE_1", "Test the database singleQuoteIfNecessary() member for a single space.");
 		myCmdLine.AddCmd(&cmdTestSingleQuote1);
 		CmdTestDBExpression	cmdTestDBExpression("DBExpression", "This command tests the DBExpression class.");
 		myCmdLine.AddCmd(&cmdTestDBExpression);

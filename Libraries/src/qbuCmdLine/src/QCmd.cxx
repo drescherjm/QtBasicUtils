@@ -1789,7 +1789,7 @@ QString QCmd::generateOptionString( QString strOptionName,QString strOptionValue
 	QString retVal;
 
 	strOptionName = strOptionName.trimmed();
-	strOptionValue = QCmd::doubleQuoteIfNecissary(strOptionValue.trimmed());
+	strOptionValue = QCmd::doubleQuoteIfNecessary(strOptionValue.trimmed());
 
 	if (qtutilsPrivate::isExtendedOption(strOptionName)) {
 		retVal =  QString("--%1=%2").arg(strOptionName).arg(strOptionValue);
@@ -1836,15 +1836,15 @@ QStringList QCmd::generateOptionStringList( QString strOptionName,QStringList ls
 	retVal << QCmd::generateOptionString(strOptionName,strFirst);
 
 // 	if (qtutilsPrivate::isExtendedOption(strOptionName)) {
-// 		retVal << QString("--%1=%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecissary(strFirst));
+// 		retVal << QString("--%1=%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecessary(strFirst));
 // 	}
 // 	else
 // 	{
-// 		retVal << QString("-%1%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecissary(strFirst));
+// 		retVal << QString("-%1%2").arg(strOptionName).arg(QCmd::doubleQuoteIfNecessary(strFirst));
 // 	}
 
 	foreach(QString strVal, lstOptionValue) {
-		retVal << QCmd::doubleQuoteIfNecissary(strVal);
+		retVal << QCmd::doubleQuoteIfNecessary(strVal);
 	}
 
 	retVal << ".";
@@ -1854,7 +1854,7 @@ QStringList QCmd::generateOptionStringList( QString strOptionName,QStringList ls
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-QString QCmd::doubleQuoteIfNecissary(QString str)
+QString QCmd::doubleQuoteIfNecessary(QString str)
 {
 	QString retVal = str;
 

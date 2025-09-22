@@ -36,8 +36,8 @@ QString qbuDBColDef::getFullString() const
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuDBColDef::qbuDBColDef(QString strFieldName, QString strAlias) :
-m_strName(quoteSQLObjectNameIfNecissary(strFieldName)),
-m_strAlias(quoteSQLObjectNameIfNecissary(strAlias))
+m_strName(quoteSQLObjectNameIfNecessary(strFieldName)),
+m_strAlias(quoteSQLObjectNameIfNecessary(strAlias))
 {
 	QRegularExpression reg("^[TQV]+\\d+$");
 
@@ -66,7 +66,7 @@ qbuDBColDef::qbuDBColDef(const qbuDBColDef & other)
 qbuDBColDef::qbuDBColDef(const qbuDBCondition & expr, QString strAlias)
 {
 	m_strName = expr.toString();
-	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+	m_strAlias = quoteSQLObjectNameIfNecessary(strAlias);
     m_options = OP_IS_EXPRESSION;
 }
 
@@ -82,7 +82,7 @@ qbuDBColDef::qbuDBColDef()
 qbuDBColDef::qbuDBColDef(const qbuDBExpression & expr, QString strAlias)
 {
 	m_strName = expr.toString();
-	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+	m_strAlias = quoteSQLObjectNameIfNecessary(strAlias);
 	m_options = OP_IS_EXPRESSION;
 }
 
@@ -187,7 +187,7 @@ qbuDBColDef qbuDBColDef::addExpression(QString strExpression) const
 void qbuDBColDef::addNameInt(QString strName)
 {
 	if (m_options.testFlag(OP_AUTO_QUOTE)) {
-		m_strName = quoteSQLObjectNameIfNecissary(strName);
+		m_strName = quoteSQLObjectNameIfNecessary(strName);
 	}
 	else
 	{
@@ -220,14 +220,14 @@ bool qbuDBColDef::hasAlias() const
 
 void qbuDBColDef::setTableAlias(QString strTableAlias)
 {
-	m_strTableAlias = quoteSQLObjectNameIfNecissary(strTableAlias);
+	m_strTableAlias = quoteSQLObjectNameIfNecessary(strTableAlias);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void qbuDBColDef::setAlias(QString strAlias)
 {
-	m_strAlias = quoteSQLObjectNameIfNecissary(strAlias);
+	m_strAlias = quoteSQLObjectNameIfNecessary(strAlias);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

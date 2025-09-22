@@ -144,11 +144,14 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
+target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore)
+
 #########################################################################################
 
 if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
 	TARGET_LINK_LIBRARIES ( 
 		${LOCAL_PROJECT_NAME} 
+		PUBLIC
 		${UPMC_EXTERNAL_LIBS} 
 		${QT_LIBRARIES} 
 		${QXT_LIBRARIES}
@@ -184,7 +187,7 @@ set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)
 
 install (TARGETS ${LOCAL_PROJECT_NAME} DESTINATION lib)
 
-print_list( ${${LOCAL_PROJECT_NAME}_EXT_HDRS} )
+#print_list( ${${LOCAL_PROJECT_NAME}_EXT_HDRS} )
 
 install (FILES ${${LOCAL_PROJECT_NAME}_EXT_HDRS} ${${LOCAL_PROJECT_NAME}_MOC_HDRS} DESTINATION include)
 

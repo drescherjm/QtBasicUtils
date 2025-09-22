@@ -4,7 +4,8 @@
   "description": "LibQxt is an extension library for Qt providing a suite of cross-platform utility classes to add functionality not readily available in Qt.",
   "homepage": "https://github.com/drescherjm/linuxdeployqt",
   "dependencies": [
-    { "name": "vcpkg-cmake", "host": true }
+	"vcpkg-cmake",
+	"vcpkg-cmake-config"
   ],
   "features": {
     "qt5": {

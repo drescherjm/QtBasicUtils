@@ -214,7 +214,7 @@ public:
 	
 	template < typename valType >
 	static QStringList  generateOptionStringList(QString strOptionName,QList<valType> lstOptionValue);
-	static QString		doubleQuoteIfNecissary( QString str );
+	static QString		doubleQuoteIfNecessary( QString str );
 
 private:
 	friend struct	qtutilsPrivate;

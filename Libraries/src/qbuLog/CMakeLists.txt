@@ -130,6 +130,8 @@ if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
 	)
 endif()
 
+add_library(Qbu::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
+
 #########################################################################################
 
 # install (FILES

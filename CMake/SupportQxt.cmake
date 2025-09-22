@@ -1,9 +1,8 @@
 function (SupportQxt)
 	find_package(libQxt REQUIRED)
 	if (libQxt_FOUND) 
-		
 		if (NOT QXT_LIBRARIES) 
-			set(QXT_LIBRARIES "")
+			set(QXT_LIBRARIES "" PARENT_SCOPE)
 		endif()
 	
 		foreach(module ${QXT_FIND_COMPONENTS})
@@ -18,6 +17,11 @@ function (SupportQxt)
 		endforeach()
 				
 		print_list("QXT_LIBRARIES=" ${QXT_LIBRARIES})
+		
+		# The following line is necissary because append_unique() will bring the variable
+		# into the local scope. 
+		set(QXT_LIBRARIES "${QXT_LIBRARIES}" PARENT_SCOPE)
+		
 	else()
 		include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQxtRuntime.cmake)
 	endif()	

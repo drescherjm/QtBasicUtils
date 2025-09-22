@@ -9,6 +9,7 @@ endif()
 set(QXT_FIND_COMPONENTS QxtCore QxtGui)
 set(QXT_USE_QXTCORE TRUE)
 
+print_list( "${LOCAL_PROJECT_NAME}\nQXT_LIBRARIES=" ${QXT_LIBRARIES} )
 SupportQxt()
 
 include_directories(
@@ -71,6 +72,8 @@ add_executable(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SRCS}
 	${${LOCAL_PROJECT_NAME}_RCS}
 	${${LOCAL_PROJECT_NAME}_UI_HDRS}
 )
+
+print_list( "${LOCAL_PROJECT_NAME}\nQXT_LIBRARIES=" ${QXT_LIBRARIES} )
 
 target_link_libraries(${LOCAL_PROJECT_NAME}  ${QT_LIBRARIES} ${QXT_LIBRARIES} qbuLog)
 

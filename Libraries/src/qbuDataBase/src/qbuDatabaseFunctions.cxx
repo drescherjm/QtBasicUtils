@@ -281,7 +281,7 @@ extern QString toQueryValue(QVariant & vt)
 				str.prepend("\'");
 				str.append("\'");
 			}
-            retVal = singleQuoteIfNecissary(str);
+            retVal = singleQuoteIfNecessary(str);
         }
         
         break;
@@ -318,7 +318,7 @@ extern bool hasOuterParenthesis(QString str)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-extern QString addOuterParenthesisIfNecissary(QString str)
+extern QString addOuterParenthesisIfNecessary(QString str)
 {
     if (!hasOuterParenthesis(str)) {
         str.prepend(" ( ").append(" ) ");

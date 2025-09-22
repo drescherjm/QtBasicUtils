@@ -5,17 +5,17 @@
 
 extern QString	singleQuoteIfNotQuoted(QString str);
 extern QString  doubleQuoteIfNotQuoted(QString str);
-extern QString	singleQuoteIfNecissary(QString str);
-extern QString	doubleQuoteIfNecissary(QString str);
-extern QString	addBracketsForIdentifierIfNecissary(QString str);
+extern QString	singleQuoteIfNecessary(QString str);
+extern QString	doubleQuoteIfNecessary(QString str);
+extern QString	addBracketsForIdentifierIfNecessary(QString str);
 extern bool		isSingleQuoted(QString str);
 extern bool		isDoubleQuoted(QString str);
 extern QString	toQueryValue(QVariant & vt);
 extern QString	toQueryValue(const QVariant & vt);
-extern QString	quoteSQLObjectNameIfNecissary(QString str);
+extern QString	quoteSQLObjectNameIfNecessary(QString str);
 extern QString  removeOuterParenthesis(QString str);
 
 extern bool		hasOuterParenthesis(QString str);
-extern QString	addOuterParenthesisIfNecissary(QString str);
+extern QString	addOuterParenthesisIfNecessary(QString str);
 
 

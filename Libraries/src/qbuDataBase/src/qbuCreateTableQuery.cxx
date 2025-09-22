@@ -35,7 +35,7 @@ bool qbuCreateTableQuery::qbuPrivate::addColumn( QString strCoumnName,QString st
 	bool retVal = (!strCoumnName.isEmpty());
 	if (retVal) {
 		qbuCTSQLColumn column;
-		column.m_strColumnName = doubleQuoteIfNecissary(strCoumnName);
+		column.m_strColumnName = doubleQuoteIfNecessary(strCoumnName);
 		column.m_strConstraints = strConstraint;
 		column.m_strDataType = strDataType;
 		column.m_bPrimaryKey = bPrimaryKey;

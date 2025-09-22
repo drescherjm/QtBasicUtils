@@ -128,7 +128,7 @@ qbuDBCondition::qbuDBCondition( QString strField0, QString strField1, QString st
 qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr, QString strField1, QString strOperator, bool bEnclose /*= true */) : m_pPrivate(new qbuPrivate)
 {
 
-	m_pPrivate->init(addOuterParenthesisIfNecissary(expr.toString()), strField1, strOperator, bEnclose);
+	m_pPrivate->init(addOuterParenthesisIfNecessary(expr.toString()), strField1, strOperator, bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr, QString strField1, Q
 qbuDBCondition::qbuDBCondition(const qbuDBExpression& expr0, const qbuDBExpression& expr1, QString strOperator, bool bEnclose /*= true */) : m_pPrivate(new qbuPrivate)
 {
 
-	m_pPrivate->init(addOuterParenthesisIfNecissary(expr0.toString()), addOuterParenthesisIfNecissary(expr1.toString()), strOperator, bEnclose);
+	m_pPrivate->init(addOuterParenthesisIfNecessary(expr0.toString()), addOuterParenthesisIfNecessary(expr1.toString()), strOperator, bEnclose);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -330,7 +330,7 @@ qbuDBCondition qbuDBCondition::IN(const qbuDBExpression & expr, QStringList slVa
 		}
 
 		if (op == qbuDBColDef::OP_AUTO_QUOTE) {
-			strCondition.append(singleQuoteIfNecissary(strVal));
+			strCondition.append(singleQuoteIfNecessary(strVal));
 		}
 		else {
 			strCondition.append(strVal);
@@ -365,7 +365,7 @@ qbuDBCondition qbuDBCondition::NOT_IN(const qbuDBExpression& expr, QStringList s
 		}
 
 		if (op == qbuDBColDef::OP_AUTO_QUOTE) {
-			strCondition.append(singleQuoteIfNecissary(strVal));
+			strCondition.append(singleQuoteIfNecessary(strVal));
 		}
 		else {
 			strCondition.append(strVal);
@@ -387,7 +387,7 @@ qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, QString slL
 	QString strCondition = expr.toString() + " BETWEEN ";
 		
 	if (op == qbuDBColDef::OP_AUTO_QUOTE) {
-		strCondition.append(singleQuoteIfNecissary(slLow));
+		strCondition.append(singleQuoteIfNecessary(slLow));
 	}
 	else {
 		strCondition.append(slLow);
@@ -396,7 +396,7 @@ qbuDBCondition qbuDBCondition::BETWEEN(const qbuDBExpression & expr, QString slL
 	strCondition.append(" AND ");
 
 	if (op == qbuDBColDef::OP_AUTO_QUOTE) {
-		strCondition.append(singleQuoteIfNecissary(slHigh));
+		strCondition.append(singleQuoteIfNecessary(slHigh));
 	}
 	else {
 		strCondition.append(slHigh);
