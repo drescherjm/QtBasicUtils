@@ -646,7 +646,7 @@ public:
 public:
 	void	setVarToUpdate(bool * pBool);
 protected:
-	bool*	m_pUnitTesting;
+	bool*	m_pUnitTesting=nullptr;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -654,7 +654,7 @@ protected:
 QCmdUnitTest::QCmdUnitTest( QString strName, QString strDescription,int nStrings ) :
 QCmd(strName,strDescription) 
 {
-	if (m_pUnitTesting) {
+	if (m_pUnitTesting != nullptr) {
 		*m_pUnitTesting = false;
 	}
 }
@@ -663,7 +663,7 @@ QCmd(strName,strDescription)
 
 int QCmdUnitTest::Execute()
 {	
-	if (m_pUnitTesting != NULL) {
+	if (m_pUnitTesting != nullptr) {
 		*m_pUnitTesting = true;
 	}
 	return QCmdParseError::STATUS_OK;
