@@ -1,3 +1,4 @@
+myproject(BasicTest)
 
 include_directories( 
 	${PROJECT_BINARY_DIR} 
@@ -40,3 +41,14 @@ target_link_libraries(BasicTest qbu::qbuDataBase)
 add_dependencies(BasicTest ${${PROJECT_NAME}_LIBRARIES})
 
 Include(UnitTests.cmake)
+
+# In Qt6 we need to run windeployqt to setup the platform plugin and other plugins since this 
+# doesn't happen automatically yet. With Qt5 this is not needed so just run for Qt6.
+if (QT_VERSION_MAJOR EQUAL 6)
+	if (MSVC) 
+		add_custom_command(TARGET ${LOCAL_PROJECT_NAME} POST_BUILD
+			COMMAND ${QT}::windeployqt --no-compiler-runtime \"$<TARGET_FILE:${LOCAL_PROJECT_NAME}>\"
+			COMMENT "Running windeployqt for $<CONFIG>"
+		)
+	endif()
+endif()
