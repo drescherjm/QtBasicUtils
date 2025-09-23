@@ -167,11 +167,18 @@ bool qbuProperty::fromXML(QDomElement & docElem)
 		if (retVal) {
 			QVariant::Type ty = static_cast<QVariant::Type>(strTypeID.toUInt());
 
+
 			// Protect ourselves from future changes of QVariant::UserType
-			assert((QVariant::UserType == 1024) || (QVariant::UserType == 127));
+			assert((QVariant::UserType == 1024) || (QVariant::UserType == 127) 
+				|| (QVariant::UserType == 65536)
+			);
 
 			// In Qt5 the value of QVariant::UserType was increased from 127 to 1024
 			if ((ty == 127) && (QVariant::UserType > 127)) {
+				ty = QVariant::UserType;
+			}
+			
+			if ((ty == 1024) && (QVariant::UserType == 65536)) {
 				ty = QVariant::UserType;
 			}
 
