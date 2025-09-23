@@ -150,7 +150,8 @@ QString singleQuoteIfNecessary(QString str)
 		
 		// Use QRegularExpression with raw string literal
 		
-		static const QRegularExpression reg(R"(\d+|\d+\.\d+|-\d+\.\d+|-\d+)");
+		static const QRegularExpression reg(R"(^(\d+|\d+\.\d+|\-\d+\.\d+|\-\d+)$)");
+		//static const QRegularExpression reg(R"(\d+|\d+\.\d+|-\d+\.\d+|-\d+)");
 		if (!reg.match(str).hasMatch()) {
 			if (!isAValidExpression(str)
 				&& !beginsAndEnds(str, '\'', '\'')
