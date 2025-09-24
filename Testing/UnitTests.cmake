@@ -34,7 +34,7 @@ if (QBU_BUILD_DATABASE)
 	ADD_TEST(DBSingleQuote9_WF     	 ${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "-10")	
 	SET_TESTS_PROPERTIES(DBSingleQuote9_WF PROPERTIES WILL_FAIL TRUE)	
 	
-	ADD_TEST(DBSingleQuote10   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ " ")	
+	ADD_TEST(DBSingleQuote10   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected+ "\" \"")	
 	
 	ADD_TEST(DBSingleQuote11   	 	${EXECUTABLE_OUTPUT_PATH}/BasicTest +DBSINGLEQUOTE  --Quote_Expected- "(10+1)")	
 	
