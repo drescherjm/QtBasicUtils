@@ -92,10 +92,16 @@ bool isValidFunctionParamaters(QString str)
 bool isSQLFunction(const QString& str)
 {
 	// Raw string literal avoids double escaping
+// 	static const QRegularExpression regExp(
+// 		R"(\s*[a-z_]+\(.+\)\s*)",
+// 		QRegularExpression::CaseInsensitiveOption
+// 	);
+
 	static const QRegularExpression regExp(
-		R"(\s*[a-z_]+\(.+\)\s*)",
+		R"(^\s*[a-z_][a-z0-9_]*\s*\([^)]*\)\s*$)",
 		QRegularExpression::CaseInsensitiveOption
 	);
+
 
 	bool retVal = regExp.match(str).hasMatch();
 	if (retVal) {
