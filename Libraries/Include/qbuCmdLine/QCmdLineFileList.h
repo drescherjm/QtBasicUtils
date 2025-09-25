@@ -44,9 +44,9 @@ public:
 public:
 	QStringList		m_strListFiles;
 	QString			m_strDefaultPath;
-	quint32			m_nMinNumFiles;
-	quint32			m_nMaxNumFiles;
-	quint32			m_nFlags;
+	quint32			m_nMinNumFiles{};
+	quint32			m_nMaxNumFiles{};
+	quint32			m_nFlags{};
 public:
 	enum Flags {MUST_EXIST				= 0x0001, 
 				MUST_NOT_EXIST			= 0x0002,

@@ -17,9 +17,9 @@ const int GRID_COLS = sizeof(Titles) / sizeof(Titles[0]);
 struct logData
 {
 	QDateTime               m_dt;
-	QxtLogger::LogLevel     m_level;
-	quint32                 m_nFileIndex;
-	quint32                 m_nFileLineNumber;
+	QxtLogger::LogLevel     m_level{};
+	quint32                 m_nFileIndex{};
+	quint32                 m_nFileLineNumber{};
 	QStringList             m_strMsg;
 };
 
