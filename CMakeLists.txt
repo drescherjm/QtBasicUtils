@@ -13,6 +13,7 @@ cmake_minimum_required (VERSION 3.20 FATAL_ERROR)
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0074 NEW)
+cmake_policy(SET CMP0167 OLD)
 
 include(CMake/SupportSwitchingQtVersionAsAFeature.cmake)
 

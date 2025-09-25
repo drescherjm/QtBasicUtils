@@ -1,7 +1,8 @@
 #This file contains the automated unit testing for QtBasicUtils
 
 if (QBU_BUILD_DATABASE)
-	add_test(NAME DBSingleQuote0     COMMAND BasicTest +DBSINGLEQUOTE  --Quote_Expected- 10)	
+	add_test(NAME DBSingleQuote0     COMMAND $<TARGET_FILE:BasicTest> +DBSINGLEQUOTE  --Quote_Expected- 10)
+	
 	add_test(NAME DBSingleQuote0_WF     	 COMMAND BasicTest +DBSINGLEQUOTE  --Quote_Expected+ 10)	
 	SET_TESTS_PROPERTIES(DBSingleQuote0_WF PROPERTIES WILL_FAIL TRUE)
 	add_test(NAME DBSingleQuote1    	 	COMMAND BasicTest +DBSINGLEQUOTE  --Quote_Expected- "10")	
