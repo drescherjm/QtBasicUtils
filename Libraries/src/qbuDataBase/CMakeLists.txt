@@ -184,7 +184,13 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
+add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
+
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${QXT_LIBRARIES})
+
+if (QBU_BUILD_LOG)
+	target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuLog)
+endif()
 
 #########################################################################################
 
@@ -215,13 +221,6 @@ GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME}
 
 #########################################################################################
 
-# install (FILES
-	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	# ${PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
-	# DESTINATION lib
-# )
-
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)
 
 install (TARGETS ${LOCAL_PROJECT_NAME} DESTINATION lib)
@@ -229,5 +228,3 @@ install (FILES ${${LOCAL_PROJECT_NAME}_EXT_HDRS} ${${LOCAL_PROJECT_NAME}_MOC_HDR
 
 set (${PROJECT_NAME}_LIBRARIES ${${PROJECT_NAME}_LIBRARIES} ${LOCAL_PROJECT_NAME} PARENT_SCOPE)
 set (${PROJECT_NAME}_DEFINES ${${PROJECT_NAME}_DEFINES} ${${LOCAL_PROJECT_NAME}_DEFINES} PARENT_SCOPE)
-
-add_library(qbu::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})

@@ -146,6 +146,8 @@ add_library(${LOCAL_PROJECT_NAME}
 
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore)
 
+add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
+
 #########################################################################################
 
 if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
@@ -175,13 +177,6 @@ GENERATE_EXPORT_HEADER( ${LOCAL_PROJECT_NAME}
 )
 
 #########################################################################################
-
-# install (FILES
-	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	# ${PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	# ${PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
-	# DESTINATION lib
-# )
 
 set_target_properties(${LOCAL_PROJECT_NAME} PROPERTIES FOLDER Libraries)
 

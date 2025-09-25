@@ -34,11 +34,9 @@ set(TEST_HDRS
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
-target_link_libraries(BasicTest ${${PROJECT_NAME}_LIBRARIES} ${QT_LIBRARIES})
+target_link_libraries(BasicTest ${QT_LIBRARIES})
 
-target_link_libraries(BasicTest qbu::qbuDataBase)
-
-add_dependencies(BasicTest ${${PROJECT_NAME}_LIBRARIES})
+target_link_libraries(BasicTest ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuDataBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuCmdLine)
 
 Include(UnitTests.cmake)
 

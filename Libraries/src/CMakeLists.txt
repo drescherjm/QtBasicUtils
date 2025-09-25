@@ -14,15 +14,16 @@ if (QBU_BUILD_LOG)
 endif()
 
 add_subdirectory(qbuBase)
+
+if(QBU_BUILD_LOG)
+	add_subdirectory(qbuLog)
+endif(QBU_BUILD_LOG)
+
 add_subdirectory(qbuCmdLine)
 
 if(QBU_BUILD_DATABASE)
 	add_subdirectory(qbuDataBase)
 endif(QBU_BUILD_DATABASE)
-
-if(QBU_BUILD_LOG)
-	add_subdirectory(qbuLog)
-endif(QBU_BUILD_LOG)
 
 if(QBU_BUILD_WIDGETS)
 	add_subdirectory(qbuWidgets)

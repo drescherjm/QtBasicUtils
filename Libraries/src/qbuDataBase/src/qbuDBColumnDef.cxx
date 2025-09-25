@@ -42,8 +42,12 @@ m_strAlias(quoteSQLObjectNameIfNecessary(strAlias))
 	QRegularExpression reg("^[TQV]+\\d+$");
 
 	if (reg.match(strAlias).hasMatch()) {
+
+#ifdef QBU_HAS_LOG
 		QString strMsg = QString("Suspicious use of the Alias parameter -n %1. It looks like a table alias instead.").arg(__FUNCTION__);
 		QLOG_WARN() << QBULOG_DATABASE_TYPE  << strMsg;
+#endif //def QBU_HAS_LOG
+
 	}
 }
 

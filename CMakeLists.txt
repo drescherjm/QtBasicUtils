@@ -26,6 +26,8 @@ set (${PROJECT_NAME}_VERSION_PATCH 0)
 set (${PROJECT_NAME}_VERSION_PATCH_CLEAN ${${PROJECT_NAME}_VERSION_PATCH})
 set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
+set (${PROJECT_NAME}_LIBRARY_PREFIX Qbu)
+
 include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
 # The following line will add additional finders to CMake without the need to be placed in the CMake install path

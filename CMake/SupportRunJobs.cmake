@@ -1,5 +1,5 @@
 if(WIN32)
-	option(USE_RUNJOBS_PARALLEL_BUILDING "Build configurations in parallel using RunJobs" ON)
+	option(USE_RUNJOBS_PARALLEL_BUILDING "Build configurations in parallel using RunJobs" OFF)
 	
 	if ( USE_RUNJOBS_PARALLEL_BUILDING ) 
 		if (CMAKE_SIZEOF_VOID_P MATCHES 8)

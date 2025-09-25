@@ -107,6 +107,8 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
+add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
+
 #target_include_directories(${LOCAL_PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${${PROJECT_NAME}_INCLUDE_DIRS}>)
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${QXT_LIBRARIES})
 
@@ -129,17 +131,6 @@ if (BUILD_${LOCAL_PROJECT_NAME}_SHARED)
 	   COMPONENT Applications
 	)
 endif()
-
-add_library(Qbu::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
-
-#########################################################################################
-
-# install (FILES
-	# ${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}Config.cmake
-	# ${LOCAL_PROJECT_BINARY_DIR}/${LOCAL_PROJECT_NAME}LibraryDepends.cmake
-	# ${LOCAL_PROJECT_SOURCE_DIR}/${LOCAL_PROJECT_NAME}Use.cmake
-	# DESTINATION lib
-# )
 
 #########################################################################################
 
