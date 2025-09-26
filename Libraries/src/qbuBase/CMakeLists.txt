@@ -144,7 +144,7 @@ add_library(${LOCAL_PROJECT_NAME}
 	${${LOCAL_PROJECT_NAME}_RC_SRCS}
 )
 
-target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore)
+target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore ${QT_LIBRARIES})
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
 
