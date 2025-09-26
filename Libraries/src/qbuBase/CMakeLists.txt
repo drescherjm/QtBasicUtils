@@ -148,7 +148,12 @@ target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore ${QT_LIBRARIES})
 
 target_compile_features(${LOCAL_PROJECT_NAME} PUBLIC cxx_std_17)
 
-target_precompile_headers(${LOCAL_PROJECT_NAME} PUBLIC "${LOCAL_PROJECT_NAME}PCH.h")
+target_precompile_headers(${LOCAL_PROJECT_NAME} 
+	PUBLIC 
+		"${LOCAL_PROJECT_NAME}PCH.h" 
+	PRIVATE 
+		iostream
+)
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
 
