@@ -113,7 +113,7 @@ target_precompile_headers(${LOCAL_PROJECT_NAME}
 	PUBLIC 
 		"${LOCAL_PROJECT_NAME}PCH.h" 
 	PRIVATE 
-		iostream
+		<iostream>
 )
 
 #target_include_directories(${LOCAL_PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${${PROJECT_NAME}_INCLUDE_DIRS}>)
