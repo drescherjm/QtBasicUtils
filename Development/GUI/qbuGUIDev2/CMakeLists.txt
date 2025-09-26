@@ -1,10 +1,10 @@
 myproject(qbuGUIDev2)
 
-if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
-	set (QT_MODULES ${QT_MODULES} Qt${QT_VERSION_MAJOR}::Designer )
+# if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
+	# set (QT_MODULES ${QT_MODULES} Qt${QT_VERSION_MAJOR}::Designer )
 	
-	find_qt5_packages()
-endif()
+	# find_qt5_packages()
+# endif()
 
 set(QXT_FIND_COMPONENTS QxtCore QxtGui)
 set(QXT_USE_QXTCORE TRUE)
