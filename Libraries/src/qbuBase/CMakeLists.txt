@@ -93,7 +93,7 @@ set( ${LOCAL_PROJECT_NAME}_INT_HDRS
 )
 
 #Add precompiled header support
-MSVC_PCH_SUPPORT(${LOCAL_PROJECT_NAME})
+#MSVC_PCH_SUPPORT(${LOCAL_PROJECT_NAME})
 
 # this command will generate rules that will run rcc on all files from UPMC_LA_RCS
 # in result UPMC_LA_RC_SRCS variable will contain paths to files produced by rcc
@@ -145,6 +145,8 @@ add_library(${LOCAL_PROJECT_NAME}
 )
 
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC Qxt::QxtCore ${QT_LIBRARIES})
+
+target_precompile_headers(${LOCAL_PROJECT_NAME} PUBLIC "${LOCAL_PROJECT_NAME}PCH.h")
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
 
