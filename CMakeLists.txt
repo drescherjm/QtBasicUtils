@@ -31,9 +31,6 @@ set (${PROJECT_NAME}_LIBRARY_PREFIX Qbu)
 
 include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
 
-# The following line will add additional finders to CMake without the need to be placed in the CMake install path
-LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Modules)
-
 #########################################################################################
 
 option (BUILD_TESTING 				"Build Tests" ON)
@@ -45,31 +42,43 @@ option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
 #########################################################################################
 
 include(CMake/SupportQt56.cmake)
+
+if (VCPKG_ROOT)
+	find_package(cmake-modules REQUIRED)
+	LIST(APPEND ${cmake-modules_MODULE_DIR})
+	LIST(APPEND ${cmake-modules_SCRIPTS_DIR})
+else(VCPKG_ROOT)
+	LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Modules)
+	LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/External/Scripts)
+endif(VCPKG_ROOT)
+
+include(HelperMacros)
+include(GetRuntime)
+include(SiteConfig)
+include(GetCompilerVersion)
+include(SetupDefaultInstallPath)
+include(SetupProject)
+include(MSVCPCHSupport)
+include(NamingConvention)
+include(SupportRunJobs)
+include(SupportQt)
+
 include(${PROJECT_SOURCE_DIR}/CMake/SupportQxt.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetRuntime.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SiteConfig.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetCompilerVersion.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SetupDefaultInstallPath.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SetupProject.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/HelperMacros.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/MSVCPCHSupport.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
+
+include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
 
 if(MSVC)
-	Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/DisableBufferSecurityCheck.cmake)
+	include(DisableBufferSecurityCheck)
 endif()
 
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportRunJobs.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
-include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportQt.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GenerateUpdateScript.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/GenerateConfigureScript.cmake)
+include(${PROJECT_SOURCE_DIR}/CMake/doxygen.cmake)
+
 include(GenerateExportHeader)
 
 #########################################################################################
