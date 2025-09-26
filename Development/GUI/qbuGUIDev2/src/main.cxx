@@ -1,7 +1,7 @@
 
 #include "qbuGUIDev2MainWindow.h"
 #include <QApplication>
-#include "qbuLog\qbuLog.h"
+#include "qbuLog/qbuLog.h"
 #include <iostream>
 
 /////////////////////////////////////////////////////////////////////////////////////////

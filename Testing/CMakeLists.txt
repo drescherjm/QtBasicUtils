@@ -1,5 +1,10 @@
 myproject(BasicTest)
 
+
+set(QXT_FIND_COMPONENTS QxtCore QxtGui)
+set(QXT_USE_QXTCORE TRUE)
+SupportQxt()
+
 include_directories( 
 	${PROJECT_BINARY_DIR} 
 	${PROJECT_BINARY_DIR}/.. 
@@ -34,9 +39,10 @@ set(TEST_HDRS
 )
 
 add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
-target_link_libraries(BasicTest ${QT_LIBRARIES})
 
-target_link_libraries(BasicTest ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuDataBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuCmdLine)
+target_link_libraries(BasicTest PRIVATE ${QT_LIBRARIES} ${QXT_LIBRARIES})
+
+target_link_libraries(BasicTest PRIVATE ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuDataBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuBase ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuCmdLine)
 
 Include(UnitTests.cmake)
 

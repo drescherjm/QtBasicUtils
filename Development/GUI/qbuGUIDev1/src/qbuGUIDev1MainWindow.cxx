@@ -1,14 +1,14 @@
 #include "qbuGUIDev1MainWindow.h"
-#include "qbuLog\qbuLoggerModel.h"
+#include "qbuLog/qbuLoggerModel.h"
 #include <QxtLogger>
-#include "qbuLog\qbuLog.h"
-#include "qbuLog\qbuLoggerWidget2.h"
+#include "qbuLog/qbuLog.h"
+#include "qbuLog/qbuLoggerWidget2.h"
 #include <QTimer>
 #include <time.h>
 //#include <time.inl>
 #include <array>
 #include <random>
-#include "qbuLog\qbuLoggerWidget3.h"
+#include "qbuLog/qbuLoggerWidget3.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

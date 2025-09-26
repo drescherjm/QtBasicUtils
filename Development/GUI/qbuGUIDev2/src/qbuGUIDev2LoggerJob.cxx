@@ -1,7 +1,7 @@
 #include "qbuGUIDev2LoggerJob.h"
 #include <QEventLoop>
 #include <QxtLogger>
-#include "qbuLog\qbuLog.h"
+#include "qbuLog/qbuLog.h"
 #include <QThread>
 #include <iostream>
 
@@ -101,4 +101,4 @@ void qbuGUIDev2LoggerJob::generateLogDataTimer()
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////\
+/////////////////////////////////////////////////////////////////////////////////////////
