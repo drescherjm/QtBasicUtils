@@ -4,7 +4,8 @@
   "dependencies": [
     "boost-core",
 	"boost-multi-index",
-	"boost-bimap"
+	"boost-bimap",
+	"cmake-modules"
   ],
   "features": {
     "qt5": {
