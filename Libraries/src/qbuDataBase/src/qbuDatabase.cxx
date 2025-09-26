@@ -7,9 +7,11 @@
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/sequenced_index.hpp>
 #include <boost/multi_index/mem_fun.hpp>
+#include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuDataBase/qbuDatabaseFunctions.h"
-#include "qbuDatabase/qbuDBSettingsTableBase.h"
+#include "qbuDataBase/qbuDBSettingsTableBase.h"
 #include "qbuLog/qbuLog.h"
+
 
 using namespace ::boost;
 using namespace ::boost::multi_index;

@@ -1,7 +1,7 @@
 #include "qbuBasePCH.h"
 
-#include "qbuBase\qbuCheckBoxDelegate.h"
-#include "qbuBase\qbuBooleanWidget.h"
+#include "qbuBase/qbuCheckBoxDelegate.h"
+#include "qbuBase/qbuBooleanWidget.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

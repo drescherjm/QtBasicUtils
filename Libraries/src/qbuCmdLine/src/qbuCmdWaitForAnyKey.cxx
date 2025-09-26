@@ -1,14 +1,17 @@
 #include "qbuCmdLinePCH.h"
 
 #include "qbuCmdLine/qbuCmdWaitForAnyKey.h"
-#include <conio.h>
+
 #include <iostream>
+#include <QCoreApplication>
+#include <QTextStream>
+#include <QIODevice>
 #include "qbuCmdLine/QCmdParseError.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
 qbuCmdWaitForAnyKey::qbuCmdWaitForAnyKey(QString strName, QString strDescription) :
-Superclass(strName,strDescription)
+Superclass(strName, strDescription)
 {
 
 }
@@ -17,12 +20,12 @@ Superclass(strName,strDescription)
 
 int qbuCmdWaitForAnyKey::Execute()
 {
+    std::cout << "Press Enter to continue!" << std::endl;
 
-	std::cout << "Press any key continue!" << std::endl;
+    QTextStream qin(stdin);
+    qin.readLine();  // Waits for Enter key
 
-	getch();
-
-	return QCmdParseError::STATUS_OK;
+    return QCmdParseError::STATUS_OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

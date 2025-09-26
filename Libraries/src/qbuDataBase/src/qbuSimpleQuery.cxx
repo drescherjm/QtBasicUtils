@@ -1,4 +1,4 @@
-#include "qbuDatabasePCH.h"
+#include "qbuDataBasePCH.h"
 #include "qbuDataBase/qbuSimpleQuery.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>

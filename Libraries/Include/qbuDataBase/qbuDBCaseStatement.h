@@ -3,7 +3,9 @@
 #ifndef QBUDBCASESTATEMENT_H
 #define QBUDBCASESTATEMENT_H
 
-#include "qbuDataBase/qbuDatabaseLibraryDefines.h"
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "qbuDataBase/qbuDataBaseLibraryDefines.h"
 #include "qbuBase/qbuObject.h"
 #include "qbuDataBase/qbuDBColumnDef.h"
 #include "qbuDataBase/qbuDBCondition.h"

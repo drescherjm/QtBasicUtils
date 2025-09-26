@@ -1,7 +1,7 @@
 #include "qbuBasePCH.h"
 
 #include <QAbstractItemModel>
-#include "qbuBase\qbuCSVModelWriter.h"
+#include "qbuBase/qbuCSVModelWriter.h"
 
 qbuCSVModelWriter::qbuCSVModelWriter(const QString &filename, QObject *parent) :
     QObject(parent),

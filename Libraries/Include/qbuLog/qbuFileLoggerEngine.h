@@ -4,7 +4,7 @@
 #define QBUFILELOGGERENGINE_H
 
 #include <QxtBasicFileLoggerEngine>
-#include <qbuBase\qbuMacros.h>
+#include <qbuBase/qbuMacros.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,9 @@
 #ifndef QBUDBSETTINGSTABLEBASE_H
 #define QBUDBSETTINGSTABLEBASE_H
 
-#include "qbuDatabase/qbuTable.h"
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#include "qbuDataBase/qbuTable.h"
 #include "qbuBase/qbuMacros.h"
 #include <stdint.h>
 #include <memory>

@@ -3,8 +3,10 @@
 #ifndef QBUSIMPLEQUERY_H
 #define QBUSIMPLEQUERY_H
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #include <QObject>
-#include <QSQLError>
+#include <QSqlError>
 #include <QSqlRecord>
 
 //#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)

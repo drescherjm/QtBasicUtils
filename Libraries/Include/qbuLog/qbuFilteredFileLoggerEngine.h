@@ -5,8 +5,8 @@
 
 //#include "qbuLogLibraryDefines.h"
 
-#include <qbuLog\qbuFileLoggerEngine.h>
-#include <qbuBase\qbuMacros.h>
+#include <qbuLog/qbuFileLoggerEngine.h>
+#include <qbuBase/qbuMacros.h>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

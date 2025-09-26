@@ -3,7 +3,7 @@
 #ifndef QBUSQLQUERYMODEL_H
 #define QBUSQLQUERYMODEL_H
 
-#include "qbuDataBase/qbuDatabaseLibraryDefines.h"
+#include "qbuDataBase/qbuDataBaseLibraryDefines.h"
 #include <QSqlQueryModel>
 #include <qbuBase/qbuMacros.h>
 #include <memory>

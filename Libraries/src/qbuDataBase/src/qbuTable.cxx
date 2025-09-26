@@ -1,5 +1,6 @@
 #include "qbuDataBasePCH.h"
 
+#include "qbuDataBase/qbuSelectQuery.h"
 #include "qbuDataBase/qbuTable.h"
 #include "qbuDataBase/qbuDatabase.h"
 #include "qbuBase/qbuPropertyMap.h"

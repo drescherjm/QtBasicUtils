@@ -58,7 +58,11 @@ Include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/MSVCPCHSupport.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/DisableBufferSecurityCheck.cmake)
+
+if(MSVC)
+	Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/DisableBufferSecurityCheck.cmake)
+endif()
+
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/NamingConvention.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/SupportRunJobs.cmake)
 Include(${PROJECT_SOURCE_DIR}/CMake/GenerateInstallScript.cmake)
