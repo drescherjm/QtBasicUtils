@@ -117,10 +117,12 @@ endif(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
 message( STATUS "LOCAL_PROJECT_NAME: ${LOCAL_PROJECT_NAME} - Qt5Core_MOC_EXECUTABLE=${Qt5Core_MOC_EXECUTABLE}" )
 
-# The following line will add support to copy the Qt dlls to the Debug and Release folders 
-# so that you can debug the application without the user having to deal with .dll path 
-# settings inside visual studio. 
-Include(${PROJECT_SOURCE_DIR}/CMake/External/Scripts/GetQtRuntime.cmake)
+if (NOT DEFINED VCPKG_TARGET_TRIPLET)
+	# The following line will add support to copy the Qt dlls to the Debug and Release folders 
+	# so that you can debug the application without the user having to deal with .dll path 
+	# settings inside visual studio. 
+	Include(GetQtRuntime)
+endif()
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
