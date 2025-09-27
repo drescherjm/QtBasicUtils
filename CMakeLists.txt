@@ -73,8 +73,6 @@ include(${PROJECT_SOURCE_DIR}/CMake/SetCompilerOptions.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/SelectDefaultConfigurations.cmake)
 include(${PROJECT_SOURCE_DIR}/CMake/DisableMSVCWarn.cmake)
 
-include(${PROJECT_SOURCE_DIR}/CMake/SetupDefaultInstallPath.cmake)
-
 if(MSVC)
 	include(DisableBufferSecurityCheck)
 endif()
