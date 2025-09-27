@@ -41,6 +41,7 @@ option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
 
 #########################################################################################
 
+include(GNUInstallDirs)
 include(CMake/SupportQt56.cmake)
 
 if (DEFINED VCPKG_TARGET_TRIPLET)
@@ -149,37 +150,6 @@ endif(BUILD_DEVELOPMENT)
 
 #########################################################################################
 
-CONFIGURE_FILE(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-  IMMEDIATE @ONLY)
-
-ADD_CUSTOM_TARGET(uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
-
-#set( ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/Include )
-export( TARGETS ${${PROJECT_NAME}_LIBRARIES} FILE ${PROJECT_NAME}Exported.cmake)
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
-	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-)
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake.in"
-	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}USE.cmake"
-	@ONLY
-)
-
-install (FILES
-	${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-#	${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibraryDepends.cmake
-#	${PROJECT_SOURCE_DIR}/${PROJECT_NAME}USE.cmake
-	DESTINATION lib
-)
-
-#########################################################################################
-
 if(BUILD_DOCUMENTATION)
 
 	ADD_TO_DOC(${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -190,3 +160,30 @@ endif(BUILD_DOCUMENTATION)
 
 #dump_all_variables_starting_with( ${PROJECT_NAME} )
 #dump_all_variables()
+
+#########################################################################################
+# This section is essential for the dependent library targets to be properly exported
+# for vcpkg to consume the library target(s) for this project.
+
+include(CMakePackageConfigHelpers)
+
+# Export all targets
+install(EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE ${${PROJECT_NAME}_LIBRARY_PREFIX}:: # Give each library a namespace which will create an alias library
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+# Generate and install the Config file
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+#########################################################################################
