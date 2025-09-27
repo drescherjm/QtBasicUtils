@@ -1,8 +1,8 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO drescherjm/cmake-modules
-    REF b9d5a36fc04a2a8c1ec5b60e7ec9d7d4611c6488
-    SHA512 943971301dc52972d6eaf9200ec3d4376eec0babf0de11e8da6ec1b51e91e9914e8322604f93a339e9308a07d8ae9d8acef52bcc967084054760c1f96465647c
+    REF 483c991cde7be8ec2402e426857cce57832d73de
+    SHA512 7ff461888638bf243164ae3ef2dee1f72ee9c857b420fdc840617d206e3b80b6edc5e143ceb351b75fb2ca64db85a03d1a6611c6c448920deadc5500303b8484
 )
 
 # Install the modules and config file
