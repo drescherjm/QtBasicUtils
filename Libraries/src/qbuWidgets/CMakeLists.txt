@@ -1,5 +1,7 @@
 myproject(qbuWidgets)
 
+init_lib_shared_static_option(ON)
+
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 	set (QT_MODULES ${QT_MODULES} Qt${QT_VERSION_MAJOR}::Designer )
 	
@@ -123,7 +125,7 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-add_library(${LOCAL_PROJECT_NAME} SHARED
+add_library(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SHARED}
 	${${LOCAL_PROJECT_NAME}_SRCS} 
 	${${LOCAL_PROJECT_NAME}_EXT_HDRS} 
 	${${LOCAL_PROJECT_NAME}_MOC_HDRS}
