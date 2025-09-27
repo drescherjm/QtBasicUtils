@@ -57,7 +57,11 @@ include(HelperMacros)
 include(GetRuntime)
 include(SiteConfig)
 include(GetCompilerVersion)
-include(SetupDefaultInstallPath)
+
+if (NOT DEFINED VCPKG_TARGET_TRIPLET)
+	include(SetupDefaultInstallPath)
+endif()
+
 include(SetupProject)
 include(MSVCPCHSupport)
 include(NamingConvention)
