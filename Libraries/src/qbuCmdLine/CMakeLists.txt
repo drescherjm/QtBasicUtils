@@ -1,5 +1,7 @@
 myproject(qbuCmdLine)
 
+init_lib_shared_static_option(OFF)
+
 set (${LOCAL_PROJECT_NAME}_VERSION_MAJOR 1)
 set (${LOCAL_PROJECT_NAME}_VERSION_MINOR 0)
 
@@ -128,7 +130,7 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-add_library(${LOCAL_PROJECT_NAME} 
+add_library(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SHARED}
 	${${LOCAL_PROJECT_NAME}_SRCS} 
 	${${LOCAL_PROJECT_NAME}_EXT_HDRS} 
 	${${LOCAL_PROJECT_NAME}_MOC_HDRS}

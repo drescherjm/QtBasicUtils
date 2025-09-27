@@ -1,5 +1,7 @@
 myproject(qbuDataBase)
 
+init_lib_shared_static_option(OFF)
+
 option(DB_USE_BIND_FOR_INSERT "Use Qt databinding for insert queries" ON)
 option(DB_DB_USE_EXCEPTIONS "Use exceptions in database code" ON)
 
