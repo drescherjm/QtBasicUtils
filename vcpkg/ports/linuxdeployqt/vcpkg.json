@@ -20,5 +20,7 @@
           "qtbase", "qttools"
       ]
     }
-  }
+  },
+  "default-features": [
+  ]
 }

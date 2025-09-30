@@ -7,23 +7,28 @@
 	"vcpkg-cmake",
 	"vcpkg-cmake-config"
   ],
-  "features": {
+
+"features": {
     "qt5": {
       "description": "Use Qt5",
       "dependencies": [
-          "qt5-base", 
-	  "qt5-tools",
-	  {
-              "name": "qt5-x11extras",
-              "platform": "linux"
-          }
+        "qt5-base",
+        "qt5-tools",
+        {
+          "name": "qt5-x11extras",
+          "platform": "linux"
+        }
       ]
     },
     "qt6": {
       "description": "Use Qt6",
       "dependencies": [
-          "qtbase", "qttools", "qt5compat"
+        "qtbase",
+        "qttools",
+        "qt5compat"
       ]
     }
-  }
+  },
+  "default-features": [
+  ]
 }
