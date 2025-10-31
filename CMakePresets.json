@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "qt5-vcpkg-ninja",
+      "generator": "Ninja",
+      "description": "Default preset with vcpkg toolchain",
+      "binaryDir": "${sourceDir}/build",
+      "toolchainFile": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_MANIFEST_FEATURES": "qt5",
+        "VCPKG_MANIFEST_INSTALL": "ON",
+        "VCPKG_MANIFEST_NO_DEFAULT_FEATURES": "ON",
+        "SELECTED_QT_VERSION": "Qt5"
+      }
+    },
+    {
+      "name": "qt6-vcpkg-ninja",
+      "generator": "Ninja",
+      "description": "Default preset with vcpkg toolchain",
+      "binaryDir": "${sourceDir}/build",
+      "toolchainFile": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "VCPKG_MANIFEST_FEATURES": "qt6",
+        "VCPKG_MANIFEST_INSTALL": "ON",
+        "VCPKG_MANIFEST_NO_DEFAULT_FEATURES": "ON",
+        "SELECTED_QT_VERSION": "Qt6"
+      }
+    }
+  ]
+}
+
