@@ -16,6 +16,7 @@ class qbuInfo;
 #include <QSharedPointer>
 #include "qbuBase/qbuObject.h"
 #include "qbuBase/qbuStringList.h"
+#include "qbuDataBase/qbuSelectQuery.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
