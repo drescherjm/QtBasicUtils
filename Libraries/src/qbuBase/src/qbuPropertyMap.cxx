@@ -21,7 +21,7 @@ static int m_nMetaID = qRegisterMetaType<qbuPropertyMap>();
 static qbuProperyMapXMLHelper hlpr(m_nMetaID);
 
 static int m_nMetaIDPtr = qRegisterMetaType<qbuPropertyMap*>();
-qbuUserPropPtrHelper<qbuPropertyMap> ptrHlpr(m_nMetaIDPtr);
+static qbuUserPropPtrHelper<qbuPropertyMap> ptrHlpr(m_nMetaIDPtr);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
