@@ -1,5 +1,4 @@
-#ifndef __QCMDORGBASICBASEXX__
-#define __QCMDORGBASICBASEXX__
+#pragma once
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +44,7 @@ void QCmdOptBasicBase<TYPE>::Initialize()
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template <class TYPE>
-TYPE QCmdOptBasicBase<TYPE>::GetValue()
+TYPE QCmdOptBasicBase<TYPE>::GetValue(const QCmd::Flags & fl)
 {
 	return m_nValue;
 }
@@ -84,5 +83,3 @@ void QCmdOptBasicBase<TYPE>::destroy()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
-#endif //__QCMDORGBASICBASEXX__

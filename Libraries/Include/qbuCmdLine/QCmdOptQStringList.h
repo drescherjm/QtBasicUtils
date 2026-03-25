@@ -18,7 +18,11 @@ public:
 	QCmdOptQStringList(const QCmdOptQStringList & other);
 	QCmdOptQStringList& operator=(const QCmdOptQStringList & other);
 	virtual QCmdOptQStringList* Clone();
+
+
 public:
+	QStringList		GetValue(const QCmd::Flags& f = QCmd::Flag::NO_FLAG) override;
+
 	virtual int		ImportData( QString strValue );
 	virtual QString GetSyntax();
 	virtual QString GetShortSyntax( );

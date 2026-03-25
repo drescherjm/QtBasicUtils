@@ -3,7 +3,10 @@
 #ifndef QCMDOPTBASICBASE_H
 #define QCMDOPTBASICBASE_H
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 #include "qbuCmdLine/QCmdOpt.h"
+#include "qbuCmdLine/QCmd.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,8 +22,8 @@ public:
 	virtual int		ImportData( QString strValue )=0;
 	virtual void	Initialize();
 	virtual bool	isDefaultValue();
-	TYPE			GetValue();
-	void			SetValue(TYPE nVal);
+	virtual TYPE	GetValue(const QCmd::Flags & f = QCmd::Flag::NO_FLAG);
+	virtual void	SetValue(TYPE nVal);
 public:
 	TYPE	m_nValue;
 	TYPE	m_nDefaultValue;

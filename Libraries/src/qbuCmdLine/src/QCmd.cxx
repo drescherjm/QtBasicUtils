@@ -69,6 +69,9 @@ public:
 	template <typename ValType,typename OptType> int GetOpt(QString strName, ValType & val);
 	template <typename ValType,typename OptType> int GetArg(QString strName, ValType & val);
 
+
+	template <typename ValType, typename OptType> int GetOpt(QString strName, ValType& val, const QCmd::Flags& fg);
+
 public:
 	static bool	isExtendedOption(QString strOption);
 	
@@ -199,6 +202,34 @@ int QCmd::qtutilsPrivate::GetOpt( QString strName, ValType & val )
 
 	}
 	QCmdParseException::Throw(retVal,strName,m_pParent->GetName());
+	return retVal;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename ValType, typename OptType>
+int QCmd::qtutilsPrivate::GetOpt(QString strName, ValType& val,const QCmd::Flags & fg)
+{
+	int retVal = (m_pParent != NULL) ? QCmdParseError::STATUS_OK : QCmdParseError::MEMORY_CORRUPTION_ERROR;
+	QCmdOpt* pOption = NULL;
+	if (retVal == QCmdParseError::STATUS_OK) {
+
+		retVal = testOptionName(strName);
+		if (m_pParent->wasSuccessful(retVal)) {
+			QString strOpt = GetOptString(strName);
+			retVal = FindOpt(strOpt, pOption);
+			if (m_pParent->wasSuccessful(retVal)) {
+				OptType* pOptType = dynamic_cast<OptType*>(pOption);
+				if (pOptType) {
+					val = pOptType->GetValue(fg);
+				}
+				else
+					retVal = QCmdParseError::OPTION_WRONG_TYPE;
+			}
+		}
+
+	}
+	QCmdParseException::Throw(retVal, strName, m_pParent->GetName());
 	return retVal;
 }
 
@@ -1083,7 +1114,8 @@ int QCmd::GetOpt(QString strName, QString & nValue,Flags fg)
 
 int QCmd::GetOpt(QString strName, QStringList & nValue,Flags fg)
 {
-	return m_pPrivate->GetOpt<QStringList,QCmdOptQStringList>(strName,nValue);
+	int retVal = m_pPrivate->GetOpt<QStringList,QCmdOptQStringList>(strName,nValue,fg);
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
