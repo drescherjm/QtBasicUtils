@@ -95,8 +95,17 @@ add_test(NAME Test0			COMMAND BasicTest +UT  +?)
 add_test(NAME Test1			COMMAND BasicTest +UT  +Test 1.0)
 add_test(NAME StringListArg0  COMMAND BasicTest +UT  +STRLSTARG 1 2 3 4 . -S10)
 add_test(NAME StringListArg1  COMMAND BasicTest +UT  +STRLSTARG 1 2 3 . -S6)
-add_test(NAME StringListOpt0  COMMAND BasicTest +UT  +STRLSTOPT -I1 2 3 . -S6)
-add_test(NAME StringListOpt1  COMMAND BasicTest +UT  +STRLSTOPT -I1 2 3 4 . -S10)
+add_test(NAME StringListOpt0  COMMAND BasicTest +UT  +STRLSTOPT -I1 2 3 . -S6 0)
+add_test(NAME StringListOpt1  COMMAND BasicTest +UT  +STRLSTOPT -I1 2 3 4 . -S10 0)
+add_test(NAME StringListOpt2_WF  COMMAND BasicTest +UT  +STRLSTOPT -I"1" "2" 3 4 . -S10 0)
+add_test(NAME StringListOpt3  COMMAND BasicTest +UT  +STRLSTOPT -I"1" "2" 3 4 . -S10 1)
+SET_TESTS_PROPERTIES(StringListOpt2_WF PROPERTIES WILL_FAIL TRUE)
+
+add_test(NAME StringListOpt_StringOptCompareWithoutRemoveQuotes_Test4_WF  COMMAND BasicTest +UT  +STRLSTOPT --StringList="Hello World" " From c++" . --CompareString="Hello World From c++" 2)
+SET_TESTS_PROPERTIES(StringListOpt_StringOptCompareWithoutRemoveQuotes_Test4_WF PROPERTIES WILL_FAIL TRUE)
+
+add_test(NAME StringListOpt_StringOptCompareWithRemoveQuotes_Test5  COMMAND BasicTest +UT  +STRLSTOPT --StringList="Hello World" " From c++" . --CompareString="Hello World From c++" 3)
+
 
 add_test(NAME PropMap0 		 COMMAND BasicTest +UT  +PROPMAP 0)
 add_test(NAME PropMap1 		 COMMAND BasicTest +UT  +PROPMAP 1)

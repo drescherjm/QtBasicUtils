@@ -175,6 +175,7 @@ QStringList QCmdOptQStringList::GetValue(const QCmd::Flags& fg /*= QCmd::Flag::N
 	if (fg.testFlag(QCmd::Flag::REMOVE_OUTER_QUOTES)) {
 		QStringList lst;
 		for (QString strTmp : m_nValue) {
+			//strTmp = strTmp.trimmed();
 			if ((strTmp.startsWith('\"') && strTmp.endsWith('\"')) ||
 				(strTmp.startsWith('\'') && strTmp.endsWith('\''))) {
 
@@ -183,8 +184,8 @@ QStringList QCmdOptQStringList::GetValue(const QCmd::Flags& fg /*= QCmd::Flag::N
 
 				// Remove the ending quote
 				strTmp.chop(1);
-				lst << strTmp;
 			}
+			lst << strTmp;
 		}
 		retVal.swap(lst);
 	}

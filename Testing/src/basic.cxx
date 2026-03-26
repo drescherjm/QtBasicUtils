@@ -301,7 +301,22 @@ class QCmdStringListOpt : public QCmd
 {
 public:
 	QCmdStringListOpt(QString strName, QString strDescription);
+
+	enum TestIDs {
+		WithoutRemoveOuterQuotes0,
+		WithRemoveOuterQuotes0,
+		WithoutRemoveOuterQuotes1,
+		WithRemoveOuterQuotes1,
+		NUM_TESTS
+	};
+
+public:
 	virtual int Execute();
+
+private:
+	int		testSimple0();
+	int		testWithRemoveOuterQuotes0();
+	int		testUsingStrings(const QCmd::Flags & fg);
 };
 
 QCmdStringListOpt::QCmdStringListOpt(QString strName, QString strDescription) :
@@ -313,6 +328,11 @@ QCmd(strName,strDescription)
 	sl.push_back("2");
 	AddOpt("I","The integers to sum","",sl);
 
+	QStringList sl1;
+	AddOpt("StringList", "A list of strings", "", sl1);
+	QString strCompare;
+	AddOpt("CompareString", "A string to compare against the join of the StringList parameter.", "", strCompare);
+
 	int nSum = 0;
 	QStringList::iterator it;
 	for(it = sl.begin(); it != sl.end();++it) {
@@ -320,23 +340,58 @@ QCmd(strName,strDescription)
 	}
 
 	AddOpt("S","The sum","This is the expected sum of Integer(s)",nSum);
+
+	int nTest = -1;
+	int nMaxTest = NUM_TESTS - 1;
+	QString desc = QString("This number is between 0 and %1").arg(nMaxTest);
+	AddArg("TestNumber", "The number of the test to execute", desc, nTest, 0, nMaxTest);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int QCmdStringListOpt::Execute()
 {
+	int retVal = QCmdParseError::STATUS_OK;
+	int nTest;
+	retVal = GetArg("TestNumber", nTest);
+	if (QCmdParseError::Succeeded(retVal)) {
+		switch (nTest) {
+		case WithoutRemoveOuterQuotes0:
+			retVal = testSimple0();
+			break;
+		case WithRemoveOuterQuotes0:
+			retVal = testWithRemoveOuterQuotes0();
+			break;
+		case WithoutRemoveOuterQuotes1:
+			retVal = testUsingStrings(QCmd::Flag::NO_FLAG);
+			break;
+		case WithRemoveOuterQuotes1:
+			retVal = testUsingStrings(QCmd::Flag::REMOVE_OUTER_QUOTES);
+			break;
+		default: 
+			retVal = QCmdParseError::PARAM_INVALID_DATA;
+			break;
+		}
+	}
+	return retVal;
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdStringListOpt::testSimple0()
+{
 	QStringList sl;
-	GetOpt("I",sl);
+	GetOpt("I", sl);
 
 	int nSum = 0;
 	QStringList::iterator it;
-	for(it = sl.begin(); it != sl.end();++it) {
+	for (it = sl.begin(); it != sl.end(); ++it) {
 		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
 		nSum += it->toInt();
 	}
 
 	int nExpectedSum = 0;
-	GetOpt("S",nExpectedSum);
+	GetOpt("S", nExpectedSum);
 
 	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
 	std::cout << "Actual Sum=" << nSum << std::endl;
@@ -344,6 +399,60 @@ int QCmdStringListOpt::Execute()
 	QString str = exportCommandString('+');
 
 	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdStringListOpt::testWithRemoveOuterQuotes0()
+{
+	QStringList sl;
+	GetOpt("I", sl, QCmd::Flag::REMOVE_OUTER_QUOTES);
+
+	int nSum = 0;
+	QStringList::iterator it;
+	for (it = sl.begin(); it != sl.end(); ++it) {
+		std::cout << "Integer(s)=" << it->toStdString() << std::endl;
+		nSum += it->toInt();
+	}
+
+	int nExpectedSum = 0;
+	GetOpt("S", nExpectedSum);
+
+	std::cout << "Expected Sum=" << nExpectedSum << std::endl;
+	std::cout << "Actual Sum=" << nSum << std::endl;
+
+	QString str = exportCommandString('+');
+
+	return (nExpectedSum == nSum) ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+int QCmdStringListOpt::testUsingStrings(const QCmd::Flags& fg)
+{
+	QStringList sl;
+	int retVal = GetOpt("StringList", sl, fg);
+
+	QString strCompare;
+
+	auto res = GetOpt("CompareString", strCompare, QCmd::Flag::REMOVE_OUTER_QUOTES);
+	if (!QCmdParseError::Succeeded(res)) {
+		retVal = res;
+	}
+
+	if (QCmdParseError::Succeeded(retVal)) {
+		QString strTmp = sl.join("");
+		bool bTest = (strTmp.compare(strCompare, Qt::CaseInsensitive) == 0);
+		if (bTest) {
+			std::cout << "The output of the string list: [" << strTmp.toStdString() << "] matched the test string [" << strCompare.toStdString() << "] ." << std::endl;
+		}
+		else {
+			std::cout << "FAILED: The output of the string list: [" << strTmp.toStdString() << "] didn't match the test string [" << strCompare.toStdString() << "] ." << std::endl;
+		}
+		retVal = bTest ? QCmdParseError::STATUS_OK : QCmdParseError::USER_EXECUTION_ERROR;
+	}
+
+	return retVal;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
