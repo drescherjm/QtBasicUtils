@@ -29,7 +29,9 @@ set (${PROJECT_NAME}_VERSION_STRING "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJEC
 
 set (${PROJECT_NAME}_LIBRARY_PREFIX Qbu)
 
+if (NOT DEFINED VCPKG_TARGET_TRIPLET)
 include(${PROJECT_SOURCE_DIR}/CMake/SubversionVersionInfo.cmake)
+endif()
 
 #########################################################################################
 
