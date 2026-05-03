@@ -1,42 +1,40 @@
 #pragma once
-
 #ifndef QBULOGGERWIDGET2FILENAMEDELAGATE_H
 #define QBULOGGERWIDGET2FILENAMEDELAGATE_H
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <QItemDelegate>
+#include <QStyledItemDelegate>
 #include "qbuBase/qbuMacros.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class qbuLoggerWidget2FileNameDelagate : public QItemDelegate
+
+class qbuLoggerWidget2FileNameDelagate : public QStyledItemDelegate
 {
-	QBU_DECLARE_SUPERCLASS(QItemDelegate)
-	Q_OBJECT
+	QBU_DECLARE_SUPERCLASS(QStyledItemDelegate)
+		Q_OBJECT
 public:
 	explicit qbuLoggerWidget2FileNameDelagate(QWidget* pParent);
 
-protected:
-	virtual QWidget *	createEditor(QWidget *parent, 
-		const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	
-	virtual void		setEditorData(QWidget *editor, 
-		const QModelIndex &index) const;
-	
-	virtual void		setModelData(QWidget *editor, 
-		QAbstractItemModel *model, const QModelIndex &index) const;
+	// Returns the button rect for a given cell rect — used by both
+	// paint() and the view's clicked handler.
+	static QRect buttonRect(const QRect& cellRect);
 
-	virtual void		updateEditorGeometry(QWidget *editor, 
-		const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void paint(QPainter* painter,
+		const QStyleOptionViewItem& option,
+		const QModelIndex& index) const override;
 
-	virtual QSize		sizeHint(const QStyleOptionViewItem &option, 
-		const QModelIndex &index) const;
+	QSize sizeHint(const QStyleOptionViewItem& option,
+		const QModelIndex& index) const override;
 
-protected slots:
-	void	buttonClicked(bool checked);
+public slots:
+	// Connect QTableView::clicked(QModelIndex) to this.
+	void onViewClicked(const QAbstractItemView* pView,
+		const QModelIndex& index);
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 #endif // QBULOGGERWIDGET2FILENAMEDELAGATE_H

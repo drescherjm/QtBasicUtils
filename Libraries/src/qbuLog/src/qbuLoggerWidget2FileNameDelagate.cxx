@@ -1,111 +1,91 @@
 #include "qbuLogPCH.h"
-
 #include "qbuLog/qbuLoggerWidget2FileNameDelagate.h"
-#include <QPushButton>
+#include <QPainter>
 #include <QApplication>
 #include <QClipboard>
-#include <QHBoxLayout>
-#include <QToolButton>
+#include <QStyle>
+#include <QAbstractItemView>
+#include "qbuLog/qbuLoggerModel.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-struct StaticLibInitializer
-{
-    void initialize()
-    {
-        Q_INIT_RESOURCE(qbuLog);
-    }
-
-    StaticLibInitializer()
-    {
-        initialize();
-    }
+struct StaticLibInitializer {
+	StaticLibInitializer() { Q_INIT_RESOURCE(qbuLog); }
 };
+static StaticLibInitializer s_init;
 
-static StaticLibInitializer test;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-qbuLoggerWidget2FileNameDelagate::qbuLoggerWidget2FileNameDelagate(QWidget* pParent) : Superclass(pParent)
+static QIcon& clippyIcon()
 {
-    //Q_INIT_RESOURCE(qbuLog);
+	static QIcon s_icon(":/Images/clippy.png");
+	return s_icon;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QWidget * qbuLoggerWidget2FileNameDelagate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+qbuLoggerWidget2FileNameDelagate::qbuLoggerWidget2FileNameDelagate(QWidget* pParent)
+	: Superclass(pParent)
+{}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*static*/ QRect qbuLoggerWidget2FileNameDelagate::buttonRect(const QRect& cellRect)
 {
-
-    static  QIcon g_icon(":/Images/clippy.png");
-
-	QWidget* pWidget = new QWidget(parent);
-
-	QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
-
-    QToolButton* pButton = new QToolButton(/*"Copy",*/parent);
-    /*pButton->setSize(40, 40);*/
-
-    pButton->setIcon(g_icon);
-
-    //pButton->setIcon(QIcon(":/Images/clippy.png"));
-	
-	pLayout->addWidget(pButton);
-
-	connect(pButton, SIGNAL(clicked(bool)), SLOT(buttonClicked(bool)));
-
-	return pWidget;
+	// A 32x32 button centred vertically in the cell, pinned to the left edge.
+	const int sz = 32;
+	int y = cellRect.top() + (cellRect.height() - sz) / 2;
+	return QRect(cellRect.left() + 2, y, sz, sz);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuLoggerWidget2FileNameDelagate::setEditorData(QWidget *editor, const QModelIndex &index) const
+void qbuLoggerWidget2FileNameDelagate::paint(QPainter* painter,
+	const QStyleOptionViewItem& option,
+	const QModelIndex& index) const
 {
-    QToolButton* pPushButton = editor->findChild<QToolButton*>();
+	// Let the base class handle selection / focus background.
+	QStyledItemDelegate::paint(painter, option, index);
 
-	if (pPushButton) {
-		pPushButton->setProperty("Data", index.model()->data(index, Qt::EditRole));
-	}
+	QStyleOptionToolButton opt;
+	opt.initFrom(option.widget);
+	opt.rect = buttonRect(option.rect);
+	opt.icon = clippyIcon();
+	opt.iconSize = QSize(24, 24);
+	opt.subControls = QStyle::SC_ToolButton;
+	opt.features = QStyleOptionToolButton::None;
+	opt.state = QStyle::State_Enabled | QStyle::State_AutoRaise;
+
+	QApplication::style()->drawComplexControl(QStyle::CC_ToolButton, &opt, painter, option.widget);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuLoggerWidget2FileNameDelagate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+QSize qbuLoggerWidget2FileNameDelagate::sizeHint(const QStyleOptionViewItem& option,
+	const QModelIndex& index) const
 {
-
-	//editor->
+	QSize sz = Superclass::sizeHint(option, index);
+	sz.setHeight(40);
+	return sz;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void qbuLoggerWidget2FileNameDelagate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void qbuLoggerWidget2FileNameDelagate::onViewClicked(const QAbstractItemView* pView,
+	const QModelIndex& index)
 {
-	editor->setGeometry(option.rect);
+	if (!pView || index.column() != qbuLoggerModel::CT_FILENAME)
+		return;
+
+	// Map the last mouse position into cell-local coords to confirm
+	// the click landed inside the button rect.
+	QPoint localPos = pView->viewport()->mapFromGlobal(QCursor::pos());
+	QRect  cellRect = pView->visualRect(index);
+
+	if (!buttonRect(cellRect).contains(localPos))
+		return;
+
+	QString strFileName = index.data(Qt::EditRole).toString();
+	if (!strFileName.isEmpty())
+		QApplication::clipboard()->setText(strFileName);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-QSize qbuLoggerWidget2FileNameDelagate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	QSize retVal = Superclass::sizeHint(option, index);
-
-	retVal.setHeight(40);
-
-	return retVal;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void qbuLoggerWidget2FileNameDelagate::buttonClicked(bool checked)
-{
-    QToolButton* pWidget = qobject_cast<QToolButton*>(sender());
-	if (pWidget) {
-		QString strFileName = pWidget->property("Data").toString();
-
-		if (!strFileName.isEmpty()) {
-			QApplication::clipboard()->setText(strFileName);
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
