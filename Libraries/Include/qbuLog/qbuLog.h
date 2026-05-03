@@ -11,11 +11,27 @@
 #include <QxtLogger>
 #include <cassert>
 
+#if defined(_MSC_VER)
+#define DEBUG_BREAK() __debugbreak()
+#elif defined(__clang__)
+#define DEBUG_BREAK() __builtin_debugtrap()
+#elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+#define DEBUG_BREAK() __asm__ volatile("int $0x03")
+#elif defined(__GNUC__) && defined(__aarch64__)
+#define DEBUG_BREAK() __asm__ volatile("brk #0")
+#elif defined(__GNUC__) && defined(__arm__)
+#define DEBUG_BREAK() __asm__ volatile("bkpt #0")
+#else
+#include <csignal>
+#define DEBUG_BREAK() raise(SIGTRAP)
+#endif
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 QString logFileName(QString strFile, int nLine);
 
 #define QLOG_WARN_ASSERT() assert(false); qxtLog->warning() << logFileName(__FILE__,__LINE__)
+#define QLOG_WARN_BREAK()  DEBUG_BREAK(); qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_WARN() qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_INFO() qxtLog->info() << logFileName(__FILE__,__LINE__)
 #define QLOG_CRIT() qxtLog->critical() << logFileName(__FILE__,__LINE__)
