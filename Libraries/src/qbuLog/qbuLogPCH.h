@@ -13,3 +13,4 @@
 #include <QSize>
 #include <QColor>
 #include <QDateTime>
+#include <QStyledItemDelegate>
