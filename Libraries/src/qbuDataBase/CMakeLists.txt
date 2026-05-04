@@ -13,7 +13,7 @@ endif()
 
 if(${PROJECT_NAME}_QT_VERSION VERSION_GREATER "4")
 
-	set (QT_LIBRARIES Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Xml)
+	set (QT_LIBRARIES Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Sql)
 	set (QT_MODULES Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui  Qt${QT_VERSION_MAJOR}::Xml Qt${QT_VERSION_MAJOR}::Sql)
 	
 	if (QT_VERSION_MAJOR EQUAL 5)
@@ -148,7 +148,7 @@ set( ${LOCAL_PROJECT_NAME}_INT_HDRS
 )
 
 #Add precompiled header support
-MSVC_PCH_SUPPORT(${LOCAL_PROJECT_NAME})
+#MSVC_PCH_SUPPORT(${LOCAL_PROJECT_NAME})
 
 # this command will generate rules that will run rcc on all files from UPMC_LA_RCS
 # in result UPMC_LA_RC_SRCS variable will contain paths to files produced by rcc
@@ -198,6 +198,15 @@ add_library(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SHARED}
 )
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
+
+#########################################################################################
+
+target_precompile_headers(${LOCAL_PROJECT_NAME} 
+	PUBLIC 
+		"${LOCAL_PROJECT_NAME}PCH.h" 
+	PRIVATE 
+		<iostream>
+)
 
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${QXT_LIBRARIES})
 

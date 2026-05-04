@@ -142,7 +142,16 @@ add_library(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SHARED}
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
 
-target_precompile_headers(${LOCAL_PROJECT_NAME} PUBLIC "${LOCAL_PROJECT_NAME}PCH.h")
+#########################################################################################
+
+target_precompile_headers(${LOCAL_PROJECT_NAME} 
+	PUBLIC 
+		"${LOCAL_PROJECT_NAME}PCH.h" 
+	PRIVATE 
+		<iostream>
+)
+
+#########################################################################################
 
 target_link_libraries(${LOCAL_PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBRARY_PREFIX}::qbuBase)
 

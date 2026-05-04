@@ -109,6 +109,8 @@ add_library(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SHARED}
 
 add_library(${${PROJECT_NAME}_LIBRARY_PREFIX}::${LOCAL_PROJECT_NAME} ALIAS ${LOCAL_PROJECT_NAME})
 
+#########################################################################################
+
 target_precompile_headers(${LOCAL_PROJECT_NAME} 
 	PUBLIC 
 		"${LOCAL_PROJECT_NAME}PCH.h" 
@@ -166,3 +168,5 @@ install (FILES
 	${${LOCAL_PROJECT_NAME}_EXPORT_HEADER} 
 	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOCAL_PROJECT_NAME}
 )
+
+#########################################################################################
