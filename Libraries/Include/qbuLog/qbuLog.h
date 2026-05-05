@@ -11,8 +11,6 @@
 #include <QxtLogger>
 #include <cassert>
 
-bool isDebuggerPresent();
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if defined(_MSC_VER)
@@ -57,6 +55,7 @@ bool isDebuggerPresent();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString logFileName(QString strFile, int nLine);
+bool    isDebuggerPresent();
 
 #define QLOG_WARN_ASSERT() assert(false); qxtLog->warning() << logFileName(__FILE__,__LINE__)
 #define QLOG_WARN_BREAK()  DEBUG_BREAK(); qxtLog->warning() << logFileName(__FILE__,__LINE__)
