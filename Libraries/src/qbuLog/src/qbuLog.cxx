@@ -16,7 +16,7 @@ QString logFileName(QString strFile, int nLine)
 #if defined(_MSC_VER) || defined(_WIN32)
 #define NOMINMAX
 #include <windows.h>
-inline bool isDebuggerPresent() {
+bool isDebuggerPresent() {
 	return IsDebuggerPresent();
 }
 
@@ -25,7 +25,7 @@ inline bool isDebuggerPresent() {
 #elif defined(__APPLE__)
 #include <sys/sysctl.h>
 #include <unistd.h>
-inline bool isDebuggerPresent() {
+bool isDebuggerPresent() {
 	int               mib[4] = {CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()};
 	struct kinfo_proc info{};
 	size_t            size = sizeof(info);
@@ -37,7 +37,7 @@ inline bool isDebuggerPresent() {
 
 #elif defined(__linux__)
 #include <fstream>
-inline bool isDebuggerPresent() {
+bool isDebuggerPresent() {
 	// /proc/self/status contains "TracerPid: N"
 	// N is 0 if no debugger, non-zero if a debugger is attached
 	std::ifstream status("/proc/self/status");
@@ -52,7 +52,7 @@ inline bool isDebuggerPresent() {
 
 #else
 // Fallback: assume no debugger
-inline bool isDebuggerPresent() {
+bool isDebuggerPresent() {
 	return false;
 }
 #endif
