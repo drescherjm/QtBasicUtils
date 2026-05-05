@@ -1,6 +1,3 @@
-#define NOMINMAX
-#define WIN32_LEAN_AND_MEAN
-
 // c++
 #include <iostream>
 #include <deque>
@@ -17,5 +14,3 @@
 #include <QColor>
 #include <QDateTime>
 #include <QStyledItemDelegate>
-
-
