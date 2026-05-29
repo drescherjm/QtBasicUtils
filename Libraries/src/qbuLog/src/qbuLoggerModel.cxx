@@ -1,5 +1,5 @@
-#include "qbuLog/qbuLoggerModel.h"
 #include "qbuLogPCH.h"
+#include "qbuLog/qbuLoggerModel.h"
 
 #include <map>
 #include <qxtlogger.h>
@@ -23,7 +23,7 @@ struct logData {
 	int                 m_cachedHeight{-1}; // -1 = not yet measured
 };
 
-typedef std::deque<logData> LogQueue;
+using LogQueue = std::deque<logData>;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

@@ -86,6 +86,23 @@ QString	qbuProperty::toXML(qbuITKIndent indent)
 				//retVal = QString("\'%1\'").arg(ch);
 			}
 			break;
+		case QVariant::StringList: {
+			QStringList  list        = GetData().toStringList();
+			qbuITKIndent childIndent = indent.GetNextIndent();
+			for (const QString& s : list) {
+				retVal += QString("%1<item>%2</item>\n").arg(childIndent.getIndent()).arg(handleXMLEscaping(s));
+			}
+			// Use the multi-line format like qbuPropertyMap does
+			QString strTemp = QString("%1<%2 tyID=\"%3\" tyName=\"%4\">\n%5%1</%2>\n")
+			                      .arg(indent.getIndent())
+			                      .arg(objectName())
+			                      .arg(ty)
+			                      .arg(GetData().typeName())
+			                      .arg(retVal);
+			retVal = strTemp;
+		}
+			// Skip the single-line format below by returning early
+			return retVal;
 		default:
 			retVal = handleXMLEscaping(GetData().toString());
 		}
@@ -209,6 +226,19 @@ bool qbuProperty::fromXML(QDomElement & docElem)
 							m_vt =QChar();
 						
 						break;
+				    case QVariant::StringList: {
+					    QStringList  list;
+					    QDomNodeList items = docElem.elementsByTagName("item");
+					    for (int i = 0; i < items.count(); ++i) {
+						    QDomElement itemElem = items.at(i).toElement();
+						    if (!itemElem.isNull()) {
+							    list.append(itemElem.text());
+						    }
+					    }
+					    m_vt = list;
+					    setObjectName(docElem.tagName());
+					    retVal = true;
+				    } break;
 					default:
 						m_vt = strText;
 						retVal = m_vt.canConvert(ty);
@@ -300,6 +330,15 @@ bool qbuProperty::fromXML2(pugi::xml_node & xmlNode)
 						m_vt = QChar();
 
 					break;
+				case QVariant::StringList: {
+					QStringList list;
+					for (pugi::xml_node item = xmlNode.child("item"); item; item = item.next_sibling("item")) {
+						list.append(QString::fromStdString(item.text().get()));
+					}
+					m_vt = list;
+					setObjectName(xmlNode.name());
+					retVal = true;
+				} break;
 				default:
 					m_vt = strText;
 					retVal = m_vt.canConvert(ty);
