@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TESTDBCASESTATEMENT_H
-#define TESTDBCASESTATEMENT_H
+#ifndef TESTPROPERTYMEMORYBUG_H
+#define TESTPROPERTYMEMORYBUG_H
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -8,18 +8,18 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class CmdTestDBCaseStatement : public QCmd
-{
+class CmdTestPropertyMemoryBug : public QCmd {
 public:
-	CmdTestDBCaseStatement(QString strName, QString strDescription);
+	CmdTestPropertyMemoryBug(QString strName, QString strDescription);
 	virtual int Execute();
 
 private:
-	bool	test0();
-	void	displayComparisonMessageIfFalse(bool retVal, 
-		const QString strExpected, const QString strVal);
+	bool test0();
+	bool test1();
+	bool test2();
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#endif // TESTDBCASESTATEMENT_H
+#endif // TESTPROPERTYMEMORYBUG_H
+

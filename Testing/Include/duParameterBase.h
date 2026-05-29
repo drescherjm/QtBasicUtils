@@ -1,0 +1,50 @@
+#pragma once
+
+#ifndef DUPARAMETERBASE_H
+#define DUPARAMETERBASE_H
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "qbuBase/qbuPropertyMap.h"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class duVarName {
+public:
+	static bool isValidVariableName(const QString& strName) {
+		bool retVal = !strName.isEmpty();
+		if (retVal) {
+			for (int i = 0; i < strName.size(); ++i) {
+				QChar ch = strName.at(i);
+				if (i == 0) {
+					retVal = ch.isLetter() || (ch == '_');
+				} else {
+					retVal = ch.isLetterOrNumber() || (ch == '_');
+				}
+				if (!retVal) {
+					break;
+				}
+			}
+		}
+		return retVal;
+	}
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class duParameterBase : public qbuPropertyMap, public duVarName {
+public:
+	bool setDisplayName(QString strDisplayName);
+	bool setDefaultValue(QVariant vtValue);
+	bool getDefaultValue(QString& strValue);
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q_DECLARE_METATYPE(duParameterBase);
+Q_DECLARE_METATYPE(duParameterBase*);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // DUPARAMETERBASE_H
+

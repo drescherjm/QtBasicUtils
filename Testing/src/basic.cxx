@@ -28,6 +28,7 @@
 
 #include "qbuDataBase/qbuDatabaseFunctions.h"
 #include "testDBCaseStatement.h"
+#include "testPropertyMemoryBug.h"
 
 class QCmdTestSingleQuote : public QCmd
 {
@@ -955,6 +956,10 @@ int main(int argc, char* argv[])
 
         QCmdTestXMLPerformance cmdTestXMLPerf("XMLPERF", "This command helps profile the performance of the toXML and fromXML.");
 
+		CmdTestPropertyMemoryBug cmdTestPropertyMemoryBug(
+		    "PROPMEMBUG", "This command tests for a specific memory bug in the property map implementation."
+		);
+
 		QCmdLine myCmdLine(argc,argv);
 		QCmdHelp myHelp("This command shows the help message for all commands.","");
 
@@ -978,6 +983,7 @@ int main(int argc, char* argv[])
 		myCmdLine.AddCmd(&cmdTestCmdLineFileInclude);
 		myCmdLine.AddCmd(&cmdTestSETVariable);
         myCmdLine.AddCmd(&cmdTestXMLPerf);
+		myCmdLine.AddCmd(&cmdTestPropertyMemoryBug);
 
 		myCmdLine.AddCmd(&cmdFloatOpts);
 		

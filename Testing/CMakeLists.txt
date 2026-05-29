@@ -13,7 +13,7 @@ include_directories(
 	${${PROJECT_NAME}_INCLUDE_DIRS}
 )
 
-set(TEST_SRCS 
+set(${LOCAL_PROJECT_NAME}_SRCS 
 	./src/basic.cxx 
 	./src/testxml.cxx
 	./src/testxmlimp.cxx
@@ -24,9 +24,13 @@ set(TEST_SRCS
 	./src/testxmlperf.cxx
 	./src/testDBExpression.cxx
 	./src/testDBCaseStatement.cxx
+	./src/testPropertyMemoryBug.cxx
+	./src/duParamCollection.cxx
+	./src/duParameterBase.cxx
+	./src/duParameter.cxx
 )
 
-set(TEST_HDRS
+set(${LOCAL_PROJECT_NAME}_HDRS
 	./Include/testxml.h
 	./Include/testxmlimp.h
 	./Include/testUserProps.h
@@ -36,9 +40,23 @@ set(TEST_HDRS
 	./Include/testxmlperf.h
 	./Include/testDBExpression.h
 	./Include/testDBCaseStatement.h
+	./Include/testPropertyMemoryBug.h
 )
 
-add_executable(BasicTest ${TEST_SRCS} ${TEST_HDRS})
+SET( ${LOCAL_PROJECT_NAME}_MOC_HDRS 
+	./Include/duParamCollection.h
+	./Include/duParameterBase.h
+	./Include/duParameter.h
+)
+
+# and finally this will run moc:
+QT45_WRAP_CPP( ${LOCAL_PROJECT_NAME}_MOC_SRCS ${${LOCAL_PROJECT_NAME}_MOC_HDRS} )
+
+add_executable(${LOCAL_PROJECT_NAME} ${${LOCAL_PROJECT_NAME}_SRCS} 
+    ${${LOCAL_PROJECT_NAME}_MOC_SRCS} 
+	${${LOCAL_PROJECT_NAME}_HDRS}
+	${${LOCAL_PROJECT_NAME}_MOC_HDRS}
+)
 
 target_link_libraries(BasicTest PRIVATE ${QT_LIBRARIES} ${QXT_LIBRARIES})
 
