@@ -127,6 +127,14 @@ qbuUserPropPtr::qbuUserPropPtr(SharedPtr & other)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+qbuUserPropPtr::~qbuUserPropPtr() {
+	std::cout << "qbuUserPropPtr destructor called for object: " << qPrintable(objectName())
+	          << " SmartPointer: " << m_pProp.data() << " RawPointer: " << m_pPropRaw << std::endl;
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 qbuUserPropPtr& qbuUserPropPtr::operator=(const qbuUserPropPtr& other)
 {
 	if (&other != this) {

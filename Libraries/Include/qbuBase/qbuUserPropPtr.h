@@ -23,6 +23,7 @@ public:
 	qbuUserPropPtr(const qbuUserPropPtr & other);
 	qbuUserPropPtr& operator=(const qbuUserPropPtr & other);
 	qbuUserPropPtr(SharedPtr & other);
+	virtual ~qbuUserPropPtr();
 public:
 	bool					isNull() const;
 	QString					toXML(bool bMakeRoot = true,qbuITKIndent indent = qbuITKIndent());
