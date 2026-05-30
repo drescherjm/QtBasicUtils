@@ -33,9 +33,11 @@ qbuPropertyMap::qbuPropertyMap() : m_cs(Qt::CaseInsensitive)
 
 qbuPropertyMap::~qbuPropertyMap()
 {
-    std::cout << "qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
+    std::cout << "BEGIN: qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
 	          << std::endl;
     destroy();
+	std::cout << "END: qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
+	          << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
