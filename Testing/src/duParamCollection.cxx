@@ -49,6 +49,42 @@ qbuPropertyMap::iterator duParamCollection::insert(duParameterBase* pParam, bool
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+duParameterBase* duParamCollection::getParam(duParamCollection::iterator it) const {
+	duParameterBase* retVal = nullptr;
+
+	if (it != end()) {
+		qbuProperty* pProp = *it;
+		if (pProp != nullptr) {
+			qbuUserPropPtr ptr = *pProp;
+			if (!ptr.isNull()) {
+				retVal = qobject_cast<duParameterBase*>(ptr.data());
+			}
+		}
+	}
+
+	return retVal;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+duParameterBase* duParamCollection::getParam(duParamCollection::const_iterator it) const {
+	duParameterBase* retVal = nullptr;
+
+	if (it != end()) {
+		qbuProperty* pProp = *it;
+		if (pProp != nullptr) {
+			qbuUserPropPtr ptr = *pProp;
+			if (!ptr.isNull()) {
+				retVal = qobject_cast<duParameterBase*>(ptr.data());
+			}
+		}
+	}
+
+	return retVal;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void duParamCollection::connectSignals(duParameterBase* pParam) {
 	// For this test, we don't need to connect any signals, but in a real implementation, you would connect the
 	// necessary signals here.

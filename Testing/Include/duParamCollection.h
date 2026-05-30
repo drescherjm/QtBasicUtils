@@ -23,10 +23,28 @@ signals:
 
 public:
 	iterator insert(duParameterBase* pParam, bool bAutoDelete = true);
-	void connectSignals(duParameterBase* pParam);
+	duParameterBase* getParam(duParamCollection::iterator it) const;
+	duParameterBase* getParam(duParamCollection::const_iterator it) const;
+	void             connectSignals(duParameterBase* pParam);
+	template <typename ParamType>
+	ParamType* getParamPtr(QString strFieldName) const;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename ParamType>
+ParamType* duParamCollection::getParamPtr(QString strFieldName) const {
+	ParamType*     retVal{nullptr};
+
+	const_iterator it = find(strFieldName);
+	if (it != end()) {
+		auto pParam = getParam(it);
+		retVal      = dynamic_cast<ParamType*>(pParam);
+	}
+	return retVal;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

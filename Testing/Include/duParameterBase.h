@@ -28,15 +28,54 @@ public:
 		}
 		return retVal;
 	}
+
+	static QString makeVariable(QString name) {
+		// TODO: Should we complain if the string is already a variable?
+
+		name.prepend('%');
+		name.append('%');
+
+		return name;
+	}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class duParameterBase : public qbuPropertyMap, public duVarName {
+	Q_OBJECT
 public:
-	bool setDisplayName(QString strDisplayName);
-	bool setDefaultValue(QVariant vtValue);
-	bool getDefaultValue(QString& strValue);
+	enum DicomNullBehavior {
+		NB_WARN    = 0,
+		NB_IGNORE  = 1,
+		NB_DELETE  = 2,
+		NB_DEFAULT = NB_WARN,
+	};
+
+public:
+	bool           setDisplayName(QString strDisplayName);
+	bool           setValue(QVariant vtValue);
+	bool           getValue(QVariant& vtValue);
+	bool           getValue(QString& strValue, bool bUseFormat = true, bool bVaildate = true);
+	bool           setDefaultValue(QVariant vtValue);
+	bool           getDefaultValue(QString& strValue);
+	bool           getDicomNullBehavior(DicomNullBehavior& dn);
+	virtual bool   setValueToDefault();
+	virtual bool   setVariableValue(QString strVarName, QString strVal);
+	bool           hasFormat();
+
+	static QString nullValue();
+
+protected:
+	virtual bool validate() {
+		return true;
+	}
+	virtual QString formatValue(QString strValue) {
+		return strValue;
+	}
+
+signals:
+	void valueChanged(duParameterBase* pParam);
+	void validation_failed(duParameterBase* pParam);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,4 +86,3 @@ Q_DECLARE_METATYPE(duParameterBase*);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif // DUPARAMETERBASE_H
-

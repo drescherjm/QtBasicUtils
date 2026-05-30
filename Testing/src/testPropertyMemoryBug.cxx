@@ -6,6 +6,7 @@
 #include "qbuBase/qbuProperyMapXMLHelper.h"
 #include "duParameterBase.h"
 #include "duParamCollection.h"
+#include "duParameter.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,11 +32,9 @@ int CmdTestPropertyMemoryBug::Execute() {
 	case 1:
 		bVal = test1();
 		break;
-
-		// 		break;
-		// 	case 2:
-		// 		bVal = test2();
-		// 		break;
+	case 2:
+		bVal = test2();
+		break;
 		// 	case 5:
 		// 		bVal = test5();
 		// 		break;
