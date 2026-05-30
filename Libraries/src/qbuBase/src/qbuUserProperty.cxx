@@ -29,7 +29,7 @@ qbuUserProperty& qbuUserProperty::operator=(const qbuUserProperty& other) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 qbuUserProperty::~qbuUserProperty() {
-	std::cout << "qbuUserProperty Destructor called for object: " << qPrintable(objectName()) << std::endl;
+	std::cout << "qbuUserProperty Destructor called for object: " << qPrintable(objectName()) << " at address: " << this << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

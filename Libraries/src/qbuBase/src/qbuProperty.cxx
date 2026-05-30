@@ -24,6 +24,8 @@ qbuProperty::qbuProperty()
 qbuProperty::~qbuProperty()
 {
 	destroy();
+	std::cout << "qbuProperty Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
+	          << std::endl;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
