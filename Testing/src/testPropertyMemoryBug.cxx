@@ -96,10 +96,12 @@ bool CmdTestPropertyMemoryBug::test2() {
 	QStringList       lstOut;
 
 	duParamCollection coll;
+	coll.setObjectName("coll");
 	coll.insert(&param, false); // false allows the param to be on the stack.
 
 	duParamCollection coll2;
-	bool              bVal = coll2.fromXML(coll.toXML());
+	coll2.setObjectName("coll2");
+	bool bVal = coll2.fromXML(coll.toXML());
 
 	if (bVal) {
 		bVal = (coll2.size() == 1);
