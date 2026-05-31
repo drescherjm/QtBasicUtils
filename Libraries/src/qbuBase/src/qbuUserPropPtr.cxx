@@ -1,7 +1,7 @@
 #include "qbuBasePCH.h"
 
 #include "qbuBase/qbuUserPropPtr.h"
-#include "qbuBase/qbuUserPropery.h"
+#include "qbuBase/qbuUserProperty.h"
 #include "qbuBase/qbuPropXMLHelper.h"
 #include "qbuBase/qbuProperty.h"
 #include "qbuBase/qbuPropertyTypeNameAlias.h"
@@ -128,9 +128,10 @@ qbuUserPropPtr::qbuUserPropPtr(SharedPtr & other)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 qbuUserPropPtr::~qbuUserPropPtr() {
+#ifdef DEBUG_PROPERTY_LIFETIME
 	std::cout << "qbuUserPropPtr destructor called for object: " << qPrintable(objectName())
 	          << " SmartPointer: " << m_pProp.data() << " RawPointer: " << m_pPropRaw << std::endl;
-
+#endif // DEBUG_PROPERTY_LIFETIME
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

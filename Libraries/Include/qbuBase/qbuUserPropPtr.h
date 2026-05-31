@@ -3,7 +3,7 @@
 #ifndef QBUUSERPROPPTR_H
 #define QBUUSERPROPPTR_H
 
-#include "qbuBase/qbuUserPropery.h"
+#include "qbuBase/qbuUserProperty.h"
 #include <QExplicitlySharedDataPointer>
 #include <QObject>
 #include <QVariant>

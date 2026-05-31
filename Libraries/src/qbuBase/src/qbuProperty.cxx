@@ -24,8 +24,11 @@ qbuProperty::qbuProperty()
 qbuProperty::~qbuProperty()
 {
 	destroy();
+
+#ifdef DEBUG_PROPERTY_LIFETIME
 	std::cout << "qbuProperty Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
 	          << std::endl;
+#endif // DEBUG_PROPERTY_LIFETIME
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

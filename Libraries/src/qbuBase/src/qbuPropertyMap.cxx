@@ -33,11 +33,17 @@ qbuPropertyMap::qbuPropertyMap() : m_cs(Qt::CaseInsensitive)
 
 qbuPropertyMap::~qbuPropertyMap()
 {
+#ifdef DEBUG_PROPERTY_LIFETIME
     std::cout << "BEGIN: qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
 	          << std::endl;
+#endif // DEBUG_PROPERTY_LIFETIME
+
     destroy();
-	std::cout << "END: qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
+	
+#ifdef DEBUG_PROPERTY_LIFETIME
+    std::cout << "END: qbuPropertyMap Destructor called for object: " << qPrintable(objectName()) << " at address: " << this
 	          << std::endl;
+#endif // DEBUG_PROPERTY_LIFETIME
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

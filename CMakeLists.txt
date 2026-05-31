@@ -40,6 +40,7 @@ option (BUILD_DEVELOPMENT 			"Build Development Code" ON)
 option (BUILD_DOCUMENTATION			"Generate doxygen documentation" OFF)
 option (DEBUG_ASSERT_CMDLINE		"Assert on command line exceptions in debug mode" ON)
 option (DEBUG_XML_DUMPS				"Debug the XML dumping" OFF)
+option (DEBUG_PROPERTY_LIFETIME		"Add couts to debug the constructors and destructors that are related to qbuProperty" OFF)
 
 #########################################################################################
 
@@ -152,6 +153,7 @@ configure_file (
 
 conditional_define(DEBUG_ASSERT_CMDLINE DEBUG_ASSERT_CMDLINE)
 conditional_define(DEBUG_XML_DUMPS DEBUG_XML_DUMPS)
+conditional_define(DEBUG_PROPERTY_LIFETIME DEBUG_PROPERTY_LIFETIME)
 
 #########################################################################################
 
