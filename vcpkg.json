@@ -50,7 +50,12 @@
             "qt6"
           ],
           "default-features": false
-        }
+        },
+		{
+			"name": "qt5compat",
+			"default-features": false,
+			"features": ["codecs", "textcodec"]
+		}
       ]
     }
   },
