@@ -5,6 +5,9 @@
 #include "qbuLog/qbuLoggerWidget2FileNameDelagate.h"
 #include "qbuLog/qbuLoggerWidget3.h"
 #include "qbuLog/ui_qbuLoggerWidget2.h"
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
 #include <QColor>
 #include <QDateTime>
 #include <QHeaderView>
@@ -12,6 +15,7 @@
 #include <QStandardItemModel>
 #include <QTableWidgetItem>
 #include <QTimer>
+#include <algorithm>
 #include <limits>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -280,6 +284,52 @@ qbuLoggerWidget3::qbuLoggerWidget3(QWidget* parent /*= 0*/)
 	m_pPrivate->updateMasks();
 
 	m_pPrivate->setupStatsWidget(m_pPrivate->ui.tableWidgetStats);
+
+	// The log stays read-only; selected rows are copied as tab separated text.
+	if (QTableView* pTableView = m_pPrivate->ui.tableView) {
+		auto* pCopy = new QAction(tr("Copy"), pTableView);
+		pCopy->setShortcut(QKeySequence::Copy);
+		pCopy->setShortcutContext(Qt::WidgetShortcut);
+		pTableView->addAction(pCopy);
+		pTableView->setContextMenuPolicy(Qt::ActionsContextMenu);
+
+		connect(pCopy, &QAction::triggered, this, [pTableView]() {
+			QItemSelectionModel* pSel = pTableView->selectionModel();
+			if (!pSel) {
+				return;
+			}
+
+			QModelIndexList rows = pSel->selectedRows();
+			if (rows.isEmpty()) {
+				rows = pSel->selectedIndexes();
+			}
+
+			std::sort(rows.begin(), rows.end(), [](const QModelIndex& a, const QModelIndex& b) {
+				return a.row() < b.row();
+			});
+
+			QStringList lines;
+			QAbstractItemModel* pModel = pTableView->model();
+			int                 nLast  = -1;
+
+			for (const QModelIndex& idx : rows) {
+				if (idx.row() == nLast) {
+					continue;
+				}
+				nLast = idx.row();
+
+				QStringList cells;
+				for (int c = 0; c < pModel->columnCount(); ++c) {
+					cells << pModel->index(idx.row(), c).data(Qt::DisplayRole).toString();
+				}
+				lines << cells.join('\t');
+			}
+
+			if (!lines.isEmpty()) {
+				QApplication::clipboard()->setText(lines.join('\n'));
+			}
+		});
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

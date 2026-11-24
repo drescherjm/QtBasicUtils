@@ -369,7 +369,12 @@ QVariant qbuLoggerModel::data(const QModelIndex& index, int role /*= Qt::Display
 			}
 			break;
 		case CT_MESSAGE:
-			retVal = item.m_strMsg.join("<br>");
+			if (role == Qt::ToolTipRole) {
+				retVal = item.m_strMsg.join("<br>");
+			} else {
+				// EditRole: plain text with newlines — this is what gets copied to the clipboard.
+				retVal = item.m_strMsg.join("\n");
+			}
 			break;
 		}
 	} else
